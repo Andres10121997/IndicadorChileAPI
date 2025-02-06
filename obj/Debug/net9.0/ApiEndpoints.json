@@ -1,0 +1,152 @@
+[
+  {
+    "ContainingType": "IndicadorChileAPI.Controllers.DolarController",
+    "Method": "GetDataListAsync",
+    "RelativePath": "api/Dolar/GetDataList",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "IndicadorChileAPI.Models.DolarModel[]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Controllers.DolarController",
+    "Method": "GetStatisticsAsync",
+    "RelativePath": "api/Dolar/GetStatistics",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "IndicadorChileAPI.Models.StatisticsModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Controllers.UFController",
+    "Method": "GetDataListAsync",
+    "RelativePath": "api/UF/GetDataList",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.String",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Controllers.UFController",
+    "Method": "GetStatisticsAsync",
+    "RelativePath": "api/UF/GetStatistics",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "IndicadorChileAPI.Models.StatisticsModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Controllers.UFController",
+    "Method": "GetTheDateValueAsync",
+    "RelativePath": "api/UF/GetTheDateValue",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "IndicadorChileAPI.Models.UFModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  }
+]
