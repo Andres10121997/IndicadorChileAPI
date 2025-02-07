@@ -8,17 +8,22 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 {
     public class DolarContext : Context
     {
+        private DolarModel[] List { get; set; }
+
+
+
         public DolarContext(ushort Year)
             : base(Url: $"https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
                    Year: Year)
         {
-            
+            this.List = Array.Empty<DolarModel>();
         }
 
 
 
         ~DolarContext()
         {
+
         }
 
 
@@ -29,8 +34,6 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
             Dictionary<byte, List<float>> ufValues = new Dictionary<byte, List<float>>();
 
-            DolarModel[] ListOfDolar = Array.Empty<DolarModel>();
-
             try
             {
                 // Descargar el HTML de la página
@@ -39,13 +42,13 @@ namespace IndicadorChileAPI.Context.ForeignExchange
                 // Extraer los valores de la tabla
                 ufValues = await this.ExtractValuesAsync(htmlContent: htmlContent, tableId: "table_export".Trim());
 
-                ListOfDolar = await this.TransformToDolarModelsAsync(ufData: ufValues);
+                this.List = await this.TransformToDolarModelsAsync(ufData: ufValues);
 
-                ListOfDolar = ListOfDolar.ToList<DolarModel>().Where<DolarModel>(predicate: x => !float.IsNaN(f: x.Dolar)).ToArray<DolarModel>();
+                this.List = this.List.ToList<DolarModel>().Where<DolarModel>(predicate: x => !float.IsNaN(f: x.Dolar)).ToArray<DolarModel>();
 
-                Array.Sort(array: ListOfDolar, (x, y) => x.Date.CompareTo(value: y.Date));
+                Array.Sort(array: this.List, (x, y) => x.Date.CompareTo(value: y.Date));
 
-                return ListOfDolar;
+                return this.List;
             }
             catch (Exception ex)
             {
@@ -57,14 +60,13 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
         public async Task<DolarModel[]> MonthlyListOfDollarValuesAsync(byte Month)
         {
-            DolarModel[] List = Array.Empty<DolarModel>();
             DolarModel[] NewList = Array.Empty<DolarModel>();
             
             try
             {
-                List = await this.AnnualListOfDollarValuesAsync();
+                this.List = await this.AnnualListOfDollarValuesAsync();
 
-                NewList = await Task.Run<DolarModel[]>(function: () => List.ToList().Where<DolarModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray());
+                NewList = await Task.Run<DolarModel[]>(function: () => this.List.ToList().Where<DolarModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray());
 
                 return NewList;
             }

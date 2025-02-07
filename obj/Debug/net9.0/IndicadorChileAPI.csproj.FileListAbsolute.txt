@@ -34,3 +34,4 @@ C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\r
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\IndicadorChileAPI.pdb
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\IndicadorChileAPI.genruntimeconfig.cache
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\ref\IndicadorChileAPI.dll
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\IndicadorChileAPI.sourcelink.json

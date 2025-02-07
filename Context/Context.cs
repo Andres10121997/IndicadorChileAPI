@@ -10,18 +10,19 @@ namespace IndicadorChileAPI.Context
     public abstract class Context
     {
         #region Variables
-        private readonly ushort Year;
         private readonly string Url;
+        private readonly ushort Year;
         #endregion
 
 
 
         #region ConstructorMethod
-        public Context(string Url, ushort Year)
+        public Context(string Url,
+                       ushort Year)
             : base()
         {
-            this.Year = Year;
             this.Url = Url;
+            this.Year = Year;
         }
         #endregion
 
@@ -59,9 +60,11 @@ namespace IndicadorChileAPI.Context
 
         protected async Task<Dictionary<byte, List<float>>> ExtractValuesAsync(string htmlContent, string tableId)
         {
+            #region Variables
             string tablePattern = string.Empty;
             string tableHtml = string.Empty;
             string rowPattern = string.Empty;
+            #endregion
 
             Dictionary<byte, List<float>> ufData = new Dictionary<byte, List<float>>();
 
@@ -101,7 +104,7 @@ namespace IndicadorChileAPI.Context
                 if (cellMatches.Count > 0)
                 {
                     // Primera celda: el día
-                    if (byte.TryParse(s: Regex.Replace(cellMatches[0].Groups[1].Value, @"\D", ""), result: out byte day))
+                    if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
                     {
                         List<float> Values = new List<float>();
 
@@ -149,7 +152,7 @@ namespace IndicadorChileAPI.Context
                             value
                         ));
 
-                        models.Add(model);
+                        models.Add(item: model);
                     }
                 }
             }

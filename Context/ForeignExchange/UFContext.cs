@@ -8,11 +8,15 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 {
     public class UFContext : Context
     {
+        private UFModel[] List { get; set; }
+
+
+
         public UFContext(ushort Year)
             : base(Url: $"https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
                    Year: Year)
         {
-
+            this.List = Array.Empty<UFModel>();
         }
 
 
@@ -30,8 +34,6 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
             Dictionary<byte, List<float>> ufValues = new Dictionary<byte, List<float>>();
 
-            UFModel[] ListOfUF = Array.Empty<UFModel>();
-
             try
             {
                 // Descargar el HTML de la página
@@ -40,13 +42,13 @@ namespace IndicadorChileAPI.Context.ForeignExchange
                 // Extraer los valores de la tabla
                 ufValues = await this.ExtractValuesAsync(htmlContent: htmlContent, tableId: "table_export".Trim());
 
-                ListOfUF = await this.TransformToUFModelsAsync(ufData: ufValues);
+                this.List = await this.TransformToUFModelsAsync(ufData: ufValues);
 
-                ListOfUF = ListOfUF.ToList<UFModel>().Where<UFModel>(predicate: x => !float.IsNaN(f: x.UF)).ToArray<UFModel>();
+                this.List = this.List.ToList<UFModel>().Where<UFModel>(predicate: x => !float.IsNaN(f: x.UF) && !float.IsInfinity(f: x.UF)).ToArray<UFModel>();
 
-                Array.Sort(array: ListOfUF, (x, y) => x.Date.CompareTo(value: y.Date));
+                Array.Sort(array: this.List, (x, y) => x.Date.CompareTo(value: y.Date));
 
-                return ListOfUF;
+                return List;
             }
             catch (Exception ex)
             {
@@ -58,12 +60,11 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
         public async Task<UFModel[]> MonthlyUFValuesAsync(byte Month)
         {
-            UFModel[] List = Array.Empty<UFModel>();
             UFModel[] NewList = Array.Empty<UFModel>();
             
             try
             {
-                List = await this.AnnualUFValuesAsync();
+                this.List = await this.AnnualUFValuesAsync();
 
                 NewList = await Task.Run<UFModel[]>(function: () => List.ToList<UFModel>().Where<UFModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray<UFModel>());
 
@@ -79,12 +80,11 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
         public async Task<UFModel> DailyValueAsync(DateOnly Date)
         {
-            UFModel[] List = Array.Empty<UFModel>();
             UFModel Value;
 
             try
             {
-                List = await this.MonthlyUFValuesAsync(Month: Convert.ToByte(value: Date.Month));
+                this.List = await this.MonthlyUFValuesAsync(Month: Convert.ToByte(value: Date.Month));
 
                 Value = List.ToList().Where(predicate: x => x.Date == Date).Single();
 
