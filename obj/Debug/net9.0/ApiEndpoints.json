@@ -94,6 +94,58 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Controllers.UFController",
+    "Method": "GetEquivalenceInPesos",
+    "RelativePath": "api/UF/GetEquivalenceInPesos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UF",
+        "Type": "System.Single",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.UInt32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Controllers.UFController",
+    "Method": "GetEquivalencyInUF",
+    "RelativePath": "api/UF/GetEquivalencyInUF",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Pesos",
+        "Type": "System.UInt32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Controllers.UFController",
     "Method": "GetStatisticsAsync",
     "RelativePath": "api/UF/GetStatistics",
     "HttpMethod": "GET",
@@ -114,32 +166,6 @@
     "ReturnTypes": [
       {
         "Type": "IndicadorChileAPI.Models.StatisticsModel",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "IndicadorChileAPI.Controllers.UFController",
-    "Method": "GetTheDateValueAsync",
-    "RelativePath": "api/UF/GetTheDateValue",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Date",
-        "Type": "System.DateOnly",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "IndicadorChileAPI.Models.UFModel",
         "MediaTypes": [
           "text/plain",
           "application/json",

@@ -34,6 +34,13 @@ namespace IndicadorChileAPI.Context
             {
                 throw new ArgumentException(message: "The month number must be between 1 and 12.", paramName: nameof(Month));
             }
+            else
+            if (Year == DateTime.Now.Year
+                &&
+                Month > DateTime.Now.Month)
+            {
+                throw new Exception(message: "The query cannot be performed.");
+            }
 
             this.Url = Url;
             this.Year = Year;

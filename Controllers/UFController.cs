@@ -61,13 +61,6 @@ namespace IndicadorChileAPI.Controllers
             {
                 return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: $"El año es debe estar entre 2013 y {DateTime.Now.Year}"));
             }
-            else
-            if (Year == DateTime.Now.Year
-                &&
-                Month > DateTime.Now.Month)
-            {
-                return await Task.Run<BadRequestResult>(function: () => this.BadRequest());
-            }
             #endregion
 
             try
@@ -133,20 +126,51 @@ namespace IndicadorChileAPI.Controllers
             HttpGet("[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<UFModel>> GetTheDateValueAsync(DateOnly Date)
+        public async Task<ActionResult<float>> GetEquivalencyInUF(uint Pesos)
         {
-            UFContext Context = new UFContext(Year: Convert.ToUInt16(value: Date.Year), Month: Convert.ToByte(value: Date.Month));
-
-            if (Date > DateOnly.FromDateTime(dateTime: DateTime.Now))
-            {
-                return await Task.Run<BadRequestResult>(function: () => BadRequest());
-            }
-
+            DateOnly Date = DateOnly.FromDateTime(DateTime.Now);
+            
             try
             {
-                var Value = await Context.DailyValueAsync(Date: Date);
+                UFContext Context = new UFContext(Year: Convert.ToUInt16(Date.Year), Month: Convert.ToByte(Date.Month));
 
-                return await Task.Run<OkObjectResult>(function: () => Ok(value: Value));
+                var UF = await Context.DailyValueAsync(Date: Date);
+                var Result = Pesos / UF.UF;
+
+                return await Task.Run<OkObjectResult>(function: () => Ok(value: Result));
+            }
+            catch (Exception ex)
+            {
+                Task[] tasks = new Task[2]
+                {
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
+                };
+
+                await Task.WhenAll(
+                    tasks: tasks.Select(selector: async task => await task).AsParallel()
+                );
+
+                return await Task.Run<ObjectResult>(function: () => StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
+            }
+        }
+
+        [
+            HttpGet("[action]"),
+            RequireHttps
+        ]
+        public async Task<ActionResult<uint>> GetEquivalenceInPesos(float UF)
+        {
+            DateOnly Date = DateOnly.FromDateTime(DateTime.Now);
+            
+            try
+            {
+                UFContext Context = new UFContext(Year: Convert.ToUInt16(Date.Year), Month: Convert.ToByte(Date.Month));
+
+                var Value = await Context.DailyValueAsync(Date: Date);
+                var Result = Math.Truncate(UF * Value.UF);
+
+                return await Task.Run<OkObjectResult>(function: () => Ok(value: Result));
             }
             catch (Exception ex)
             {
@@ -179,13 +203,6 @@ namespace IndicadorChileAPI.Controllers
                 Year > DateTime.Now.Year)
             {
                 return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: $"El año es debe estar entre 2013 y {DateTime.Now.Year}"));
-            }
-            else
-            if (Year == DateTime.Now.Year
-                &&
-                Month > DateTime.Now.Month)
-            {
-                return await Task.Run<BadRequestResult>(function: () => this.BadRequest());
             }
             #endregion
 
