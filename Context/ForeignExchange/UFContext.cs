@@ -8,13 +8,16 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 {
     public class UFContext : Context
     {
+        #region Arrays
         private UFModel[] List { get; set; }
+        #endregion
 
 
 
-        public UFContext(ushort Year)
+        public UFContext(ushort Year, byte? Month)
             : base(Url: $"https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
-                   Year: Year)
+                   Year: Year,
+                   Month: Month)
         {
             this.List = Array.Empty<UFModel>();
         }

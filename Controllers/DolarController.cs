@@ -52,7 +52,7 @@ namespace IndicadorChileAPI.Controllers
         ]
         public async Task<ActionResult<DolarModel[]>> GetDataListAsync(ushort Year, byte? Month)
         {
-            DolarContext Context = new DolarContext(Year: Year);
+            DolarContext Context = new DolarContext(Year: Year, Month: Month);
 
             #region Validations
             if (Year < 2013
@@ -60,13 +60,6 @@ namespace IndicadorChileAPI.Controllers
                 Year > DateTime.Now.Year)
             {
                 return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: $"El año es debe estar entre 2013 y {DateTime.Now.Year}"));
-            }
-            else
-            if (Month < 1
-                ||
-                Month > 12)
-            {
-                return await Task.Run<BadRequestResult>(function: () => this.BadRequest());
             }
             #endregion
 
@@ -135,7 +128,7 @@ namespace IndicadorChileAPI.Controllers
         ]
         public async Task<ActionResult<StatisticsModel>> GetStatisticsAsync(ushort Year, byte? Month)
         {
-            DolarContext Context = new DolarContext(Year: Year);
+            DolarContext Context = new DolarContext(Year: Year, Month: Month);
             StatisticsModel Model;
 
             #region Validations
@@ -144,13 +137,6 @@ namespace IndicadorChileAPI.Controllers
                 Year > DateTime.Now.Year)
             {
                 return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: $"El año es debe estar entre 2013 y {DateTime.Now.Year}"));
-            }
-            else
-            if (Month < 1
-                ||
-                Month > 12)
-            {
-                return await Task.Run<BadRequestResult>(function: () => this.BadRequest());
             }
             #endregion
 

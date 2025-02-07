@@ -8,13 +8,16 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 {
     public class DolarContext : Context
     {
+        #region Arrays
         private DolarModel[] List { get; set; }
+        #endregion
 
 
 
-        public DolarContext(ushort Year)
+        public DolarContext(ushort Year, byte? Month)
             : base(Url: $"https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
-                   Year: Year)
+                   Year: Year,
+                   Month: Month)
         {
             this.List = Array.Empty<DolarModel>();
         }
@@ -61,7 +64,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
         public async Task<DolarModel[]> MonthlyListOfDollarValuesAsync(byte Month)
         {
             DolarModel[] NewList = Array.Empty<DolarModel>();
-            
+
             try
             {
                 this.List = await this.AnnualListOfDollarValuesAsync();

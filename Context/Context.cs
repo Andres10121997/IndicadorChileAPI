@@ -12,17 +12,32 @@ namespace IndicadorChileAPI.Context
         #region Variables
         private readonly string Url;
         private readonly ushort Year;
+        private readonly ushort? Month;
         #endregion
 
 
 
         #region ConstructorMethod
         public Context(string Url,
-                       ushort Year)
+                       ushort Year,
+                       ushort? Month)
             : base()
         {
+            if (Year > DateTime.Now.Year)
+            {
+                throw new ArgumentException(message: $"The year must not be greater than {DateTime.Now.Year}.", paramName: nameof(Year));
+            }
+            else
+            if (Month < 1
+                ||
+                Month > 12)
+            {
+                throw new ArgumentException(message: "The month number must be between 1 and 12.", paramName: nameof(Month));
+            }
+
             this.Url = Url;
             this.Year = Year;
+            this.Month = Month;
         }
         #endregion
 
@@ -46,6 +61,11 @@ namespace IndicadorChileAPI.Context
         protected ushort GetYear()
         {
             return this.Year;
+        }
+
+        protected ushort? GetMonth()
+        {
+            return this.Month;
         }
         #endregion
 

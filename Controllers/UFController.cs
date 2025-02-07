@@ -52,20 +52,14 @@ namespace IndicadorChileAPI.Controllers
         ]
         public async Task<ActionResult<string>> GetDataListAsync(ushort Year, byte? Month)
         {
-            UFContext Context = new UFContext(Year: Year);
+            UFContext Context = new UFContext(Year: Year, Month: Month);
 
+            #region Validations
             if (Year < 2013
                 ||
                 Year > DateTime.Now.Year)
             {
                 return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: $"El año es debe estar entre 2013 y {DateTime.Now.Year}"));
-            }
-            else
-            if (Month < 1
-                ||
-                Month > 12)
-            {
-                return await Task.Run<BadRequestResult>(function: () => this.BadRequest());
             }
             else
             if (Year == DateTime.Now.Year
@@ -74,6 +68,7 @@ namespace IndicadorChileAPI.Controllers
             {
                 return await Task.Run<BadRequestResult>(function: () => this.BadRequest());
             }
+            #endregion
 
             try
             {
@@ -140,7 +135,7 @@ namespace IndicadorChileAPI.Controllers
         ]
         public async Task<ActionResult<UFModel>> GetTheDateValueAsync(DateOnly Date)
         {
-            UFContext Context = new UFContext(Year: (ushort)Date.Year);
+            UFContext Context = new UFContext(Year: Convert.ToUInt16(value: Date.Year), Month: Convert.ToByte(value: Date.Month));
 
             if (Date > DateOnly.FromDateTime(dateTime: DateTime.Now))
             {
@@ -175,7 +170,7 @@ namespace IndicadorChileAPI.Controllers
         ]
         public async Task<ActionResult<StatisticsModel>> GetStatisticsAsync(ushort Year, byte? Month)
         {
-            UFContext Context = new UFContext(Year: Year);
+            UFContext Context = new UFContext(Year: Year, Month: Month);
             StatisticsModel Model;
 
             #region Validations
@@ -184,13 +179,6 @@ namespace IndicadorChileAPI.Controllers
                 Year > DateTime.Now.Year)
             {
                 return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: $"El año es debe estar entre 2013 y {DateTime.Now.Year}"));
-            }
-            else
-            if (Month < 1
-                ||
-                Month > 12)
-            {
-                return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: Month));
             }
             else
             if (Year == DateTime.Now.Year
