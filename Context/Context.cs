@@ -145,7 +145,7 @@ namespace IndicadorChileAPI.Context
                         float value = values[month - 1];
 
                         TModel model = await Task.Run(function: () => modelFactory(
-                            new DateOnly(this.GetYear(), month, day),
+                            new DateOnly(year: this.GetYear(), month: month, day: day),
                             value
                         ));
 
@@ -156,6 +156,5 @@ namespace IndicadorChileAPI.Context
 
             return models.ToArray();
         }
-
     }
 }

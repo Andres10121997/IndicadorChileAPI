@@ -37,18 +37,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
                 htmlContent = await this.GetHtmlContentAsync();
 
                 // Extraer los valores de la tabla
-                ufValues = await this.ExtractValuesAsync(htmlContent, "table_export".Trim());
-
-                // Imprimir los valores obtenidos
-                /*
-                foreach (KeyValuePair<byte, List<float>> uf in ufValues)
-                {
-                    await Utils.OutMessageAsync(
-                        Message: $"Día: {uf.Key}, Valores: {string.Join(separator: " | ", values: uf.Value)}",
-                        OType: this.GetType()
-                    );
-                }
-                */
+                ufValues = await this.ExtractValuesAsync(htmlContent: htmlContent, tableId: "table_export".Trim());
 
                 ListOfDolar = await this.TransformToDolarModelsAsync(ufData: ufValues);
 
@@ -91,7 +80,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
         {
             return await this.TransformToModelsAsync(Data: ufData, modelFactory: (date, value) => new DolarModel
             {
-                ID = uint.Parse(date.ToString("yyyyMMdd")),
+                ID = uint.Parse(s: date.ToString("yyyyMMdd")),
                 Date = date,
                 Dolar = value
             });

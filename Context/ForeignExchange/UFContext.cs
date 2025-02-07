@@ -38,18 +38,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
                 htmlContent = await this.GetHtmlContentAsync();
 
                 // Extraer los valores de la tabla
-                ufValues = await this.ExtractValuesAsync(htmlContent, "table_export".Trim());
-
-                // Imprimir los valores obtenidos
-                /*
-                foreach (KeyValuePair<byte, List<float>> uf in ufValues)
-                {
-                    await Utils.OutMessageAsync(
-                        Message: $"Día: {uf.Key}, Valores: {string.Join(separator: " | ", values: uf.Value)}",
-                        OType: this.GetType()
-                    );
-                }
-                */
+                ufValues = await this.ExtractValuesAsync(htmlContent: htmlContent, tableId: "table_export".Trim());
 
                 ListOfUF = await this.TransformToUFModelsAsync(ufData: ufValues);
 
@@ -90,11 +79,14 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
         public async Task<UFModel> DailyValueAsync(DateOnly Date)
         {
+            UFModel[] List = Array.Empty<UFModel>();
+            UFModel Value;
+
             try
             {
-                var List = await this.MonthlyUFValuesAsync(Month: Convert.ToByte(Date.Month));
+                List = await this.MonthlyUFValuesAsync(Month: Convert.ToByte(value: Date.Month));
 
-                var Value = List.ToList().Where(x => x.Date == Date).Single();
+                Value = List.ToList().Where(predicate: x => x.Date == Date).Single();
 
                 return Value;
             }
@@ -110,7 +102,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
         {
             return await this.TransformToModelsAsync(Data: ufData, modelFactory: (date, value) => new UFModel
             {
-                ID = uint.Parse(date.ToString("yyyyMMdd")),
+                ID = uint.Parse(s: date.ToString("yyyyMMdd")),
                 Date = date,
                 UF = value
             });
