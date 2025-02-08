@@ -91,7 +91,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             {
                 this.List = await this.MonthlyUFValuesAsync(Month: Convert.ToByte(value: Date.Month));
 
-                Value = List.ToList().Where(predicate: x => x.Date == Date).Single();
+                Value = List.ToList<UFModel>().Where<UFModel>(predicate: x => x.Date == Date).Single<UFModel>();
 
                 return Value;
             }

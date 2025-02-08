@@ -95,8 +95,10 @@ namespace IndicadorChileAPI.Context
 
             Dictionary<byte, float[]> ufData = new Dictionary<byte, float[]>();
 
+            #region Match
             Match tableMatch;
             MatchCollection rowMatches;
+            #endregion
 
             if (string.IsNullOrWhiteSpace(value: tableId)
                 ||
@@ -122,18 +124,26 @@ namespace IndicadorChileAPI.Context
 
             foreach (Match rowMatch in rowMatches)
             {
-                string rowHtml = rowMatch.Groups[1].Value;
+                #region Variables
+                string rowHtml = string.Empty;
+                string cellPattern = string.Empty;
+                #endregion
+
+                MatchCollection cellMatches;
+
+                rowHtml = rowMatch.Groups[1].Value;
 
                 // Regex para las celdas (<th> y <td>)
-                string cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
-                MatchCollection cellMatches = await Task.Run<MatchCollection>(function: () => Regex.Matches(input: rowHtml, pattern: cellPattern, options: RegexOptions.Singleline));
+                cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
+                cellMatches = await Task.Run<MatchCollection>(function: () => Regex.Matches(input: rowHtml, pattern: cellPattern, options: RegexOptions.Singleline));
 
                 if (cellMatches.Count > 0)
                 {
                     // Primera celda: el día
                     if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
                     {
-                        List<float> Values = new List<float>();
+                        // List<float> Values = new List<float>();
+                        float[] Values = new float[12];
 
                         for (byte i = 1; i < cellMatches.Count; i++)
                         {
@@ -145,16 +155,16 @@ namespace IndicadorChileAPI.Context
                             #region GuardarValores
                             if (float.TryParse(s: value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float ufValue))
                             {
-                                await Task.Run(action: () => Values.Add(item: ufValue));
+                                await Task.Run<float>(function: () => Values[i - 1] = ufValue);
                             }
                             else
                             {
-                                await Task.Run(action: () => Values.Add(item: float.NaN)); // Guardar float.NaN si el valor no es válido
+                                await Task.Run<float>(function: () => Values[i - 1] = float.NaN);
                             }
                             #endregion
                         }
 
-                        await Task.Run<float[]>(function: () => ufData[day] = Values.ToArray());
+                        await Task.Run<float[]>(function: () => ufData[day] = Values);
                     }
                 }
             }

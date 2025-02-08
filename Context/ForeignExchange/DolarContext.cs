@@ -71,7 +71,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             {
                 this.List = await this.AnnualListOfDollarValuesAsync();
 
-                NewList = await Task.Run<DolarModel[]>(function: () => this.List.ToList().Where<DolarModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray());
+                NewList = await Task.Run<DolarModel[]>(function: () => this.List.ToList<DolarModel>().Where<DolarModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray<DolarModel>());
 
                 return NewList;
             }
