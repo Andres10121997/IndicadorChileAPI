@@ -126,7 +126,7 @@ namespace IndicadorChileAPI.Controllers
             HttpGet("[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetEquivalencyInUF(uint Pesos)
+        public async Task<ActionResult<float>> GetEquivalencyInUF(ulong Pesos)
         {
             DateOnly Date = DateOnly.FromDateTime(DateTime.Now);
             

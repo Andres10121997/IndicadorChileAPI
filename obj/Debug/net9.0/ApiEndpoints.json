@@ -128,7 +128,7 @@
     "Parameters": [
       {
         "Name": "Pesos",
-        "Type": "System.UInt32",
+        "Type": "System.UInt64",
         "IsRequired": false
       }
     ],
