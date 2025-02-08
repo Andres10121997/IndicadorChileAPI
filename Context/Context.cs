@@ -85,7 +85,8 @@ namespace IndicadorChileAPI.Context
             return await client.GetStringAsync(requestUri: this.Url);
         }
 
-        protected async Task<Dictionary<byte, float[]>> ExtractValuesAsync(string htmlContent, string tableId)
+        protected async Task<Dictionary<byte, float[]>> ExtractValuesAsync(string htmlContent,
+                                                                           string tableId)
         {
             #region Variables
             string tablePattern = string.Empty;
@@ -142,18 +143,19 @@ namespace IndicadorChileAPI.Context
                     // Primera celda: el día
                     if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
                     {
-                        // List<float> Values = new List<float>();
                         float[] Values = new float[12];
 
                         for (byte i = 1; i < cellMatches.Count; i++)
                         {
-                            string value = cellMatches[i].Groups[1].Value
+                            string Value = string.Empty;
+                            
+                            Value = cellMatches[i].Groups[1].Value
                                 .Trim()
                                 .Replace(".", "")   // Eliminar puntos
                                 .Replace(",", "."); // Cambiar comas por puntos
                             
                             #region GuardarValores
-                            if (float.TryParse(s: value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float ufValue))
+                            if (float.TryParse(s: Value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float ufValue))
                             {
                                 await Task.Run<float>(function: () => Values[i - 1] = ufValue);
                             }
@@ -180,12 +182,12 @@ namespace IndicadorChileAPI.Context
             {
                 for (byte month = 1; month <= values.Length; month++)
                 {
-                    if (day > 0 && day <= DateTime.DaysInMonth(year: this.GetYear(), month: month))
+                    if (day > 0 && day <= DateTime.DaysInMonth(year: this.Year, month: month))
                     {
                         float value = values[month - 1];
 
                         TModel model = await Task.Run(function: () => modelFactory(
-                            new DateOnly(year: this.GetYear(), month: month, day: day),
+                            new DateOnly(year: this.Year, month: month, day: day),
                             value
                         ));
 

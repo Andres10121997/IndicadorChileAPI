@@ -71,7 +71,7 @@ namespace IndicadorChileAPI.Controllers
                     ||
                     Month.Equals(other: null))
                 {
-                    this.UFList = await Context.AnnualUFValuesAsync();
+                    this.UFList = await Context.AnnualValuesAsync();
 
                     #region Validations
                     if (await Utils.ArrayIsNullAsync(Values: this.UFList))
@@ -214,7 +214,7 @@ namespace IndicadorChileAPI.Controllers
                     ||
                     Month.Equals(other: null))
                 {
-                    this.UFList = await Context.AnnualUFValuesAsync();
+                    this.UFList = await Context.AnnualValuesAsync();
 
                     #region Validations
                     if (await Utils.ArrayIsNullAsync(Values: this.UFList))

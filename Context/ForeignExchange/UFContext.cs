@@ -33,7 +33,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
 
 
-        public async Task<UFModel[]> AnnualUFValuesAsync()
+        public async Task<UFModel[]> AnnualValuesAsync()
         {
             string htmlContent = string.Empty;
 
@@ -49,7 +49,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
                 this.List = await this.TransformToUFModelsAsync(ufData: ufValues);
 
-                this.List = this.List.ToList<UFModel>().Where<UFModel>(predicate: x => !float.IsNaN(f: x.UF) && !float.IsInfinity(f: x.UF)).ToArray<UFModel>();
+                this.List = this.List.Where<UFModel>(predicate: x => !float.IsNaN(f: x.UF) && !float.IsInfinity(f: x.UF)).ToArray<UFModel>();
 
                 Array.Sort(array: this.List, (x, y) => x.Date.CompareTo(value: y.Date));
 
@@ -69,7 +69,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             
             try
             {
-                this.List = await this.AnnualUFValuesAsync();
+                this.List = await this.AnnualValuesAsync();
 
                 NewList = await Task.Run<UFModel[]>(function: () => List.ToList<UFModel>().Where<UFModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray<UFModel>());
 

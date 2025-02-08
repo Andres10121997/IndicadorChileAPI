@@ -33,7 +33,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
 
 
-        public async Task<DolarModel[]> AnnualListOfDollarValuesAsync()
+        public async Task<DolarModel[]> AnnualValuesAsync()
         {
             string htmlContent = string.Empty;
 
@@ -49,7 +49,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
                 this.List = await this.TransformToDolarModelsAsync(ufData: dolarValues);
 
-                this.List = this.List.ToList<DolarModel>().Where<DolarModel>(predicate: x => !float.IsNaN(f: x.Dolar)).ToArray<DolarModel>();
+                this.List = this.List.Where<DolarModel>(x => !float.IsNaN(f: x.Dolar) && !float.IsInfinity(x.Dolar)).ToArray<DolarModel>();
 
                 Array.Sort(array: this.List, (x, y) => x.Date.CompareTo(value: y.Date));
 
@@ -69,7 +69,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
             try
             {
-                this.List = await this.AnnualListOfDollarValuesAsync();
+                this.List = await this.AnnualValuesAsync();
 
                 NewList = await Task.Run<DolarModel[]>(function: () => this.List.ToList<DolarModel>().Where<DolarModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray<DolarModel>());
 
