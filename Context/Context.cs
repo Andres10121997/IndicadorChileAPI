@@ -85,7 +85,7 @@ namespace IndicadorChileAPI.Context
             return await client.GetStringAsync(requestUri: this.Url);
         }
 
-        protected async Task<Dictionary<byte, List<float>>> ExtractValuesAsync(string htmlContent, string tableId)
+        protected async Task<Dictionary<byte, float[]>> ExtractValuesAsync(string htmlContent, string tableId)
         {
             #region Variables
             string tablePattern = string.Empty;
@@ -93,7 +93,7 @@ namespace IndicadorChileAPI.Context
             string rowPattern = string.Empty;
             #endregion
 
-            Dictionary<byte, List<float>> ufData = new Dictionary<byte, List<float>>();
+            Dictionary<byte, float[]> ufData = new Dictionary<byte, float[]>();
 
             Match tableMatch;
             MatchCollection rowMatches;
@@ -154,7 +154,7 @@ namespace IndicadorChileAPI.Context
                             #endregion
                         }
 
-                        await Task.Run<List<float>>(function: () => ufData[day] = Values);
+                        await Task.Run<float[]>(function: () => ufData[day] = Values.ToArray());
                     }
                 }
             }
@@ -162,13 +162,13 @@ namespace IndicadorChileAPI.Context
             return ufData;
         }
 
-        protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, List<float>> Data, Func<DateOnly, float, TModel> modelFactory)
+        protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data, Func<DateOnly, float, TModel> modelFactory)
         {
             List<TModel> models = new List<TModel>();
 
             foreach (var (day, values) in Data)
             {
-                for (byte month = 1; month <= values.Count; month++)
+                for (byte month = 1; month <= values.Length; month++)
                 {
                     if (day > 0 && day <= DateTime.DaysInMonth(year: this.GetYear(), month: month))
                     {

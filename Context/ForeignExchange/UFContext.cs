@@ -14,6 +14,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
 
 
+        #region ConstructorMethod
         public UFContext(ushort Year, byte? Month)
             : base(Url: $"https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
                    Year: Year,
@@ -21,6 +22,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
         {
             this.List = Array.Empty<UFModel>();
         }
+        #endregion
 
 
 
@@ -35,7 +37,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
         {
             string htmlContent = string.Empty;
 
-            Dictionary<byte, List<float>> ufValues = new Dictionary<byte, List<float>>();
+            Dictionary<byte, float[]> ufValues = new Dictionary<byte, float[]>();
 
             try
             {
@@ -101,7 +103,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             }
         }
 
-        private async Task<UFModel[]> TransformToUFModelsAsync(Dictionary<byte, List<float>> ufData)
+        private async Task<UFModel[]> TransformToUFModelsAsync(Dictionary<byte, float[]> ufData)
         {
             return await this.TransformToModelsAsync(Data: ufData, modelFactory: (date, value) => new UFModel
             {

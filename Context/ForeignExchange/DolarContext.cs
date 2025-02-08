@@ -14,6 +14,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
 
 
+        #region ConstructorMethod
         public DolarContext(ushort Year, byte? Month)
             : base(Url: $"https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
                    Year: Year,
@@ -21,6 +22,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
         {
             this.List = Array.Empty<DolarModel>();
         }
+        #endregion
 
 
 
@@ -35,7 +37,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
         {
             string htmlContent = string.Empty;
 
-            Dictionary<byte, List<float>> ufValues = new Dictionary<byte, List<float>>();
+            Dictionary<byte, float[]> dolarValues = new Dictionary<byte, float[]>();
 
             try
             {
@@ -43,9 +45,9 @@ namespace IndicadorChileAPI.Context.ForeignExchange
                 htmlContent = await this.GetHtmlContentAsync();
 
                 // Extraer los valores de la tabla
-                ufValues = await this.ExtractValuesAsync(htmlContent: htmlContent, tableId: "table_export".Trim());
+                dolarValues = await this.ExtractValuesAsync(htmlContent: htmlContent, tableId: "table_export".Trim());
 
-                this.List = await this.TransformToDolarModelsAsync(ufData: ufValues);
+                this.List = await this.TransformToDolarModelsAsync(ufData: dolarValues);
 
                 this.List = this.List.ToList<DolarModel>().Where<DolarModel>(predicate: x => !float.IsNaN(f: x.Dolar)).ToArray<DolarModel>();
 
@@ -81,7 +83,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             }
         }
 
-        private async Task<DolarModel[]> TransformToDolarModelsAsync(Dictionary<byte, List<float>> ufData)
+        private async Task<DolarModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> ufData)
         {
             return await this.TransformToModelsAsync(Data: ufData, modelFactory: (date, value) => new DolarModel
             {
