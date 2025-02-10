@@ -89,7 +89,7 @@ namespace IndicadorChileAPI.Controllers
                 }
                 else
                 {
-                    this.UFList = await Context.MonthlyUFValuesAsync();
+                    this.UFList = await Context.MonthlyValuesAsync();
 
                     #region Validations
                     if (await Utils.ArrayIsNullAsync(Values: this.UFList))
@@ -245,7 +245,7 @@ namespace IndicadorChileAPI.Controllers
                 }
                 else
                 {
-                    this.UFList = await Context.MonthlyUFValuesAsync();
+                    this.UFList = await Context.MonthlyValuesAsync();
 
                     #region Validations
                     if (await Utils.ArrayIsNullAsync(Values: this.UFList))

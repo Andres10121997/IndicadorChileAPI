@@ -26,10 +26,12 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
 
 
+        #region DeconstructorMethod
         ~DolarContext()
         {
 
         }
+        #endregion
 
 
 
@@ -57,7 +59,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             }
         }
 
-        public async Task<DolarModel[]> MonthlyListOfDollarValuesAsync()
+        public async Task<DolarModel[]> MonthlyValuesAsync()
         {
             try
             {

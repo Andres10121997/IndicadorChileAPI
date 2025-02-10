@@ -94,7 +94,7 @@ namespace IndicadorChileAPI.Context
             string rowPattern = string.Empty;
             #endregion
 
-            Dictionary<byte, float[]> ufData = new Dictionary<byte, float[]>();
+            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
 
             #region Match
             Match tableMatch;
@@ -166,12 +166,12 @@ namespace IndicadorChileAPI.Context
                             #endregion
                         }
 
-                        await Task.Run<float[]>(function: () => ufData[day] = Values);
+                        await Task.Run<float[]>(function: () => Data[day] = Values);
                     }
                 }
             }
 
-            return ufData;
+            return Data;
         }
 
         protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data, Func<DateOnly, float, TModel> modelFactory)

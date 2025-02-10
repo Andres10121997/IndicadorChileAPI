@@ -89,7 +89,7 @@ namespace IndicadorChileAPI.Controllers
                 }
                 else
                 {
-                    this.DolarList = await Context.MonthlyListOfDollarValuesAsync();
+                    this.DolarList = await Context.MonthlyValuesAsync();
 
                     #region Validations
                     if (await Utils.ArrayIsNullAsync(Values: this.DolarList))
@@ -179,7 +179,7 @@ namespace IndicadorChileAPI.Controllers
                 }
                 else
                 {
-                    this.DolarList = await Context.MonthlyListOfDollarValuesAsync();
+                    this.DolarList = await Context.MonthlyValuesAsync();
 
                     #region Validation
                     if (await Utils.ArrayIsNullAsync(Values: this.DolarList))

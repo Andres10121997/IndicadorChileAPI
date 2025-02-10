@@ -26,10 +26,12 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
 
 
+        #region DeconstructorMethod
         ~UFContext()
         {
 
         }
+        #endregion
 
 
 
@@ -57,7 +59,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             }
         }
 
-        public async Task<UFModel[]> MonthlyUFValuesAsync()
+        public async Task<UFModel[]> MonthlyValuesAsync()
         {
             try
             {
@@ -81,7 +83,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
             try
             {
-                Value = (await this.MonthlyUFValuesAsync())
+                Value = (await this.MonthlyValuesAsync())
                     .Where<UFModel>(x => x.Date == Date)
                     .Single<UFModel>();
 
@@ -90,7 +92,7 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             catch (Exception ex)
             {
                 await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-
+                
                 throw;
             }
         }
