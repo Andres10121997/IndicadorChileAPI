@@ -191,7 +191,7 @@ namespace IndicadorChileAPI.Context
                             value
                         ));
 
-                        models.Add(item: model);
+                        await Task.Run(action: () => models.Add(item: model));
                     }
                 }
             }

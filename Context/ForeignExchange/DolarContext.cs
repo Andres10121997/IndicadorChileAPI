@@ -35,23 +35,17 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
         public async Task<DolarModel[]> AnnualValuesAsync()
         {
-            string htmlContent = string.Empty;
-
-            Dictionary<byte, float[]> dolarValues = new Dictionary<byte, float[]>();
-
             try
             {
-                // Descargar el HTML de la página
-                htmlContent = await this.GetHtmlContentAsync();
-
-                // Extraer los valores de la tabla
-                dolarValues = await this.ExtractValuesAsync(htmlContent: htmlContent, tableId: "table_export".Trim());
-
-                this.List = await this.TransformToDolarModelsAsync(ufData: dolarValues);
-
-                this.List = this.List.Where<DolarModel>(x => !float.IsNaN(f: x.Dolar) && !float.IsInfinity(x.Dolar)).ToArray<DolarModel>();
-
-                Array.Sort(array: this.List, (x, y) => x.Date.CompareTo(value: y.Date));
+                this.List = (await this.TransformToDolarModelsAsync(
+                    dolarData: await this.ExtractValuesAsync(
+                        htmlContent: await this.GetHtmlContentAsync(),
+                        tableId: "table_export".Trim()
+                    )
+                ))
+                .Where<DolarModel>(predicate: x => !float.IsNaN(f: x.Dolar) && !float.IsInfinity(f: x.Dolar))
+                .OrderBy<DolarModel, DateOnly>(keySelector: x => x.Date)
+                .ToArray<DolarModel>();
 
                 return this.List;
             }
@@ -83,9 +77,9 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             }
         }
 
-        private async Task<DolarModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> ufData)
+        private async Task<DolarModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> dolarData)
         {
-            return await this.TransformToModelsAsync(Data: ufData, modelFactory: (date, value) => new DolarModel
+            return await this.TransformToModelsAsync(Data: dolarData, modelFactory: (date, value) => new DolarModel
             {
                 ID = uint.Parse(s: date.ToString("yyyyMMdd")),
                 Date = date,

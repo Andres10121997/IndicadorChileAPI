@@ -35,25 +35,19 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
         public async Task<UFModel[]> AnnualValuesAsync()
         {
-            string htmlContent = string.Empty;
-
-            Dictionary<byte, float[]> ufValues = new Dictionary<byte, float[]>();
-
             try
             {
-                // Descargar el HTML de la página
-                htmlContent = await this.GetHtmlContentAsync();
+                this.List = (await this.TransformToUFModelsAsync(
+                    ufData: await this.ExtractValuesAsync(
+                        htmlContent: await this.GetHtmlContentAsync(),
+                        tableId: "table_export".Trim()
+                    )
+                ))
+                .Where<UFModel>(predicate: x => !float.IsNaN(f: x.UF) && !float.IsInfinity(f: x.UF))
+                .OrderBy<UFModel, DateOnly>(keySelector: x => x.Date)
+                .ToArray<UFModel>();
 
-                // Extraer los valores de la tabla
-                ufValues = await this.ExtractValuesAsync(htmlContent: htmlContent, tableId: "table_export".Trim());
-
-                this.List = await this.TransformToUFModelsAsync(ufData: ufValues);
-
-                this.List = this.List.Where<UFModel>(predicate: x => !float.IsNaN(f: x.UF) && !float.IsInfinity(f: x.UF)).ToArray<UFModel>();
-
-                Array.Sort(array: this.List, (x, y) => x.Date.CompareTo(value: y.Date));
-
-                return List;
+                return this.List;
             }
             catch (Exception ex)
             {
