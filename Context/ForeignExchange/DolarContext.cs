@@ -57,17 +57,15 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             }
         }
 
-        public async Task<DolarModel[]> MonthlyListOfDollarValuesAsync(byte Month)
+        public async Task<DolarModel[]> MonthlyListOfDollarValuesAsync()
         {
-            DolarModel[] NewList = Array.Empty<DolarModel>();
-
             try
             {
-                this.List = await this.AnnualValuesAsync();
+                this.List = (await this.AnnualValuesAsync())
+                    .Where<DolarModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == this.GetMonth())
+                    .ToArray<DolarModel>();
 
-                NewList = await Task.Run<DolarModel[]>(function: () => this.List.ToList<DolarModel>().Where<DolarModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray<DolarModel>());
-
-                return NewList;
+                return this.List;
             }
             catch (Exception ex)
             {

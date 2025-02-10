@@ -19,6 +19,7 @@ namespace IndicadorChileAPI
             Console.Error.WriteLine("");
             Console.Error.WriteLine("---");
             Console.Error.WriteLine(OType);
+            Console.Error.WriteLine(DateTime.Now);
             Console.Error.WriteLine($"Stack Trace: {ex.StackTrace}");
             Console.Error.WriteLine($"Message: {ex.Message}");
             Console.Error.WriteLine(ex);

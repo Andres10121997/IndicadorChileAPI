@@ -57,17 +57,15 @@ namespace IndicadorChileAPI.Context.ForeignExchange
             }
         }
 
-        public async Task<UFModel[]> MonthlyUFValuesAsync(byte Month)
+        public async Task<UFModel[]> MonthlyUFValuesAsync()
         {
-            UFModel[] NewList = Array.Empty<UFModel>();
-            
             try
             {
-                this.List = await this.AnnualValuesAsync();
+                this.List = (await this.AnnualValuesAsync())
+                    .Where<UFModel>(x => x.Date.Year == this.GetYear() && x.Date.Month == this.GetMonth())
+                    .ToArray<UFModel>();
 
-                NewList = await Task.Run<UFModel[]>(function: () => List.ToList<UFModel>().Where<UFModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == Month).ToArray<UFModel>());
-
-                return NewList;
+                return this.List;
             }
             catch (Exception ex)
             {
@@ -83,9 +81,9 @@ namespace IndicadorChileAPI.Context.ForeignExchange
 
             try
             {
-                this.List = await this.MonthlyUFValuesAsync(Month: Convert.ToByte(value: Date.Month));
-
-                Value = List.ToList<UFModel>().Where<UFModel>(predicate: x => x.Date == Date).Single<UFModel>();
+                Value = (await this.MonthlyUFValuesAsync())
+                    .Where<UFModel>(x => x.Date == Date)
+                    .Single<UFModel>();
 
                 return Value;
             }
