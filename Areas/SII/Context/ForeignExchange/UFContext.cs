@@ -1,12 +1,13 @@
-﻿using IndicadorChileAPI.Models;
+﻿using IndicadorChileAPI.Context;
+using IndicadorChileAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.Context.ForeignExchange
+namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 {
-    public class UFContext : Context
+    public class UFContext : ContextBase
     {
         #region Arrays
         private UFModel[] List { get; set; }

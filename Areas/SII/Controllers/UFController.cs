@@ -1,4 +1,4 @@
-﻿using IndicadorChileAPI.Context.ForeignExchange;
+﻿using IndicadorChileAPI.Areas.SII.Context.ForeignExchange;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -85,8 +85,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
                     #endregion
-
-                    return await Task.Run<OkObjectResult>(function: () => this.Ok(value: this.UFList));
                 }
                 else
                 {
@@ -103,9 +101,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
                     #endregion
-
-                    return await Task.Run<OkObjectResult>(function: () => this.Ok(value: this.UFList));
                 }
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: this.UFList));
             }
             catch (Exception ex)
             {
@@ -241,8 +239,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         StartDate = this.UFList.Min(selector: x => x.Date),
                         EndDate = this.UFList.Max(selector: x => x.Date)
                     };
-
-                    return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
                 }
                 else
                 {
@@ -272,9 +268,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         StartDate = this.UFList.Min(selector: x => x.Date),
                         EndDate = this.UFList.Max(selector: x => x.Date)
                     };
-
-                    return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
                 }
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
             }
             catch (Exception ex)
             {

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IndicadorChileAPI.Context
 {
-    public abstract class Context
+    public abstract class ContextBase
     {
         #region Variables
         private readonly string Url;
@@ -18,7 +18,7 @@ namespace IndicadorChileAPI.Context
 
 
         #region ConstructorMethod
-        public Context(string Url,
+        public ContextBase(string Url,
                        ushort Year,
                        ushort? Month)
             : base()
@@ -51,7 +51,7 @@ namespace IndicadorChileAPI.Context
 
 
         #region DeconstructorMethod
-        ~Context()
+        ~ContextBase()
         {
 
         }

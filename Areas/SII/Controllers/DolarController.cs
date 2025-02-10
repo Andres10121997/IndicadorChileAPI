@@ -1,4 +1,4 @@
-﻿using IndicadorChileAPI.Context.ForeignExchange;
+﻿using IndicadorChileAPI.Areas.SII.Context.ForeignExchange;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -85,8 +85,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
                     #endregion
-
-                    return await Task.Run<OkObjectResult>(function: () => this.Ok(value: this.DolarList));
                 }
                 else
                 {
@@ -103,9 +101,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
                     #endregion
-
-                    return await Task.Run<OkObjectResult>(function: () => this.Ok(value: this.DolarList));
                 }
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: this.DolarList));
             }
             catch (Exception ex)
             {
@@ -175,8 +173,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         StartDate = this.DolarList.Min(selector: x => x.Date),
                         EndDate = this.DolarList.Max(selector: y => y.Date)
                     };
-
-                    return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
                 }
                 else
                 {
@@ -206,9 +202,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         StartDate = this.DolarList.Min(selector: x => x.Date),
                         EndDate = this.DolarList.Max(selector: y => y.Date)
                     };
-
-                    return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
                 }
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
             }
             catch (Exception ex)
             {

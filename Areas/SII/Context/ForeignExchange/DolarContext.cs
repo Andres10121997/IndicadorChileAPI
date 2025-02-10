@@ -1,12 +1,13 @@
-﻿using IndicadorChileAPI.Models;
+﻿using IndicadorChileAPI.Context;
+using IndicadorChileAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.Context.ForeignExchange
+namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 {
-    public class DolarContext : Context
+    public class DolarContext : ContextBase
     {
         #region Arrays
         private DolarModel[] List { get; set; }
