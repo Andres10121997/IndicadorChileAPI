@@ -64,6 +64,12 @@ namespace IndicadorChileAPI.App.Start
 
             App.UseAuthorization();
 
+            App.MapAreaControllerRoute(
+                name: "MyAreaSII",
+                areaName: "SII",
+                pattern: "SII/{controller=Home}/{action=Index}/{id?}"
+            );
+
             App.MapControllers();
         }
         #endregion

@@ -5,7 +5,7 @@
     "version": "1.0"
   },
   "paths": {
-    "/api/Dolar/GetDataList": {
+    "/api/SII/Dolar/GetDataList": {
       "get": {
         "tags": [
           "Dolar"
@@ -61,7 +61,7 @@
         }
       }
     },
-    "/api/Dolar/GetStatistics": {
+    "/api/SII/Dolar/GetStatistics": {
       "get": {
         "tags": [
           "Dolar"
@@ -108,7 +108,7 @@
         }
       }
     },
-    "/api/UF/GetDataList": {
+    "/api/SII/UF/GetDataList": {
       "get": {
         "tags": [
           "UF"
@@ -155,7 +155,7 @@
         }
       }
     },
-    "/api/UF/GetEquivalencyInUF": {
+    "/api/SII/UF/GetEquivalencyInUF": {
       "get": {
         "tags": [
           "UF"
@@ -197,7 +197,7 @@
         }
       }
     },
-    "/api/UF/GetEquivalenceInPesos": {
+    "/api/SII/UF/GetEquivalenceInPesos": {
       "get": {
         "tags": [
           "UF"
@@ -239,7 +239,7 @@
         }
       }
     },
-    "/api/UF/GetStatistics": {
+    "/api/SII/UF/GetStatistics": {
       "get": {
         "tags": [
           "UF"

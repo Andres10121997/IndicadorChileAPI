@@ -7,11 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.Controllers
+namespace IndicadorChileAPI.Areas.SII.Controllers
 {
     [
         ApiController,
-        Route("api/[controller]")
+        Area(areaName: "SII"),
+        Route("api/[area]/[controller]")
     ]
     public class UFController : ControllerBase
     {
