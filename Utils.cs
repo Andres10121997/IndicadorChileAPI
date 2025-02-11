@@ -6,10 +6,12 @@ namespace IndicadorChileAPI
 {
     internal static class Utils
     {
+        #region ConstructorMethod
         static Utils()
         {
             
         }
+        #endregion
 
 
 

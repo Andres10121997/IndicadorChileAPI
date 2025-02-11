@@ -6,16 +6,12 @@ namespace IndicadorChileAPI
 {
     internal static class Statistics
     {
-        #region Variables
-        private static int AmountOfData;
-        #endregion
-
-
-
+        #region ConstructorMethod
         static Statistics()
         {
-            AmountOfData = 0;
+            
         }
+        #endregion
 
 
 
@@ -94,80 +90,6 @@ namespace IndicadorChileAPI
         internal static async Task<double> VarianceAsync(double[] Values)
         {
             return await Task.Run<double>(function: () => Variance(Values: Values));
-        }
-        #endregion
-
-
-
-        #region Mean
-        internal static float GeometricMean(float[] Values)
-        {
-            AmountOfData = Values.Length;
-            float Multiplication = 1;
-
-            if (Values.Length == 0
-                ||
-                Values.Length.Equals(0))
-            {
-                throw new ArgumentException("El array no puede estar vacío");
-            }
-
-            foreach (float Item in Values)
-            {
-                if (Item <= 0)
-                {
-                    throw new ArgumentException("Los números deben ser mayores que cero para calcular la media geométrica");
-                }
-
-                Multiplication *= Item;
-
-                if (float.IsInfinity(Multiplication))
-                {
-                    throw new OverflowException("El resultado es demasiado grande para ser representado.");
-                }
-            }
-
-            return NthRoot(Multiplication, AmountOfData);
-        }
-
-        internal static async Task<float> GeometricMeanAsync(float[] Values)
-        {
-            return await Task.Run<float>(function: () => GeometricMean(Values: Values));
-        }
-
-        internal static double GeometricMean(double[] Values)
-        {
-            AmountOfData = Values.Length;
-            double Multiplication = 1;
-
-            if (Values.Length == 0
-                ||
-                Values.Length.Equals(0))
-            {
-                throw new ArgumentException("El array no puede estar vacío");
-            }
-
-            foreach (double Item in Values)
-            {
-                if (Item <= 0)
-                {
-                    throw new ArgumentException("Los números deben ser mayores que cero para calcular la media geométrica");
-                }
-
-                Multiplication *= Item;
-
-                if (double.IsInfinity(Multiplication))
-                {
-                    throw new OverflowException("El resultado es demasiado grande para ser representado.");
-                }
-            }
-
-            return NthRoot(Multiplication, AmountOfData);
-        }
-
-        internal static async Task<double> GeometricMeanAsync(double[] Values)
-        {
-            return await Task.Run<double>(function: () => GeometricMean(Values));
         }
         #endregion
     }
