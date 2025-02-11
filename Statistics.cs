@@ -46,11 +46,7 @@ namespace IndicadorChileAPI
         #region StandardDeviation
         internal static float StandardDeviation(float[] Values)
         {
-            var average = Values.Average();
-            var sumOfSquares = Values.Select(selector: value => Math.Pow(x: value - average, y: 2)).Sum();
-            var variance = sumOfSquares / Values.Length;
-
-            return (float)Math.Sqrt(variance);
+            return Convert.ToSingle(value: Math.Sqrt(d: Variance(Values: Values)));
         }
 
         internal static async Task<float> StandardDeviationAsync(float[] Values)
@@ -60,11 +56,7 @@ namespace IndicadorChileAPI
 
         internal static double StandardDeviation(double[] Values)
         {
-            var average = Values.Average();
-            var sumOfSquares = Values.Select(selector: value => Math.Pow(x: value - average, y: 2)).Sum();
-            var variance = sumOfSquares / Values.Length;
-
-            return Math.Sqrt(variance);
+            return Math.Sqrt(d: Variance(Values: Values));
         }
 
         internal static async Task<double> StandardDeviationAsync(double[] Values)
@@ -78,16 +70,11 @@ namespace IndicadorChileAPI
         #region Variance
         internal static float Variance(float[] Values)
         {
-            AmountOfData = Values.Length;
-            float Average = Values.Average();
-            float Summation = 0;
+            var average = Values.Average();
+            var sumOfSquares = Values.Select(selector: value => Math.Pow(x: value - average, y: 2)).Sum();
+            var variance = sumOfSquares / Values.Length;
 
-            foreach (float Value in Values)
-            {
-                Summation += Convert.ToSingle(value: Math.Pow(Value - Average, 2));
-            }
-
-            return Summation / AmountOfData;
+            return Convert.ToSingle(value: variance);
         }
 
         internal static async Task<float> VarianceAsync(float[] Values)
@@ -97,16 +84,11 @@ namespace IndicadorChileAPI
 
         internal static double Variance(double[] Values)
         {
-            AmountOfData = Values.Length;
-            double Average = Values.Average();
-            double Summation = 0;
+            var average = Values.Average();
+            var sumOfSquares = Values.Select(selector: value => Math.Pow(x: value - average, y: 2)).Sum();
+            var variance = sumOfSquares / Values.Length;
 
-            foreach (float Value in Values)
-            {
-                Summation += Math.Pow(Value - Average, 2);
-            }
-
-            return Summation / AmountOfData;
+            return variance;
         }
 
         internal static async Task<double> VarianceAsync(double[] Values)
