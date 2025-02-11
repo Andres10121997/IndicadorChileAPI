@@ -46,16 +46,11 @@ namespace IndicadorChileAPI
         #region StandardDeviation
         internal static float StandardDeviation(float[] Values)
         {
-            uint AmountOfData = Convert.ToUInt32(value: Values.Length);
-            float Average = Values.Average();
-            float Summation = 0;
+            var average = Values.Average();
+            var sumOfSquares = Values.Select(selector: value => Math.Pow(x: value - average, y: 2)).Sum();
+            var variance = sumOfSquares / Values.Length;
 
-            foreach (float Value in Values)
-            {
-                Summation += Convert.ToSingle(value: Math.Pow(Value - Average, 2));
-            }
-
-            return Convert.ToSingle(value: Math.Sqrt(d: Summation / AmountOfData));
+            return (float)Math.Sqrt(variance);
         }
 
         internal static async Task<float> StandardDeviationAsync(float[] Values)
@@ -65,16 +60,11 @@ namespace IndicadorChileAPI
 
         internal static double StandardDeviation(double[] Values)
         {
-            uint AmountOfData = Convert.ToUInt32(value: Values.Length);
-            double Average = Values.Average();
-            double Summation = 0;
+            var average = Values.Average();
+            var sumOfSquares = Values.Select(selector: value => Math.Pow(x: value - average, y: 2)).Sum();
+            var variance = sumOfSquares / Values.Length;
 
-            foreach (double Value in Values)
-            {
-                Summation += Math.Pow(Value - Average, 2);
-            }
-
-            return Math.Sqrt(d: Summation / AmountOfData);
+            return Math.Sqrt(variance);
         }
 
         internal static async Task<double> StandardDeviationAsync(double[] Values)

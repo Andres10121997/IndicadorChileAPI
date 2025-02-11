@@ -127,16 +127,18 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<float>> GetEquivalencyInUF(ulong Pesos)
         {
-            DateOnly Date = DateOnly.FromDateTime(DateTime.Now);
-            
+            #region Variables
+            float UF;
+            DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+            #endregion
+
             try
             {
-                UFContext Context = new UFContext(Year: Convert.ToUInt16(Date.Year), Month: Convert.ToByte(Date.Month));
+                UFContext Context = new UFContext(Year: Convert.ToUInt16(value: Date.Year), Month: Convert.ToByte(value: Date.Month));
 
-                var UF = await Context.DailyValueAsync(Date: Date);
-                var Result = Pesos / UF.UF;
+                UF = Pesos / (await Context.DailyValueAsync(Date: Date)).UF;
 
-                return await Task.Run<OkObjectResult>(function: () => Ok(value: Result));
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: UF));
             }
             catch (Exception ex)
             {
@@ -160,16 +162,18 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<uint>> GetEquivalenceInPesos(float UF)
         {
-            DateOnly Date = DateOnly.FromDateTime(DateTime.Now);
-            
+            #region Variables
+            uint Pesos;
+            DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+            #endregion
+
             try
             {
                 UFContext Context = new UFContext(Year: Convert.ToUInt16(Date.Year), Month: Convert.ToByte(Date.Month));
 
-                var Value = await Context.DailyValueAsync(Date: Date);
-                var Result = Math.Truncate(UF * Value.UF);
+                Pesos = Convert.ToUInt32(value: Math.Truncate(d: UF * (await Context.DailyValueAsync(Date: Date)).UF));
 
-                return await Task.Run<OkObjectResult>(function: () => Ok(value: Result));
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Pesos));
             }
             catch (Exception ex)
             {
