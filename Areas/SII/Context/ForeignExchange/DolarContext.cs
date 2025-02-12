@@ -45,6 +45,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
 
 
+        #region Values
         public async Task<DolarModel[]> AnnualValuesAsync()
         {
             try
@@ -86,6 +87,9 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 throw;
             }
         }
+        #endregion
+
+
 
         private async Task<DolarModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> dolarData)
         {

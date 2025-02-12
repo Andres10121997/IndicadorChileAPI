@@ -45,6 +45,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
 
 
+        #region Values
         public async Task<UFModel[]> AnnualValuesAsync()
         {
             try
@@ -86,7 +87,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 throw;
             }
         }
-
+        
         public async Task<UFModel> DailyValueAsync(DateOnly Date)
         {
             UFModel Value;
@@ -106,6 +107,9 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 throw;
             }
         }
+        #endregion
+
+
 
         private async Task<UFModel[]> TransformToUFModelsAsync(Dictionary<byte, float[]> ufData)
         {
