@@ -13,5 +13,6 @@ namespace IndicadorChileAPI.Models
         public required float Variance { get; set; }
         public required DateOnly StartDate { get; set; }
         public required DateOnly EndDate { get; set; }
+        public required DateTime DateAndTimeOfConsultation { get; set; }
     }
 }

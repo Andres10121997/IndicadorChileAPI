@@ -102,9 +102,10 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
         {
             return await this.TransformToModelsAsync(Data: ufData, modelFactory: (date, value) => new UFModel
             {
-                ID = uint.Parse(s: date.ToString("yyyyMMdd")),
+                ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
                 Date = date,
-                UF = value
+                UF = value,
+                DateAndTimeOfConsultation = DateTime.Now
             });
         }
     }

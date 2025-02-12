@@ -82,9 +82,10 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
         {
             return await this.TransformToModelsAsync(Data: dolarData, modelFactory: (date, value) => new DolarModel
             {
-                ID = uint.Parse(s: date.ToString("yyyyMMdd")),
+                ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
                 Date = date,
-                Dolar = value
+                Dolar = value,
+                DateAndTimeOfConsultation = DateTime.Now
             });
         }
     }

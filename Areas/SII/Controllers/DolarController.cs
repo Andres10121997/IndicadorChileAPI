@@ -75,12 +75,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     this.DolarList = await Context.AnnualValuesAsync();
 
                     #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    else
-                    if (await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
+                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
                     {
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
@@ -91,12 +88,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     this.DolarList = await Context.MonthlyValuesAsync();
 
                     #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    else
-                    if (await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
+                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
                     {
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
@@ -150,12 +144,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     this.DolarList = await Context.AnnualValuesAsync();
 
                     #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    else
-                    if (await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
+                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
                     {
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
@@ -171,7 +162,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
                         Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
                         StartDate = this.DolarList.Min(selector: x => x.Date),
-                        EndDate = this.DolarList.Max(selector: y => y.Date)
+                        EndDate = this.DolarList.Max(selector: y => y.Date),
+                        DateAndTimeOfConsultation = DateTime.Now
                     };
                 }
                 else
@@ -179,12 +171,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     this.DolarList = await Context.MonthlyValuesAsync();
 
                     #region Validation
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    else
-                    if (await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
+                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
                     {
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
@@ -200,7 +189,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
                         Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
                         StartDate = this.DolarList.Min(selector: x => x.Date),
-                        EndDate = this.DolarList.Max(selector: y => y.Date)
+                        EndDate = this.DolarList.Max(selector: y => y.Date),
+                        DateAndTimeOfConsultation = DateTime.Now
                     };
                 }
 

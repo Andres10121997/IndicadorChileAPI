@@ -292,6 +292,7 @@
       "DolarModel": {
         "required": [
           "date",
+          "dateAndTimeOfConsultation",
           "dolar"
         ],
         "type": "object",
@@ -307,6 +308,10 @@
           "dolar": {
             "type": "number",
             "format": "float"
+          },
+          "dateAndTimeOfConsultation": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -315,6 +320,7 @@
         "required": [
           "amountOfData",
           "average",
+          "dateAndTimeOfConsultation",
           "endDate",
           "maximum",
           "minimum",
@@ -360,6 +366,10 @@
           "endDate": {
             "type": "string",
             "format": "date"
+          },
+          "dateAndTimeOfConsultation": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

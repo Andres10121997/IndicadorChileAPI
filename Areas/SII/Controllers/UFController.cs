@@ -75,12 +75,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     this.UFList = await Context.AnnualValuesAsync();
 
                     #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.UFList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    else
-                    if (await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
+                    if (await Utils.ArrayIsNullAsync(Values: this.UFList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
                     {
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
@@ -91,12 +88,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     this.UFList = await Context.MonthlyValuesAsync();
 
                     #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.UFList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    else
-                    if (await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
+                    if (await Utils.ArrayIsNullAsync(Values: this.UFList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
                     {
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
@@ -220,12 +214,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     this.UFList = await Context.AnnualValuesAsync();
 
                     #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.UFList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    else
-                    if (await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
+                    if (await Utils.ArrayIsNullAsync(Values: this.UFList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
                     {
                         return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                     }
@@ -241,7 +232,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select(selector: x => x.UF).ToArray()),
                         Variance = await Statistics.VarianceAsync(Values: this.UFList.Select(selector: x => x.UF).ToArray()),
                         StartDate = this.UFList.Min(selector: x => x.Date),
-                        EndDate = this.UFList.Max(selector: x => x.Date)
+                        EndDate = this.UFList.Max(selector: x => x.Date),
+                        DateAndTimeOfConsultation = DateTime.Now
                     };
                 }
                 else
@@ -249,12 +241,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     this.UFList = await Context.MonthlyValuesAsync();
 
                     #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.UFList))
-                    {
-                        return await Task.Run<NotFoundObjectResult>(function: () => this.NotFound(value: this.UFList));
-                    }
-                    else
-                    if (await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
+                    if (await Utils.ArrayIsNullAsync(Values: this.UFList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
                     {
                         return await Task.Run<NotFoundObjectResult>(function: () => this.NotFound(value: this.UFList));
                     }
@@ -270,7 +259,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         StandardDeviation = await Statistics.StandardDeviationAsync(this.UFList.Select(selector: x => x.UF).ToArray()),
                         Variance = await Statistics.VarianceAsync(Values: this.UFList.Select(selector: x => x.UF).ToArray()),
                         StartDate = this.UFList.Min(selector: x => x.Date),
-                        EndDate = this.UFList.Max(selector: x => x.Date)
+                        EndDate = this.UFList.Max(selector: x => x.Date),
+                        DateAndTimeOfConsultation = DateTime.Now
                     };
                 }
 
