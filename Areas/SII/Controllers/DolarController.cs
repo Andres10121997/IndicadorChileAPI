@@ -12,7 +12,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
     [
         ApiController,
         Area(areaName: "SII"),
-        Route("api/[area]/[controller]")
+        Route(template: "api/[area]/[controller]")
     ]
     public class DolarController : ControllerBase
     {

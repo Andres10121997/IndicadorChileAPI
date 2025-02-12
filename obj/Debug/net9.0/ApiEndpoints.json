@@ -82,7 +82,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.String",
+        "Type": "IndicadorChileAPI.Models.UFModel[]",
         "MediaTypes": [
           "text/plain",
           "application/json",

@@ -19,8 +19,8 @@ namespace IndicadorChileAPI.Context
 
         #region ConstructorMethod
         public ContextBase(string Url,
-                       ushort Year,
-                       ushort? Month)
+                           ushort Year,
+                           ushort? Month)
             : base()
         {
             if (Year > DateTime.Now.Year)
@@ -35,7 +35,9 @@ namespace IndicadorChileAPI.Context
                 throw new ArgumentException(message: "The month number must be between 1 and 12.", paramName: nameof(Month));
             }
             else
-            if (Year == DateTime.Now.Year
+            if ((Year == DateTime.Now.Year
+                 ||
+                 Year.Equals(obj: DateTime.Now.Year))
                 &&
                 Month > DateTime.Now.Month)
             {

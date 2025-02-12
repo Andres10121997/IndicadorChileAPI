@@ -12,7 +12,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
     [
         ApiController,
         Area(areaName: "SII"),
-        Route("api/[area]/[controller]")
+        Route(template: "api/[area]/[controller]")
     ]
     public class UFController : ControllerBase
     {
@@ -51,7 +51,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet("[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<string>> GetDataListAsync(ushort Year, byte? Month)
+        public async Task<ActionResult<UFModel[]>> GetDataListAsync(ushort Year, byte? Month)
         {
             UFContext Context = new UFContext(Year: Year, Month: Month);
 
