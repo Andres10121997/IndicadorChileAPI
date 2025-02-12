@@ -17,7 +17,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
         #region ConstructorMethod
         public DolarContext(ushort Year, byte? Month)
-            : base(Url: $"https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
+            : base(Url: GetUrl(Year),
                    Year: Year,
                    Month: Month)
         {
@@ -31,6 +31,15 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
         ~DolarContext()
         {
 
+        }
+        #endregion
+
+
+
+        #region Static
+        public static string GetUrl(ushort Year)
+        {
+            return Year >= 2013 ? $"https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm" : $"https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm";
         }
         #endregion
 

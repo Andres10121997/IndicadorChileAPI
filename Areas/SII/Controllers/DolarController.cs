@@ -55,15 +55,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         {
             DolarContext Context = new DolarContext(Year: Year, Month: Month);
 
-            #region Validations
-            if (Year < 2013
-                ||
-                Year > DateTime.Now.Year)
-            {
-                return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: $"El año es debe estar entre 2013 y {DateTime.Now.Year}"));
-            }
-            #endregion
-
             try
             {
                 if (Month is null
@@ -123,15 +114,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         {
             DolarContext Context = new DolarContext(Year: Year, Month: Month);
             StatisticsModel Model;
-
-            #region Validations
-            if (Year < 2013
-                ||
-                Year > DateTime.Now.Year)
-            {
-                return await Task.Run<BadRequestObjectResult>(function: () => this.BadRequest(error: $"El año es debe estar entre 2013 y {DateTime.Now.Year}"));
-            }
-            #endregion
 
             try
             {
