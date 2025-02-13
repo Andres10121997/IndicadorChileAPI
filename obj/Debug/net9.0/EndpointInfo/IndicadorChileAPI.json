@@ -34,26 +34,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DolarModel"
-                  }
+                  "$ref": "#/components/schemas/DolarConsultationModel"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DolarModel"
-                  }
+                  "$ref": "#/components/schemas/DolarConsultationModel"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DolarModel"
-                  }
+                  "$ref": "#/components/schemas/DolarConsultationModel"
                 }
               }
             }
@@ -137,26 +128,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UFModel"
-                  }
+                  "$ref": "#/components/schemas/UFConsultationModel"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UFModel"
-                  }
+                  "$ref": "#/components/schemas/UFConsultationModel"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UFModel"
-                  }
+                  "$ref": "#/components/schemas/UFConsultationModel"
                 }
               }
             }
@@ -298,10 +280,30 @@
   },
   "components": {
     "schemas": {
+      "DolarConsultationModel": {
+        "required": [
+          "dateAndTimeOfConsultation",
+          "dolarList"
+        ],
+        "type": "object",
+        "properties": {
+          "dateAndTimeOfConsultation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dolarList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DolarModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "DolarModel": {
         "required": [
           "date",
-          "dateAndTimeOfConsultation",
           "dolar"
         ],
         "type": "object",
@@ -317,10 +319,6 @@
           "dolar": {
             "type": "number",
             "format": "float"
-          },
-          "dateAndTimeOfConsultation": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -383,10 +381,30 @@
         },
         "additionalProperties": false
       },
+      "UFConsultationModel": {
+        "required": [
+          "dateAndTimeOfConsultation",
+          "ufList"
+        ],
+        "type": "object",
+        "properties": {
+          "dateAndTimeOfConsultation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ufList": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UFModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "UFModel": {
         "required": [
           "date",
-          "dateAndTimeOfConsultation",
           "id",
           "uf"
         ],
@@ -403,10 +421,6 @@
           "uf": {
             "type": "number",
             "format": "currency"
-          },
-          "dateAndTimeOfConsultation": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false

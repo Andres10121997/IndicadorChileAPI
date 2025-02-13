@@ -1,5 +1,6 @@
 ﻿using IndicadorChileAPI.Areas.SII.Context.ForeignExchange;
 using IndicadorChileAPI.Models;
+using IndicadorChileAPI.Models.Consultation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -51,8 +52,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet("[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<UFModel[]>> GetDataListAsync(ushort Year, byte? Month)
+        public async Task<ActionResult<UFConsultationModel>> GetDataListAsync(ushort Year, byte? Month)
         {
+            UFConsultationModel Consultation;
             UFContext Context = new UFContext(Year: Year, Month: Month);
 
             try
@@ -88,7 +90,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     #endregion
                 }
 
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: this.UFList));
+                Consultation = new UFConsultationModel()
+                {
+                    DateAndTimeOfConsultation = DateTime.Now,
+                    UFList = this.UFList
+                };
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Consultation));
             }
             catch (Exception ex)
             {

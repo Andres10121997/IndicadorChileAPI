@@ -1,5 +1,6 @@
 ﻿using IndicadorChileAPI.Areas.SII.Context.ForeignExchange;
 using IndicadorChileAPI.Models;
+using IndicadorChileAPI.Models.Consultation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -51,8 +52,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet("[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<DolarModel[]>> GetDataListAsync(ushort Year, byte? Month)
+        public async Task<ActionResult<DolarConsultationModel>> GetDataListAsync(ushort Year, byte? Month)
         {
+            DolarConsultationModel Consultation;
             DolarContext Context = new DolarContext(Year: Year, Month: Month);
 
             try
@@ -88,7 +90,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     #endregion
                 }
 
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: this.DolarList));
+                Consultation = new DolarConsultationModel()
+                {
+                    DateAndTimeOfConsultation = DateTime.Now,
+                    DolarList = this.DolarList
+                };
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Consultation));
             }
             catch (Exception ex)
             {

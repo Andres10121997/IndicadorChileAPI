@@ -45,23 +45,5 @@ namespace IndicadorChileAPI.Models
             Required
         ]
         public required float UF { get; set; }
-
-        [
-            DataType(
-                dataType: DataType.DateTime
-            ),
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                GroupName = "",
-                Name = "Fecha y hora de la consulta",
-                Order = 3,
-                Prompt = "",
-                ShortName = "Consulta"
-            ),
-            Required
-        ]
-        public required DateTime DateAndTimeOfConsultation { get; set; }
     }
 }

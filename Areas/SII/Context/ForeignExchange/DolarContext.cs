@@ -101,8 +101,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 {
                     ID = 0,
                     Date = DateOnly.FromDateTime(DateTime.Now),
-                    Dolar = (await this.MonthlyValuesAsync()).Average(x => x.Dolar),
-                    DateAndTimeOfConsultation = DateTime.Now
+                    Dolar = (await this.MonthlyValuesAsync()).Average(x => x.Dolar)
                 };
 
                 return Value;
@@ -118,8 +117,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             {
                 ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
                 Date = date,
-                Dolar = value,
-                DateAndTimeOfConsultation = DateTime.Now
+                Dolar = value
             });
         }
     }

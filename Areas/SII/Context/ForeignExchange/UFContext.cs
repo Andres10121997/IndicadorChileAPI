@@ -109,8 +109,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             {
                 ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
                 Date = date,
-                UF = value,
-                DateAndTimeOfConsultation = DateTime.Now
+                UF = value
             });
         }
     }

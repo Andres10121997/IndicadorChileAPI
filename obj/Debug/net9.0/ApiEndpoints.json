@@ -20,7 +20,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "IndicadorChileAPI.Models.DolarModel[]",
+        "Type": "IndicadorChileAPI.Models.Consultation.DolarConsultationModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -82,7 +82,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "IndicadorChileAPI.Models.UFModel[]",
+        "Type": "IndicadorChileAPI.Models.Consultation.UFConsultationModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
