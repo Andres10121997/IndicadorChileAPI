@@ -16,8 +16,9 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
 
         #region ConstructorMethod
-        public UFContext(ushort Year, byte? Month)
-            : base(Url: GetUrl(Year),
+        public UFContext(ushort Year,
+                         byte? Month)
+            : base(Url: $"https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
                    Year: Year,
                    Month: Month)
         {
@@ -31,15 +32,6 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
         ~UFContext()
         {
 
-        }
-        #endregion
-
-
-
-        #region Static
-        public static string GetUrl(ushort Year)
-        {
-            return Year >= 2013 ? $"https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm" : $"https://www.sii.cl/pagina/valores/uf/uf{Year}.htm";
         }
         #endregion
 

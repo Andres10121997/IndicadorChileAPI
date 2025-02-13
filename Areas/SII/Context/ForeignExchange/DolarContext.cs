@@ -16,8 +16,9 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
 
         #region ConstructorMethod
-        public DolarContext(ushort Year, byte? Month)
-            : base(Url: GetUrl(Year),
+        public DolarContext(ushort Year,
+                            byte? Month)
+            : base(Url: $"https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
                    Year: Year,
                    Month: Month)
         {
@@ -31,15 +32,6 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
         ~DolarContext()
         {
 
-        }
-        #endregion
-
-
-
-        #region Static
-        public static string GetUrl(ushort Year)
-        {
-            return Year >= 2013 ? $"https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm" : $"https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm";
         }
         #endregion
 
@@ -85,6 +77,35 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
 
                 throw;
+            }
+        }
+
+        public async Task<DolarModel> TodaysValue()
+        {
+            DateOnly Today = DateOnly.FromDateTime(dateTime: DateTime.Now);
+            DolarModel Value;
+
+            try
+            {
+                Value = (await this.MonthlyValuesAsync())
+                    .Where<DolarModel>(predicate: x => x.Date == Today)
+                    .Single<DolarModel>();
+
+                return Value;
+            }
+            catch (Exception ex)
+            {
+                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
+
+                Value = new DolarModel()
+                {
+                    ID = 0,
+                    Date = DateOnly.FromDateTime(DateTime.Now),
+                    Dolar = (await this.MonthlyValuesAsync()).Average(x => x.Dolar),
+                    DateAndTimeOfConsultation = DateTime.Now
+                };
+
+                return Value;
             }
         }
         #endregion
