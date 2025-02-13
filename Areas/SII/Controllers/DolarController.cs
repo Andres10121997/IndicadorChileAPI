@@ -55,6 +55,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public async Task<ActionResult<DolarConsultationModel>> GetDataListAsync(ushort Year, byte? Month)
         {
             DolarConsultationModel Consultation;
+            StatisticsModel Model;
             DolarContext Context = new DolarContext(Year: Year, Month: Month);
 
             try
@@ -89,102 +90,28 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     }
                     #endregion
                 }
+
+                Model = new StatisticsModel()
+                {
+                    AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
+                    Minimum = this.DolarList.Min(selector: x => x.Dolar),
+                    Maximum = this.DolarList.Max(selector: x => x.Dolar),
+                    Summation = this.DolarList.Sum(selector: x => x.Dolar),
+                    Average = this.DolarList.Average(selector: x => x.Dolar),
+                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
+                    Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
+                    StartDate = this.DolarList.Min(selector: x => x.Date),
+                    EndDate = this.DolarList.Max(selector: y => y.Date)
+                };
 
                 Consultation = new DolarConsultationModel()
                 {
                     DateAndTimeOfConsultation = DateTime.Now,
+                    Statistics = Model,
                     DolarList = this.DolarList
                 };
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Consultation));
-            }
-            catch (Exception ex)
-            {
-                Task[] tasks = new Task[2]
-                {
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
-                };
-
-                await Task.WhenAll(
-                    tasks: tasks.Select(selector: async task => await task).AsParallel()
-                );
-
-                return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
-            }
-        }
-
-        [
-            HttpGet("[action]"),
-            RequireHttps
-        ]
-        public async Task<ActionResult<StatisticsModel>> GetStatisticsAsync(ushort Year, byte? Month)
-        {
-            DolarContext Context = new DolarContext(Year: Year, Month: Month);
-            StatisticsModel Model;
-
-            try
-            {
-                if (Month is null
-                    ||
-                    Month == null
-                    ||
-                    Month.Equals(other: null))
-                {
-                    this.DolarList = await Context.AnnualValuesAsync();
-
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
-
-                    Model = new StatisticsModel()
-                    {
-                        AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
-                        Minimum = this.DolarList.Min(selector: x => x.Dolar),
-                        Maximum = this.DolarList.Max(selector: x => x.Dolar),
-                        Summation = this.DolarList.Sum(selector: x => x.Dolar),
-                        Average = this.DolarList.Average(selector: x => x.Dolar),
-                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
-                        Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
-                        StartDate = this.DolarList.Min(selector: x => x.Date),
-                        EndDate = this.DolarList.Max(selector: y => y.Date),
-                        DateAndTimeOfConsultation = DateTime.Now
-                    };
-                }
-                else
-                {
-                    this.DolarList = await Context.MonthlyValuesAsync();
-
-                    #region Validation
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
-
-                    Model = new StatisticsModel()
-                    {
-                        AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
-                        Minimum = this.DolarList.Min(selector: x => x.Dolar),
-                        Maximum = this.DolarList.Max(selector: x => x.Dolar),
-                        Summation = this.DolarList.Sum(selector: x => x.Dolar),
-                        Average = this.DolarList.Average(selector: x => x.Dolar),
-                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
-                        Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
-                        StartDate = this.DolarList.Min(selector: x => x.Date),
-                        EndDate = this.DolarList.Max(selector: y => y.Date),
-                        DateAndTimeOfConsultation = DateTime.Now
-                    };
-                }
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
             }
             catch (Exception ex)
             {

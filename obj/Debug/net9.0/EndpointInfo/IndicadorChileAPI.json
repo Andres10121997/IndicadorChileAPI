@@ -52,53 +52,6 @@
         }
       }
     },
-    "/api/SII/Dolar/GetStatistics": {
-      "get": {
-        "tags": [
-          "Dolar"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatisticsModel"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatisticsModel"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatisticsModel"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/SII/UF/GetDataList": {
       "get": {
         "tags": [
@@ -229,53 +182,6 @@
           }
         }
       }
-    },
-    "/api/SII/UF/GetStatistics": {
-      "get": {
-        "tags": [
-          "UF"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatisticsModel"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatisticsModel"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/StatisticsModel"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -283,13 +189,17 @@
       "DolarConsultationModel": {
         "required": [
           "dateAndTimeOfConsultation",
-          "dolarList"
+          "dolarList",
+          "statistics"
         ],
         "type": "object",
         "properties": {
           "dateAndTimeOfConsultation": {
             "type": "string",
             "format": "date-time"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/StatisticsModel"
           },
           "dolarList": {
             "type": "array",
@@ -327,7 +237,6 @@
         "required": [
           "amountOfData",
           "average",
-          "dateAndTimeOfConsultation",
           "endDate",
           "maximum",
           "minimum",
@@ -373,10 +282,6 @@
           "endDate": {
             "type": "string",
             "format": "date"
-          },
-          "dateAndTimeOfConsultation": {
-            "type": "string",
-            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -384,6 +289,7 @@
       "UFConsultationModel": {
         "required": [
           "dateAndTimeOfConsultation",
+          "statistics",
           "ufList"
         ],
         "type": "object",
@@ -391,6 +297,9 @@
           "dateAndTimeOfConsultation": {
             "type": "string",
             "format": "date-time"
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/StatisticsModel"
           },
           "ufList": {
             "type": "array",
