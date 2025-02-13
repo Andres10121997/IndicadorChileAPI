@@ -54,9 +54,11 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<DolarConsultationModel>> GetDataListAsync(ushort Year, byte? Month)
         {
-            DolarConsultationModel Consultation;
+            #region Objects
             StatisticsModel Model;
+            DolarConsultationModel Consultation;
             DolarContext Context = new DolarContext(Year: Year, Month: Month);
+            #endregion
 
             try
             {

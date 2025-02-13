@@ -54,9 +54,11 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<UFConsultationModel>> GetDataListAsync(ushort Year, byte? Month)
         {
-            UFConsultationModel Consultation;
+            #region Objects
             StatisticsModel Model;
+            UFConsultationModel Consultation;
             UFContext Context = new UFContext(Year: Year, Month: Month);
+            #endregion
 
             try
             {
