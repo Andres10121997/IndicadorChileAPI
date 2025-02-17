@@ -31,6 +31,58 @@
     ]
   },
   {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
+    "Method": "GetEquivalencyInDolar",
+    "RelativePath": "api/SII/Dolar/GetEquivalencyInDolar",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Pesos",
+        "Type": "System.UInt64",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
+    "Method": "GetEquivalencyInPesos",
+    "RelativePath": "api/SII/Dolar/GetEquivalencyInPesos",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Dolar",
+        "Type": "System.Single",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.UInt32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
     "Method": "GetDataListAsync",
     "RelativePath": "api/SII/UF/GetDataList",

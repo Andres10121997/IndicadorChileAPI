@@ -52,6 +52,90 @@
         }
       }
     },
+    "/api/SII/Dolar/GetEquivalencyInDolar": {
+      "get": {
+        "tags": [
+          "Dolar"
+        ],
+        "parameters": [
+          {
+            "name": "Pesos",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SII/Dolar/GetEquivalencyInPesos": {
+      "get": {
+        "tags": [
+          "Dolar"
+        ],
+        "parameters": [
+          {
+            "name": "Dolar",
+            "in": "query",
+            "schema": {
+              "type": "number",
+              "format": "float"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/SII/UF/GetDataList": {
       "get": {
         "tags": [
@@ -190,13 +274,23 @@
         "required": [
           "dateAndTimeOfConsultation",
           "dolarList",
-          "statistics"
+          "statistics",
+          "year"
         ],
         "type": "object",
         "properties": {
           "dateAndTimeOfConsultation": {
             "type": "string",
             "format": "date-time"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "statistics": {
             "$ref": "#/components/schemas/StatisticsModel"
@@ -290,13 +384,23 @@
         "required": [
           "dateAndTimeOfConsultation",
           "statistics",
-          "ufList"
+          "ufList",
+          "year"
         ],
         "type": "object",
         "properties": {
           "dateAndTimeOfConsultation": {
             "type": "string",
             "format": "date-time"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "statistics": {
             "$ref": "#/components/schemas/StatisticsModel"

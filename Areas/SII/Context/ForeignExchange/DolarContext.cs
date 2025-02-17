@@ -80,15 +80,14 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             }
         }
 
-        public async Task<DolarModel> TodaysValue()
+        public async Task<DolarModel> DailyValueAsync(DateOnly Date)
         {
-            DateOnly Today = DateOnly.FromDateTime(dateTime: DateTime.Now);
             DolarModel Value;
 
             try
             {
                 Value = (await this.MonthlyValuesAsync())
-                    .Where<DolarModel>(predicate: x => x.Date == Today)
+                    .Where<DolarModel>(predicate: x => x.Date == Date)
                     .Single<DolarModel>();
 
                 return Value;
@@ -100,8 +99,8 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 Value = new DolarModel()
                 {
                     ID = 0,
-                    Date = DateOnly.FromDateTime(DateTime.Now),
-                    Dolar = (await this.MonthlyValuesAsync()).Average(x => x.Dolar)
+                    Date = DateOnly.FromDateTime(dateTime: DateTime.Now),
+                    Dolar = (await this.MonthlyValuesAsync()).Average<DolarModel>(selector: x => x.Dolar)
                 };
 
                 return Value;

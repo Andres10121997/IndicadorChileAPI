@@ -109,6 +109,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Consultation = new UFConsultationModel()
                 {
                     DateAndTimeOfConsultation = DateTime.Now,
+                    Year = Year,
+                    Month = Month,
                     Statistics = Model,
                     UFList = this.UFList
                 };

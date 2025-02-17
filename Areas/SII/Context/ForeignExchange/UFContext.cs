@@ -87,7 +87,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             try
             {
                 Value = (await this.MonthlyValuesAsync())
-                    .Where<UFModel>(x => x.Date == Date)
+                    .Where<UFModel>(predicate: x => x.Date == Date)
                     .Single<UFModel>();
 
                 return Value;
@@ -95,8 +95,15 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             catch (Exception ex)
             {
                 await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                
-                throw;
+
+                Value = new UFModel()
+                {
+                    ID = 0,
+                    Date = DateOnly.FromDateTime(dateTime: DateTime.Now),
+                    UF = (await this.MonthlyValuesAsync()).Average<UFModel>(selector: x => x.UF)
+                };
+
+                return Value;
             }
         }
         #endregion
