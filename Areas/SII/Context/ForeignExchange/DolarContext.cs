@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 {
@@ -93,7 +92,11 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                     .FirstOrDefault<DolarModel>();
 
                 // Si no hay un valor exacto, retornar el último disponible antes de la fecha
-                if (Value is null)
+                if (Value is null
+                    ||
+                    Value == null
+                    ||
+                    Value.Equals(obj: null))
                 {
                     Value = (await this.MonthlyValuesAsync())
                         .Where<DolarModel>(predicate: x => x.Date < Date)
@@ -102,7 +105,11 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 }
 
                 // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
-                if (Value is null)
+                if (Value is null
+                    ||
+                    Value == null
+                    ||
+                    Value.Equals(obj: null))
                 {
                     Value = new DolarModel
                     {

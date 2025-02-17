@@ -92,7 +92,11 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                     .FirstOrDefault<UFModel>();
 
                 // Si no hay un valor exacto, retornar el último disponible antes de la fecha
-                if (Value is null)
+                if (Value is null
+                    ||
+                    Value == null
+                    ||
+                    Value.Equals(obj: null))
                 {
                     Value = (await this.MonthlyValuesAsync())
                         .Where<UFModel>(predicate: x => x.Date < Date)
@@ -101,7 +105,11 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 }
 
                 // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
-                if (Value is null)
+                if (Value is null
+                    ||
+                    Value == null
+                    ||
+                    Value.Equals(obj: null))
                 {
                     Value = new UFModel
                     {

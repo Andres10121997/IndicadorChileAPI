@@ -16,7 +16,8 @@ namespace IndicadorChileAPI
 
 
         #region Message
-        public static void ErrorMessage(Exception ex, Type OType)
+        public static void ErrorMessage(Exception ex,
+                                        Type OType)
         {
             Console.Error.WriteLine("");
             Console.Error.WriteLine("---");
@@ -29,12 +30,14 @@ namespace IndicadorChileAPI
             Console.Error.WriteLine("");
         }
 
-        public static async Task ErrorMessageAsync(Exception ex, Type OType)
+        public static async Task ErrorMessageAsync(Exception ex,
+                                                   Type OType)
         {
             await Task.Run(action: () => ErrorMessage(ex: ex, OType: OType));
         }
 
-        public static void OutMessage(string Message, Type? OType)
+        public static void OutMessage(string Message,
+                                      Type? OType)
         {
             Console.Out.WriteLine("");
             Console.Out.WriteLine("---");
@@ -45,7 +48,8 @@ namespace IndicadorChileAPI
             Console.Out.WriteLine("");
         }
 
-        public static async Task OutMessageAsync(string Message, Type? OType)
+        public static async Task OutMessageAsync(string Message,
+                                                 Type? OType)
         {
             await Task.Run(action: () => OutMessage(Message: Message, OType: OType));
         }

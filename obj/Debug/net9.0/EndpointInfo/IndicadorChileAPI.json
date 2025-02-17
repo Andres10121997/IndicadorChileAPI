@@ -432,6 +432,7 @@
             "format": "date"
           },
           "uf": {
+            "minimum": 0,
             "type": "number",
             "format": "currency"
           }

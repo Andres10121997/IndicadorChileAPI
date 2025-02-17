@@ -96,7 +96,9 @@ namespace IndicadorChileAPI.Context
             string rowPattern = string.Empty;
             #endregion
 
+            #region Dictionary
             Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
+            #endregion
 
             #region Match
             Match tableMatch;
@@ -107,7 +109,8 @@ namespace IndicadorChileAPI.Context
                 ||
                 string.IsNullOrEmpty(value: tableId))
             {
-                throw new ArgumentException(message: "El ID de la tabla no puede estar vacío.", paramName: nameof(tableId));
+                throw new ArgumentException(message: "El ID de la tabla no puede estar vacío.",
+                                            paramName: nameof(tableId));
             }
 
             // Regex para encontrar la tabla con el ID dinámico
@@ -145,12 +148,16 @@ namespace IndicadorChileAPI.Context
                     // Primera celda: el día
                     if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
                     {
+                        #region Arrays
                         float[] Values = new float[12];
+                        #endregion
 
                         for (byte i = 1; i < cellMatches.Count; i++)
                         {
+                            #region Variables
                             string Value = string.Empty;
-                            
+                            #endregion
+
                             Value = cellMatches[i].Groups[1].Value
                                 .Trim()
                                 .Replace(".", "")   // Eliminar puntos
@@ -176,7 +183,8 @@ namespace IndicadorChileAPI.Context
             return Data;
         }
 
-        protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data, Func<DateOnly, float, TModel> modelFactory)
+        protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
+                                                                      Func<DateOnly, float, TModel> modelFactory)
         {
             List<TModel> models = new List<TModel>();
 
@@ -186,7 +194,11 @@ namespace IndicadorChileAPI.Context
                 {
                     if (day > 0 && day <= DateTime.DaysInMonth(year: this.Year, month: month))
                     {
-                        float value = values[month - 1];
+                        #region Variables
+                        float value;
+                        #endregion
+
+                        value = values[month - 1];
 
                         TModel model = await Task.Run(function: () => modelFactory(
                             new DateOnly(year: this.Year, month: month, day: day),

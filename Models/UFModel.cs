@@ -42,7 +42,11 @@ namespace IndicadorChileAPI.Models
                 Prompt = "",
                 ShortName = "UF"
             ),
-            Required
+            Required,
+            Range(
+                minimum: 0,
+                maximum: float.MaxValue
+            )
         ]
         public required float UF { get; set; }
     }

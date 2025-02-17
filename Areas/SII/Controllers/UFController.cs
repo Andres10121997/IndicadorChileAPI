@@ -52,7 +52,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet("[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<UFConsultationModel>> GetDataListAsync(ushort Year, byte? Month)
+        public async Task<ActionResult<UFConsultationModel>> GetDataListAsync(ushort Year,
+                                                                              byte? Month)
         {
             #region Objects
             StatisticsModel Model;
