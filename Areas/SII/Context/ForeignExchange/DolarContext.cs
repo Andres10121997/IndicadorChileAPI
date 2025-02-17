@@ -90,20 +90,31 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                     .Where<DolarModel>(predicate: x => x.Date == Date)
                     .Single<DolarModel>();
 
+                if (Value is null
+                    ||
+                    Value == null
+                    ||
+                    Value.Equals(obj: null)
+                    ||
+                    string.IsNullOrEmpty(value: Value.ToString())
+                    ||
+                    string.IsNullOrWhiteSpace(value: Value.ToString()))
+                {
+                    Value = new DolarModel()
+                    {
+                        ID = 0,
+                        Date = DateOnly.FromDateTime(dateTime: DateTime.Now),
+                        Dolar = (await this.MonthlyValuesAsync()).Average<DolarModel>(selector: x => x.Dolar)
+                    };
+                }
+
                 return Value;
             }
             catch (Exception ex)
             {
                 await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
 
-                Value = new DolarModel()
-                {
-                    ID = 0,
-                    Date = DateOnly.FromDateTime(dateTime: DateTime.Now),
-                    Dolar = (await this.MonthlyValuesAsync()).Average<DolarModel>(selector: x => x.Dolar)
-                };
-
-                return Value;
+                throw;
             }
         }
         #endregion

@@ -90,20 +90,31 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                     .Where<UFModel>(predicate: x => x.Date == Date)
                     .Single<UFModel>();
 
+                if (Value is null
+                    ||
+                    Value == null
+                    ||
+                    Value.Equals(obj: null)
+                    ||
+                    string.IsNullOrEmpty(value: Value.ToString())
+                    ||
+                    string.IsNullOrWhiteSpace(value: Value.ToString()))
+                {
+                    Value = new UFModel()
+                    {
+                        ID = 0,
+                        Date = DateOnly.FromDateTime(dateTime: DateTime.Now),
+                        UF = (await this.MonthlyValuesAsync()).Average<UFModel>(selector: x => x.UF)
+                    };
+                }
+
                 return Value;
             }
             catch (Exception ex)
             {
                 await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
 
-                Value = new UFModel()
-                {
-                    ID = 0,
-                    Date = DateOnly.FromDateTime(dateTime: DateTime.Now),
-                    UF = (await this.MonthlyValuesAsync()).Average<UFModel>(selector: x => x.UF)
-                };
-
-                return Value;
+                throw;
             }
         }
         #endregion
