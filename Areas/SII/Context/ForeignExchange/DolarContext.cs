@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 {
@@ -82,29 +83,32 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
         public async Task<DolarModel> DailyValueAsync(DateOnly Date)
         {
-            DolarModel Value;
-
+            DolarModel? Value;
+            
             try
             {
+                // Intentar obtener el valor exacto de la fecha solicitada
                 Value = (await this.MonthlyValuesAsync())
                     .Where<DolarModel>(predicate: x => x.Date == Date)
-                    .Single<DolarModel>();
+                    .FirstOrDefault<DolarModel>();
 
-                if (Value is null
-                    ||
-                    Value == null
-                    ||
-                    Value.Equals(obj: null)
-                    ||
-                    string.IsNullOrEmpty(value: Value.ToString())
-                    ||
-                    string.IsNullOrWhiteSpace(value: Value.ToString()))
+                // Si no hay un valor exacto, retornar el último disponible antes de la fecha
+                if (Value is null)
                 {
-                    Value = new DolarModel()
+                    Value = (await this.MonthlyValuesAsync())
+                        .Where<DolarModel>(predicate: x => x.Date < Date)
+                        .OrderByDescending<DolarModel, DateOnly>(keySelector: x => x.Date)
+                        .FirstOrDefault<DolarModel>();
+                }
+
+                // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
+                if (Value is null)
+                {
+                    Value = new DolarModel
                     {
                         ID = 0,
-                        Date = DateOnly.FromDateTime(dateTime: DateTime.Now),
-                        Dolar = (await this.MonthlyValuesAsync()).Average<DolarModel>(selector: x => x.Dolar)
+                        Date = Date,
+                        Dolar = (await this.MonthlyValuesAsync()).Any<DolarModel>() ? (await this.MonthlyValuesAsync()).Average<DolarModel>(selector: x => x.Dolar) : 0
                     };
                 }
 

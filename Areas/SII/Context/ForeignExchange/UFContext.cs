@@ -82,29 +82,32 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
         
         public async Task<UFModel> DailyValueAsync(DateOnly Date)
         {
-            UFModel Value;
+            UFModel? Value;
 
             try
             {
+                // Intentar obtener el valor exacto de la fecha solicitada
                 Value = (await this.MonthlyValuesAsync())
                     .Where<UFModel>(predicate: x => x.Date == Date)
-                    .Single<UFModel>();
+                    .FirstOrDefault<UFModel>();
 
-                if (Value is null
-                    ||
-                    Value == null
-                    ||
-                    Value.Equals(obj: null)
-                    ||
-                    string.IsNullOrEmpty(value: Value.ToString())
-                    ||
-                    string.IsNullOrWhiteSpace(value: Value.ToString()))
+                // Si no hay un valor exacto, retornar el último disponible antes de la fecha
+                if (Value is null)
                 {
-                    Value = new UFModel()
+                    Value = (await this.MonthlyValuesAsync())
+                        .Where<UFModel>(predicate: x => x.Date < Date)
+                        .OrderByDescending<UFModel, DateOnly>(keySelector: x => x.Date)
+                        .FirstOrDefault<UFModel>();
+                }
+
+                // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
+                if (Value is null)
+                {
+                    Value = new UFModel
                     {
                         ID = 0,
-                        Date = DateOnly.FromDateTime(dateTime: DateTime.Now),
-                        UF = (await this.MonthlyValuesAsync()).Average<UFModel>(selector: x => x.UF)
+                        Date = Date,
+                        UF = (await this.MonthlyValuesAsync()).Any<UFModel>() ? (await this.MonthlyValuesAsync()).Average<UFModel>(selector: x => x.UF) : 0
                     };
                 }
 
