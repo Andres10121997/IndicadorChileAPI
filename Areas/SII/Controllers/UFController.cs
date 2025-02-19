@@ -53,10 +53,11 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             RequireHttps
         ]
         public async Task<ActionResult<UFConsultationModel>> GetDataListAsync(ushort Year,
-                                                                              byte? Month)
+                                                                              byte? Month,
+                                                                              bool IncludeStatistics)
         {
             #region Objects
-            StatisticsModel Model;
+            StatisticsModel? Model = null;
             UFConsultationModel Consultation;
             UFContext Context = new UFContext(Year: Year, Month: Month);
             #endregion
@@ -94,19 +95,22 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     #endregion
                 }
 
-                Model = new StatisticsModel()
+                if (IncludeStatistics)
                 {
-                    AmountOfData = Convert.ToUInt16(value: this.UFList.Length),
-                    Minimum = this.UFList.Min(selector: x => x.UF),
-                    Maximum = this.UFList.Max(selector: x => x.UF),
-                    Summation = this.UFList.Sum(selector: x => x.UF),
-                    Average = this.UFList.Average(selector: x => x.UF),
-                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select(selector: x => x.UF).ToArray()),
-                    Variance = await Statistics.VarianceAsync(Values: this.UFList.Select(selector: x => x.UF).ToArray()),
-                    StartDate = this.UFList.Min(selector: x => x.Date),
-                    EndDate = this.UFList.Max(selector: x => x.Date)
-                };
-
+                    Model = new StatisticsModel()
+                    {
+                        AmountOfData = Convert.ToUInt16(value: this.UFList.Length),
+                        Minimum = this.UFList.Min<UFModel>(selector: x => x.UF),
+                        Maximum = this.UFList.Max<UFModel>(selector: x => x.UF),
+                        Summation = this.UFList.Sum<UFModel>(selector: x => x.UF),
+                        Average = this.UFList.Average<UFModel>(selector: x => x.UF),
+                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select<UFModel, float>(selector: x => x.UF).ToArray<float>()),
+                        Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<UFModel, float>(selector: x => x.UF).ToArray<float>()),
+                        StartDate = this.UFList.Min<UFModel, DateOnly>(selector: x => x.Date),
+                        EndDate = this.UFList.Max<UFModel, DateOnly>(selector: x => x.Date)
+                    };
+                }
+                
                 Consultation = new UFConsultationModel()
                 {
                     DateAndTimeOfConsultation = DateTime.Now,

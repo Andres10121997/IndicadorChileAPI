@@ -157,6 +157,13 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "IncludeStatistics",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -383,7 +390,6 @@
       "UFConsultationModel": {
         "required": [
           "dateAndTimeOfConsultation",
-          "statistics",
           "ufList",
           "year"
         ],

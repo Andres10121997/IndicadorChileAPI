@@ -97,14 +97,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Model = new StatisticsModel()
                 {
                     AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
-                    Minimum = this.DolarList.Min(selector: x => x.Dolar),
-                    Maximum = this.DolarList.Max(selector: x => x.Dolar),
-                    Summation = this.DolarList.Sum(selector: x => x.Dolar),
-                    Average = this.DolarList.Average(selector: x => x.Dolar),
-                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
-                    Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select(selector: x => x.Dolar).ToArray()),
-                    StartDate = this.DolarList.Min(selector: x => x.Date),
-                    EndDate = this.DolarList.Max(selector: y => y.Date)
+                    Minimum = this.DolarList.Min<DolarModel>(selector: x => x.Dolar),
+                    Maximum = this.DolarList.Max<DolarModel>(selector: x => x.Dolar),
+                    Summation = this.DolarList.Sum<DolarModel>(selector: x => x.Dolar),
+                    Average = this.DolarList.Average<DolarModel>(selector: x => x.Dolar),
+                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<DolarModel, float>(selector: x => x.Dolar).ToArray<float>()),
+                    Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<DolarModel, float>(selector: x => x.Dolar).ToArray<float>()),
+                    StartDate = this.DolarList.Min<DolarModel, DateOnly>(selector: x => x.Date),
+                    EndDate = this.DolarList.Max<DolarModel, DateOnly>(selector: y => y.Date)
                 };
 
                 Consultation = new DolarConsultationModel()
