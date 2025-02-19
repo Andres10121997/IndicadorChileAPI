@@ -1,9 +1,9 @@
 ﻿using IndicadorChileAPI.Areas.SII.Context.ForeignExchange;
 using IndicadorChileAPI.Models;
-using IndicadorChileAPI.Models.Consultation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -52,12 +52,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet("[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<DolarConsultationModel>> GetDataListAsync(ushort Year,
-                                                                                 byte? Month)
+        public async Task<ActionResult<ConsultationModel>> GetDataListAsync(ushort Year,
+                                                                            byte? Month,
+                                                                            bool IncludeStatistics)
         {
             #region Objects
-            StatisticsModel Model;
-            DolarConsultationModel Consultation;
+            StatisticsModel? Model = null;
+            ConsultationModel Consultation;
             DolarContext Context = new DolarContext(Year: Year, Month: Month);
             #endregion
 
@@ -94,26 +95,30 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     #endregion
                 }
 
-                Model = new StatisticsModel()
+                if (IncludeStatistics)
                 {
-                    AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
-                    Minimum = this.DolarList.Min<CurrencyModel>(selector: x => x.Currency),
-                    Maximum = this.DolarList.Max<CurrencyModel>(selector: x => x.Currency),
-                    Summation = this.DolarList.Sum<CurrencyModel>(selector: x => x.Currency),
-                    Average = this.DolarList.Average<CurrencyModel>(selector: x => x.Currency),
-                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
-                    Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
-                    StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: x => x.Date),
-                    EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: y => y.Date)
-                };
-
-                Consultation = new DolarConsultationModel()
+                    Model = new StatisticsModel()
+                    {
+                        AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
+                        Minimum = this.DolarList.Min<CurrencyModel>(selector: x => x.Currency),
+                        Maximum = this.DolarList.Max<CurrencyModel>(selector: x => x.Currency),
+                        Summation = this.DolarList.Sum<CurrencyModel>(selector: x => x.Currency),
+                        Average = this.DolarList.Average<CurrencyModel>(selector: x => x.Currency),
+                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
+                        Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
+                        StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: x => x.Date),
+                        EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: y => y.Date)
+                    };
+                }
+                
+                Consultation = new ConsultationModel()
                 {
+                    Title = "Dólar",
                     DateAndTimeOfConsultation = DateTime.Now,
                     Year = Year,
-                    Month = Month,
+                    Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     Statistics = Model,
-                    DolarList = this.DolarList
+                    List = this.DolarList
                 };
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Consultation));

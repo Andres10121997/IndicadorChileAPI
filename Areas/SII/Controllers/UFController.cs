@@ -1,9 +1,9 @@
 ﻿using IndicadorChileAPI.Areas.SII.Context.ForeignExchange;
 using IndicadorChileAPI.Models;
-using IndicadorChileAPI.Models.Consultation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -52,13 +52,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet("[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<UFConsultationModel>> GetDataListAsync(ushort Year,
-                                                                              byte? Month,
-                                                                              bool IncludeStatistics)
+        public async Task<ActionResult<ConsultationModel>> GetDataListAsync(ushort Year,
+                                                                            byte? Month,
+                                                                            bool IncludeStatistics)
         {
             #region Objects
             StatisticsModel? Model = null;
-            UFConsultationModel Consultation;
+            ConsultationModel Consultation;
             UFContext Context = new UFContext(Year: Year, Month: Month);
             #endregion
 
@@ -111,13 +111,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     };
                 }
                 
-                Consultation = new UFConsultationModel()
+                Consultation = new ConsultationModel()
                 {
+                    Title = "UF",
                     DateAndTimeOfConsultation = DateTime.Now,
                     Year = Year,
-                    Month = Month,
+                    Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     Statistics = Model,
-                    UFList = this.UFList
+                    List = this.UFList
                 };
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Consultation));

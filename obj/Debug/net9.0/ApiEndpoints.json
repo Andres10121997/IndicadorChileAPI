@@ -16,11 +16,16 @@
         "Name": "Month",
         "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "IsRequired": false
+      },
+      {
+        "Name": "IncludeStatistics",
+        "Type": "System.Boolean",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "IndicadorChileAPI.Models.Consultation.DolarConsultationModel",
+        "Type": "IndicadorChileAPI.Models.ConsultationModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -108,7 +113,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "IndicadorChileAPI.Models.Consultation.UFConsultationModel",
+        "Type": "IndicadorChileAPI.Models.ConsultationModel",
         "MediaTypes": [
           "text/plain",
           "application/json",

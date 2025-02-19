@@ -26,6 +26,13 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "IncludeStatistics",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -34,17 +41,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/DolarConsultationModel"
+                  "$ref": "#/components/schemas/ConsultationModel"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DolarConsultationModel"
+                  "$ref": "#/components/schemas/ConsultationModel"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DolarConsultationModel"
+                  "$ref": "#/components/schemas/ConsultationModel"
                 }
               }
             }
@@ -172,17 +179,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/UFConsultationModel"
+                  "$ref": "#/components/schemas/ConsultationModel"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UFConsultationModel"
+                  "$ref": "#/components/schemas/ConsultationModel"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UFConsultationModel"
+                  "$ref": "#/components/schemas/ConsultationModel"
                 }
               }
             }
@@ -277,6 +284,44 @@
   },
   "components": {
     "schemas": {
+      "ConsultationModel": {
+        "required": [
+          "dateAndTimeOfConsultation",
+          "list",
+          "title",
+          "year"
+        ],
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateAndTimeOfConsultation": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "string",
+            "nullable": true
+          },
+          "statistics": {
+            "$ref": "#/components/schemas/StatisticsModel"
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CurrencyModel"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CurrencyModel": {
         "required": [
           "currency",
@@ -297,41 +342,6 @@
             "minimum": 0,
             "type": "number",
             "format": "currency"
-          }
-        },
-        "additionalProperties": false
-      },
-      "DolarConsultationModel": {
-        "required": [
-          "dateAndTimeOfConsultation",
-          "dolarList",
-          "statistics",
-          "year"
-        ],
-        "type": "object",
-        "properties": {
-          "dateAndTimeOfConsultation": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "year": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "month": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "statistics": {
-            "$ref": "#/components/schemas/StatisticsModel"
-          },
-          "dolarList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CurrencyModel"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
@@ -385,40 +395,6 @@
           "endDate": {
             "type": "string",
             "format": "date"
-          }
-        },
-        "additionalProperties": false
-      },
-      "UFConsultationModel": {
-        "required": [
-          "dateAndTimeOfConsultation",
-          "ufList",
-          "year"
-        ],
-        "type": "object",
-        "properties": {
-          "dateAndTimeOfConsultation": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "year": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "month": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "statistics": {
-            "$ref": "#/components/schemas/StatisticsModel"
-          },
-          "ufList": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CurrencyModel"
-            },
-            "nullable": true
           }
         },
         "additionalProperties": false
