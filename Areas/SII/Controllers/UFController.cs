@@ -18,7 +18,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
     public class UFController : ControllerBase
     {
         #region Arrays
-        private UFModel[] UFList { get; set; }
+        private CurrencyModel[] UFList { get; set; }
         #endregion
 
         #region Interfaces
@@ -31,7 +31,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public UFController(ILogger<UFController> Logger)
             : base()
         {
-            this.UFList = Array.Empty<UFModel>();
+            this.UFList = Array.Empty<CurrencyModel>();
             this.Logger = Logger;
         }
         #endregion
@@ -100,14 +100,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Model = new StatisticsModel()
                     {
                         AmountOfData = Convert.ToUInt16(value: this.UFList.Length),
-                        Minimum = this.UFList.Min<UFModel>(selector: x => x.UF),
-                        Maximum = this.UFList.Max<UFModel>(selector: x => x.UF),
-                        Summation = this.UFList.Sum<UFModel>(selector: x => x.UF),
-                        Average = this.UFList.Average<UFModel>(selector: x => x.UF),
-                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select<UFModel, float>(selector: x => x.UF).ToArray<float>()),
-                        Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<UFModel, float>(selector: x => x.UF).ToArray<float>()),
-                        StartDate = this.UFList.Min<UFModel, DateOnly>(selector: x => x.Date),
-                        EndDate = this.UFList.Max<UFModel, DateOnly>(selector: x => x.Date)
+                        Minimum = this.UFList.Min<CurrencyModel>(selector: x => x.Currency),
+                        Maximum = this.UFList.Max<CurrencyModel>(selector: x => x.Currency),
+                        Summation = this.UFList.Sum<CurrencyModel>(selector: x => x.Currency),
+                        Average = this.UFList.Average<CurrencyModel>(selector: x => x.Currency),
+                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
+                        Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
+                        StartDate = this.UFList.Min<CurrencyModel, DateOnly>(selector: x => x.Date),
+                        EndDate = this.UFList.Max<CurrencyModel, DateOnly>(selector: x => x.Date)
                     };
                 }
                 
@@ -153,7 +153,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 UFContext Context = new UFContext(Year: Convert.ToUInt16(value: Date.Year), Month: Convert.ToByte(value: Date.Month));
 
-                UF = Pesos / (await Context.DailyValueAsync(Date: Date)).UF;
+                UF = Pesos / (await Context.DailyValueAsync(Date: Date)).Currency;
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: UF));
             }
@@ -188,7 +188,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 UFContext Context = new UFContext(Year: Convert.ToUInt16(Date.Year), Month: Convert.ToByte(Date.Month));
 
-                Pesos = Convert.ToUInt32(value: Math.Truncate(d: UF * (await Context.DailyValueAsync(Date: Date)).UF));
+                Pesos = Convert.ToUInt32(value: Math.Truncate(d: UF * (await Context.DailyValueAsync(Date: Date)).Currency));
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Pesos));
             }

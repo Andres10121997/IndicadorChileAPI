@@ -48,6 +48,6 @@ namespace IndicadorChileAPI.Models
                 maximum: float.MaxValue
             )
         ]
-        public required float Divisa { get; set; }
+        public required float Currency { get; set; }
     }
 }

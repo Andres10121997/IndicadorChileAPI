@@ -277,6 +277,30 @@
   },
   "components": {
     "schemas": {
+      "CurrencyModel": {
+        "required": [
+          "currency",
+          "date",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "currency": {
+            "minimum": 0,
+            "type": "number",
+            "format": "currency"
+          }
+        },
+        "additionalProperties": false
+      },
       "DolarConsultationModel": {
         "required": [
           "dateAndTimeOfConsultation",
@@ -305,31 +329,9 @@
           "dolarList": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DolarModel"
+              "$ref": "#/components/schemas/CurrencyModel"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "DolarModel": {
-        "required": [
-          "date",
-          "dolar"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "dolar": {
-            "type": "number",
-            "format": "float"
           }
         },
         "additionalProperties": false
@@ -414,33 +416,9 @@
           "ufList": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UFModel"
+              "$ref": "#/components/schemas/CurrencyModel"
             },
             "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "UFModel": {
-        "required": [
-          "date",
-          "id",
-          "uf"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "uf": {
-            "minimum": 0,
-            "type": "number",
-            "format": "currency"
           }
         },
         "additionalProperties": false

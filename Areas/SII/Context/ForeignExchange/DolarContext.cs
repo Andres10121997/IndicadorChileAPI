@@ -10,7 +10,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
     public class DolarContext : ContextBase
     {
         #region Arrays
-        private DolarModel[] List { get; set; }
+        private CurrencyModel[] List { get; set; }
         #endregion
 
 
@@ -22,7 +22,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                    Year: Year,
                    Month: Month)
         {
-            this.List = Array.Empty<DolarModel>();
+            this.List = Array.Empty<CurrencyModel>();
         }
         #endregion
 
@@ -38,7 +38,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
 
         #region Values
-        public async Task<DolarModel[]> AnnualValuesAsync()
+        public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
             try
             {
@@ -48,9 +48,9 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                         tableId: "table_export".Trim()
                     )
                 ))
-                .Where<DolarModel>(predicate: x => !float.IsNaN(f: x.Dolar) && !float.IsInfinity(f: x.Dolar))
-                .OrderBy<DolarModel, DateOnly>(keySelector: x => x.Date)
-                .ToArray<DolarModel>();
+                .Where<CurrencyModel>(predicate: x => !float.IsNaN(f: x.Currency) && !float.IsInfinity(f: x.Currency))
+                .OrderBy<CurrencyModel, DateOnly>(keySelector: x => x.Date)
+                .ToArray<CurrencyModel>();
 
                 return this.List;
             }
@@ -62,13 +62,13 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             }
         }
 
-        public async Task<DolarModel[]> MonthlyValuesAsync()
+        public async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
             try
             {
                 this.List = (await this.AnnualValuesAsync())
-                    .Where<DolarModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == this.GetMonth())
-                    .ToArray<DolarModel>();
+                    .Where<CurrencyModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == this.GetMonth())
+                    .ToArray<CurrencyModel>();
 
                 return this.List;
             }
@@ -80,16 +80,16 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             }
         }
 
-        public async Task<DolarModel> DailyValueAsync(DateOnly Date)
+        public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
         {
-            DolarModel? Value;
+            CurrencyModel? Value;
             
             try
             {
                 // Intentar obtener el valor exacto de la fecha solicitada
                 Value = (await this.MonthlyValuesAsync())
-                    .Where<DolarModel>(predicate: x => x.Date == Date)
-                    .FirstOrDefault<DolarModel>();
+                    .Where<CurrencyModel>(predicate: x => x.Date == Date)
+                    .FirstOrDefault<CurrencyModel>();
 
                 // Si no hay un valor exacto, retornar el último disponible antes de la fecha
                 if (Value is null
@@ -99,9 +99,9 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                     Value.Equals(obj: null))
                 {
                     Value = (await this.MonthlyValuesAsync())
-                        .Where<DolarModel>(predicate: x => x.Date < Date)
-                        .OrderByDescending<DolarModel, DateOnly>(keySelector: x => x.Date)
-                        .FirstOrDefault<DolarModel>();
+                        .Where<CurrencyModel>(predicate: x => x.Date < Date)
+                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: x => x.Date)
+                        .FirstOrDefault<CurrencyModel>();
                 }
 
                 // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
@@ -111,11 +111,11 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                     ||
                     Value.Equals(obj: null))
                 {
-                    Value = new DolarModel
+                    Value = new CurrencyModel
                     {
                         ID = 0,
                         Date = Date,
-                        Dolar = (await this.MonthlyValuesAsync()).Any<DolarModel>() ? (await this.MonthlyValuesAsync()).Average<DolarModel>(selector: x => x.Dolar) : 0
+                        Currency = (await this.MonthlyValuesAsync()).Any<CurrencyModel>() ? (await this.MonthlyValuesAsync()).Average<CurrencyModel>(selector: x => x.Currency) : 0
                     };
                 }
 
@@ -132,13 +132,13 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
 
 
-        private async Task<DolarModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> dolarData)
+        private async Task<CurrencyModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> dolarData)
         {
-            return await this.TransformToModelsAsync(Data: dolarData, modelFactory: (date, value) => new DolarModel
+            return await this.TransformToModelsAsync(Data: dolarData, modelFactory: (date, value) => new CurrencyModel
             {
                 ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
                 Date = date,
-                Dolar = value
+                Currency = value
             });
         }
     }

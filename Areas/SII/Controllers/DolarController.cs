@@ -18,7 +18,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
     public class DolarController : ControllerBase
     {
         #region Arrays
-        private DolarModel[] DolarList { get; set; }
+        private CurrencyModel[] DolarList { get; set; }
         #endregion
 
         #region Interfaces
@@ -31,7 +31,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public DolarController(ILogger<DolarController> Logger)
             : base()
         {
-            this.DolarList = Array.Empty<DolarModel>();
+            this.DolarList = Array.Empty<CurrencyModel>();
             this.Logger = Logger;
         }
         #endregion
@@ -97,14 +97,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Model = new StatisticsModel()
                 {
                     AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
-                    Minimum = this.DolarList.Min<DolarModel>(selector: x => x.Dolar),
-                    Maximum = this.DolarList.Max<DolarModel>(selector: x => x.Dolar),
-                    Summation = this.DolarList.Sum<DolarModel>(selector: x => x.Dolar),
-                    Average = this.DolarList.Average<DolarModel>(selector: x => x.Dolar),
-                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<DolarModel, float>(selector: x => x.Dolar).ToArray<float>()),
-                    Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<DolarModel, float>(selector: x => x.Dolar).ToArray<float>()),
-                    StartDate = this.DolarList.Min<DolarModel, DateOnly>(selector: x => x.Date),
-                    EndDate = this.DolarList.Max<DolarModel, DateOnly>(selector: y => y.Date)
+                    Minimum = this.DolarList.Min<CurrencyModel>(selector: x => x.Currency),
+                    Maximum = this.DolarList.Max<CurrencyModel>(selector: x => x.Currency),
+                    Summation = this.DolarList.Sum<CurrencyModel>(selector: x => x.Currency),
+                    Average = this.DolarList.Average<CurrencyModel>(selector: x => x.Currency),
+                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
+                    Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
+                    StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: x => x.Date),
+                    EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: y => y.Date)
                 };
 
                 Consultation = new DolarConsultationModel()
@@ -149,7 +149,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 DolarContext Context = new DolarContext(Year: Convert.ToUInt16(value: Date.Year), Month: Convert.ToByte(value: Date.Month));
 
-                Dolar = Pesos / (await Context.DailyValueAsync(Date: Date)).Dolar;
+                Dolar = Pesos / (await Context.DailyValueAsync(Date: Date)).Currency;
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Dolar));
             }
@@ -184,7 +184,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 DolarContext Context = new DolarContext(Year: Convert.ToUInt16(value: Date.Year), Month: Convert.ToByte(value: Date.Month));
 
-                Pesos = Convert.ToUInt32(value: Math.Truncate(d: Dolar * (await Context.DailyValueAsync(Date: Date)).Dolar));
+                Pesos = Convert.ToUInt32(value: Math.Truncate(d: Dolar * (await Context.DailyValueAsync(Date: Date)).Currency));
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Pesos));
             }

@@ -8,6 +8,6 @@ namespace IndicadorChileAPI.Models.Consultation
         public required ushort Year { get; set; }
         public  byte? Month { get; set; }
         public required StatisticsModel Statistics { get; set; }
-        public required DolarModel[] DolarList { get; set; }
+        public required CurrencyModel[] DolarList { get; set; }
     }
 }
