@@ -125,14 +125,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Task[] tasks = new Task[2]
+                Task[] TaskList = new Task[2]
                 {
                     Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
                     Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
                 };
 
                 await Task.WhenAll(
-                    tasks: tasks.Select<Task, Task>(selector: async task => await task).AsParallel<Task>()
+                    tasks: TaskList.AsParallel<Task>().Select<Task, Task>(selector: async task => await task)
                 );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
@@ -160,14 +160,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Task[] tasks = new Task[2]
+                Task[] TaskList = new Task[2]
                 {
                     Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
                     Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
                 };
 
                 await Task.WhenAll(
-                    tasks: tasks.Select<Task, Task>(selector: async task => await task).AsParallel<Task>()
+                    tasks: TaskList.AsParallel<Task>().Select<Task, Task>(selector: async task => await task)
                 );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
@@ -195,14 +195,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Task[] tasks = new Task[2]
+                Task[] TaskList = new Task[2]
                 {
                     Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
                     Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
                 };
 
                 await Task.WhenAll(
-                    tasks: tasks.Select<Task, Task>(selector: async task => await task).AsParallel<Task>()
+                    tasks: TaskList.AsParallel<Task>().Select<Task, Task>(selector: async task => await task)
                 );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));

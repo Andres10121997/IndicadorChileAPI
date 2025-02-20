@@ -30,6 +30,7 @@ namespace IndicadorChileAPI.Context
                            ushort? Month)
             : base()
         {
+            #region Validations
             if (Year > DateTime.Now.Year)
             {
                 throw new ArgumentException(message: $"The year must not be greater than {DateTime.Now.Year}.", paramName: nameof(Year));
@@ -50,6 +51,7 @@ namespace IndicadorChileAPI.Context
             {
                 throw new Exception(message: "The query cannot be performed.");
             }
+            #endregion
 
             this.Url = Url;
             this.Year = Year;

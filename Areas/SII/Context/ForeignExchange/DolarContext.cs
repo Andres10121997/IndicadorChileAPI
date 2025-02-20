@@ -43,6 +43,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                             tableId: "table_export".Trim()
                         )
                     ))
+                    .AsParallel<CurrencyModel>()
                     .Where<CurrencyModel>(predicate: x => !float.IsNaN(f: x.Currency) && !float.IsInfinity(f: x.Currency))
                     .OrderBy<CurrencyModel, DateOnly>(keySelector: x => x.Date)
                     .ToArray<CurrencyModel>()
@@ -64,6 +65,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             {
                 this.SetCurrencyList(
                     CurrencyList: (await this.AnnualValuesAsync())
+                        .AsParallel<CurrencyModel>()
                         .Where<CurrencyModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == this.GetMonth())
                         .ToArray<CurrencyModel>()
                 );
@@ -86,6 +88,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             {
                 // Intentar obtener el valor exacto de la fecha solicitada
                 Value = (await this.MonthlyValuesAsync())
+                    .AsParallel<CurrencyModel>()
                     .Where<CurrencyModel>(predicate: x => x.Date == Date)
                     .FirstOrDefault<CurrencyModel>();
 
@@ -97,6 +100,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                     Value.Equals(obj: null))
                 {
                     Value = (await this.MonthlyValuesAsync())
+                        .AsParallel<CurrencyModel>()
                         .Where<CurrencyModel>(predicate: x => x.Date < Date)
                         .OrderByDescending<CurrencyModel, DateOnly>(keySelector: x => x.Date)
                         .FirstOrDefault<CurrencyModel>();
