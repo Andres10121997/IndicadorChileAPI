@@ -9,12 +9,6 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 {
     public class UFContext : ContextBase
     {
-        #region Arrays
-        private CurrencyModel[] List { get; set; }
-        #endregion
-
-
-
         #region ConstructorMethod
         public UFContext(ushort Year,
                          byte? Month)
@@ -22,7 +16,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                    Year: Year,
                    Month: Month)
         {
-            this.List = Array.Empty<CurrencyModel>();
+            
         }
         #endregion
 
@@ -42,17 +36,19 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
         {
             try
             {
-                this.List = (await this.TransformToUFModelsAsync(
-                    ufData: await this.ExtractValuesAsync(
-                        htmlContent: await this.GetHtmlContentAsync(),
-                        tableId: "table_export".Trim()
-                    )
-                ))
-                .Where<CurrencyModel>(predicate: x => !float.IsNaN(f: x.Currency) && !float.IsInfinity(f: x.Currency))
-                .OrderBy<CurrencyModel, DateOnly>(keySelector: x => x.Date)
-                .ToArray<CurrencyModel>();
+                this.SetCurrencyList(
+                    CurrencyList: (await this.TransformToUFModelsAsync(
+                        ufData: await this.ExtractValuesAsync(
+                            htmlContent: await this.GetHtmlContentAsync(),
+                            tableId: "table_export".Trim()
+                        )
+                    ))
+                    .Where<CurrencyModel>(predicate: x => !float.IsNaN(f: x.Currency) && !float.IsInfinity(f: x.Currency))
+                    .OrderBy<CurrencyModel, DateOnly>(keySelector: x => x.Date)
+                    .ToArray<CurrencyModel>()
+                );
 
-                return this.List;
+                return this.GetCurrencyList();
             }
             catch (Exception ex)
             {
@@ -66,11 +62,13 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
         {
             try
             {
-                this.List = (await this.AnnualValuesAsync())
-                    .Where<CurrencyModel>(x => x.Date.Year == this.GetYear() && x.Date.Month == this.GetMonth())
-                    .ToArray<CurrencyModel>();
+                this.SetCurrencyList(
+                    CurrencyList: (await this.AnnualValuesAsync())
+                        .Where<CurrencyModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == this.GetMonth())
+                        .ToArray<CurrencyModel>()
+                );
 
-                return this.List;
+                return this.GetCurrencyList();
             }
             catch (Exception ex)
             {
@@ -80,7 +78,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             }
         }
         
-        public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
+        public override async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
         {
             CurrencyModel? Value;
 

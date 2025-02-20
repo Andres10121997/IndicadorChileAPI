@@ -11,9 +11,15 @@ namespace IndicadorChileAPI.Context
     public abstract class ContextBase
     {
         #region Variables
+        #region Readonly
         private readonly string Url;
         private readonly ushort Year;
         private readonly ushort? Month;
+        #endregion
+        #endregion
+
+        #region Arrays
+        private CurrencyModel[] CurrencyList { get; set; }
         #endregion
 
 
@@ -48,6 +54,7 @@ namespace IndicadorChileAPI.Context
             this.Url = Url;
             this.Year = Year;
             this.Month = Month;
+            this.CurrencyList = Array.Empty<CurrencyModel>();
         }
         #endregion
 
@@ -62,7 +69,8 @@ namespace IndicadorChileAPI.Context
 
 
 
-        #region Getters
+        #region GettersAndSetters
+        #region Readonly
         protected string GetUrl()
         {
             return this.Url;
@@ -79,11 +87,23 @@ namespace IndicadorChileAPI.Context
         }
         #endregion
 
+        public CurrencyModel[] GetCurrencyList()
+        {
+            return this.CurrencyList;
+        }
+
+        public void SetCurrencyList(CurrencyModel[] CurrencyList)
+        {
+            this.CurrencyList = CurrencyList;
+        }
+        #endregion
+
 
 
         #region Abstract
         public abstract Task<CurrencyModel[]> AnnualValuesAsync();
         public abstract Task<CurrencyModel[]> MonthlyValuesAsync();
+        public abstract Task<CurrencyModel> DailyValueAsync(DateOnly Date);
         #endregion
 
 
