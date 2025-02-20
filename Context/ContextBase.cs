@@ -4,6 +4,7 @@ using System;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using IndicadorChileAPI.Models;
 
 namespace IndicadorChileAPI.Context
 {
@@ -76,6 +77,13 @@ namespace IndicadorChileAPI.Context
         {
             return this.Month;
         }
+        #endregion
+
+
+
+        #region Abstract
+        public abstract Task<CurrencyModel[]> AnnualValuesAsync();
+        public abstract Task<CurrencyModel[]> MonthlyValuesAsync();
         #endregion
 
 

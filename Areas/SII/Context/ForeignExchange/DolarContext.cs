@@ -38,7 +38,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
 
         #region Values
-        public async Task<CurrencyModel[]> AnnualValuesAsync()
+        public override async Task<CurrencyModel[]> AnnualValuesAsync()
         {
             try
             {
@@ -62,7 +62,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             }
         }
 
-        public async Task<CurrencyModel[]> MonthlyValuesAsync()
+        public override async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
             try
             {
