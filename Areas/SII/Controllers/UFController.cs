@@ -49,7 +49,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
         #region HttpGet
         [
-            HttpGet("[action]"),
+            HttpGet(template: "[action]"),
             RequireHttps
         ]
         public async Task<ActionResult<ConsultationModel>> GetDataListAsync(ushort Year,
@@ -116,7 +116,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Title = "UF",
                     DateAndTimeOfConsultation = DateTime.Now,
                     Year = Year,
-                    Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
+                    Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     Statistics = Model,
                     List = this.UFList
                 };
@@ -132,7 +132,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 };
 
                 await Task.WhenAll(
-                    tasks: tasks.Select(selector: async task => await task).AsParallel()
+                    tasks: tasks.Select<Task, Task>(selector: async task => await task).AsParallel<Task>()
                 );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
@@ -140,7 +140,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         }
 
         [
-            HttpGet("[action]"),
+            HttpGet(template: "[action]"),
             RequireHttps
         ]
         public async Task<ActionResult<float>> GetEquivalencyInUF(ulong Pesos)
@@ -167,15 +167,15 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 };
 
                 await Task.WhenAll(
-                    tasks: tasks.Select(selector: async task => await task).AsParallel()
+                    tasks: tasks.Select<Task, Task>(selector: async task => await task).AsParallel<Task>()
                 );
 
-                return await Task.Run<ObjectResult>(function: () => StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
+                return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
         }
 
         [
-            HttpGet("[action]"),
+            HttpGet(template: "[action]"),
             RequireHttps
         ]
         public async Task<ActionResult<uint>> GetEquivalenceInPesos(float UF)
@@ -202,10 +202,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 };
 
                 await Task.WhenAll(
-                    tasks: tasks.Select(selector: async task => await task).AsParallel()
+                    tasks: tasks.Select<Task, Task>(selector: async task => await task).AsParallel<Task>()
                 );
 
-                return await Task.Run<ObjectResult>(function: () => StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
+                return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
         }
         #endregion

@@ -160,8 +160,8 @@ namespace IndicadorChileAPI.Context
 
                             Value = cellMatches[i].Groups[1].Value
                                 .Trim()
-                                .Replace(".", "")   // Eliminar puntos
-                                .Replace(",", "."); // Cambiar comas por puntos
+                                .Replace(oldValue: ".", newValue: "")   // Eliminar puntos
+                                .Replace(oldValue: ",", newValue: "."); // Cambiar comas por puntos
                             
                             #region GuardarValores
                             if (float.TryParse(s: Value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float ufValue))
@@ -198,9 +198,13 @@ namespace IndicadorChileAPI.Context
                         float value;
                         #endregion
 
+                        #region Objects
+                        TModel model;
+                        #endregion
+
                         value = values[month - 1];
 
-                        TModel model = await Task.Run(function: () => modelFactory(
+                        model = await Task.Run(function: () => modelFactory(
                             new DateOnly(year: this.Year, month: month, day: day),
                             value
                         ));
