@@ -56,9 +56,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public async Task<ActionResult<ConsultationModel>> GetDataListAsync([
                                                                                 Required(
                                                                                     AllowEmptyStrings = false
+                                                                                ),
+                                                                                Range(
+                                                                                    minimum: 2013,
+                                                                                    maximum: int.MaxValue
                                                                                 )
                                                                             ]
                                                                             ushort Year,
+                                                                            
                                                                             [
                                                                                 Range(
                                                                                     minimum: 1,
@@ -66,6 +71,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                                                                                 )
                                                                             ]
                                                                             byte? Month,
+                                                                            
                                                                             [
                                                                                 Required(
                                                                                     AllowEmptyStrings = false
@@ -117,14 +123,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Model = new StatisticsModel()
                     {
                         AmountOfData = Convert.ToUInt16(value: this.UFList.Length),
-                        Minimum = this.UFList.Min<CurrencyModel>(selector: x => x.Currency),
-                        Maximum = this.UFList.Max<CurrencyModel>(selector: x => x.Currency),
+                        Minimum = this.UFList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
+                        Maximum = this.UFList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
                         Summation = this.UFList.Sum<CurrencyModel>(selector: x => x.Currency),
-                        Average = this.UFList.Average<CurrencyModel>(selector: x => x.Currency),
-                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
-                        Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
-                        StartDate = this.UFList.Min<CurrencyModel, DateOnly>(selector: x => x.Date),
-                        EndDate = this.UFList.Max<CurrencyModel, DateOnly>(selector: x => x.Date)
+                        Average = this.UFList.Average<CurrencyModel>(selector: Average => Average.Currency),
+                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
+                        Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>()),
+                        StartDate = this.UFList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
+                        EndDate = this.UFList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date)
                     };
                 }
                 

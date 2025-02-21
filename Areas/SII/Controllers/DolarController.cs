@@ -53,9 +53,31 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<ConsultationModel>> GetDataListAsync([Required(AllowEmptyStrings = false)] ushort Year,
-                                                                            [Range(minimum: 1, maximum: 12)] byte? Month,
-                                                                            [Required(AllowEmptyStrings = false)] bool IncludeStatistics)
+        public async Task<ActionResult<ConsultationModel>> GetDataListAsync([
+                                                                                Required(
+                                                                                    AllowEmptyStrings = false
+                                                                                ),
+                                                                                Range(
+                                                                                    minimum: 2013,
+                                                                                    maximum: int.MaxValue
+                                                                                )
+                                                                            ]
+                                                                            ushort Year,
+                                                                            
+                                                                            [
+                                                                                Range(
+                                                                                    minimum: 1,
+                                                                                    maximum: 12
+                                                                                )
+                                                                            ]
+                                                                            byte? Month,
+                                                                            
+                                                                            [
+                                                                                Required(
+                                                                                    AllowEmptyStrings = false
+                                                                                )
+                                                                            ]
+                                                                            bool IncludeStatistics)
         {
             #region Objects
             StatisticsModel? Model = null;
@@ -101,14 +123,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Model = new StatisticsModel()
                     {
                         AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
-                        Minimum = this.DolarList.Min<CurrencyModel>(selector: x => x.Currency),
-                        Maximum = this.DolarList.Max<CurrencyModel>(selector: x => x.Currency),
+                        Minimum = this.DolarList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
+                        Maximum = this.DolarList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
                         Summation = this.DolarList.Sum<CurrencyModel>(selector: x => x.Currency),
-                        Average = this.DolarList.Average<CurrencyModel>(selector: x => x.Currency),
-                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
-                        Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: x => x.Currency).ToArray<float>()),
-                        StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: x => x.Date),
-                        EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: y => y.Date)
+                        Average = this.DolarList.Average<CurrencyModel>(selector: Average => Average.Currency),
+                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
+                        Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>()),
+                        StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
+                        EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date)
                     };
                 }
                 

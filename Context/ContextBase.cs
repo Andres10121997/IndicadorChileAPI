@@ -135,16 +135,26 @@ namespace IndicadorChileAPI.Context
             MatchCollection rowMatches;
             #endregion
 
-            if (string.IsNullOrWhiteSpace(value: tableId)
+            #region Validations
+            if (string.IsNullOrEmpty(value: htmlContent)
                 ||
-                string.IsNullOrEmpty(value: tableId))
+                string.IsNullOrWhiteSpace(value: htmlContent))
+            {
+                throw new ArgumentNullException(message: $"El parámetro {nameof(htmlContent)} no puede ser nulo o estar vacío.",
+                                                paramName: nameof(htmlContent));
+            }
+            
+            if (string.IsNullOrEmpty(value: tableId)
+                ||
+                string.IsNullOrWhiteSpace(value: tableId))
             {
                 throw new ArgumentException(message: "El ID de la tabla no puede estar vacío.",
                                             paramName: nameof(tableId));
             }
+            #endregion
 
             // Regex para encontrar la tabla con el ID dinámico
-            tablePattern = $@"<table[^>]*id=""{Regex.Escape(tableId)}""[^>]*>(.*?)<\/table>";
+            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: tableId)}""[^>]*>(.*?)<\/table>";
             tableMatch = await Task.Run<Match>(function: () => Regex.Match(input: htmlContent, pattern: tablePattern, options: RegexOptions.Singleline));
 
             if (!tableMatch.Success)
@@ -216,7 +226,9 @@ namespace IndicadorChileAPI.Context
         protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
                                                                       Func<DateOnly, float, TModel> modelFactory)
         {
-            List<TModel> models = new List<TModel>();
+            #region List
+            List<TModel> ModelList = new List<TModel>();
+            #endregion
 
             foreach (var (day, values) in Data)
             {
@@ -239,12 +251,12 @@ namespace IndicadorChileAPI.Context
                             value
                         ));
 
-                        await Task.Run(action: () => models.Add(item: model));
+                        await Task.Run(action: () => ModelList.Add(item: model));
                     }
                 }
             }
 
-            return await Task.Run<TModel[]>(function: () => models.ToArray());
+            return await Task.Run<TModel[]>(function: () => ModelList.ToArray());
         }
     }
 }

@@ -16,6 +16,8 @@
             "in": "query",
             "required": true,
             "schema": {
+              "maximum": 2147483647,
+              "minimum": 2013,
               "type": "integer",
               "format": "int32"
             }
