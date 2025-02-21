@@ -44,8 +44,8 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                         )
                     ))
                     .AsParallel<CurrencyModel>()
-                    .Where<CurrencyModel>(predicate: x => !float.IsNaN(f: x.Currency) && !float.IsInfinity(f: x.Currency))
-                    .OrderBy<CurrencyModel, DateOnly>(keySelector: x => x.Date)
+                    .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency) && !float.IsInfinity(f: Model.Currency))
+                    .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                     .ToArray<CurrencyModel>()
                 );
 
@@ -66,7 +66,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 this.SetCurrencyList(
                     CurrencyList: (await this.AnnualValuesAsync())
                         .AsParallel<CurrencyModel>()
-                        .Where<CurrencyModel>(predicate: x => x.Date.Year == this.GetYear() && x.Date.Month == this.GetMonth())
+                        .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.GetYear() && Model.Date.Month == this.GetMonth())
                         .ToArray<CurrencyModel>()
                 );
 
@@ -89,7 +89,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 // Intentar obtener el valor exacto de la fecha solicitada
                 Value = (await this.MonthlyValuesAsync())
                     .AsParallel<CurrencyModel>()
-                    .Where<CurrencyModel>(predicate: x => x.Date == Date)
+                    .Where<CurrencyModel>(predicate: Model => Model.Date == Date)
                     .FirstOrDefault<CurrencyModel>();
 
                 // Si no hay un valor exacto, retornar el último disponible antes de la fecha
@@ -101,8 +101,8 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                 {
                     Value = (await this.MonthlyValuesAsync())
                         .AsParallel<CurrencyModel>()
-                        .Where<CurrencyModel>(predicate: x => x.Date < Date)
-                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: x => x.Date)
+                        .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                         .FirstOrDefault<CurrencyModel>();
                 }
 
@@ -117,7 +117,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
                     {
                         ID = 0,
                         Date = Date,
-                        Currency = (await this.MonthlyValuesAsync()).Any<CurrencyModel>() ? (await this.MonthlyValuesAsync()).Average<CurrencyModel>(selector: x => x.Currency) : 0
+                        Currency = (await this.MonthlyValuesAsync()).Any<CurrencyModel>() ? (await this.MonthlyValuesAsync()).Average<CurrencyModel>(selector: Model => Model.Currency) : 0
                     };
                 }
 

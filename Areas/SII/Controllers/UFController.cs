@@ -3,6 +3,7 @@ using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -52,8 +53,24 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<ConsultationModel>> GetDataListAsync(ushort Year,
+        public async Task<ActionResult<ConsultationModel>> GetDataListAsync([
+                                                                                Required(
+                                                                                    AllowEmptyStrings = false
+                                                                                )
+                                                                            ]
+                                                                            ushort Year,
+                                                                            [
+                                                                                Range(
+                                                                                    minimum: 1,
+                                                                                    maximum: 12
+                                                                                )
+                                                                            ]
                                                                             byte? Month,
+                                                                            [
+                                                                                Required(
+                                                                                    AllowEmptyStrings = false
+                                                                                )
+                                                                            ]
                                                                             bool IncludeStatistics)
         {
             #region Objects
@@ -143,7 +160,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetEquivalencyInUF(ulong Pesos)
+        public async Task<ActionResult<float>> GetEquivalencyInUF([Required(AllowEmptyStrings = false)] ulong Pesos)
         {
             #region Variables
             float UF;
@@ -178,7 +195,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<uint>> GetEquivalenceInPesos(float UF)
+        public async Task<ActionResult<uint>> GetEquivalenceInPesos([Required(AllowEmptyStrings = false)] float UF)
         {
             #region Variables
             uint Pesos;

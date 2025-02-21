@@ -3,6 +3,7 @@ using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 using System.Net;
@@ -52,9 +53,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<ConsultationModel>> GetDataListAsync(ushort Year,
-                                                                            byte? Month,
-                                                                            bool IncludeStatistics)
+        public async Task<ActionResult<ConsultationModel>> GetDataListAsync([Required(AllowEmptyStrings = false)] ushort Year,
+                                                                            [Range(minimum: 1, maximum: 12)] byte? Month,
+                                                                            [Required(AllowEmptyStrings = false)] bool IncludeStatistics)
         {
             #region Objects
             StatisticsModel? Model = null;
@@ -143,7 +144,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetEquivalencyInDolar(ulong Pesos)
+        public async Task<ActionResult<float>> GetEquivalencyInDolar([Required(AllowEmptyStrings = false)] ulong Pesos)
         {
             #region Variables
             float Dolar;
@@ -178,7 +179,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<uint>> GetEquivalencyInPesos(float Dolar)
+        public async Task<ActionResult<uint>> GetEquivalencyInPesos([Required(AllowEmptyStrings = false)] float Dolar)
         {
             #region Variables
             uint Pesos;

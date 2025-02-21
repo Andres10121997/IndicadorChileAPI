@@ -14,6 +14,7 @@
           {
             "name": "Year",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -23,6 +24,8 @@
             "name": "Month",
             "in": "query",
             "schema": {
+              "maximum": 12,
+              "minimum": 1,
               "type": "integer",
               "format": "int32"
             }
@@ -30,6 +33,7 @@
           {
             "name": "IncludeStatistics",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "boolean"
             }
@@ -68,6 +72,7 @@
           {
             "name": "Pesos",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -110,6 +115,7 @@
           {
             "name": "Dolar",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "number",
               "format": "float"
@@ -152,6 +158,7 @@
           {
             "name": "Year",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -161,6 +168,8 @@
             "name": "Month",
             "in": "query",
             "schema": {
+              "maximum": 12,
+              "minimum": 1,
               "type": "integer",
               "format": "int32"
             }
@@ -168,6 +177,7 @@
           {
             "name": "IncludeStatistics",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "boolean"
             }
@@ -206,6 +216,7 @@
           {
             "name": "Pesos",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -248,6 +259,7 @@
           {
             "name": "UF",
             "in": "query",
+            "required": true,
             "schema": {
               "type": "number",
               "format": "float"
@@ -339,7 +351,7 @@
             "format": "date"
           },
           "currency": {
-            "minimum": 0,
+            "minimum": 0,01,
             "type": "number",
             "format": "currency"
           }

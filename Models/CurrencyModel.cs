@@ -6,7 +6,20 @@ namespace IndicadorChileAPI.Models
     public class CurrencyModel
     {
         [
-            Key
+            Key,
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(CurrencyModel),
+                Name = "Identificador",
+                Order = 1,
+                Prompt = "",
+                ShortName = "ID"
+            ),
+            Required(
+                AllowEmptyStrings = false
+            )
         ]
         public required uint ID { get; set; }
 
@@ -18,13 +31,15 @@ namespace IndicadorChileAPI.Models
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = "",
+                GroupName = nameof(CurrencyModel),
                 Name = "Fecha",
                 Order = 2,
                 Prompt = "",
                 ShortName = "Fecha"
             ),
-            Required
+            Required(
+                AllowEmptyStrings = false
+            )
         ]
         public required DateOnly Date { get; set; }
 
@@ -36,15 +51,17 @@ namespace IndicadorChileAPI.Models
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = "",
+                GroupName = nameof(CurrencyModel),
                 Name = "Valor Divisa",
                 Order = 3,
                 Prompt = "",
                 ShortName = "Divisa"
             ),
-            Required,
+            Required(
+                AllowEmptyStrings = false
+            ),
             Range(
-                minimum: 0,
+                minimum: 0.01,
                 maximum: float.MaxValue
             )
         ]

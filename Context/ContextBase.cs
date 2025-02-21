@@ -244,7 +244,7 @@ namespace IndicadorChileAPI.Context
                 }
             }
 
-            return models.ToArray();
+            return await Task.Run<TModel[]>(function: () => models.ToArray());
         }
     }
 }
