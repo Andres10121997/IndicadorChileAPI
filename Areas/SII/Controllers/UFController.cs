@@ -80,35 +80,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                if (Month is null
-                    ||
-                    Month == null
-                    ||
-                    Month.Equals(other: null))
-                {
-                    this.UFList = await Context.AnnualValuesAsync();
+                this.UFList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.UFList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
-                }
-                else
+                if (await Utils.ArrayIsNullAsync(Values: this.UFList)
+                    ||
+                    await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
                 {
-                    this.UFList = await Context.MonthlyValuesAsync();
-
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.UFList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
+                    return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                 }
 
                 Consultation = new ConsultationModel()
@@ -160,40 +138,20 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                                                                             ]
                                                                             byte? Month)
         {
+            #region Objects
             StatisticsModel? Model = null;
             UFContext Context = new UFContext(Year: Year, Month: Month);
+            #endregion
 
             try
             {
-                if (Month is null
-                    ||
-                    Month == null
-                    ||
-                    Month.Equals(other: null))
-                {
-                    this.UFList = await Context.AnnualValuesAsync();
+                this.UFList = (Month.HasValue ? await Context.AnnualValuesAsync() : await Context.MonthlyValuesAsync()); // Ternaria para obtener datos.
 
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.UFList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
-                }
-                else
+                if (await Utils.ArrayIsNullAsync(Values: this.UFList)
+                    ||
+                    await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
                 {
-                    this.UFList = await Context.MonthlyValuesAsync();
-
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.UFList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
+                    return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                 }
 
                 Model = new StatisticsModel()

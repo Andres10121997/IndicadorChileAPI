@@ -79,7 +79,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                this.DolarList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync());
+                this.DolarList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
                     ||
@@ -144,7 +144,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                this.DolarList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync());
+                this.DolarList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
                     ||
