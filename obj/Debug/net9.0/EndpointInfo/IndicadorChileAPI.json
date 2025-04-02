@@ -31,14 +31,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "IncludeStatistics",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "boolean"
-            }
           }
         ],
         "responses": {
@@ -228,14 +220,6 @@
               "minimum": 1,
               "type": "integer",
               "format": "int32"
-            }
-          },
-          {
-            "name": "IncludeStatistics",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "boolean"
             }
           }
         ],

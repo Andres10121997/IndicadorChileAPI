@@ -64,21 +64,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                                                                                 )
                                                                             ]
                                                                             ushort Year,
-                                                                            
                                                                             [
                                                                                 Range(
                                                                                     minimum: 1,
                                                                                     maximum: 12
                                                                                 )
                                                                             ]
-                                                                            byte? Month,
-                                                                            
-                                                                            [
-                                                                                Required(
-                                                                                    AllowEmptyStrings = false
-                                                                                )
-                                                                            ]
-                                                                            bool IncludeStatistics)
+                                                                            byte? Month)
         {
             #region Objects
             ConsultationModel Consultation;
@@ -87,35 +79,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                if (Month is null
-                    ||
-                    Month == null
-                    ||
-                    Month.Equals(other: null))
-                {
-                    this.DolarList = await Context.AnnualValuesAsync();
+                this.DolarList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync());
 
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
-                }
-                else
+                if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
+                    ||
+                    await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
                 {
-                    this.DolarList = await Context.MonthlyValuesAsync();
-
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
+                    return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                 }
 
                 Consultation = new ConsultationModel()
@@ -174,35 +144,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                if (Month is null
-                    ||
-                    Month == null
-                    ||
-                    Month.Equals(other: null))
-                {
-                    this.DolarList = await Context.AnnualValuesAsync();
+                this.DolarList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync());
 
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
-                }
-                else
+                if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
+                    ||
+                    await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
                 {
-                    this.DolarList = await Context.MonthlyValuesAsync();
-
-                    #region Validations
-                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
-                        ||
-                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
-                    {
-                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                    }
-                    #endregion
+                    return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                 }
 
                 Model = new StatisticsModel()
