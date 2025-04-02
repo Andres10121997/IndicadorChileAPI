@@ -20,7 +20,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "IndicadorChileAPI.Models.ConsultationModel",
+        "Type": "IndicadorChileAPI.Models.CurrencyListHeaderModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -134,7 +134,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "IndicadorChileAPI.Models.ConsultationModel",
+        "Type": "IndicadorChileAPI.Models.CurrencyListHeaderModel",
         "MediaTypes": [
           "text/plain",
           "application/json",

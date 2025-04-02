@@ -8,7 +8,6 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace IndicadorChileAPI.Areas.SII.Controllers
 {
@@ -54,7 +53,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<ConsultationModel>> GetDataListAsync([
+        public async Task<ActionResult<CurrencyListHeaderModel>> GetDataListAsync([
                                                                                 Required(
                                                                                     AllowEmptyStrings = false
                                                                                 ),
@@ -75,7 +74,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             DateTime Now = DateTime.Now;
 
             #region Objects
-            ConsultationModel Consultation;
+            CurrencyListHeaderModel Consultation;
             DolarContext Context = new DolarContext(Year: Year, Month: Month);
             #endregion
 
@@ -90,7 +89,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                 }
 
-                Consultation = new ConsultationModel()
+                Consultation = new CurrencyListHeaderModel()
                 {
                     Title = "Dólar",
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
@@ -104,15 +103,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Task[] TaskList = new Task[2]
-                {
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
-                };
-
-                await Task.WhenAll(
-                    tasks: TaskList.AsParallel<Task>().Select<Task, Task>(selector: async task => await task)
-                );
+                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
+                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -173,15 +165,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Task[] TaskList = new Task[2]
-                {
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
-                };
-
-                await Task.WhenAll(
-                    tasks: TaskList.AsParallel<Task>().Select<Task, Task>(selector: async task => await task)
-                );
+                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
+                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -208,15 +193,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Task[] TaskList = new Task[2]
-                {
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
-                };
-
-                await Task.WhenAll(
-                    tasks: TaskList.AsParallel<Task>().Select<Task, Task>(selector: async task => await task)
-                );
+                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
+                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -243,15 +221,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Task[] TaskList = new Task[2]
-                {
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
-                };
-
-                await Task.WhenAll(
-                    tasks: TaskList.AsParallel<Task>().Select<Task, Task>(selector: async task => await task)
-                );
+                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
+                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }

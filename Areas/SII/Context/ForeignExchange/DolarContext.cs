@@ -38,7 +38,7 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             {
                 this.SetCurrencyList(
                     CurrencyList: (await this.TransformToDolarModelsAsync(
-                        dolarData: await this.ExtractValuesAsync(
+                        DolarData: await this.ExtractValuesAsync(
                             htmlContent: await this.GetHtmlContentAsync(),
                             tableId: "table_export".Trim()
                         )
@@ -134,9 +134,9 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
 
 
 
-        private async Task<CurrencyModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> dolarData)
+        private async Task<CurrencyModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> DolarData)
         {
-            return await this.TransformToModelsAsync(Data: dolarData, modelFactory: (date, value) => new CurrencyModel
+            return await this.TransformToModelsAsync(Data: DolarData, modelFactory: (date, value) => new CurrencyModel
             {
                 ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
                 Date = date,

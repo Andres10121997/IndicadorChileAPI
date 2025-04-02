@@ -2,7 +2,7 @@
 
 namespace IndicadorChileAPI.Models
 {
-    public class ConsultationModel
+    public class CurrencyListHeaderModel
     {
         public required string Title { get; set; }
         public required DateOnly ConsultationDate { get; set; }
