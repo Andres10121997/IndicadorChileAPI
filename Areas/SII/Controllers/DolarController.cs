@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace IndicadorChileAPI.Areas.SII.Controllers
 {
@@ -80,7 +81,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                                                                             bool IncludeStatistics)
         {
             #region Objects
-            StatisticsModel? Model = null;
             ConsultationModel Consultation;
             DolarContext Context = new DolarContext(Year: Year, Month: Month);
             #endregion
@@ -118,33 +118,107 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     #endregion
                 }
 
-                if (IncludeStatistics)
-                {
-                    Model = new StatisticsModel()
-                    {
-                        AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
-                        Minimum = this.DolarList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
-                        Maximum = this.DolarList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
-                        Summation = this.DolarList.Sum<CurrencyModel>(selector: x => x.Currency),
-                        Average = this.DolarList.Average<CurrencyModel>(selector: Average => Average.Currency),
-                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
-                        Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>()),
-                        StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
-                        EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date)
-                    };
-                }
-                
                 Consultation = new ConsultationModel()
                 {
                     Title = "Dólar",
                     DateAndTimeOfConsultation = DateTime.Now,
                     Year = Year,
                     Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    Statistics = Model,
                     List = this.DolarList
                 };
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Consultation));
+            }
+            catch (Exception ex)
+            {
+                Task[] TaskList = new Task[2]
+                {
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
+                };
+
+                await Task.WhenAll(
+                    tasks: TaskList.AsParallel<Task>().Select<Task, Task>(selector: async task => await task)
+                );
+
+                return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
+            }
+        }
+
+        [
+            HttpGet(template: "[action]"),
+            RequireHttps
+        ]
+        public async Task<ActionResult<StatisticsModel>> GetStatisticsAsync([
+                                                                                Required(
+                                                                                    AllowEmptyStrings = false
+                                                                                ),
+                                                                                Range(
+                                                                                    minimum: 2013,
+                                                                                    maximum: int.MaxValue
+                                                                                )
+                                                                            ]
+                                                                            ushort Year,
+                                                                            [
+                                                                                Range(
+                                                                                    minimum: 1,
+                                                                                    maximum: 12
+                                                                                )
+                                                                            ]
+                                                                            byte? Month)
+        {
+            #region Objects
+            StatisticsModel? Model = null;
+            DolarContext Context = new DolarContext(Year: Year, Month: Month);
+            #endregion
+
+            try
+            {
+                if (Month is null
+                    ||
+                    Month == null
+                    ||
+                    Month.Equals(other: null))
+                {
+                    this.DolarList = await Context.AnnualValuesAsync();
+
+                    #region Validations
+                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
+                    {
+                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
+                    }
+                    #endregion
+                }
+                else
+                {
+                    this.DolarList = await Context.MonthlyValuesAsync();
+
+                    #region Validations
+                    if (await Utils.ArrayIsNullAsync(Values: this.DolarList)
+                        ||
+                        await Utils.ArraySizeIsZeroAsync(Values: this.DolarList))
+                    {
+                        return await Task.Run<NotFoundResult>(function: () => this.NotFound());
+                    }
+                    #endregion
+                }
+
+                Model = new StatisticsModel()
+                {
+                    AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
+                    Minimum = this.DolarList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
+                    Maximum = this.DolarList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
+                    Summation = this.DolarList.Sum<CurrencyModel>(selector: x => x.Currency),
+                    Average = this.DolarList.Average<CurrencyModel>(selector: Average => Average.Currency),
+                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
+                    Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>()),
+                    StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
+                    EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date)
+                };
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
             }
             catch (Exception ex)
             {

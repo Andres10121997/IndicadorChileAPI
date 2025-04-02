@@ -65,6 +65,58 @@
         }
       }
     },
+    "/api/SII/Dolar/GetStatistics": {
+      "get": {
+        "tags": [
+          "Dolar"
+        ],
+        "parameters": [
+          {
+            "name": "Year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 2013,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Month",
+            "in": "query",
+            "schema": {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/SII/Dolar/GetEquivalencyInDolar": {
       "get": {
         "tags": [
@@ -162,6 +214,8 @@
             "in": "query",
             "required": true,
             "schema": {
+              "maximum": 2147483647,
+              "minimum": 2013,
               "type": "integer",
               "format": "int32"
             }
@@ -202,6 +256,58 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ConsultationModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SII/UF/GetStatistics": {
+      "get": {
+        "tags": [
+          "UF"
+        ],
+        "parameters": [
+          {
+            "name": "Year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 2013,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Month",
+            "in": "query",
+            "schema": {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatisticsModel"
                 }
               }
             }
@@ -322,9 +428,6 @@
           "month": {
             "type": "string",
             "nullable": true
-          },
-          "statistics": {
-            "$ref": "#/components/schemas/StatisticsModel"
           },
           "list": {
             "type": "array",
