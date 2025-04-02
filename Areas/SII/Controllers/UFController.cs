@@ -73,6 +73,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                                                                             ]
                                                                             byte? Month)
         {
+            DateTime Now = DateTime.Now;
+
             #region Objects
             ConsultationModel Consultation;
             UFContext Context = new UFContext(Year: Year, Month: Month);
@@ -92,7 +94,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Consultation = new ConsultationModel()
                 {
                     Title = "UF",
-                    DateAndTimeOfConsultation = DateTime.Now,
+                    ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
+                    ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = Year,
                     Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     List = this.UFList
@@ -145,7 +148,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                this.UFList = (Month.HasValue ? await Context.AnnualValuesAsync() : await Context.MonthlyValuesAsync()); // Ternaria para obtener datos.
+                this.UFList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 if (await Utils.ArrayIsNullAsync(Values: this.UFList)
                     ||

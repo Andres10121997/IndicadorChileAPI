@@ -390,7 +390,8 @@
     "schemas": {
       "ConsultationModel": {
         "required": [
-          "dateAndTimeOfConsultation",
+          "consultationDate",
+          "consultationTime",
           "list",
           "title",
           "year"
@@ -401,9 +402,13 @@
             "type": "string",
             "nullable": true
           },
-          "dateAndTimeOfConsultation": {
+          "consultationDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date"
+          },
+          "consultationTime": {
+            "type": "string",
+            "format": "time"
           },
           "year": {
             "type": "integer",
