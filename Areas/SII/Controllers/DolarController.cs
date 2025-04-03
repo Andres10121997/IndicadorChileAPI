@@ -54,24 +54,26 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             RequireHttps
         ]
         public async Task<ActionResult<CurrencyListHeaderModel>> GetDataListAsync([
-                                                                                Required(
-                                                                                    AllowEmptyStrings = false
-                                                                                ),
-                                                                                Range(
-                                                                                    minimum: 2013,
-                                                                                    maximum: int.MaxValue
-                                                                                )
-                                                                            ]
-                                                                            ushort Year,
-                                                                            [
-                                                                                Range(
-                                                                                    minimum: 1,
-                                                                                    maximum: 12
-                                                                                )
-                                                                            ]
-                                                                            byte? Month)
+                                                                                    Required(
+                                                                                        AllowEmptyStrings = false
+                                                                                    ),
+                                                                                    Range(
+                                                                                        minimum: 2013,
+                                                                                        maximum: int.MaxValue
+                                                                                    )
+                                                                                  ]
+                                                                                  ushort Year,
+                                                                                  [
+                                                                                    Range(
+                                                                                        minimum: 1,
+                                                                                        maximum: 12
+                                                                                    )
+                                                                                  ]
+                                                                                  byte? Month)
         {
+            #region Variables
             DateTime Now = DateTime.Now;
+            #endregion
 
             #region Objects
             CurrencyListHeaderModel Consultation;
@@ -185,7 +187,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                DolarContext Context = new DolarContext(Year: Convert.ToUInt16(value: Date.Year), Month: Convert.ToByte(value: Date.Month));
+                DolarContext Context = new DolarContext(
+                    Year: Convert.ToUInt16(value: Date.Year),
+                    Month: Convert.ToByte(value: Date.Month)
+                );
 
                 Dolar = Pesos / (await Context.DailyValueAsync(Date: Date)).Currency;
 
@@ -213,7 +218,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                DolarContext Context = new DolarContext(Year: Convert.ToUInt16(value: Date.Year), Month: Convert.ToByte(value: Date.Month));
+                DolarContext Context = new DolarContext(
+                    Year: Convert.ToUInt16(value: Date.Year),
+                    Month: Convert.ToByte(value: Date.Month)
+                );
 
                 Pesos = Convert.ToUInt32(value: Math.Truncate(d: Dolar * (await Context.DailyValueAsync(Date: Date)).Currency));
 
