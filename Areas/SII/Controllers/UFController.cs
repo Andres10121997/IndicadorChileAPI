@@ -116,7 +116,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<StatisticsModel>> GetStatisticsAsync([
+        public async Task<ActionResult<StatisticsHeaderModel>> GetStatisticsAsync([
                                                                                 Required(
                                                                                     AllowEmptyStrings = false
                                                                                 ),
@@ -134,8 +134,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                                                                             ]
                                                                             byte? Month)
         {
+            #region Variables
+            DateTime Now = DateTime.Now;
+            #endregion
+
             #region Objects
-            StatisticsModel? Model = null;
+            StatisticsHeaderModel StatisticsHeader;
             UFContext Context = new UFContext(Year: Year, Month: Month);
             #endregion
 
@@ -150,20 +154,27 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                 }
 
-                Model = new StatisticsModel()
+                StatisticsHeader = new StatisticsHeaderModel()
                 {
-                    AmountOfData = Convert.ToUInt16(value: this.UFList.Length),
-                    Minimum = this.UFList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
-                    Maximum = this.UFList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
-                    Summation = this.UFList.Sum<CurrencyModel>(selector: x => x.Currency),
-                    Average = this.UFList.Average<CurrencyModel>(selector: Average => Average.Currency),
-                    StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
-                    Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>()),
-                    StartDate = this.UFList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
-                    EndDate = this.UFList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date)
+                    ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
+                    ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
+                    Year = Year,
+                    Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
+                    Statistics = new StatisticsModel()
+                    {
+                        AmountOfData = Convert.ToUInt16(value: this.UFList.Length),
+                        Minimum = this.UFList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
+                        Maximum = this.UFList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
+                        Summation = this.UFList.Sum<CurrencyModel>(selector: x => x.Currency),
+                        Average = this.UFList.Average<CurrencyModel>(selector: Average => Average.Currency),
+                        StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
+                        Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>()),
+                        StartDate = this.UFList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
+                        EndDate = this.UFList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date)
+                    }
                 };
 
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Model));
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: StatisticsHeader));
             }
             catch (Exception ex)
             {

@@ -103,7 +103,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "IndicadorChileAPI.Models.StatisticsModel",
+        "Type": "IndicadorChileAPI.Models.StatisticsHeaderModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -217,7 +217,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "IndicadorChileAPI.Models.StatisticsModel",
+        "Type": "IndicadorChileAPI.Models.StatisticsHeaderModel",
         "MediaTypes": [
           "text/plain",
           "application/json",
