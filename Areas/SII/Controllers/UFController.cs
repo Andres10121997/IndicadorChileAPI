@@ -76,12 +76,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             #endregion
 
             #region Objects
-            CurrencyListHeaderModel Consultation;
-            UFContext Context = new UFContext(Year: Year, Month: Month);
+            CurrencyListHeaderModel CurrencyList;
+            UFContext Context;
             #endregion
 
             try
             {
+                Context = new UFContext(Year: Year, Month: Month);
+
                 this.UFList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 if (await Utils.ArrayIsNullAsync(Values: this.UFList)
@@ -90,9 +92,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 {
                     return await Task.Run<NotFoundResult>(function: () => this.NotFound());
                 }
-
-                Consultation = new CurrencyListHeaderModel()
+                
+                CurrencyList = new CurrencyListHeaderModel()
                 {
+                    Title = "UF (Unidad de Fomento)",
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = Year,
@@ -100,12 +103,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     List = this.UFList
                 };
 
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Consultation));
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: CurrencyList));
             }
             catch (Exception ex)
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
+                await Task.WhenAll(
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
+                );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -139,11 +144,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             #region Objects
             StatisticsHeaderModel StatisticsHeader;
-            UFContext Context = new UFContext(Year: Year, Month: Month);
+            UFContext Context;
             #endregion
 
             try
             {
+                Context = new UFContext(Year: Year, Month: Month);
+
                 this.UFList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 if (await Utils.ArrayIsNullAsync(Values: this.UFList)
@@ -180,8 +187,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
+                await Task.WhenAll(
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
+                );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -198,9 +207,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
             #endregion
 
+            #region Objects
+            UFContext Context;
+            #endregion
+
             try
             {
-                UFContext Context = new UFContext(
+                Context = new UFContext(
                     Year: Convert.ToUInt16(value: Date.Year),
                     Month: Convert.ToByte(value: Date.Month)
                 );
@@ -211,8 +224,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
+                await Task.WhenAll(
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
+                );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -229,9 +244,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
             #endregion
 
+            #region Objects
+            UFContext Context;
+            #endregion
+
             try
             {
-                UFContext Context = new UFContext(
+                Context = new UFContext(
                     Year: Convert.ToUInt16(value: Date.Year),
                     Month: Convert.ToByte(value: Date.Month)
                 );
@@ -242,8 +261,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
+                await Task.WhenAll(
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType())
+                );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }

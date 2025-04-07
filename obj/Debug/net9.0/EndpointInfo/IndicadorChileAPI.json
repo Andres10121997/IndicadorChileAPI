@@ -393,10 +393,15 @@
           "consultationDate",
           "consultationTime",
           "list",
+          "title",
           "year"
         ],
         "type": "object",
         "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
           "consultationDate": {
             "type": "string",
             "format": "date"
