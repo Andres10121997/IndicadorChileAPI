@@ -393,15 +393,10 @@
           "consultationDate",
           "consultationTime",
           "list",
-          "title",
           "year"
         ],
         "type": "object",
         "properties": {
-          "title": {
-            "type": "string",
-            "nullable": true
-          },
           "consultationDate": {
             "type": "string",
             "format": "date"
@@ -445,7 +440,7 @@
             "format": "date"
           },
           "currency": {
-            "minimum": 0,01,
+            "minimum": 0,
             "type": "number",
             "format": "currency"
           }
@@ -461,6 +456,10 @@
         ],
         "type": "object",
         "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
           "consultationDate": {
             "type": "string",
             "format": "date"
@@ -493,10 +492,19 @@
           "standardDeviation",
           "startDate",
           "summation",
+          "sumOfSquares",
           "variance"
         ],
         "type": "object",
         "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
           "amountOfData": {
             "type": "integer",
             "format": "int32"
@@ -513,6 +521,10 @@
             "type": "number",
             "format": "float"
           },
+          "sumOfSquares": {
+            "type": "number",
+            "format": "double"
+          },
           "average": {
             "type": "number",
             "format": "float"
@@ -524,14 +536,6 @@
           "variance": {
             "type": "number",
             "format": "float"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date"
           }
         },
         "additionalProperties": false

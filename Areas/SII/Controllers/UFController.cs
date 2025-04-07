@@ -93,7 +93,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Consultation = new CurrencyListHeaderModel()
                 {
-                    Title = "UF",
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = Year,
@@ -162,17 +161,20 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     Statistics = new StatisticsModel()
                     {
+                        StartDate = this.UFList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
+                        EndDate = this.UFList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date),
                         AmountOfData = Convert.ToUInt16(value: this.UFList.Length),
                         Minimum = this.UFList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
                         Maximum = this.UFList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
                         Summation = this.UFList.Sum<CurrencyModel>(selector: x => x.Currency),
+                        SumOfSquares = this.UFList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2)),
                         Average = this.UFList.Average<CurrencyModel>(selector: Average => Average.Currency),
                         StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
-                        Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>()),
-                        StartDate = this.UFList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
-                        EndDate = this.UFList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date)
+                        Variance = await Statistics.VarianceAsync(Values: this.UFList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>())
                     }
                 };
+
+                StatisticsHeader.Title += " - UF";
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: StatisticsHeader));
             }

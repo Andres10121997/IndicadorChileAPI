@@ -61,7 +61,7 @@ namespace IndicadorChileAPI.Models
                 AllowEmptyStrings = false
             ),
             Range(
-                minimum: 0.01,
+                minimum: 0,
                 maximum: float.MaxValue
             )
         ]

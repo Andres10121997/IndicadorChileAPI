@@ -93,7 +93,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Consultation = new CurrencyListHeaderModel()
                 {
-                    Title = "Dólar",
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = Year,
@@ -162,17 +161,21 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     Statistics = new StatisticsModel()
                     {
+
+                        StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
+                        EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date),
                         AmountOfData = Convert.ToUInt16(value: this.DolarList.Length),
                         Minimum = this.DolarList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
                         Maximum = this.DolarList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
                         Summation = this.DolarList.Sum<CurrencyModel>(selector: x => x.Currency),
+                        SumOfSquares = this.DolarList.Sum<CurrencyModel>(x => Math.Pow(x: x.Currency, y: 2)),
                         Average = this.DolarList.Average<CurrencyModel>(selector: Average => Average.Currency),
                         StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
-                        Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>()),
-                        StartDate = this.DolarList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
-                        EndDate = this.DolarList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date)
+                        Variance = await Statistics.VarianceAsync(Values: this.DolarList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>())
                     }
                 };
+
+                StatisticsHeader.Title += " - Dólar";
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: StatisticsHeader));
             }
