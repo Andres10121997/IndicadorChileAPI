@@ -107,8 +107,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
+                await Task.WhenAll(
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: this.Logger, ex: ex, OType: this.GetType())
+                );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -186,8 +188,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
+                await Task.WhenAll(
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: this.Logger, ex: ex, OType: this.GetType())
+                );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -221,8 +225,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
+                await Task.WhenAll(
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: this.Logger, ex: ex, OType: this.GetType())
+                );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
@@ -256,8 +262,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-                await Utils.LoggerErrorAsync(Logger: Logger, ex: ex, OType: this.GetType());
+                await Task.WhenAll(
+                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
+                    Utils.LoggerErrorAsync(Logger: this.Logger, ex: ex, OType: this.GetType())
+                );
 
                 return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
             }
