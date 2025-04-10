@@ -142,7 +142,9 @@ namespace IndicadorChileAPI.Context
                     )
                 ))
                 .AsParallel<CurrencyModel>()
-                .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency) && !float.IsInfinity(f: Model.Currency))
+                .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
+                                                          &&
+                                                          !float.IsInfinity(f: Model.Currency))
                 .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                 .ToArray<CurrencyModel>()
             ));
@@ -155,7 +157,9 @@ namespace IndicadorChileAPI.Context
             await Task.Run(function: async () => this.SetCurrencyList(
                 CurrencyList: (await this.AnnualValuesAsync())
                     .AsParallel<CurrencyModel>()
-                    .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.GetYear() && Model.Date.Month == this.GetMonth())
+                    .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.GetYear()
+                                                              &&
+                                                              Model.Date.Month == this.GetMonth())
                     .ToArray<CurrencyModel>()
             ));
             
@@ -164,53 +168,42 @@ namespace IndicadorChileAPI.Context
 
         public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
         {
+            #region Objects
             CurrencyModel? Value;
+            #endregion
 
-            try
+            // Intentar obtener el valor exacto de la fecha solicitada
+            Value = (await this.MonthlyValuesAsync())
+                .AsParallel<CurrencyModel>()
+                .Where<CurrencyModel>(predicate: Model => Model.Date == Date)
+                .FirstOrDefault<CurrencyModel>();
+
+            // Si no hay un valor exacto, retornar el último disponible antes de la fecha
+            if (string.IsNullOrEmpty(Value?.ToString())
+                ||
+                string.IsNullOrWhiteSpace(Value?.ToString()))
             {
-                // Intentar obtener el valor exacto de la fecha solicitada
                 Value = (await this.MonthlyValuesAsync())
                     .AsParallel<CurrencyModel>()
-                    .Where<CurrencyModel>(predicate: Model => Model.Date == Date)
+                    .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                    .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                     .FirstOrDefault<CurrencyModel>();
-
-                // Si no hay un valor exacto, retornar el último disponible antes de la fecha
-                if (Value is null
-                    ||
-                    Value == null
-                    ||
-                    Value.Equals(obj: null))
-                {
-                    Value = (await this.MonthlyValuesAsync())
-                        .AsParallel<CurrencyModel>()
-                        .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
-                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                        .FirstOrDefault<CurrencyModel>();
-                }
-
-                // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
-                if (Value is null
-                    ||
-                    Value == null
-                    ||
-                    Value.Equals(obj: null))
-                {
-                    Value = new CurrencyModel
-                    {
-                        ID = 0,
-                        Date = Date,
-                        Currency = (await this.MonthlyValuesAsync()).Any<CurrencyModel>() ? (await this.MonthlyValuesAsync()).Average<CurrencyModel>(selector: Model => Model.Currency) : 0
-                    };
-                }
-
-                return Value;
             }
-            catch (Exception ex)
+
+            // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
+            if (string.IsNullOrEmpty(Value?.ToString())
+                ||
+                string.IsNullOrWhiteSpace(Value?.ToString()))
             {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-
-                throw;
+                Value = new CurrencyModel
+                {
+                    ID = 0,
+                    Date = Date,
+                    Currency = (await this.MonthlyValuesAsync()).Any<CurrencyModel>() ? (await this.MonthlyValuesAsync()).Average<CurrencyModel>(selector: Model => Model.Currency) : throw new Exception(message: "No es posible obtener el valor de la divisa.")
+                };
             }
+
+            return Value;
         }
         #endregion
 
