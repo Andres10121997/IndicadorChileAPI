@@ -57,7 +57,7 @@ namespace IndicadorChileAPI
 
 
 
-        #region Looger
+        #region Logger
         internal static void LoogerInformation(ILogger Logger, string Message, Type OType)
         {
             Logger.LogInformation("");

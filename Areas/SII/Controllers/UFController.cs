@@ -17,10 +17,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
     ]
     public class UFController : ControllerBase
     {
-        #region Arrays
-        private CurrencyModel[] UFList { get; set; }
-        #endregion
-
         #region Interfaces
         private readonly ILogger<UFController> Logger;
         #endregion
@@ -31,7 +27,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public UFController(ILogger<UFController> Logger)
             : base()
         {
-            this.UFList = Array.Empty<CurrencyModel>();
             this.Logger = Logger;
         }
         #endregion
@@ -83,15 +78,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new UFContext(Year: Year, Month: Month);
 
-                this.UFList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+                Context.SetCurrencyList(CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync())); // Ternaria para obtener datos.
 
-                if (await Utils.ArrayIsNullAsync(Values: this.UFList)
-                    ||
-                    await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
-                {
-                    return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                }
-                
                 CurrencyList = new CurrencyListHeaderModel()
                 {
                     Title = "UF (Unidad de Fomento)",
@@ -99,7 +87,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = Year,
                     Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    List = this.UFList
+                    List = Context.GetCurrencyList()
                 };
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: CurrencyList));
@@ -150,14 +138,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new UFContext(Year: Year, Month: Month);
 
-                this.UFList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                if (await Utils.ArrayIsNullAsync(Values: this.UFList)
-                    ||
-                    await Utils.ArraySizeIsZeroAsync(Values: this.UFList))
-                {
-                    return await Task.Run<NotFoundResult>(function: () => this.NotFound());
-                }
+                Context.SetCurrencyList(CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync())); // Ternaria para obtener datos.
 
                 StatisticsHeader = new StatisticsHeaderModel()
                 {

@@ -92,11 +92,27 @@ namespace IndicadorChileAPI.Context
 
         public CurrencyModel[] GetCurrencyList()
         {
+            if (this.CurrencyList.Length == 0
+                ||
+                this.CurrencyList.Length.Equals(obj: 0))
+            {
+                throw new Exception(message: $"El arreglo/matriz {nameof(this.CurrencyList)} debe tener más de un elemento.");
+            }
+
             return this.CurrencyList;
         }
 
         public void SetCurrencyList(CurrencyModel[] CurrencyList)
         {
+            if (CurrencyList is null
+                ||
+                CurrencyList == null
+                ||
+                CurrencyList.Equals(obj: null))
+            {
+                throw new ArgumentNullException(paramName: nameof(CurrencyList), message: $"El arreglo/matriz {nameof(CurrencyList)} no puede ser nulo.");
+            }
+
             this.CurrencyList = CurrencyList;
         }
         #endregion
@@ -209,6 +225,7 @@ namespace IndicadorChileAPI.Context
 
 
 
+        #region HTML
         protected async Task<string> GetHtmlContentAsync()
         {
             using HttpClient client = new HttpClient();
@@ -321,6 +338,7 @@ namespace IndicadorChileAPI.Context
 
             return Data;
         }
+        #endregion
 
         #region Transform
         protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
