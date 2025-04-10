@@ -1,7 +1,6 @@
 ﻿using IndicadorChileAPI.Context;
 using IndicadorChileAPI.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,8 +36,8 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             try
             {
                 this.SetCurrencyList(
-                    CurrencyList: (await this.TransformToDolarModelsAsync(
-                        DolarData: await this.ExtractValuesAsync(
+                    CurrencyList: (await this.TransformToCurrencyModelsAsync(
+                        CurrencyData: await this.ExtractValuesAsync(
                             htmlContent: await this.GetHtmlContentAsync(),
                             tableId: "table_export".Trim()
                         )
@@ -131,17 +130,5 @@ namespace IndicadorChileAPI.Areas.SII.Context.ForeignExchange
             }
         }
         #endregion
-
-
-
-        private async Task<CurrencyModel[]> TransformToDolarModelsAsync(Dictionary<byte, float[]> DolarData)
-        {
-            return await this.TransformToModelsAsync(Data: DolarData, modelFactory: (date, value) => new CurrencyModel
-            {
-                ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
-                Date = date,
-                Currency = value
-            });
-        }
     }
 }

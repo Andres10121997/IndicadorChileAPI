@@ -223,6 +223,7 @@ namespace IndicadorChileAPI.Context
             return Data;
         }
 
+        #region Transform
         protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
                                                                       Func<DateOnly, float, TModel> modelFactory)
         {
@@ -258,5 +259,16 @@ namespace IndicadorChileAPI.Context
 
             return await Task.Run<TModel[]>(function: () => ModelList.ToArray());
         }
+
+        protected async Task<CurrencyModel[]> TransformToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
+        {
+            return await this.TransformToModelsAsync(Data: CurrencyData, modelFactory: (date, value) => new CurrencyModel
+            {
+                ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
+                Date = date,
+                Currency = value
+            });
+        }
+        #endregion
     }
 }
