@@ -121,22 +121,22 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             RequireHttps
         ]
         public async Task<ActionResult<StatisticsHeaderModel>> GetStatisticsAsync([
-                                                                                Required(
-                                                                                    AllowEmptyStrings = false
-                                                                                ),
-                                                                                Range(
-                                                                                    minimum: 2013,
-                                                                                    maximum: int.MaxValue
-                                                                                )
-                                                                            ]
-                                                                            ushort Year,
-                                                                            [
-                                                                                Range(
-                                                                                    minimum: 1,
-                                                                                    maximum: 12
-                                                                                )
-                                                                            ]
-                                                                            byte? Month)
+                                                                                    Required(
+                                                                                        AllowEmptyStrings = false
+                                                                                    ),
+                                                                                    Range(
+                                                                                        minimum: 2013,
+                                                                                        maximum: int.MaxValue
+                                                                                    )
+                                                                                  ]
+                                                                                  ushort Year,
+                                                                                  [
+                                                                                    Range(
+                                                                                        minimum: 1,
+                                                                                        maximum: 12
+                                                                                    )
+                                                                                  ]
+                                                                                  byte? Month)
         {
             #region Variables
             DateTime Now = DateTime.Now;

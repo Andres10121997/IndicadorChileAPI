@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using IndicadorChileAPI.Models;
+using System.Linq;
 
 namespace IndicadorChileAPI.Context
 {
@@ -102,10 +103,105 @@ namespace IndicadorChileAPI.Context
 
 
 
-        #region Abstract
-        public abstract Task<CurrencyModel[]> AnnualValuesAsync();
-        public abstract Task<CurrencyModel[]> MonthlyValuesAsync();
-        public abstract Task<CurrencyModel> DailyValueAsync(DateOnly Date);
+        #region Values
+        public async Task<CurrencyModel[]> AnnualValuesAsync()
+        {
+            try
+            {
+                this.SetCurrencyList(
+                    CurrencyList: (await this.TransformToCurrencyModelsAsync(
+                        CurrencyData: await this.ExtractValuesAsync(
+                            htmlContent: await this.GetHtmlContentAsync(),
+                            tableId: "table_export".Trim()
+                        )
+                    ))
+                    .AsParallel<CurrencyModel>()
+                    .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency) && !float.IsInfinity(f: Model.Currency))
+                    .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                    .ToArray<CurrencyModel>()
+                );
+
+                return this.GetCurrencyList();
+            }
+            catch (Exception ex)
+            {
+                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
+
+                throw;
+            }
+        }
+
+        public async Task<CurrencyModel[]> MonthlyValuesAsync()
+        {
+            try
+            {
+                this.SetCurrencyList(
+                    CurrencyList: (await this.AnnualValuesAsync())
+                        .AsParallel<CurrencyModel>()
+                        .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.GetYear() && Model.Date.Month == this.GetMonth())
+                        .ToArray<CurrencyModel>()
+                );
+
+                return this.GetCurrencyList();
+            }
+            catch (Exception ex)
+            {
+                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
+
+                throw;
+            }
+        }
+
+        public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
+        {
+            CurrencyModel? Value;
+
+            try
+            {
+                // Intentar obtener el valor exacto de la fecha solicitada
+                Value = (await this.MonthlyValuesAsync())
+                    .AsParallel<CurrencyModel>()
+                    .Where<CurrencyModel>(predicate: Model => Model.Date == Date)
+                    .FirstOrDefault<CurrencyModel>();
+
+                // Si no hay un valor exacto, retornar el último disponible antes de la fecha
+                if (Value is null
+                    ||
+                    Value == null
+                    ||
+                    Value.Equals(obj: null))
+                {
+                    Value = (await this.MonthlyValuesAsync())
+                        .AsParallel<CurrencyModel>()
+                        .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                        .FirstOrDefault<CurrencyModel>();
+                }
+
+                // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
+                if (Value is null
+                    ||
+                    Value == null
+                    ||
+                    Value.Equals(obj: null))
+                {
+                    Value = new CurrencyModel
+                    {
+                        ID = 0,
+                        Date = Date,
+                        Currency = (await this.MonthlyValuesAsync()).Any<CurrencyModel>() ? (await this.MonthlyValuesAsync()).Average<CurrencyModel>(selector: Model => Model.Currency) : 0
+                    };
+                }
+
+                return Value;
+            }
+            catch (Exception ex)
+            {
+                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
+
+                throw;
+            }
+        }
         #endregion
 
 
