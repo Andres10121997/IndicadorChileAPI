@@ -106,50 +106,32 @@ namespace IndicadorChileAPI.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
-            try
-            {
-                this.SetCurrencyList(
-                    CurrencyList: (await this.TransformToCurrencyModelsAsync(
-                        CurrencyData: await this.ExtractValuesAsync(
-                            htmlContent: await this.GetHtmlContentAsync(),
-                            tableId: "table_export".Trim()
-                        )
-                    ))
-                    .AsParallel<CurrencyModel>()
-                    .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency) && !float.IsInfinity(f: Model.Currency))
-                    .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                    .ToArray<CurrencyModel>()
-                );
+            await Task.Run(function: async () => this.SetCurrencyList(
+                CurrencyList: (await this.TransformToCurrencyModelsAsync(
+                    CurrencyData: await this.ExtractValuesAsync(
+                        htmlContent: await this.GetHtmlContentAsync(),
+                        tableId: "table_export".Trim()
+                    )
+                ))
+                .AsParallel<CurrencyModel>()
+                .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency) && !float.IsInfinity(f: Model.Currency))
+                .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                .ToArray<CurrencyModel>()
+            ));
 
-                return this.GetCurrencyList();
-            }
-            catch (Exception ex)
-            {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-
-                throw;
-            }
+            return await Task.Run<CurrencyModel[]>(function: () => this.GetCurrencyList());
         }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
-            try
-            {
-                this.SetCurrencyList(
-                    CurrencyList: (await this.AnnualValuesAsync())
-                        .AsParallel<CurrencyModel>()
-                        .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.GetYear() && Model.Date.Month == this.GetMonth())
-                        .ToArray<CurrencyModel>()
-                );
-
-                return this.GetCurrencyList();
-            }
-            catch (Exception ex)
-            {
-                await Utils.ErrorMessageAsync(ex: ex, OType: this.GetType());
-
-                throw;
-            }
+            await Task.Run(function: async () => this.SetCurrencyList(
+                CurrencyList: (await this.AnnualValuesAsync())
+                    .AsParallel<CurrencyModel>()
+                    .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.GetYear() && Model.Date.Month == this.GetMonth())
+                    .ToArray<CurrencyModel>()
+            ));
+            
+            return await Task.Run<CurrencyModel[]>(function: () => this.GetCurrencyList());
         }
 
         public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
@@ -201,6 +183,27 @@ namespace IndicadorChileAPI.Context
 
                 throw;
             }
+        }
+        #endregion
+
+
+
+        #region Mathematics
+        public async Task<StatisticsModel> GetStatisticsAsync()
+        {
+            return await Task.Run<StatisticsModel>(function: async () => new StatisticsModel()
+            {
+                StartDate = this.CurrencyList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
+                EndDate = this.CurrencyList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date),
+                AmountOfData = Convert.ToUInt16(value: this.CurrencyList.Length),
+                Minimum = this.CurrencyList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
+                Maximum = this.CurrencyList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
+                Summation = this.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency),
+                SumOfSquares = this.CurrencyList.Sum<CurrencyModel>(x => Math.Pow(x: x.Currency, y: 2)),
+                Average = this.CurrencyList.Average<CurrencyModel>(selector: Average => Average.Currency),
+                StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.CurrencyList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
+                Variance = await Statistics.VarianceAsync(Values: this.CurrencyList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>())
+            });
         }
         #endregion
 
