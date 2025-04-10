@@ -32,11 +32,25 @@ namespace IndicadorChileAPI.Context
             : base()
         {
             #region Validations
+            if (string.IsNullOrEmpty(value: Url)
+                ||
+                string.IsNullOrWhiteSpace(value: Url))
+            {
+                throw new ArgumentNullException(paramName: nameof(Url), message: $"El parámetro {nameof(Url)} no pueder ser nulo, estar vacío o con espacios vacíos.");
+            }
+            
+            if (string.IsNullOrEmpty(value: Year.ToString())
+                ||
+                string.IsNullOrWhiteSpace(value: Year.ToString()))
+            {
+                throw new ArgumentNullException(paramName: nameof(Year), message: $"El parámetro {nameof(Year)} no puede ser nulo, estar vacío o con espacios vacíos.");
+            }
+            else
             if (Year > DateTime.Now.Year)
             {
                 throw new ArgumentException(message: $"The year must not be greater than {DateTime.Now.Year}.", paramName: nameof(Year));
             }
-            else
+            
             if (Month < 1
                 ||
                 Month > 12)
@@ -44,11 +58,9 @@ namespace IndicadorChileAPI.Context
                 throw new ArgumentException(message: "The month number must be between 1 and 12.", paramName: nameof(Month));
             }
             else
-            if ((Year == DateTime.Now.Year
-                 ||
-                 Year.Equals(obj: DateTime.Now.Year))
+            if (Month > DateTime.Now.Month
                 &&
-                Month > DateTime.Now.Month)
+                (Year == DateTime.Now.Year || Year.Equals(obj: DateTime.Now.Year)))
             {
                 throw new Exception(message: "The query cannot be performed.");
             }
