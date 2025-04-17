@@ -222,7 +222,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month: Convert.ToByte(value: Date.Month)
                 );
 
-                return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, Dolar: Dolar)));
+                return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, AmountOfCurrency: Dolar)));
             }
             catch (Exception ex)
             {
