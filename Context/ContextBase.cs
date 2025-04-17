@@ -12,6 +12,9 @@ namespace IndicadorChileAPI.Context
     public abstract class ContextBase
     {
         #region Variables
+        private float Currency { get; set; }
+        private double CurrencyConversion { get; set; }
+
         #region Readonly
         private readonly string Url;
         private readonly ushort Year;
@@ -85,6 +88,41 @@ namespace IndicadorChileAPI.Context
 
 
         #region GettersAndSetters
+        public float GetCurrency()
+        {
+            return this.Currency;
+        }
+
+        public void SetCurrency(float Currency)
+        {
+            if (float.IsNaN(f: Currency))
+            {
+                throw new ArgumentNullException(paramName: nameof(Currency), message: $"La variable {nameof(Currency)} no puede tener un valor ${nameof(float.NaN)}");
+            }
+            else
+            if (float.IsInfinity(f: Currency))
+            {
+                throw new ArgumentException(message: $"El parámetro {nameof(Currency)} no puede ser infinito", paramName: nameof(Currency));
+            }
+
+            this.Currency = Currency;
+        }
+
+        public double GetCurrencyConversion()
+        {
+            return this.CurrencyConversion;
+        }
+
+        public void SetCurrencyConversion(double CurrencyConversion)
+        {
+            if (double.IsNaN(d: CurrencyConversion))
+            {
+                throw new ArgumentNullException(paramName: nameof(CurrencyConversion), message: $"La variable {nameof(CurrencyConversion)} no puede tener un valor {nameof(double.NaN)}");
+            }
+
+            this.CurrencyConversion = CurrencyConversion;
+        }
+
         #region Readonly
         protected string GetUrl()
         {
@@ -102,6 +140,7 @@ namespace IndicadorChileAPI.Context
         }
         #endregion
 
+        #region Arrays
         public CurrencyModel[] GetCurrencyList()
         {
             if (this.CurrencyList.Length == 0
@@ -127,6 +166,7 @@ namespace IndicadorChileAPI.Context
 
             this.CurrencyList = CurrencyList;
         }
+        #endregion
         #endregion
 
 
@@ -214,18 +254,32 @@ namespace IndicadorChileAPI.Context
                                                               float AmountOfCurrency)
         {
             #region Variables
-            float Currency;
-            double CurrencyConversion;
             uint Pesos;
             #endregion
 
-            Currency = (await this.DailyValueAsync(Date: Date)).Currency;
+            this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
 
-            CurrencyConversion = await Task.Run<double>(function: () => Math.Truncate(d: AmountOfCurrency * Currency));
+            this.CurrencyConversion = await Task.Run<double>(function: () => Math.Truncate(d: AmountOfCurrency * this.Currency));
 
-            Pesos = await Task.Run<uint>(function: () => Convert.ToUInt32(value: CurrencyConversion));
+            Pesos = await Task.Run<uint>(function: () => Convert.ToUInt32(value: this.CurrencyConversion));
 
             return Pesos;
+        }
+
+        public async Task<float> ConversionIntoAnotherCurrencyAsync(DateOnly Date,
+                                                                    ulong Pesos)
+        {
+            #region Variables
+            float AnotherCurrency;
+            #endregion
+
+            this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
+
+            this.CurrencyConversion = await Task.Run<double>(function: () => Math.Round(value: Pesos / this.Currency, digits: 2));
+
+            AnotherCurrency = await Task.Run<float>(function: () => Convert.ToSingle(value: this.CurrencyConversion));
+
+            return AnotherCurrency;
         }
         #endregion
 

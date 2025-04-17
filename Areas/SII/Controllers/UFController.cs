@@ -168,7 +168,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetEquivalencyInUF([Required(AllowEmptyStrings = false)] ulong Pesos)
+        public async Task<ActionResult<float>> GetEquivalencyInUFAsync([Required(AllowEmptyStrings = false)] ulong Pesos)
         {
             #region Variables
             float UF;
@@ -186,9 +186,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month: Convert.ToByte(value: Date.Month)
                 );
 
-                UF = Pesos / (await Context.DailyValueAsync(Date: Date)).Currency;
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: UF));
+                return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionIntoAnotherCurrencyAsync(Date: Date, Pesos: Pesos)));
             }
             catch (Exception ex)
             {
@@ -205,7 +203,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<uint>> GetEquivalenceInPesos([Required(AllowEmptyStrings = false)] float UF)
+        public async Task<ActionResult<uint>> GetEquivalenceInPesosAsync([Required(AllowEmptyStrings = false)] float UF)
         {
             #region Variables
             DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);

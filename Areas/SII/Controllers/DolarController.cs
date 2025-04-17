@@ -186,9 +186,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month: Convert.ToByte(value: Date.Month)
                 );
 
-                Dolar = Pesos / (await Context.DailyValueAsync(Date: Date)).Currency;
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Dolar));
+                return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionIntoAnotherCurrencyAsync(Date: Date, Pesos: Pesos)));
             }
             catch (Exception ex)
             {

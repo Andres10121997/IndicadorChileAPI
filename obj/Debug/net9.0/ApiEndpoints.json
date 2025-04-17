@@ -146,7 +146,7 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
-    "Method": "GetEquivalenceInPesos",
+    "Method": "GetEquivalenceInPesosAsync",
     "RelativePath": "api/SII/UF/GetEquivalenceInPesos",
     "HttpMethod": "GET",
     "IsController": true,
@@ -172,7 +172,7 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
-    "Method": "GetEquivalencyInUF",
+    "Method": "GetEquivalencyInUFAsync",
     "RelativePath": "api/SII/UF/GetEquivalencyInUF",
     "HttpMethod": "GET",
     "IsController": true,
