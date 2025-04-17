@@ -69,10 +69,17 @@ namespace IndicadorChileAPI.Context
             }
             #endregion
 
+            #region Variables
+            this.Currency = float.NaN;
+            this.CurrencyConversion = double.NaN;
             this.Url = Url;
             this.Year = Year;
             this.Month = Month;
+            #endregion
+
+            #region Arrays
             this.CurrencyList = Array.Empty<CurrencyModel>();
+            #endregion
         }
         #endregion
 
@@ -97,12 +104,20 @@ namespace IndicadorChileAPI.Context
         {
             if (float.IsNaN(f: Currency))
             {
-                throw new ArgumentNullException(paramName: nameof(Currency), message: $"La variable {nameof(Currency)} no puede tener un valor ${nameof(float.NaN)}");
+                throw new ArgumentNullException(paramName: nameof(Currency),
+                                                message: $"El parámetro {nameof(Currency)} no puede tener un valor ${nameof(float.NaN)}.");
             }
             else
             if (float.IsInfinity(f: Currency))
             {
-                throw new ArgumentException(message: $"El parámetro {nameof(Currency)} no puede ser infinito", paramName: nameof(Currency));
+                throw new ArgumentException(message: $"El parámetro {nameof(Currency)} no puede ser infinito.",
+                                            paramName: nameof(Currency));
+            }
+            else
+            if (float.IsNegative(f: Currency))
+            {
+                throw new ArgumentException(message: $"El parámetro {nameof(Currency)} no puede ser negativo.",
+                                            paramName: nameof(Currency));
             }
 
             this.Currency = Currency;
@@ -117,7 +132,14 @@ namespace IndicadorChileAPI.Context
         {
             if (double.IsNaN(d: CurrencyConversion))
             {
-                throw new ArgumentNullException(paramName: nameof(CurrencyConversion), message: $"La variable {nameof(CurrencyConversion)} no puede tener un valor {nameof(double.NaN)}");
+                throw new ArgumentNullException(paramName: nameof(CurrencyConversion),
+                                                message: $"El parámetro {nameof(CurrencyConversion)} no puede tener un valor {nameof(double.NaN)}.");
+            }
+            else
+            if (double.IsNegative(d: CurrencyConversion))
+            {
+                throw new ArgumentException(message: $"El parámetro {nameof(CurrencyConversion)} no puede ser negativo.",
+                                            paramName: nameof(CurrencyConversion));
             }
 
             this.CurrencyConversion = CurrencyConversion;
@@ -257,9 +279,9 @@ namespace IndicadorChileAPI.Context
             uint Pesos;
             #endregion
 
-            this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
+            this.SetCurrency(Currency: (await this.DailyValueAsync(Date: Date)).Currency);
 
-            this.CurrencyConversion = await Task.Run<double>(function: () => Math.Truncate(d: AmountOfCurrency * this.Currency));
+            this.SetCurrencyConversion(CurrencyConversion: await Task.Run<double>(function: () => Math.Truncate(d: AmountOfCurrency * this.Currency)));
 
             Pesos = await Task.Run<uint>(function: () => Convert.ToUInt32(value: this.CurrencyConversion));
 
@@ -273,9 +295,9 @@ namespace IndicadorChileAPI.Context
             float AnotherCurrency;
             #endregion
 
-            this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
+            this.SetCurrency(Currency: (await this.DailyValueAsync(Date: Date)).Currency);
 
-            this.CurrencyConversion = await Task.Run<double>(function: () => Math.Round(value: Pesos / this.Currency, digits: 2));
+            this.SetCurrencyConversion(CurrencyConversion: await Task.Run<double>(function: () => Math.Round(value: Pesos / this.Currency, digits: 2)));
 
             AnotherCurrency = await Task.Run<float>(function: () => Convert.ToSingle(value: this.CurrencyConversion));
 

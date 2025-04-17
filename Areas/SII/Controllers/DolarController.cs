@@ -171,7 +171,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public async Task<ActionResult<float>> GetEquivalencyInDolarAsync([Required(AllowEmptyStrings = false)] ulong Pesos)
         {
             #region Variables
-            float Dolar;
             DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
             #endregion
 
