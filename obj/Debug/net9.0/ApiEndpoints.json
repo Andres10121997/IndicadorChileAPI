@@ -32,7 +32,7 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
-    "Method": "GetEquivalencyInDolar",
+    "Method": "GetEquivalencyInDolarAsync",
     "RelativePath": "api/SII/Dolar/GetEquivalencyInDolar",
     "HttpMethod": "GET",
     "IsController": true,
@@ -58,7 +58,7 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
-    "Method": "GetEquivalencyInPesos",
+    "Method": "GetEquivalencyInPesosAsync",
     "RelativePath": "api/SII/Dolar/GetEquivalencyInPesos",
     "HttpMethod": "GET",
     "IsController": true,

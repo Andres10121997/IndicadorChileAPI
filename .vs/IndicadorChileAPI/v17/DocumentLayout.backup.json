@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\areas\\sii\\controllers\\ufcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|solutionrelative:areas\\sii\\controllers\\ufcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\areas\\sii\\context\\foreignexchange\\ufcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|solutionrelative:areas\\sii\\context\\foreignexchange\\ufcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\areas\\sii\\context\\foreignexchange\\dolarcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|solutionrelative:areas\\sii\\context\\foreignexchange\\dolarcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +22,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DolarContext.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Context\\ForeignExchange\\DolarContext.cs",
+              "RelativeDocumentMoniker": "Areas\\SII\\Context\\ForeignExchange\\DolarContext.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Context\\ForeignExchange\\DolarContext.cs",
+              "RelativeToolTip": "Areas\\SII\\Context\\ForeignExchange\\DolarContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T13:01:21.729Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UFController.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Controllers\\UFController.cs",
+              "RelativeDocumentMoniker": "Areas\\SII\\Controllers\\UFController.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Controllers\\UFController.cs",
+              "RelativeToolTip": "Areas\\SII\\Controllers\\UFController.cs",
+              "ViewState": "AgIAALoAAAAAAAAAAAAgwNEAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T13:00:57.121Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UFContext.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Context\\ForeignExchange\\UFContext.cs",
+              "RelativeDocumentMoniker": "Areas\\SII\\Context\\ForeignExchange\\UFContext.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Context\\ForeignExchange\\UFContext.cs",
+              "RelativeToolTip": "Areas\\SII\\Context\\ForeignExchange\\UFContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-17T13:00:44.046Z",
+              "EditorCaption": ""
             }
           ]
         }

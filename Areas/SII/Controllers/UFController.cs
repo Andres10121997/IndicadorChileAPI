@@ -208,7 +208,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public async Task<ActionResult<uint>> GetEquivalenceInPesos([Required(AllowEmptyStrings = false)] float UF)
         {
             #region Variables
-            uint Pesos;
             DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
             #endregion
 
@@ -223,9 +222,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month: Convert.ToByte(value: Date.Month)
                 );
 
-                Pesos = Convert.ToUInt32(value: Math.Truncate(d: UF * (await Context.DailyValueAsync(Date: Date)).Currency));
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Pesos));
+                return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, UF: UF)));
             }
             catch (Exception ex)
             {

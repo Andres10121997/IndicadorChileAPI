@@ -138,7 +138,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new DolarContext(Year: Year, Month: Month);
 
-                Context.SetCurrencyList((Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync())); // Ternaria para obtener datos.
+                Context.SetCurrencyList(CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync())); // Ternaria para obtener datos.
 
                 StatisticsHeader = new StatisticsHeaderModel()
                 {
@@ -168,7 +168,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetEquivalencyInDolar([Required(AllowEmptyStrings = false)] ulong Pesos)
+        public async Task<ActionResult<float>> GetEquivalencyInDolarAsync([Required(AllowEmptyStrings = false)] ulong Pesos)
         {
             #region Variables
             float Dolar;
@@ -205,10 +205,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<uint>> GetEquivalencyInPesos([Required(AllowEmptyStrings = false)] float Dolar)
+        public async Task<ActionResult<uint>> GetEquivalencyInPesosAsync([Required(AllowEmptyStrings = false)] float Dolar)
         {
             #region Variables
-            uint Pesos;
             DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
             #endregion
 
@@ -223,9 +222,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month: Convert.ToByte(value: Date.Month)
                 );
 
-                Pesos = Convert.ToUInt32(value: Math.Truncate(d: Dolar * (await Context.DailyValueAsync(Date: Date)).Currency));
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Pesos));
+                return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, Dolar: Dolar)));
             }
             catch (Exception ex)
             {
