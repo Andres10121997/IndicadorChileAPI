@@ -6,7 +6,6 @@ namespace IndicadorChileAPI.Models
 {
     public class StatisticsHeaderModel
     {
-        public string Title { get; set; } = "Valores estadísticos";
         [JsonConverter(typeof(DateOnlyJsonConverter))]
         public required DateOnly ConsultationDate { get; set; }
         [JsonConverter(typeof(TimeOnlyJsonConverter))]

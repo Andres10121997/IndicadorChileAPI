@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using IndicadorChileAPI.Models;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using IndicadorChileAPI.Models;
-using System.Linq;
 
 namespace IndicadorChileAPI.Context
 {
@@ -72,9 +72,11 @@ namespace IndicadorChileAPI.Context
             #region Variables
             this.Currency = float.NaN;
             this.CurrencyConversion = double.NaN;
+            #region Readonly
             this.Url = Url;
             this.Year = Year;
             this.Month = Month;
+            #endregion
             #endregion
 
             #region Arrays

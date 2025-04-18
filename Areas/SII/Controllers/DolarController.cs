@@ -78,11 +78,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new DolarContext(Year: Year, Month: Month);
                 
-                Context.SetCurrencyList(CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync())); // Ternaria para obtener datos.
+                Context.SetCurrencyList(
+                    CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()) // Ternaria para obtener datos.
+                );
 
                 CurrencyList = new CurrencyListHeaderModel()
                 {
-                    Title = "Dólar",
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = Year,
@@ -138,7 +139,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new DolarContext(Year: Year, Month: Month);
 
-                Context.SetCurrencyList(CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync())); // Ternaria para obtener datos.
+                Context.SetCurrencyList(
+                    CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()) // Ternaria para obtener datos.
+                );
 
                 StatisticsHeader = new StatisticsHeaderModel()
                 {
@@ -148,8 +151,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     Statistics = await Context.GetStatisticsAsync()
                 };
-
-                StatisticsHeader.Title += " - Dólar";
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: StatisticsHeader));
             }

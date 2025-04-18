@@ -6,7 +6,6 @@ namespace IndicadorChileAPI.Models
 {
     public class CurrencyListHeaderModel
     {
-        public required string Title { get; set; }
         [JsonConverter(typeof(DateOnlyJsonConverter))]
         public required DateOnly ConsultationDate { get; set; }
         [JsonConverter(typeof(TimeOnlyJsonConverter))]
