@@ -446,6 +446,8 @@ namespace IndicadorChileAPI.Context
         }
         #endregion
 
+
+
         #region Transform
         protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
                                                                       Func<DateOnly, float, TModel> modelFactory)

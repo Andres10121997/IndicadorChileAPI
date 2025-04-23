@@ -66,7 +66,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                                                                                   byte? Month)
         {
             #region Variables
-            DateTime Now = DateTime.Now;
+            DateTime Now;
             #endregion
 
             #region Objects
@@ -81,6 +81,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Context.SetCurrencyList(
                     CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()) // Ternaria para obtener datos.
                 );
+
+                Now = DateTime.Now;
 
                 CurrencyList = new CurrencyListHeaderModel()
                 {
@@ -127,7 +129,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                                                                                   byte? Month)
         {
             #region Variables
-            DateTime Now = DateTime.Now;
+            DateTime Now;
             #endregion
 
             #region Objects
@@ -142,6 +144,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Context.SetCurrencyList(
                     CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()) // Ternaria para obtener datos.
                 );
+
+                Now = DateTime.Now;
 
                 StatisticsHeader = new StatisticsHeaderModel()
                 {
@@ -172,7 +176,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public async Task<ActionResult<float>> GetEquivalencyInUFAsync([Required(AllowEmptyStrings = false)] ulong Pesos)
         {
             #region Variables
-            DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+            DateOnly Date;
             #endregion
 
             #region Objects
@@ -181,9 +185,11 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
+                Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+
                 Context = new UFContext(
-                    Year: Convert.ToUInt16(value: Date.Year),
-                    Month: Convert.ToByte(value: Date.Month)
+                    Year: await Task.Run<ushort>(function: () => Convert.ToUInt16(value: Date.Year)),
+                    Month: await Task.Run<byte>(function: () => Convert.ToByte(value: Date.Month))
                 );
 
                 return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionIntoAnotherCurrencyAsync(Date: Date, Pesos: Pesos)));
@@ -206,7 +212,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public async Task<ActionResult<uint>> GetEquivalenceInPesosAsync([Required(AllowEmptyStrings = false)] float UF)
         {
             #region Variables
-            DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+            DateOnly Date;
             #endregion
 
             #region Objects
@@ -215,9 +221,11 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
+                Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+
                 Context = new UFContext(
-                    Year: Convert.ToUInt16(value: Date.Year),
-                    Month: Convert.ToByte(value: Date.Month)
+                    Year: await Task.Run<ushort>(function: () => Convert.ToUInt16(value: Date.Year)),
+                    Month: await Task.Run<byte>(function: () => Convert.ToByte(value: Date.Month))
                 );
 
                 return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, AmountOfCurrency: UF)));
