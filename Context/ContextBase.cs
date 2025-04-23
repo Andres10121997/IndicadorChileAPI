@@ -208,7 +208,9 @@ namespace IndicadorChileAPI.Context
                 .AsParallel<CurrencyModel>()
                 .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
                                                           &&
-                                                          !float.IsInfinity(f: Model.Currency))
+                                                          !float.IsInfinity(f: Model.Currency)
+                                                          &&
+                                                          !float.IsNegative(f: Model.Currency))
                 .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                 .ToArray<CurrencyModel>()
             ));
@@ -282,9 +284,13 @@ namespace IndicadorChileAPI.Context
             uint Pesos;
             #endregion
 
-            this.SetCurrency(Currency: (await this.DailyValueAsync(Date: Date)).Currency);
+            this.SetCurrency(
+                Currency: (await this.DailyValueAsync(Date: Date)).Currency
+            );
 
-            this.SetCurrencyConversion(CurrencyConversion: await Task.Run<double>(function: () => Math.Truncate(d: AmountOfCurrency * this.Currency)));
+            this.SetCurrencyConversion(
+                CurrencyConversion: await Task.Run<double>(function: () => Math.Truncate(d: AmountOfCurrency * this.Currency))
+            );
 
             Pesos = await Task.Run<uint>(function: () => Convert.ToUInt32(value: this.CurrencyConversion));
 
@@ -298,9 +304,13 @@ namespace IndicadorChileAPI.Context
             float AnotherCurrency;
             #endregion
 
-            this.SetCurrency(Currency: (await this.DailyValueAsync(Date: Date)).Currency);
+            this.SetCurrency(
+                Currency: (await this.DailyValueAsync(Date: Date)).Currency
+            );
 
-            this.SetCurrencyConversion(CurrencyConversion: await Task.Run<double>(function: () => Math.Round(value: Pesos / this.Currency, digits: 2)));
+            this.SetCurrencyConversion(
+                CurrencyConversion: await Task.Run<double>(function: () => Math.Round(value: Pesos / this.Currency, digits: 2))
+            );
 
             AnotherCurrency = await Task.Run<float>(function: () => Convert.ToSingle(value: this.CurrencyConversion));
 
