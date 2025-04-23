@@ -263,6 +263,7 @@ namespace IndicadorChileAPI.Context
                 {
                     ID = 0,
                     Date = Date,
+                    WeekdayName = Date.ToString(format: "dddd", provider: CultureInfo.CreateSpecificCulture(name: "es")),
                     Currency = (await this.MonthlyValuesAsync()).Any<CurrencyModel>() ? (await this.MonthlyValuesAsync()).Average<CurrencyModel>(selector: Model => Model.Currency) : throw new Exception(message: "No es posible obtener el valor de la divisa.")
                 };
             }
@@ -484,11 +485,12 @@ namespace IndicadorChileAPI.Context
 
         protected async Task<CurrencyModel[]> TransformToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
         {
-            return await this.TransformToModelsAsync(Data: CurrencyData, modelFactory: (date, value) => new CurrencyModel
+            return await this.TransformToModelsAsync(Data: CurrencyData, modelFactory: (Date, Value) => new CurrencyModel
             {
-                ID = uint.Parse(s: date.ToString(format: "yyyyMMdd")),
-                Date = date,
-                Currency = value
+                ID = uint.Parse(s: Date.ToString(format: "yyyyMMdd")),
+                Date = Date,
+                WeekdayName = Date.ToString(format: "dddd", provider: CultureInfo.CreateSpecificCulture(name: "es")),
+                Currency = Value
             });
         }
         #endregion

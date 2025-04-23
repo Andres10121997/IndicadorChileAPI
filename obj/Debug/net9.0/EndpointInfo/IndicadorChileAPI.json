@@ -409,7 +409,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "month": {
+          "monthName": {
             "type": "string",
             "nullable": true
           },
@@ -427,7 +427,8 @@
         "required": [
           "currency",
           "date",
-          "id"
+          "id",
+          "weekdayName"
         ],
         "type": "object",
         "properties": {
@@ -438,6 +439,11 @@
           "date": {
             "type": "string",
             "format": "date"
+          },
+          "weekdayName": {
+            "minLength": 1,
+            "type": "string",
+            "format": "string"
           },
           "currency": {
             "minimum": 0,

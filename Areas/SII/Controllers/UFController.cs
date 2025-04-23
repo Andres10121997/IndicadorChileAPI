@@ -87,7 +87,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = Year,
-                    Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
+                    MonthName = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     List = Context.GetCurrencyList()
                 };
 

@@ -45,6 +45,26 @@ namespace IndicadorChileAPI.Models
 
         [
             DataType(
+                dataType: DataType.Text
+            ),
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(CurrencyModel),
+                Name = "Nombre del día de la semana",
+                Order = 3,
+                Prompt = "",
+                ShortName = "Día de la semana"
+            ),
+            Required(
+                AllowEmptyStrings = false
+            )
+        ]
+        public required string WeekdayName { get; set; }
+
+        [
+            DataType(
                 DataType.Currency
             ),
             Display(
@@ -53,7 +73,7 @@ namespace IndicadorChileAPI.Models
                 Description = "",
                 GroupName = nameof(CurrencyModel),
                 Name = "Valor Divisa",
-                Order = 3,
+                Order = 4,
                 Prompt = "",
                 ShortName = "Divisa"
             ),
