@@ -334,7 +334,7 @@ namespace IndicadorChileAPI.Context
                 SumOfSquares = this.CurrencyList.Sum<CurrencyModel>(x => Math.Pow(x: x.Currency, y: 2)),
                 Average = this.CurrencyList.Average<CurrencyModel>(selector: Average => Average.Currency),
                 StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.CurrencyList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
-                Variance = await Statistics.VarianceAsync(Values: this.CurrencyList.Select<CurrencyModel, float>(selector: Variance => Variance.Currency).ToArray<float>())
+                Variance = this.CurrencyList.Select(value => value.Currency).Variance()
             });
         }
         #endregion
