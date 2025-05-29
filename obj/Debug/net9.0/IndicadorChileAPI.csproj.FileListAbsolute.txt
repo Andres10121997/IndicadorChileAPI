@@ -21,12 +21,6 @@ C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\s
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets.build.json
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets\msbuild.IndicadorChileAPI.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets\msbuild.IndicadorChileAPI.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
-C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets\msbuild.build.IndicadorChileAPI.props
-C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.IndicadorChileAPI.props
-C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.IndicadorChileAPI.props
-C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets.pack.json
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\Indicado.EFF4D45E.Up2Date
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\IndicadorChileAPI.dll
@@ -35,3 +29,4 @@ C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\I
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\IndicadorChileAPI.genruntimeconfig.cache
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\ref\IndicadorChileAPI.dll
 C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\IndicadorChileAPI.sourcelink.json
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Debug\net9.0\staticwebassets.build.json.cache
