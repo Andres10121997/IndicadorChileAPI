@@ -82,6 +82,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()) // Ternaria para obtener datos.
                 );
 
+                ArgumentNullException.ThrowIfNull(argument: Context.GetCurrencyList());
+
                 Now = DateTime.Now;
 
                 CurrencyList = new CurrencyListHeaderModel()
@@ -97,12 +99,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Task.WhenAll(
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: this.Logger, ex: ex, OType: this.GetType())
-                );
+                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
+                return await Task.Run<StatusCodeResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError));
             }
         }
 
@@ -145,6 +145,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()) // Ternaria para obtener datos.
                 );
 
+                ArgumentNullException.ThrowIfNull(argument: Context.GetCurrencyList());
+
                 Now = DateTime.Now;
 
                 StatisticsHeader = new StatisticsHeaderModel()
@@ -160,12 +162,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Task.WhenAll(
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: this.Logger, ex: ex, OType: this.GetType())
-                );
+                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
+                return await Task.Run<StatusCodeResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError));
             }
         }
 
@@ -196,12 +196,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Task.WhenAll(
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: this.Logger, ex: ex, OType: this.GetType())
-                );
+                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
+                return await Task.Run<StatusCodeResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError));
             }
         }
 
@@ -232,12 +230,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                await Task.WhenAll(
-                    Utils.ErrorMessageAsync(ex: ex, OType: this.GetType()),
-                    Utils.LoggerErrorAsync(Logger: this.Logger, ex: ex, OType: this.GetType())
-                );
+                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<ObjectResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError, value: ex));
+                return await Task.Run<StatusCodeResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError));
             }
         }
         #endregion
