@@ -142,14 +142,7 @@ namespace IndicadorChileAPI.Context
 
         public void SetCurrencyList(CurrencyModel[] CurrencyList)
         {
-            if (CurrencyList is null
-                ||
-                CurrencyList == null
-                ||
-                CurrencyList.Equals(obj: null))
-            {
-                throw new ArgumentNullException(paramName: nameof(CurrencyList), message: $"El arreglo/matriz {nameof(CurrencyList)} no puede ser nulo.");
-            }
+            ArgumentNullException.ThrowIfNull(CurrencyList);
 
             this.CurrencyList = CurrencyList;
         }
@@ -331,21 +324,10 @@ namespace IndicadorChileAPI.Context
             #endregion
 
             #region Validations
-            if (string.IsNullOrEmpty(value: htmlContent)
-                ||
-                string.IsNullOrWhiteSpace(value: htmlContent))
-            {
-                throw new ArgumentNullException(message: $"El parámetro {nameof(htmlContent)} no puede ser nulo o estar vacío.",
-                                                paramName: nameof(htmlContent));
-            }
-            
-            if (string.IsNullOrEmpty(value: tableId)
-                ||
-                string.IsNullOrWhiteSpace(value: tableId))
-            {
-                throw new ArgumentException(message: "El ID de la tabla no puede estar vacío.",
-                                            paramName: nameof(tableId));
-            }
+            ArgumentNullException.ThrowIfNullOrEmpty(argument: htmlContent);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: htmlContent);
+            ArgumentNullException.ThrowIfNullOrEmpty(argument: tableId);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: tableId);
             #endregion
 
             // Regex para encontrar la tabla con el ID dinámico
