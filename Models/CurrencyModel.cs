@@ -34,7 +34,7 @@ namespace IndicadorChileAPI.Models
                 GroupName = nameof(CurrencyModel),
                 Name = "Fecha",
                 Order = 2,
-                Prompt = "",
+                Prompt = "Ingrese aquí la fecha.",
                 ShortName = "Fecha"
             ),
             Required(
@@ -54,7 +54,7 @@ namespace IndicadorChileAPI.Models
                 GroupName = nameof(CurrencyModel),
                 Name = "Nombre del día de la semana",
                 Order = 3,
-                Prompt = "",
+                Prompt = "Ingrese aquí el nombre del día de la semana.",
                 ShortName = "Día de la semana"
             ),
             Required(
@@ -74,7 +74,7 @@ namespace IndicadorChileAPI.Models
                 GroupName = nameof(CurrencyModel),
                 Name = "Valor Divisa",
                 Order = 4,
-                Prompt = "",
+                Prompt = "Ingrese aquí el valor de la divisa.",
                 ShortName = "Divisa"
             ),
             Required(

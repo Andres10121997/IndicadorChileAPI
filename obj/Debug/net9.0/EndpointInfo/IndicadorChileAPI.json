@@ -407,7 +407,7 @@
           },
           "year": {
             "type": "integer",
-            "format": "int32"
+            "format": "currency"
           },
           "monthName": {
             "type": "string",

@@ -130,12 +130,7 @@ namespace IndicadorChileAPI.Context
         #region Arrays
         public CurrencyModel[] GetCurrencyList()
         {
-            if (this.CurrencyList.Length == 0
-                ||
-                this.CurrencyList.Length.Equals(obj: 0))
-            {
-                throw new Exception(message: $"El arreglo/matriz {nameof(this.CurrencyList)} debe tener más de un elemento.");
-            }
+            ArgumentOutOfRangeException.ThrowIfEqual(value: this.CurrencyList.Length, other: 0);
 
             return this.CurrencyList;
         }

@@ -44,6 +44,25 @@ namespace IndicadorChileAPI.Models
             )
         ]
         public required TimeOnly ConsultationTime { get; set; }
+
+        [
+            DataType(
+                dataType: DataType.Currency
+            ),
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(CurrencyListHeaderModel),
+                Name = "Año",
+                Order = 3,
+                Prompt = "Ingrese aquí el año.",
+                ShortName = "Año"
+            ),
+            Required(
+                AllowEmptyStrings = false
+            )
+        ]
         public required ushort Year { get; set; }
         public string? MonthName { get; set; }
         public required CurrencyModel[] List { get; set; }
