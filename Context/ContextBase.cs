@@ -35,24 +35,9 @@ namespace IndicadorChileAPI.Context
             : base()
         {
             #region Validations
-            if (string.IsNullOrEmpty(value: Url)
-                ||
-                string.IsNullOrWhiteSpace(value: Url))
-            {
-                throw new ArgumentNullException(paramName: nameof(Url), message: $"El parámetro {nameof(Url)} no pueder ser nulo, estar vacío o con espacios vacíos.");
-            }
-            
-            if (string.IsNullOrEmpty(value: Year.ToString())
-                ||
-                string.IsNullOrWhiteSpace(value: Year.ToString()))
-            {
-                throw new ArgumentNullException(paramName: nameof(Year), message: $"El parámetro {nameof(Year)} no puede ser nulo, estar vacío o con espacios vacíos.");
-            }
-            else
-            if (Year > DateTime.Now.Year)
-            {
-                throw new ArgumentException(message: $"The year must not be greater than {DateTime.Now.Year}.", paramName: nameof(Year));
-            }
+            ArgumentNullException.ThrowIfNullOrEmpty(argument: Url);
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Url);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(value: Year, other: DateTime.Now.Year);
             
             if (Month < 1
                 ||
@@ -104,23 +89,10 @@ namespace IndicadorChileAPI.Context
 
         public void SetCurrency(float Currency)
         {
-            if (float.IsNaN(f: Currency))
-            {
-                throw new ArgumentNullException(paramName: nameof(Currency),
-                                                message: $"El parámetro {nameof(Currency)} no puede tener un valor ${nameof(float.NaN)}.");
-            }
-            else
-            if (float.IsInfinity(f: Currency))
-            {
-                throw new ArgumentException(message: $"El parámetro {nameof(Currency)} no puede ser infinito.",
-                                            paramName: nameof(Currency));
-            }
-            else
-            if (float.IsNegative(f: Currency))
-            {
-                throw new ArgumentException(message: $"El parámetro {nameof(Currency)} no puede ser negativo.",
-                                            paramName: nameof(Currency));
-            }
+            ArgumentOutOfRangeException.ThrowIfEqual(value: Currency, other: float.NaN);
+            ArgumentOutOfRangeException.ThrowIfEqual(value: Currency, other: float.PositiveInfinity);
+            ArgumentOutOfRangeException.ThrowIfEqual(value: Currency, other: float.NegativeInfinity);
+            ArgumentOutOfRangeException.ThrowIfNegative(value: Currency);
 
             this.Currency = Currency;
         }
@@ -132,17 +104,8 @@ namespace IndicadorChileAPI.Context
 
         public void SetCurrencyConversion(double CurrencyConversion)
         {
-            if (double.IsNaN(d: CurrencyConversion))
-            {
-                throw new ArgumentNullException(paramName: nameof(CurrencyConversion),
-                                                message: $"El parámetro {nameof(CurrencyConversion)} no puede tener un valor {nameof(double.NaN)}.");
-            }
-            else
-            if (double.IsNegative(d: CurrencyConversion))
-            {
-                throw new ArgumentException(message: $"El parámetro {nameof(CurrencyConversion)} no puede ser negativo.",
-                                            paramName: nameof(CurrencyConversion));
-            }
+            ArgumentOutOfRangeException.ThrowIfEqual(value: Currency, other: double.NaN);
+            ArgumentOutOfRangeException.ThrowIfNegative(value: CurrencyConversion);
 
             this.CurrencyConversion = CurrencyConversion;
         }
