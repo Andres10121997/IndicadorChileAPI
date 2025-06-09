@@ -92,53 +92,5 @@ namespace IndicadorChileAPI
             await Task.Run(action: () => LoggerError(Logger: Logger, ex: ex, OType: OType));
         }
         #endregion
-
-
-
-        #region Validations
-        internal static bool ArrayIsNull(object[] Values)
-        {
-            if (Values is null
-                ||
-                Values == null
-                ||
-                Values.Equals(obj: null))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        internal static async Task<bool> ArrayIsNullAsync(object[] Values)
-        {
-            return await Task.Run<bool>(function: () => ArrayIsNull(Values: Values));
-        }
-
-        internal static bool ArraySizeIsZero(object[] Values)
-        {
-            if (Values.Length == 0
-                ||
-                Values.Length.Equals(obj: 0)
-                ||
-                Values.LongLength == 0
-                ||
-                Values.LongLength.Equals(obj: 0))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        internal static async Task<bool> ArraySizeIsZeroAsync(object[] Values)
-        {
-            return await Task.Run<bool>(function: () => ArraySizeIsZero(Values));
-        }
-        #endregion
     }
 }

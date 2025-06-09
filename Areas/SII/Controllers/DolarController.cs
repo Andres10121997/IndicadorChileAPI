@@ -102,7 +102,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Utils.ErrorMessage(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<StatusCodeResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError));
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
             }
         }
 
@@ -165,7 +167,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Utils.ErrorMessage(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
 
-                return await Task.Run<StatusCodeResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError));
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
             }
         }
 
@@ -199,7 +203,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Utils.ErrorMessage(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<StatusCodeResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError));
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
             }
         }
 
@@ -233,7 +239,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Utils.ErrorMessage(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<StatusCodeResult>(function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError));
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
             }
         }
         #endregion
