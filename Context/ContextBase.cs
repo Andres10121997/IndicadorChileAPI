@@ -193,10 +193,8 @@ namespace IndicadorChileAPI.Context
                 .Where<CurrencyModel>(predicate: Model => Model.Date == Date)
                 .FirstOrDefault<CurrencyModel>();
 
-            // Si no hay un valor exacto, retornar el último disponible antes de la fecha
-            if (string.IsNullOrEmpty(Value?.ToString())
-                ||
-                string.IsNullOrWhiteSpace(Value?.ToString()))
+            // Si no hay un valor exacto, retornar el último disponible antes de la fecha (mensual).
+            if (Value is null)
             {
                 Value = (await this.MonthlyValuesAsync())
                     .AsParallel<CurrencyModel>()
@@ -205,19 +203,17 @@ namespace IndicadorChileAPI.Context
                     .FirstOrDefault<CurrencyModel>();
             }
 
-            // Si aún no hay valores, calcular el promedio o devolver un valor por defecto
-            if (string.IsNullOrEmpty(Value?.ToString())
-                ||
-                string.IsNullOrWhiteSpace(Value?.ToString()))
+            // Si no hay un valor exacto, retornar el último disponible antes de la fecha (anual).
+            if (Value is null)
             {
-                Value = new CurrencyModel
-                {
-                    ID = 0,
-                    Date = Date,
-                    WeekdayName = Date.ToString(format: "dddd", provider: CultureInfo.CreateSpecificCulture(name: "es")),
-                    Currency = (await this.MonthlyValuesAsync()).Any<CurrencyModel>() ? (await this.MonthlyValuesAsync()).Average<CurrencyModel>(selector: Model => Model.Currency) : throw new Exception(message: "No es posible obtener el valor de la divisa.")
-                };
+                Value = (await this.AnnualValuesAsync())
+                    .AsParallel<CurrencyModel>()
+                    .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                    .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                    .FirstOrDefault<CurrencyModel>();
             }
+
+            ArgumentNullException.ThrowIfNull(argument: Value);
 
             return Value;
         }
@@ -262,7 +258,7 @@ namespace IndicadorChileAPI.Context
 
 
         #region Mathematics
-        public async Task<StatisticsModel> GetStatisticsAsync() => await Task.Run<StatisticsModel>(function: async () => new StatisticsModel()
+        public async Task<StatisticsModel> GetStatisticsAsync() => new StatisticsModel()
         {
             StartDate = this.CurrencyList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
             EndDate = this.CurrencyList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date),
@@ -274,7 +270,7 @@ namespace IndicadorChileAPI.Context
             Average = this.CurrencyList.Average<CurrencyModel>(selector: Average => Average.Currency),
             StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.CurrencyList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
             Variance = this.CurrencyList.Select(value => value.Currency).Variance()
-        });
+        }   ;
         #endregion
 
 
@@ -363,13 +359,13 @@ namespace IndicadorChileAPI.Context
                                 .Replace(oldValue: ",", newValue: "."); // Cambiar comas por puntos
                             
                             #region GuardarValores
-                            if (float.TryParse(s: Value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float ufValue))
+                            if (float.TryParse(s: Value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
                             {
-                                await Task.Run<float>(function: () => Values[i - 1] = ufValue);
+                                Values[i - 1] = currencyValue;
                             }
                             else
                             {
-                                await Task.Run<float>(function: () => Values[i - 1] = float.NaN);
+                                Values[i - 1] = float.NaN;
                             }
                             #endregion
                         }
