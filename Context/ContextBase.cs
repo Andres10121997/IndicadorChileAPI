@@ -12,8 +12,8 @@ namespace IndicadorChileAPI.Context
     public abstract class ContextBase
     {
         #region Variables
-        private float Currency { get; set; }
-        private double CurrencyConversion { get; set; }
+        private float V_Currency;
+        private double V_CurrencyConversion;
 
         #region Readonly
         private readonly string Url;
@@ -55,8 +55,8 @@ namespace IndicadorChileAPI.Context
             #endregion
 
             #region Variables
-            this.Currency = float.NaN;
-            this.CurrencyConversion = double.NaN;
+            this.V_Currency = float.NaN;
+            this.V_CurrencyConversion = double.NaN;
             #region Readonly
             this.Url = Url;
             this.Year = Year;
@@ -82,32 +82,30 @@ namespace IndicadorChileAPI.Context
 
 
         #region GettersAndSetters
-        public float GetCurrency()
+        public float Currency
         {
-            return this.Currency;
+            get => this.V_Currency;
+            set
+            {
+                ArgumentOutOfRangeException.ThrowIfEqual(value: value, other: float.NaN);
+                ArgumentOutOfRangeException.ThrowIfEqual(value: value, other: float.PositiveInfinity);
+                ArgumentOutOfRangeException.ThrowIfEqual(value: value, other: float.NegativeInfinity);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(value: value);
+
+                this.V_Currency = value;
+            }
         }
 
-        public void SetCurrency(float Currency)
+        public double CurrencyConversion
         {
-            ArgumentOutOfRangeException.ThrowIfEqual(value: Currency, other: float.NaN);
-            ArgumentOutOfRangeException.ThrowIfEqual(value: Currency, other: float.PositiveInfinity);
-            ArgumentOutOfRangeException.ThrowIfEqual(value: Currency, other: float.NegativeInfinity);
-            ArgumentOutOfRangeException.ThrowIfNegative(value: Currency);
+            get => this.V_CurrencyConversion;
+            set
+            {
+                ArgumentOutOfRangeException.ThrowIfEqual(value: value, other: double.NaN);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<double>(value: value);
 
-            this.Currency = Currency;
-        }
-
-        public double GetCurrencyConversion()
-        {
-            return this.CurrencyConversion;
-        }
-
-        public void SetCurrencyConversion(double CurrencyConversion)
-        {
-            ArgumentOutOfRangeException.ThrowIfEqual(value: Currency, other: double.NaN);
-            ArgumentOutOfRangeException.ThrowIfNegative(value: CurrencyConversion);
-
-            this.CurrencyConversion = CurrencyConversion;
+                this.V_CurrencyConversion = value;
+            }
         }
 
         #region Readonly
@@ -235,13 +233,9 @@ namespace IndicadorChileAPI.Context
             uint Pesos;
             #endregion
 
-            this.SetCurrency(
-                Currency: (await this.DailyValueAsync(Date: Date)).Currency
-            );
+            this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
 
-            this.SetCurrencyConversion(
-                CurrencyConversion: await Task.Run<double>(function: () => Math.Truncate(d: AmountOfCurrency * this.Currency))
-            );
+            this.CurrencyConversion = await Task.Run<double>(function: () => Math.Truncate(d: AmountOfCurrency * this.Currency));
 
             Pesos = await Task.Run<uint>(function: () => Convert.ToUInt32(value: this.CurrencyConversion));
 
@@ -255,13 +249,9 @@ namespace IndicadorChileAPI.Context
             float AnotherCurrency;
             #endregion
 
-            this.SetCurrency(
-                Currency: (await this.DailyValueAsync(Date: Date)).Currency
-            );
+            this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
 
-            this.SetCurrencyConversion(
-                CurrencyConversion: await Task.Run<double>(function: () => Math.Round(value: Pesos / this.Currency, digits: 2))
-            );
+            this.CurrencyConversion = await Task.Run<double>(function: () => Math.Round(value: Pesos / this.Currency, digits: 2));
 
             AnotherCurrency = await Task.Run<float>(function: () => Convert.ToSingle(value: this.CurrencyConversion));
 
