@@ -77,12 +77,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new DolarContext(Year: Year, Month: Month);
-                
-                Context.SetCurrencyList(
-                    CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()) // Ternaria para obtener datos.
-                );
 
-                ArgumentNullException.ThrowIfNull(argument: Context.GetCurrencyList());
+                Context.CurrencyList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
                 Now = DateTime.Now;
 
@@ -92,7 +90,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = Year,
                     MonthName = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    List = Context.GetCurrencyList()
+                    List = Context.CurrencyList
                 };
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: CurrencyList));
@@ -143,11 +141,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new DolarContext(Year: Year, Month: Month);
 
-                Context.SetCurrencyList(
-                    CurrencyList: (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()) // Ternaria para obtener datos.
-                );
+                Context.CurrencyList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                ArgumentNullException.ThrowIfNull(argument: Context.GetCurrencyList());
+                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
                 Now = DateTime.Now;
 

@@ -16,14 +16,14 @@ namespace IndicadorChileAPI.Context
         private double V_CurrencyConversion;
 
         #region Readonly
-        private readonly string Url;
-        private readonly ushort Year;
-        private readonly ushort? Month;
+        private readonly string VR_Url;
+        private readonly ushort VR_Year;
+        private readonly ushort? VR_Month;
         #endregion
         #endregion
 
         #region Arrays
-        private CurrencyModel[] CurrencyList { get; set; }
+        private CurrencyModel[] A_CurrencyList;
         #endregion
 
 
@@ -57,31 +57,24 @@ namespace IndicadorChileAPI.Context
             #region Variables
             this.V_Currency = float.NaN;
             this.V_CurrencyConversion = double.NaN;
+
             #region Readonly
-            this.Url = Url;
-            this.Year = Year;
-            this.Month = Month;
+            this.VR_Url = Url;
+            this.VR_Year = Year;
+            this.VR_Month = Month;
             #endregion
             #endregion
 
             #region Arrays
-            this.CurrencyList = Array.Empty<CurrencyModel>();
+            this.A_CurrencyList = Array.Empty<CurrencyModel>();
             #endregion
-        }
-        #endregion
-
-
-
-        #region DeconstructorMethod
-        ~ContextBase()
-        {
-
         }
         #endregion
 
 
 
         #region GettersAndSetters
+        #region Variables
         public float Currency
         {
             get => this.V_Currency;
@@ -109,35 +102,33 @@ namespace IndicadorChileAPI.Context
         }
 
         #region Readonly
-        protected string GetUrl()
+        protected string Url
         {
-            return this.Url;
+            get => this.VR_Url;
         }
 
-        protected ushort GetYear()
+        protected ushort Year
         {
-            return this.Year;
+            get => this.VR_Year;
         }
 
-        protected ushort? GetMonth()
+        protected ushort? Month
         {
-            return this.Month;
+            get => this.VR_Month;
         }
+        #endregion
         #endregion
 
         #region Arrays
-        public CurrencyModel[] GetCurrencyList()
+        public CurrencyModel[] CurrencyList
         {
-            ArgumentOutOfRangeException.ThrowIfEqual(value: this.CurrencyList.Length, other: 0);
+            get => this.A_CurrencyList;
+            set
+            {
+                ArgumentNullException.ThrowIfNull(argument: value);
 
-            return this.CurrencyList;
-        }
-
-        public void SetCurrencyList(CurrencyModel[] CurrencyList)
-        {
-            ArgumentNullException.ThrowIfNull(CurrencyList);
-
-            this.CurrencyList = CurrencyList;
+                this.A_CurrencyList = value;
+            }
         }
         #endregion
         #endregion
@@ -147,8 +138,7 @@ namespace IndicadorChileAPI.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
-            await Task.Run(function: async () => this.SetCurrencyList(
-                CurrencyList: (await this.TransformToCurrencyModelsAsync(
+            await Task.Run(function: async () => this.CurrencyList = (await this.TransformToCurrencyModelsAsync(
                     CurrencyData: await this.ExtractValuesAsync(
                         htmlContent: await this.GetHtmlContentAsync(),
                         tableId: "table_export".Trim()
@@ -162,23 +152,22 @@ namespace IndicadorChileAPI.Context
                                                           !float.IsNegative(f: Model.Currency))
                 .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                 .ToArray<CurrencyModel>()
-            ));
+            );
 
-            return await Task.Run<CurrencyModel[]>(function: () => this.GetCurrencyList());
+            return await Task.Run<CurrencyModel[]>(function: () => this.CurrencyList);
         }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
-            await Task.Run(function: async () => this.SetCurrencyList(
-                CurrencyList: (await this.AnnualValuesAsync())
+            await Task.Run(function: async () => this.CurrencyList = (await this.AnnualValuesAsync())
                     .AsParallel<CurrencyModel>()
-                    .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.GetYear()
+                    .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.Year
                                                               &&
-                                                              Model.Date.Month == this.GetMonth())
+                                                              Model.Date.Month == this.Month)
                     .ToArray<CurrencyModel>()
-            ));
+            );
             
-            return await Task.Run<CurrencyModel[]>(function: () => this.GetCurrencyList());
+            return await Task.Run<CurrencyModel[]>(function: () => this.CurrencyList);
         }
 
         public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
