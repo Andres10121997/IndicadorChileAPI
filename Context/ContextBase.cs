@@ -55,9 +55,6 @@ namespace IndicadorChileAPI.Context
             #endregion
 
             #region Variables
-            this.V_Currency = float.NaN;
-            this.V_CurrencyConversion = double.NaN;
-
             #region Readonly
             this.VR_Url = Url;
             this.VR_Year = Year;
@@ -370,7 +367,7 @@ namespace IndicadorChileAPI.Context
                             #endregion
                         }
 
-                        await Task.Run<float[]>(function: () => Data[day] = Values);
+                        Data[day] = Values;
                     }
                 }
             }
