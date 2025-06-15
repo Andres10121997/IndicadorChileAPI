@@ -70,7 +70,7 @@ namespace IndicadorChileAPI.Context
 
 
 
-        #region GettersAndSetters
+        #region Getters And Setters
         #region Variables
         public float Currency
         {
@@ -113,7 +113,7 @@ namespace IndicadorChileAPI.Context
         #region Readonly
         protected string Url
         {
-            get => this.VR_Url;
+            get => this.VR_Url.Trim();
         }
 
         protected ushort Year
