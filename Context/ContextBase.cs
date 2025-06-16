@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IndicadorChileAPI.Context
 {
-    public abstract class ContextBase
+    public class ContextBase
     {
         #region Variables
         private float V_Currency;

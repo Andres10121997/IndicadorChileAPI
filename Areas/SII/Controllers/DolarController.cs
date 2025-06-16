@@ -1,4 +1,4 @@
-﻿using IndicadorChileAPI.Areas.SII.Context.ForeignExchange;
+﻿using IndicadorChileAPI.Context;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,6 +17,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
     ]
     public class DolarController : ControllerBase
     {
+        #region Constant
+        private const string C_Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm";
+        #endregion
+
         #region Interfaces
         private readonly ILogger<DolarController> Logger;
         #endregion
@@ -28,15 +32,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             : base()
         {
             this.Logger = Logger;
-        }
-        #endregion
-
-
-
-        #region DeconstructorMethod
-        ~DolarController()
-        {
-
         }
         #endregion
 
@@ -71,12 +66,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             #region Objects
             CurrencyListHeaderModel CurrencyList;
-            DolarContext Context;
+            ContextBase Context;
             #endregion
 
             try
             {
-                Context = new DolarContext(Year: Year, Month: Month);
+                Context = new ContextBase(Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()), Year: Year, Month: Month);
 
                 Context.CurrencyList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
@@ -134,12 +129,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             #region Objects
             StatisticsHeaderModel StatisticsHeader;
-            DolarContext Context;
+            ContextBase Context;
             #endregion
 
             try
             {
-                Context = new DolarContext(Year: Year, Month: Month);
+                Context = new ContextBase(Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()), Year: Year, Month: Month);
 
                 Context.CurrencyList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
@@ -180,14 +175,15 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             #endregion
 
             #region Objects
-            DolarContext Context;
+            ContextBase Context;
             #endregion
 
             try
             {
                 Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
-                Context = new DolarContext(
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Date.Year.ToString()),
                     Year: await Task.Run<ushort>(function: () => Convert.ToUInt16(value: Date.Year)),
                     Month: await Task.Run<byte>(function: () => Convert.ToByte(value: Date.Month))
                 );
@@ -216,14 +212,15 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             #endregion
 
             #region Objects
-            DolarContext Context;
+            ContextBase Context;
             #endregion
 
             try
             {
                 Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
-                Context = new DolarContext(
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Date.Year.ToString()),
                     Year: await Task.Run<ushort>(function: () => Convert.ToUInt16(value: Date.Year)),
                     Month: await Task.Run<byte>(function: () => Convert.ToByte(value: Date.Month))
                 );
