@@ -1,4 +1,4 @@
-﻿using IndicadorChileAPI.Areas.SII.Context.ForeignExchange;
+﻿using IndicadorChileAPI.Context;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,6 +17,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
     ]
     public class UFController : ControllerBase
     {
+        #region Constant
+        private const string C_Url = "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm";
+        #endregion
+
         #region Interfaces
         private readonly ILogger<UFController> Logger;
         #endregion
@@ -71,12 +75,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             #region Objects
             CurrencyListHeaderModel CurrencyList;
-            UFContext Context;
+            ContextBase Context;
             #endregion
-
+            
             try
             {
-                Context = new UFContext(Year: Year, Month: Month);
+                Context = new ContextBase(Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()), Year: Year, Month: Month);
 
                 Context.CurrencyList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
@@ -134,12 +138,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             #region Objects
             StatisticsHeaderModel StatisticsHeader;
-            UFContext Context;
+            ContextBase Context;
             #endregion
 
             try
             {
-                Context = new UFContext(Year: Year, Month: Month);
+                Context = new ContextBase(Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()), Year: Year, Month: Month);
 
                 Context.CurrencyList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
@@ -180,14 +184,15 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             #endregion
 
             #region Objects
-            UFContext Context;
+            ContextBase Context;
             #endregion
 
             try
             {
                 Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
-                Context = new UFContext(
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Date.Year.ToString()),
                     Year: await Task.Run<ushort>(function: () => Convert.ToUInt16(value: Date.Year)),
                     Month: await Task.Run<byte>(function: () => Convert.ToByte(value: Date.Month))
                 );
@@ -216,14 +221,15 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             #endregion
 
             #region Objects
-            UFContext Context;
+            ContextBase Context;
             #endregion
 
             try
             {
                 Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
-                Context = new UFContext(
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Date.Year.ToString()),
                     Year: await Task.Run<ushort>(function: () => Convert.ToUInt16(value: Date.Year)),
                     Month: await Task.Run<byte>(function: () => Convert.ToByte(value: Date.Month))
                 );
