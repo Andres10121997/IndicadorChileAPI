@@ -71,9 +71,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                Context = new ContextBase(Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()), Year: Year, Month: Month);
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
+                    Year: Year,
+                    Month: Month
+                );
 
-                Context.CurrencyList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
@@ -134,9 +138,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             try
             {
-                Context = new ContextBase(Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()), Year: Year, Month: Month);
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
+                    Year: Year,
+                    Month: Month
+                );
 
-                Context.CurrencyList = (Month.HasValue ? await Context.MonthlyValuesAsync() : await Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
@@ -183,9 +191,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Date.Year.ToString()),
-                    Year: await Task.Run<ushort>(function: () => Convert.ToUInt16(value: Date.Year)),
-                    Month: await Task.Run<byte>(function: () => Convert.ToByte(value: Date.Month))
+                    Url: C_Url.Replace(
+                        oldValue: "{Year}",
+                        newValue: Date.Year.ToString()
+                    ),
+                    Year: Convert.ToUInt16(value: Date.Year),
+                    Month: Convert.ToByte(value: Date.Month)
                 );
 
                 return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionIntoAnotherCurrencyAsync(Date: Date, Pesos: Pesos)));
@@ -220,9 +231,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Date.Year.ToString()),
-                    Year: await Task.Run<ushort>(function: () => Convert.ToUInt16(value: Date.Year)),
-                    Month: await Task.Run<byte>(function: () => Convert.ToByte(value: Date.Month))
+                    Url: C_Url.Replace(
+                        oldValue: "{Year}",
+                        newValue: Date.Year.ToString()
+                    ),
+                    Year: Convert.ToUInt16(value: Date.Year),
+                    Month: Convert.ToByte(value: Date.Month)
                 );
 
                 return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, AmountOfCurrency: Dolar)));
