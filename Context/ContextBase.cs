@@ -77,15 +77,15 @@ namespace IndicadorChileAPI.Context
             get => this.V_Currency;
             set
             {
-                ArgumentOutOfRangeException.ThrowIfEqual(
+                ArgumentOutOfRangeException.ThrowIfEqual<float>(
                     value: value,
                     other: float.NaN
                 );
-                ArgumentOutOfRangeException.ThrowIfEqual(
+                ArgumentOutOfRangeException.ThrowIfEqual<float>(
                     value: value,
                     other: float.PositiveInfinity
                 );
-                ArgumentOutOfRangeException.ThrowIfEqual(
+                ArgumentOutOfRangeException.ThrowIfEqual<float>(
                     value: value,
                     other: float.NegativeInfinity
                 );
@@ -100,7 +100,7 @@ namespace IndicadorChileAPI.Context
             get => this.V_CurrencyConversion;
             set
             {
-                ArgumentOutOfRangeException.ThrowIfEqual(
+                ArgumentOutOfRangeException.ThrowIfEqual<double>(
                     value: value,
                     other: double.NaN
                 );
@@ -161,8 +161,6 @@ namespace IndicadorChileAPI.Context
                                                       !float.IsNegative(f: Model.Currency))
             .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
             .ToArray<CurrencyModel>();
-
-            ArgumentNullException.ThrowIfNull(argument: this.CurrencyList);
 
             return this.CurrencyList;
         }
