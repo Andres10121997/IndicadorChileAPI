@@ -162,49 +162,56 @@ namespace IndicadorChileAPI.Context
             .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
             .ToArray<CurrencyModel>();
 
-            return await Task.Run<CurrencyModel[]>(function: () => this.CurrencyList);
+            ArgumentNullException.ThrowIfNull(argument: this.CurrencyList);
+
+            return this.CurrencyList;
         }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
             this.CurrencyList = (await this.AnnualValuesAsync())
-            .AsParallel<CurrencyModel>()
-            .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.Year
-                                                      &&
-                                                      Model.Date.Month == this.Month)
-            .ToArray<CurrencyModel>();
+                .AsParallel<CurrencyModel>()
+                .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.Year
+                                                          &&
+                                                          Model.Date.Month == this.Month)
+                .ToArray<CurrencyModel>();
 
-
-            return await Task.Run<CurrencyModel[]>(function: () => this.CurrencyList);
+            return this.CurrencyList;
         }
 
         public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
         {
+            #region Arrays
+            CurrencyModel[] MonthlyValues;
+            #endregion
+
             #region Objects
             CurrencyModel? Value;
             #endregion
 
-            // Intentar obtener el valor exacto de la fecha solicitada
-            Value = (await this.MonthlyValuesAsync())
-                .AsParallel<CurrencyModel>()
-                .Where<CurrencyModel>(predicate: Model => Model.Date == Date)
-                .FirstOrDefault<CurrencyModel>();
+            MonthlyValues = await this.MonthlyValuesAsync();
 
-            // Si no hay un valor exacto, retornar el último disponible antes de la fecha (mensual).
+            // Buscar valor exacto
+            Value = MonthlyValues
+                .FirstOrDefault<CurrencyModel>(predicate: model => model.Date == Date);
+
+            // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
             if (Value is null)
             {
-                Value = (await this.MonthlyValuesAsync())
-                    .AsParallel<CurrencyModel>()
+                Value = MonthlyValues
                     .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
                     .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                     .FirstOrDefault<CurrencyModel>();
             }
 
-            // Si no hay un valor exacto, retornar el último disponible antes de la fecha (anual).
+            // Si aún no se encuentra, buscar en valores anuales
             if (Value is null)
             {
-                Value = (await this.AnnualValuesAsync())
-                    .AsParallel<CurrencyModel>()
+                CurrencyModel[] AnnualValues;
+
+                AnnualValues = await this.AnnualValuesAsync();
+
+                Value = AnnualValues
                     .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
                     .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                     .FirstOrDefault<CurrencyModel>();
@@ -402,12 +409,15 @@ namespace IndicadorChileAPI.Context
 
                         value = values[month - 1];
 
-                        model = await Task.Run(function: () => modelFactory(
-                            new DateOnly(year: this.Year, month: month, day: day),
+                        model = modelFactory(
+                            new DateOnly(
+                                year: this.Year,
+                                month: month,
+                                day: day),
                             value
-                        ));
+                        );
 
-                        await Task.Run(action: () => ModelList.Add(item: model));
+                        ModelList.Add(item: model);
                     }
                 }
             }
