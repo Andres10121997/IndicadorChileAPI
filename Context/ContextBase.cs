@@ -275,8 +275,8 @@ namespace IndicadorChileAPI.Context
             return await client.GetStringAsync(requestUri: this.Url);
         }
 
-        protected async Task<Dictionary<byte, float[]>> ExtractValuesAsync(string htmlContent,
-                                                                           string tableId)
+        protected Dictionary<byte, float[]> ExtractValues(string htmlContent,
+                                                          string tableId)
         {
             #region Variables
             string tablePattern = string.Empty;
@@ -302,7 +302,7 @@ namespace IndicadorChileAPI.Context
 
             // Regex para encontrar la tabla con el ID dinámico
             tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: tableId)}""[^>]*>(.*?)<\/table>";
-            tableMatch = await Task.Run<Match>(function: () => Regex.Match(input: htmlContent, pattern: tablePattern, options: RegexOptions.Singleline));
+            tableMatch = Regex.Match(input: htmlContent, pattern: tablePattern, options: RegexOptions.Singleline);
 
             if (!tableMatch.Success)
             {
@@ -313,7 +313,7 @@ namespace IndicadorChileAPI.Context
 
             // Regex para las filas de la tabla
             rowPattern = @"<tr>(.*?)<\/tr>";
-            rowMatches = await Task.Run<MatchCollection>(function: () => Regex.Matches(input: tableHtml, pattern: rowPattern, options: RegexOptions.Singleline));
+            rowMatches = Regex.Matches(input: tableHtml, pattern: rowPattern, options: RegexOptions.Singleline);
 
             foreach (Match rowMatch in rowMatches)
             {
@@ -328,7 +328,7 @@ namespace IndicadorChileAPI.Context
 
                 // Regex para las celdas (<th> y <td>)
                 cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
-                cellMatches = await Task.Run<MatchCollection>(function: () => Regex.Matches(input: rowHtml, pattern: cellPattern, options: RegexOptions.Singleline));
+                cellMatches = Regex.Matches(input: rowHtml, pattern: cellPattern, options: RegexOptions.Singleline);
 
                 if (cellMatches.Count > 0)
                 {
@@ -368,6 +368,14 @@ namespace IndicadorChileAPI.Context
             }
 
             return Data;
+        }
+
+        protected async Task<Dictionary<byte, float[]>> ExtractValuesAsync(string htmlContent,
+                                                                           string tableId)
+        {
+            return await Task.Run<Dictionary<byte, float[]>>(
+                function: () => this.ExtractValues(htmlContent: htmlContent, tableId: tableId)
+            );
         }
         #endregion
 
