@@ -194,13 +194,10 @@ namespace IndicadorChileAPI.Context
                 .FirstOrDefault<CurrencyModel>(predicate: model => model.Date == Date);
 
             // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-            if (Value is null)
-            {
-                Value = MonthlyValues
-                    .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
-                    .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                    .FirstOrDefault<CurrencyModel>();
-            }
+            Value ??= MonthlyValues
+                .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                .FirstOrDefault<CurrencyModel>();
 
             // Si aún no se encuentra, buscar en valores anuales
             if (Value is null)
@@ -384,8 +381,8 @@ namespace IndicadorChileAPI.Context
 
 
         #region Transform
-        protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
-                                                                      Func<DateOnly, float, TModel> modelFactory)
+        protected TModel[] TransformToModels<TModel>(Dictionary<byte, float[]> Data,
+                                                     Func<DateOnly, float, TModel> modelFactory)
         {
             #region List
             List<TModel> ModelList = new List<TModel>();
@@ -411,7 +408,8 @@ namespace IndicadorChileAPI.Context
                             new DateOnly(
                                 year: this.Year,
                                 month: month,
-                                day: day),
+                                day: day
+                            ),
                             value
                         );
 
@@ -420,7 +418,13 @@ namespace IndicadorChileAPI.Context
                 }
             }
 
-            return await Task.Run<TModel[]>(function: () => ModelList.ToArray());
+            return ModelList.ToArray<TModel>();
+        }
+
+        protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
+                                                                      Func<DateOnly, float, TModel> modelFactory)
+        {
+            return await Task.Run<TModel[]>(function: () => this.TransformToModels<TModel>(Data: Data, modelFactory));
         }
 
         protected async Task<CurrencyModel[]> TransformToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
