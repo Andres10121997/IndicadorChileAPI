@@ -37,15 +37,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
 
 
-        #region DeconstructorMethod
-        ~UFController()
-        {
-
-        }
-        #endregion
-
-
-
         #region HttpGet
         [
             HttpGet(template: "[action]"),
@@ -77,7 +68,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             CurrencyListHeaderModel CurrencyList;
             ContextBase Context;
             #endregion
-            
+
             try
             {
                 Context = new ContextBase(

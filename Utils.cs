@@ -9,7 +9,7 @@ namespace IndicadorChileAPI
         #region ConstructorMethod
         static Utils()
         {
-            
+
         }
         #endregion
 

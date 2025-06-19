@@ -5,7 +5,7 @@ namespace IndicadorChileAPI.App.Start
         public Program()
             : base()
         {
-            
+
         }
 
 

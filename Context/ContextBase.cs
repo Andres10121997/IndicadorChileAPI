@@ -38,7 +38,7 @@ namespace IndicadorChileAPI.Context
             ArgumentNullException.ThrowIfNullOrEmpty(argument: Url);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Url);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(value: Year, other: DateTime.Now.Year);
-            
+
             if (Month < 1
                 ||
                 Month > 12)
@@ -262,7 +262,7 @@ namespace IndicadorChileAPI.Context
             Average = this.CurrencyList.Average<CurrencyModel>(selector: Average => Average.Currency),
             StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.CurrencyList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
             Variance = this.CurrencyList.Select(value => value.Currency).Variance()
-        }   ;
+        };
         #endregion
 
 
@@ -349,7 +349,7 @@ namespace IndicadorChileAPI.Context
                                 .Trim()
                                 .Replace(oldValue: ".", newValue: "")   // Eliminar puntos
                                 .Replace(oldValue: ",", newValue: "."); // Cambiar comas por puntos
-                            
+
                             #region GuardarValores
                             if (float.TryParse(s: Value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
                             {
