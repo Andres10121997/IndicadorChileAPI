@@ -191,19 +191,19 @@ namespace IndicadorChileAPI.Context
 
             // Buscar valor exacto
             Value = MonthlyValues
-                .FirstOrDefault<CurrencyModel>(predicate: model => model.Date == Date);
-
-            // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-            Value ??= MonthlyValues
-                .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
-                .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                .FirstOrDefault<CurrencyModel>();
+                .FirstOrDefault<CurrencyModel>(predicate: model => model.Date == Date)
+                ??
+                // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
+                MonthlyValues
+                    .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                    .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                    .FirstOrDefault<CurrencyModel>();
 
             // Si aún no se encuentra, buscar en valores anuales
             Value ??= (await this.AnnualValuesAsync())
-                .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
-                .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                .FirstOrDefault<CurrencyModel>();
+                    .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                    .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                    .FirstOrDefault<CurrencyModel>();
 
             ArgumentNullException.ThrowIfNull(argument: Value);
 
