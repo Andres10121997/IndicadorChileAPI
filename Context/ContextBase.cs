@@ -145,7 +145,9 @@ namespace IndicadorChileAPI.Context
 
 
         #region Values
-        public async Task<CurrencyModel[]> AnnualValuesAsync() => (
+        public async Task<CurrencyModel[]> AnnualValuesAsync()
+        {
+            return (
                 await this.TransformToCurrencyModelsAsync(
                     CurrencyData: await this.ExtractValuesAsync(
                         htmlContent: await this.GetHtmlContentAsync(),
@@ -161,6 +163,7 @@ namespace IndicadorChileAPI.Context
                                                       !float.IsNegative(f: Model.Currency))
             .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
             .ToArray<CurrencyModel>();
+        }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
