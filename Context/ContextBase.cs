@@ -149,32 +149,30 @@ namespace IndicadorChileAPI.Context
         {
             return (
                 await this.TransformToCurrencyModelsAsync(
-                    CurrencyData: await this.ExtractValuesAsync(
-                        htmlContent: await this.GetHtmlContentAsync(),
-                        tableId: "table_export".Trim()
+                        CurrencyData: await this.ExtractValuesAsync(
+                            htmlContent: await this.GetHtmlContentAsync(),
+                            tableId: "table_export".Trim()
+                        )
                     )
                 )
-            )
-            .AsParallel<CurrencyModel>()
-            .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
-                                                      &&
-                                                      !float.IsInfinity(f: Model.Currency)
-                                                      &&
-                                                      !float.IsNegative(f: Model.Currency))
-            .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-            .ToArray<CurrencyModel>();
+                .AsParallel<CurrencyModel>()
+                .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
+                                                          &&
+                                                          !float.IsInfinity(f: Model.Currency)
+                                                          &&
+                                                          !float.IsNegative(f: Model.Currency))
+                .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                .ToArray<CurrencyModel>();
         }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
-            this.CurrencyList = (await this.AnnualValuesAsync())
+            return (await this.AnnualValuesAsync())
                 .AsParallel<CurrencyModel>()
                 .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.Year
                                                           &&
                                                           Model.Date.Month == this.Month)
                 .ToArray<CurrencyModel>();
-
-            return this.CurrencyList;
         }
 
         public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
