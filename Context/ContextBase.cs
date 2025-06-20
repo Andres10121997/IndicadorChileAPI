@@ -145,14 +145,14 @@ namespace IndicadorChileAPI.Context
 
 
         #region Values
-        public async Task<CurrencyModel[]> AnnualValuesAsync()
-        {
-            this.CurrencyList = (await this.TransformToCurrencyModelsAsync(
-                CurrencyData: await this.ExtractValuesAsync(
-                    htmlContent: await this.GetHtmlContentAsync(),
-                    tableId: "table_export".Trim()
+        public async Task<CurrencyModel[]> AnnualValuesAsync() => (
+                await this.TransformToCurrencyModelsAsync(
+                    CurrencyData: await this.ExtractValuesAsync(
+                        htmlContent: await this.GetHtmlContentAsync(),
+                        tableId: "table_export".Trim()
+                    )
                 )
-            ))
+            )
             .AsParallel<CurrencyModel>()
             .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
                                                       &&
@@ -161,9 +161,6 @@ namespace IndicadorChileAPI.Context
                                                       !float.IsNegative(f: Model.Currency))
             .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
             .ToArray<CurrencyModel>();
-
-            return this.CurrencyList;
-        }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
