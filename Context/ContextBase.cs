@@ -189,13 +189,13 @@ namespace IndicadorChileAPI.Context
 
             // Buscar valor exacto
             Value = MonthlyValues
-                .FirstOrDefault<CurrencyModel>(predicate: model => model.Date == Date)
-                ??
-                // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-                MonthlyValues
-                    .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
-                    .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                    .FirstOrDefault<CurrencyModel>();
+                        .FirstOrDefault<CurrencyModel>(predicate: model => model.Date == Date)
+                    ??
+                    // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
+                    MonthlyValues
+                        .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                        .FirstOrDefault<CurrencyModel>();
 
             // Si aún no se encuentra, buscar en valores anuales
             Value ??= (await this.AnnualValuesAsync())
@@ -431,7 +431,9 @@ namespace IndicadorChileAPI.Context
         protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
                                                                       Func<DateOnly, float, TModel> modelFactory)
         {
-            return await Task.Run<TModel[]>(function: () => this.TransformToModels<TModel>(Data: Data, modelFactory));
+            return await Task.Run<TModel[]>(
+                function: () => this.TransformToModels<TModel>(Data: Data, modelFactory)
+            );
         }
 
         protected async Task<CurrencyModel[]> TransformToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
