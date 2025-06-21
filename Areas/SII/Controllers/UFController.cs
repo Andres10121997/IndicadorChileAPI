@@ -79,8 +79,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
-
                 Now = DateTime.Now;
 
                 CurrencyList = new CurrencyListHeaderModel()
@@ -239,7 +237,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     Month: Convert.ToByte(value: Date.Month)
                 );
 
-                return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, AmountOfCurrency: UF)));
+                return await Task.Run<OkObjectResult>(
+                    function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, AmountOfCurrency: UF))
+                );
             }
             catch (Exception ex)
             {

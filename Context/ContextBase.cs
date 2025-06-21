@@ -37,7 +37,10 @@ namespace IndicadorChileAPI.Context
             #region Validations
             ArgumentNullException.ThrowIfNullOrEmpty(argument: Url);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Url);
-            ArgumentOutOfRangeException.ThrowIfGreaterThan(value: Year, other: DateTime.Now.Year);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
+                value: Year,
+                other: DateTime.Now.Year
+            );
 
             if (Month < 1
                 ||
@@ -438,7 +441,7 @@ namespace IndicadorChileAPI.Context
 
         protected async Task<CurrencyModel[]> TransformToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
         {
-            return await this.TransformToModelsAsync(Data: CurrencyData, modelFactory: (Date, Value) => new CurrencyModel
+            return await this.TransformToModelsAsync<CurrencyModel>(Data: CurrencyData, modelFactory: (Date, Value) => new CurrencyModel
             {
                 ID = uint.Parse(s: Date.ToString(format: "yyyyMMdd")),
                 Date = Date,
