@@ -345,8 +345,16 @@ namespace IndicadorChileAPI.Context
 
                             Value = cellMatches[i].Groups[1].Value
                                 .Trim()
-                                .Replace(oldValue: ".", newValue: "")   // Eliminar puntos
-                                .Replace(oldValue: ",", newValue: "."); // Cambiar comas por puntos
+                                // Eliminar puntos
+                                .Replace(
+                                    oldValue: ".",
+                                    newValue: ""
+                                )
+                                // Cambiar comas por puntos
+                                .Replace(
+                                    oldValue: ",",
+                                    newValue: "."
+                                );
 
                             #region GuardarValores
                             if (float.TryParse(s: Value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
