@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace IndicadorChileAPI.App.Start
 {
@@ -48,7 +49,14 @@ namespace IndicadorChileAPI.App.Start
         {
             Builder.Services.AddControllers();
             Builder.Services.AddEndpointsApiExplorer();
-            Builder.Services.AddSwaggerGen();
+            Builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Indicadores de Chile",
+                    Version = "v1"
+                });
+            });
         }
 
         private static void Configure(WebApplication App)

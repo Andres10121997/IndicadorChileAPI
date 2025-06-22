@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.4",
   "info": {
-    "title": "IndicadorChileAPI",
-    "version": "1.0"
+    "title": "Indicadores de Chile",
+    "version": "v1"
   },
   "paths": {
     "/api/SII/Dolar/GetDataList": {
