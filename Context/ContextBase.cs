@@ -34,14 +34,29 @@ namespace IndicadorChileAPI.Context
                            ushort? Month)
             : base()
         {
+            DateOnly Date;
+            bool[] MonthValidations;
+
+            Date = DateOnly.FromDateTime(DateTime.Now);
+            MonthValidations = new bool[]
+            {
+                Month < 1
+                ||
+                Month > 12,
+                Month > Date.Month
+                &&
+                (Year == Date.Year || Year.Equals(obj: Date.Year))
+            };
+            
             #region Validations
             ArgumentNullException.ThrowIfNullOrEmpty(argument: Url);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Url);
             ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
                 value: Year,
-                other: DateTime.Now.Year
+                other: Date.Year
             );
 
+            /*
             if (Month < 1
                 ||
                 Month > 12)
@@ -54,6 +69,11 @@ namespace IndicadorChileAPI.Context
                 (Year == DateTime.Now.Year || Year.Equals(obj: DateTime.Now.Year)))
             {
                 throw new Exception(message: "The query cannot be performed.");
+            }
+            */
+            if (MonthValidations.Contains(true))
+            {
+                throw new ArgumentException(message: "", paramName: nameof(Month));
             }
             #endregion
 
