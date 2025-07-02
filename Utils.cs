@@ -58,39 +58,35 @@ namespace IndicadorChileAPI
 
 
         #region Logger
-        internal static void LoogerInformation(ILogger Logger, string Message, Type OType)
+        internal static void LoogerInformation(ILogger Logger,
+                                               string Message,
+                                               Type OType)
         {
-            Logger.LogInformation("");
-            Logger.LogInformation("---");
-            Logger.LogInformation($"{OType}");
-            Logger.LogInformation($"{DateTime.Now}");
+            Logger.LogInformation(message: "");
+            Logger.LogInformation(message: "---");
+            Logger.LogInformation(message: OType.ToString());
+            Logger.LogInformation(message: DateTime.Now.ToString());
             Logger.LogInformation(message: Message);
-            Logger.LogInformation("---");
-            Logger.LogInformation("");
+            Logger.LogInformation(message: "---");
+            Logger.LogInformation(message: "");
         }
 
-        internal static async Task LoogerInformationAsync(ILogger Logger, string Message, Type OType)
-        {
-            await Task.Run(action: () => LoogerInformation(Logger: Logger, Message: Message, OType: OType));
-        }
+        internal static async Task LoogerInformationAsync(ILogger Logger, string Message, Type OType) => await Task.Run(action: () => LoogerInformation(Logger: Logger, Message: Message, OType: OType));
 
         internal static void LoggerError(ILogger Logger, Exception ex, Type OType)
         {
-            Logger.LogError("");
-            Logger.LogError("---");
-            Logger.LogError($"{OType}");
-            Logger.LogError($"{DateTime.Now}");
-            Logger.LogError($"Stack Trace: {ex.StackTrace}");
-            Logger.LogError($"Message: {ex.Message}");
-            Logger.LogError($"{ex}");
-            Logger.LogError("---");
-            Logger.LogError("");
+            Logger.LogError(message: "");
+            Logger.LogError(message: "---");
+            Logger.LogError(message: OType.ToString());
+            Logger.LogError(message: DateTime.Now.ToString());
+            Logger.LogError(message: $"Stack Trace: {ex.StackTrace}");
+            Logger.LogError(message: $"Message: {ex.Message}");
+            Logger.LogError(message: ex.ToString());
+            Logger.LogError(message: "---");
+            Logger.LogError(message: "");
         }
 
-        internal static async Task LoggerErrorAsync(ILogger Logger, Exception ex, Type OType)
-        {
-            await Task.Run(action: () => LoggerError(Logger: Logger, ex: ex, OType: OType));
-        }
+        internal static async Task LoggerErrorAsync(ILogger Logger, Exception ex, Type OType) => await Task.Run(action: () => LoggerError(Logger: Logger, ex: ex, OType: OType));
         #endregion
     }
 }
