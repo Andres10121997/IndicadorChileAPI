@@ -40,6 +40,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
 
         #region HttpGet
+        #region Data
         [
             HttpGet(template: "[action]"),
             RequireHttps
@@ -106,6 +107,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 );
             }
         }
+        #endregion
 
         #region Statistics
         [
@@ -147,6 +149,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 );
 
                 Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
                 Count = Context.CurrencyList.Count<CurrencyModel>();
 
@@ -202,6 +206,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 );
 
                 Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
                 Average = Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency);
 
