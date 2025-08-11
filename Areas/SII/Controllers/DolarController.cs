@@ -1,4 +1,5 @@
-﻿using IndicadorChileAPI.Context;
+﻿using IndicadorChileAPI.App.Interfaces;
+using IndicadorChileAPI.Context;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,7 +17,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         Area(areaName: "SII"),
         Route(template: "api/[area]/[controller]")
     ]
-    public class DolarController : ControllerBase
+    public class DolarController : ControllerBase, IStatistics
     {
         #region Constant
         private const string C_Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm";
@@ -107,6 +108,61 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         }
 
         #region Statistics
+        [
+            HttpGet(template: "[action]"),
+            RequireHttps
+        ]
+        public async Task<ActionResult<int>> GetCountAsync([
+                                                            Required(
+                                                                AllowEmptyStrings = false
+                                                            ),
+                                                            Range(
+                                                                minimum: 2013,
+                                                                maximum: int.MaxValue
+                                                            )
+                                                           ]
+                                                           ushort Year,
+                                                           [
+                                                            Range(
+                                                                minimum: 1,
+                                                                maximum: 12
+                                                            )
+                                                           ]
+                                                           byte? Month)
+        {
+            #region Variables
+            float Count;
+            #endregion
+
+            #region Objects
+            ContextBase Context;
+            #endregion
+
+            try
+            {
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
+                    Year: Year,
+                    Month: Month
+                );
+
+                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+                Count = Context.CurrencyList.Count<CurrencyModel>();
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Count));
+            }
+            catch (Exception ex)
+            {
+                Utils.MessageError(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
+
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
+            }
+        }
+
         [
             HttpGet(template: "[action]"),
             RequireHttps
