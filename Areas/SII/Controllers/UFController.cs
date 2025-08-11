@@ -95,7 +95,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<StatusCodeResult>(
@@ -151,7 +151,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<StatusCodeResult>(
@@ -218,7 +218,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<StatusCodeResult>(
@@ -260,7 +260,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<StatusCodeResult>(
@@ -302,7 +302,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
                 return await Task.Run<StatusCodeResult>(
