@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -103,6 +104,62 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
         }
 
+        #region Statistics
+        [
+            HttpGet(template: "[action]"),
+            RequireHttps
+        ]
+        public async Task<ActionResult<float>> GetAverageAsync([
+                                                                Required(
+                                                                    AllowEmptyStrings = false
+                                                                ),
+                                                                Range(
+                                                                    minimum: 2013,
+                                                                    maximum: int.MaxValue
+                                                                )
+                                                               ]
+                                                               ushort Year,
+                                                               [
+                                                                Range(
+                                                                    minimum: 1,
+                                                                    maximum: 12
+                                                                )
+                                                               ]
+                                                               byte? Month)
+        {
+            #region Variables
+            float Average;
+            #endregion
+
+            #region Objects
+            ContextBase Context;
+            #endregion
+
+            try
+            {
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
+                    Year: Year,
+                    Month: Month
+                );
+
+                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+                Average = Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency);
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Average));
+            }
+            catch (Exception ex)
+            {
+                Utils.ErrorMessage(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
+
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
+            }
+        }
+
         [
             HttpGet(template: "[action]"),
             RequireHttps
@@ -169,7 +226,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 );
             }
         }
+        #endregion
 
+        #region Equivalency
         [
             HttpGet(template: "[action]"),
             RequireHttps
@@ -251,6 +310,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 );
             }
         }
+        #endregion
         #endregion
     }
 }
