@@ -1,68 +1,6 @@
 [
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
-    "Method": "GetAverageAsync",
-    "RelativePath": "api/SII/Dolar/GetAverage",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Year",
-        "Type": "System.UInt16",
-        "IsRequired": false
-      },
-      {
-        "Name": "Month",
-        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Single",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
-    "Method": "GetCountAsync",
-    "RelativePath": "api/SII/Dolar/GetCount",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "Year",
-        "Type": "System.UInt16",
-        "IsRequired": false
-      },
-      {
-        "Name": "Month",
-        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Int32",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
     "Method": "GetDataListAsync",
     "RelativePath": "api/SII/Dolar/GetDataList",
     "HttpMethod": "GET",
@@ -176,9 +114,9 @@
     ]
   },
   {
-    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
     "Method": "GetAverageAsync",
-    "RelativePath": "api/SII/UF/GetAverage",
+    "RelativePath": "api/SII/Dolar/Statistics/GetAverage",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -207,9 +145,9 @@
     ]
   },
   {
-    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
     "Method": "GetCountAsync",
-    "RelativePath": "api/SII/UF/GetCount",
+    "RelativePath": "api/SII/Dolar/Statistics/GetCount",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -228,6 +166,37 @@
     "ReturnTypes": [
       {
         "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
+    "Method": "GetMinimumAsync",
+    "RelativePath": "api/SII/Dolar/Statistics/GetMinimum",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -342,6 +311,99 @@
     "ReturnTypes": [
       {
         "Type": "IndicadorChileAPI.Models.StatisticsHeaderModel",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
+    "Method": "GetAverageAsync",
+    "RelativePath": "api/SII/UF/Statistics/GetAverage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
+    "Method": "GetCountAsync",
+    "RelativePath": "api/SII/UF/Statistics/GetCount",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
+    "Method": "GetMinimumAsync",
+    "RelativePath": "api/SII/UF/Statistics/GetMinimum",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
         "MediaTypes": [
           "text/plain",
           "application/json",

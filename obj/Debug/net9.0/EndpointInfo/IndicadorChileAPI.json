@@ -57,7 +57,7 @@
         }
       }
     },
-    "/api/SII/Dolar/GetCount": {
+    "/api/SII/Dolar/Statistics/GetCount": {
       "get": {
         "tags": [
           "Dolar"
@@ -112,7 +112,62 @@
         }
       }
     },
-    "/api/SII/Dolar/GetAverage": {
+    "/api/SII/Dolar/Statistics/GetMinimum": {
+      "get": {
+        "tags": [
+          "Dolar"
+        ],
+        "parameters": [
+          {
+            "name": "Year",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "maximum": 2147483647,
+              "minimum": 2013,
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Month",
+            "in": "query",
+            "schema": {
+              "maximum": 12,
+              "minimum": 1,
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SII/Dolar/Statistics/GetAverage": {
       "get": {
         "tags": [
           "Dolar"
@@ -357,7 +412,7 @@
         }
       }
     },
-    "/api/SII/UF/GetCount": {
+    "/api/SII/UF/Statistics/GetCount": {
       "get": {
         "tags": [
           "UF"
@@ -412,7 +467,57 @@
         }
       }
     },
-    "/api/SII/UF/GetAverage": {
+    "/api/SII/UF/Statistics/GetMinimum": {
+      "get": {
+        "tags": [
+          "UF"
+        ],
+        "parameters": [
+          {
+            "name": "Year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SII/UF/Statistics/GetAverage": {
       "get": {
         "tags": [
           "UF"

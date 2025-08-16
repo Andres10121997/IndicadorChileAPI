@@ -109,7 +109,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
         #region Statistics
         [
-            HttpGet(template: "[action]"),
+            HttpGet(template: "Statistics/[action]"),
             RequireHttps
         ]
         public async Task<ActionResult<int>> GetCountAsync([
@@ -166,7 +166,48 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         }
 
         [
-            HttpGet(template: "[action]"),
+            HttpGet(template: "Statistics/[action]"),
+            RequireHttps
+        ]
+        public async Task<ActionResult<float>> GetMinimumAsync(ushort Year, byte? Month)
+        {
+            #region Variables
+            float Min;
+            #endregion
+
+            #region Objects
+            ContextBase Context;
+            #endregion
+
+            try
+            {
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
+                    Year: Year,
+                    Month: Month
+                );
+
+                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
+
+                Min = Context.CurrencyList.Min(x => x.Currency);
+
+                return await Task.Run(() => this.Ok(Min));
+            }
+            catch (Exception ex)
+            {
+                Utils.MessageError(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
+
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
+            }
+        }
+
+        [
+            HttpGet(template: "Statistics/[action]"),
             RequireHttps
         ]
         public async Task<ActionResult<float>> GetAverageAsync([
