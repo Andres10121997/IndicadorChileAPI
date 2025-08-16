@@ -29,7 +29,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
 
 
-        #region ConstructorMethod
+        #region Constructor Method
         public DolarController(ILogger<DolarController> Logger)
             : base()
         {
@@ -211,7 +211,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Min = Context.CurrencyList.Min(x => x.Currency);
 
-                return await Task.Run(() => this.Ok(Min));
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Min));
             }
             catch (Exception ex)
             {
