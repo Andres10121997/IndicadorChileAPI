@@ -177,6 +177,37 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
+    "Method": "GetMaximumAsync",
+    "RelativePath": "api/SII/Dolar/Statistics/GetMaximum",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
     "Method": "GetMinimumAsync",
     "RelativePath": "api/SII/Dolar/Statistics/GetMinimum",
     "HttpMethod": "GET",
@@ -373,6 +404,37 @@
     "ReturnTypes": [
       {
         "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
+    "Method": "GetMaximumAsync",
+    "RelativePath": "api/SII/UF/Statistics/GetMaximum",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
         "MediaTypes": [
           "text/plain",
           "application/json",

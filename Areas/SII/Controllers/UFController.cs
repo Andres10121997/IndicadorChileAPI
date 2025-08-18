@@ -66,6 +66,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
+                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
+
                 Now = DateTime.Now;
 
                 CurrencyList = new CurrencyListHeaderModel()
@@ -162,6 +164,47 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Min = Context.CurrencyList.Min(x => x.Currency);
 
                 return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Min));
+            }
+            catch (Exception ex)
+            {
+                Utils.MessageError(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
+
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
+            }
+        }
+
+        [
+            HttpGet(template: "Statistics/[action]"),
+            RequireHttps
+        ]
+        public async Task<ActionResult<float>> GetMaximumAsync([FromQuery] SearchFilterModel SearchFilter)
+        {
+            #region Variables
+            float Max;
+            #endregion
+
+            #region Objects
+            ContextBase Context;
+            #endregion
+
+            try
+            {
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Year: SearchFilter.Year,
+                    Month: SearchFilter.Month
+                );
+
+                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
+
+                Max = Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency);
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Max));
             }
             catch (Exception ex)
             {
