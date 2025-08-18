@@ -28,7 +28,7 @@ namespace IndicadorChileAPI.Context
 
 
 
-        #region ConstructorMethod
+        #region Constructor Method
         public ContextBase(string Url,
                            ushort Year,
                            ushort? Month)

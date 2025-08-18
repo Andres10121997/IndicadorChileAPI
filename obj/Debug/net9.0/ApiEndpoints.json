@@ -238,6 +238,37 @@
     ]
   },
   {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
+    "Method": "GetSumOfSquares",
+    "RelativePath": "api/SII/Dolar/Statistics/GetSumOfSquares",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
     "Method": "GetDataListAsync",
     "RelativePath": "api/SII/UF/GetDataList",
@@ -448,6 +479,37 @@
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
     "Method": "GetSumAsync",
     "RelativePath": "api/SII/UF/Statistics/GetSum",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Year",
+        "Type": "System.UInt16",
+        "IsRequired": false
+      },
+      {
+        "Name": "Month",
+        "Type": "System.Nullable\u00601[[System.Byte, System.Private.CoreLib, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Single",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
+    "Method": "GetSumOfSquares",
+    "RelativePath": "api/SII/UF/Statistics/GetSumOfSquares",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

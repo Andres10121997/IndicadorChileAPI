@@ -10,6 +10,7 @@ namespace IndicadorChileAPI.App.Interfaces
         public Task<ActionResult<float>> GetMinimumAsync([FromQuery] SearchFilterModel SearchFilter);
         public Task<ActionResult<float>> GetMaximumAsync([FromQuery] SearchFilterModel SearchFilter);
         public Task<ActionResult<float>> GetSumAsync([FromQuery] SearchFilterModel SearchFilter);
+        public Task<ActionResult<float>> GetSumOfSquares([FromQuery] SearchFilterModel SearchFilter);
         public Task<ActionResult<float>> GetAverageAsync([FromQuery] SearchFilterModel SearchFilter);
     }
 }
