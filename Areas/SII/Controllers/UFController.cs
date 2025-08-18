@@ -100,10 +100,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<int>> GetCountAsync([FromQuery] SearchFilterModel SearchFilter)
         {
-            #region Variables
-            float Count;
-            #endregion
-
             #region Objects
             ContextBase Context;
             #endregion
@@ -120,9 +116,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
-                Count = Context.CurrencyList.Count<CurrencyModel>();
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Count));
+                return await Task.Run<OkObjectResult>(
+                    function: () => this.Ok(value: Context.CurrencyList.Count<CurrencyModel>())
+                );
             }
             catch (Exception ex)
             {
@@ -141,10 +137,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<float>> GetMinimumAsync([FromQuery] SearchFilterModel SearchFilter)
         {
-            #region Variables
-            float Min;
-            #endregion
-
             #region Objects
             ContextBase Context;
             #endregion
@@ -161,9 +153,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
-                Min = Context.CurrencyList.Min(x => x.Currency);
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Min));
+                return await Task.Run<OkObjectResult>(
+                    function: () => this.Ok(value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency))
+                );
             }
             catch (Exception ex)
             {
@@ -182,10 +174,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<float>> GetMaximumAsync([FromQuery] SearchFilterModel SearchFilter)
         {
-            #region Variables
-            float Max;
-            #endregion
-
             #region Objects
             ContextBase Context;
             #endregion
@@ -202,9 +190,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
-                Max = Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency);
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Max));
+                return await Task.Run<OkObjectResult>(
+                    function: () => this.Ok(value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency))
+                );
             }
             catch (Exception ex)
             {
@@ -223,10 +211,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<float>> GetSummationAsync([FromQuery] SearchFilterModel SearchFilter)
         {
-            #region Variables
-            float Summation;
-            #endregion
-
             #region Objects
             ContextBase Context;
             #endregion
@@ -243,9 +227,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
-                Summation = Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency);
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(Summation));
+                return await Task.Run<OkObjectResult>(
+                    function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency))
+                );
             }
             catch (Exception ex)
             {
@@ -264,10 +248,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         ]
         public async Task<ActionResult<float>> GetAverageAsync([FromQuery] SearchFilterModel SearchFilter)
         {
-            #region Variables
-            float Average;
-            #endregion
-
             #region Objects
             ContextBase Context;
             #endregion
@@ -284,60 +264,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
-                Average = Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency);
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Average));
-            }
-            catch (Exception ex)
-            {
-                Utils.MessageError(ex: ex, OType: this.GetType());
-                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
-
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                return await Task.Run<OkObjectResult>(
+                    function: () => this.Ok(value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency))
                 );
-            }
-        }
-
-        [
-            HttpGet(template: "[action]"),
-            RequireHttps
-        ]
-        public async Task<ActionResult<StatisticsHeaderModel>> GetStatisticsAsync([FromQuery] SearchFilterModel SearchFilter)
-        {
-            #region Variables
-            DateTime Now;
-            #endregion
-
-            #region Objects
-            StatisticsHeaderModel StatisticsHeader;
-            ContextBase Context;
-            #endregion
-
-            try
-            {
-                Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    Year: SearchFilter.Year,
-                    Month: SearchFilter.Month
-                );
-
-                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
-
-                Now = DateTime.Now;
-
-                StatisticsHeader = new StatisticsHeaderModel()
-                {
-                    ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
-                    ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
-                    Year = SearchFilter.Year,
-                    Month = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    Statistics = await Context.GetStatisticsAsync()
-                };
-
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: StatisticsHeader));
             }
             catch (Exception ex)
             {
