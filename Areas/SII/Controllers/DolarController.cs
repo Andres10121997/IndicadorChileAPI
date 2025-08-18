@@ -221,6 +221,47 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "Statistics/[action]"),
             RequireHttps
         ]
+        public async Task<ActionResult<float>> GetSummationAsync([FromQuery] SearchFilterModel SearchFilter)
+        {
+            #region Variables
+            float Summation;
+            #endregion
+
+            #region Objects
+            ContextBase Context;
+            #endregion
+
+            try
+            {
+                Context = new ContextBase(
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Year: SearchFilter.Year,
+                    Month: SearchFilter.Month
+                );
+
+                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
+
+                Summation = Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency);
+
+                return await Task.Run<OkObjectResult>(function: () => this.Ok(Summation));
+            }
+            catch (Exception ex)
+            {
+                Utils.MessageError(ex: ex, OType: this.GetType());
+                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
+
+                return await Task.Run<StatusCodeResult>(
+                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
+                );
+            }
+        }
+
+        [
+            HttpGet(template: "Statistics/[action]"),
+            RequireHttps
+        ]
         public async Task<ActionResult<float>> GetAverageAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             #region Variables
