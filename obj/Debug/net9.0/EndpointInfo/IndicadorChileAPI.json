@@ -850,7 +850,10 @@
             "format": "currency"
           },
           "monthName": {
+            "maxLength": 10,
+            "minLength": 5,
             "type": "string",
+            "format": "string",
             "nullable": true
           },
           "list": {

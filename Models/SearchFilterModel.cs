@@ -2,7 +2,7 @@
 
 namespace IndicadorChileAPI.Models
 {
-    public class SearchFilterModel
+    public record SearchFilterModel
     {
         [
             Display(
@@ -23,7 +23,7 @@ namespace IndicadorChileAPI.Models
                 maximum: int.MaxValue
             )
         ]
-        public required ushort Year { get; set; }
+        public required ushort Year { get; init; }
 
         [
             Display(
@@ -41,6 +41,6 @@ namespace IndicadorChileAPI.Models
                 maximum: 12
             )
         ]
-        public byte? Month { get; set; }
+        public byte? Month { get; init; }
     }
 }

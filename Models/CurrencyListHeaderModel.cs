@@ -64,6 +64,32 @@ namespace IndicadorChileAPI.Models
             )
         ]
         public required ushort Year { get; set; }
+
+        [
+            DataType(
+                dataType: DataType.Text
+            ),
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(CurrencyListHeaderModel),
+                Name = "Month name",
+                Order = 4,
+                Prompt = "",
+                ShortName = "Mes"
+            ),
+            MaxLength(
+                length: 10
+            ),
+            MinLength(
+                length: 5
+            ),
+            StringLength(
+                maximumLength: 10,
+                MinimumLength = 5
+            )
+        ]
         public string? MonthName { get; set; }
         public required CurrencyModel[] List { get; set; }
     }

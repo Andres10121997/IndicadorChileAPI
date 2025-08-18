@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IndicadorChileAPI.Models
 {
-    public class CurrencyModel
+    public record CurrencyModel
     {
         [
             Key,
@@ -21,7 +21,7 @@ namespace IndicadorChileAPI.Models
                 AllowEmptyStrings = false
             )
         ]
-        public required uint ID { get; set; }
+        public required uint ID { get; init; }
 
         [
             DataType(
@@ -41,7 +41,7 @@ namespace IndicadorChileAPI.Models
                 AllowEmptyStrings = false
             )
         ]
-        public required DateOnly Date { get; set; }
+        public required DateOnly Date { get; init; }
 
         [
             DataType(
@@ -61,7 +61,7 @@ namespace IndicadorChileAPI.Models
                 AllowEmptyStrings = false
             )
         ]
-        public required string WeekdayName { get; set; }
+        public required string WeekdayName { get; init; }
 
         [
             DataType(
@@ -85,6 +85,6 @@ namespace IndicadorChileAPI.Models
                 maximum: float.MaxValue
             )
         ]
-        public required float Currency { get; set; }
+        public required float Currency { get; init; }
     }
 }
