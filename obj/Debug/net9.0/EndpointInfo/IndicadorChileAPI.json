@@ -222,7 +222,7 @@
         }
       }
     },
-    "/api/SII/Dolar/Statistics/GetSummation": {
+    "/api/SII/Dolar/Statistics/GetSum": {
       "get": {
         "tags": [
           "Dolar"
@@ -635,7 +635,7 @@
         }
       }
     },
-    "/api/SII/UF/Statistics/GetSummation": {
+    "/api/SII/UF/Statistics/GetSum": {
       "get": {
         "tags": [
           "UF"

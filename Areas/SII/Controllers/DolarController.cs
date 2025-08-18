@@ -209,7 +209,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "Statistics/[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetSummationAsync([FromQuery] SearchFilterModel SearchFilter)
+        public async Task<ActionResult<float>> GetSumAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             #region Objects
             ContextBase Context;
@@ -227,7 +227,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency)));
+                return await Task.Run<OkObjectResult>(
+                    function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency))
+                );
             }
             catch (Exception ex)
             {

@@ -209,7 +209,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "Statistics/[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetSummationAsync([FromQuery] SearchFilterModel SearchFilter)
+        public async Task<ActionResult<float>> GetSumAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             #region Objects
             ContextBase Context;

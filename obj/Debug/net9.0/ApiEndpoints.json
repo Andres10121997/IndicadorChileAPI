@@ -208,8 +208,8 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
-    "Method": "GetSummationAsync",
-    "RelativePath": "api/SII/Dolar/Statistics/GetSummation",
+    "Method": "GetSumAsync",
+    "RelativePath": "api/SII/Dolar/Statistics/GetSum",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -446,8 +446,8 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
-    "Method": "GetSummationAsync",
-    "RelativePath": "api/SII/UF/Statistics/GetSummation",
+    "Method": "GetSumAsync",
+    "RelativePath": "api/SII/UF/Statistics/GetSum",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
