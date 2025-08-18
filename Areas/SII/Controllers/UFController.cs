@@ -45,23 +45,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<CurrencyListHeaderModel>> GetDataListAsync([
-                                                                                    Required(
-                                                                                        AllowEmptyStrings = false
-                                                                                    ),
-                                                                                    Range(
-                                                                                        minimum: 2013,
-                                                                                        maximum: int.MaxValue
-                                                                                    )
-                                                                                  ]
-                                                                                  ushort Year,
-                                                                                  [
-                                                                                    Range(
-                                                                                        minimum: 1,
-                                                                                        maximum: 12
-                                                                                    )
-                                                                                  ]
-                                                                                  byte? Month)
+        public async Task<ActionResult<CurrencyListHeaderModel>> GetDataListAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             #region Variables
             DateTime Now;
@@ -75,12 +59,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
-                    Year: Year,
-                    Month: Month
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Year: SearchFilter.Year,
+                    Month: SearchFilter.Month
                 );
 
-                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 Now = DateTime.Now;
 
@@ -88,8 +72,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 {
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
-                    Year = Year,
-                    MonthName = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
+                    Year = SearchFilter.Year,
+                    MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     List = Context.CurrencyList
                 };
 
@@ -112,23 +96,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "Statistics/[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<int>> GetCountAsync([
-                                                            Required(
-                                                                AllowEmptyStrings = false
-                                                            ),
-                                                            Range(
-                                                                minimum: 2013,
-                                                                maximum: int.MaxValue
-                                                            )
-                                                           ]
-                                                           ushort Year,
-                                                           [
-                                                            Range(
-                                                                minimum: 1,
-                                                                maximum: 12
-                                                            )
-                                                           ]
-                                                           byte? Month)
+        public async Task<ActionResult<int>> GetCountAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             #region Variables
             float Count;
@@ -141,12 +109,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
-                    Year: Year,
-                    Month: Month
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Year: SearchFilter.Year,
+                    Month: SearchFilter.Month
                 );
 
-                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
@@ -169,7 +137,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "Statistics/[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetMinimumAsync(ushort Year, byte? Month)
+        public async Task<ActionResult<float>> GetMinimumAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             #region Variables
             float Min;
@@ -182,12 +150,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
-                    Year: Year,
-                    Month: Month
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Year: SearchFilter.Year,
+                    Month: SearchFilter.Month
                 );
 
-                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
@@ -210,23 +178,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "Statistics/[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetAverageAsync([
-                                                                Required(
-                                                                    AllowEmptyStrings = false
-                                                                ),
-                                                                Range(
-                                                                    minimum: 2013,
-                                                                    maximum: int.MaxValue
-                                                                )
-                                                               ]
-                                                               ushort Year,
-                                                               [
-                                                                Range(
-                                                                    minimum: 1,
-                                                                    maximum: 12
-                                                                )
-                                                               ]
-                                                               byte? Month)
+        public async Task<ActionResult<float>> GetAverageAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             #region Variables
             float Average;
@@ -239,12 +191,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
-                    Year: Year,
-                    Month: Month
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Year: SearchFilter.Year,
+                    Month: SearchFilter.Month
                 );
 
-                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
@@ -267,23 +219,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<StatisticsHeaderModel>> GetStatisticsAsync([
-                                                                                    Required(
-                                                                                        AllowEmptyStrings = false
-                                                                                    ),
-                                                                                    Range(
-                                                                                        minimum: 2013,
-                                                                                        maximum: int.MaxValue
-                                                                                    )
-                                                                                  ]
-                                                                                  ushort Year,
-                                                                                  [
-                                                                                    Range(
-                                                                                        minimum: 1,
-                                                                                        maximum: 12
-                                                                                    )
-                                                                                  ]
-                                                                                  byte? Month)
+        public async Task<ActionResult<StatisticsHeaderModel>> GetStatisticsAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             #region Variables
             DateTime Now;
@@ -297,12 +233,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: Year.ToString()),
-                    Year: Year,
-                    Month: Month
+                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Year: SearchFilter.Year,
+                    Month: SearchFilter.Month
                 );
 
-                Context.CurrencyList = await (Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
                 ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
@@ -312,8 +248,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 {
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
-                    Year = Year,
-                    Month = Month.HasValue ? new DateOnly(year: Year, month: Convert.ToInt32(value: Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
+                    Year = SearchFilter.Year,
+                    Month = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     Statistics = await Context.GetStatisticsAsync()
                 };
 
