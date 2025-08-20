@@ -1,4 +1,5 @@
-﻿using IndicadorChileAPI.Models;
+﻿using IndicadorChileAPI.Context.Settings;
+using IndicadorChileAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -129,8 +130,10 @@ namespace IndicadorChileAPI.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
+            Transform transform = new Transform(this.Year);
+            
             return (
-                await this.TransformToCurrencyModelsAsync(
+                await transform.ToCurrencyModelsAsync(
                         CurrencyData: await this.ExtractValuesAsync(
                             htmlContent: await this.GetHtmlContentAsync(),
                             tableId: "table_export".Trim()
@@ -364,69 +367,6 @@ namespace IndicadorChileAPI.Context
             return await Task.Run<Dictionary<byte, float[]>>(
                 function: () => this.ExtractValues(htmlContent: htmlContent, tableId: tableId)
             );
-        }
-        #endregion
-
-
-
-        #region Transform
-        protected TModel[] TransformToModels<TModel>(Dictionary<byte, float[]> Data,
-                                                     Func<DateOnly, float, TModel> modelFactory)
-        {
-            #region List
-            List<TModel> ModelList = new List<TModel>();
-            #endregion
-
-            foreach (var (day, values) in Data)
-            {
-                for (byte month = 1; month <= values.Length; month++)
-                {
-                    if (day > 0 && day <= DateTime.DaysInMonth(year: this.Year, month: month))
-                    {
-                        #region Variables
-                        float value;
-                        #endregion
-
-                        #region Objects
-                        TModel model;
-                        #endregion
-
-                        value = values[month - 1];
-
-                        model = modelFactory(
-                            new DateOnly(
-                                year: this.Year,
-                                month: month,
-                                day: day
-                            ),
-                            value
-                        );
-
-                        ModelList.Add(item: model);
-                    }
-                }
-            }
-
-            return ModelList.ToArray<TModel>();
-        }
-
-        protected async Task<TModel[]> TransformToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
-                                                                      Func<DateOnly, float, TModel> modelFactory)
-        {
-            return await Task.Run<TModel[]>(
-                function: () => this.TransformToModels<TModel>(Data: Data, modelFactory)
-            );
-        }
-
-        protected async Task<CurrencyModel[]> TransformToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
-        {
-            return await this.TransformToModelsAsync<CurrencyModel>(Data: CurrencyData, modelFactory: (Date, Value) => new CurrencyModel
-            {
-                ID = uint.Parse(s: Date.ToString(format: "yyyyMMdd")),
-                Date = Date,
-                WeekdayName = Date.ToString(format: "dddd", provider: CultureInfo.CreateSpecificCulture(name: "es")),
-                Currency = Value
-            });
         }
         #endregion
     }
