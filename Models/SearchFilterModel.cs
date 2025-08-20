@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
 namespace IndicadorChileAPI.Models
 {
@@ -91,7 +90,7 @@ namespace IndicadorChileAPI.Models
                 (Year == Date.Year || Year.Equals(obj: Date.Year)))
             {
                 yield return new ValidationResult(
-                    errorMessage: $"El mes y año no puede ser posterior a {Date.ToString("MM-yyyy")}.",
+                    errorMessage: $"El mes y año no puede ser posterior a {Date.ToString(format: "MM-yyyy")}.",
                     memberNames: new[] {
                         nameof(Month),
                         nameof(Year)
