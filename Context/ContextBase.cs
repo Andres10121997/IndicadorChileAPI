@@ -119,10 +119,9 @@ namespace IndicadorChileAPI.Context
         #endregion
 
         #region Objects
-        public SearchFilterModel SearchFilter
+        protected SearchFilterModel SearchFilter
         {
             get => this.O_SearchFilter;
-            set => this.O_SearchFilter = value;
         }
         #endregion
         #endregion
@@ -132,7 +131,7 @@ namespace IndicadorChileAPI.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
-            Transform transform = new Transform(this.SearchFilter.Year);
+            Transform transform = new Transform(Year: this.SearchFilter.Year);
             
             return (
                 await transform.ToCurrencyModelsAsync(
@@ -230,24 +229,6 @@ namespace IndicadorChileAPI.Context
 
             return AnotherCurrency;
         }
-        #endregion
-
-
-
-        #region Mathematics
-        public async Task<StatisticsModel> GetStatisticsAsync() => new StatisticsModel()
-        {
-            StartDate = this.CurrencyList.Min<CurrencyModel, DateOnly>(selector: Minimum => Minimum.Date),
-            EndDate = this.CurrencyList.Max<CurrencyModel, DateOnly>(selector: Maximum => Maximum.Date),
-            AmountOfData = Convert.ToUInt16(value: this.CurrencyList.Length),
-            Minimum = this.CurrencyList.Min<CurrencyModel>(selector: Minimum => Minimum.Currency),
-            Maximum = this.CurrencyList.Max<CurrencyModel>(selector: Maximum => Maximum.Currency),
-            Summation = this.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency),
-            SumOfSquares = this.CurrencyList.Sum<CurrencyModel>(x => Math.Pow(x: x.Currency, y: 2)),
-            Average = this.CurrencyList.Average<CurrencyModel>(selector: Average => Average.Currency),
-            StandardDeviation = await Statistics.StandardDeviationAsync(Values: this.CurrencyList.Select<CurrencyModel, float>(selector: StandardDeviation => StandardDeviation.Currency).ToArray<float>()),
-            Variance = this.CurrencyList.Select(value => value.Currency).Variance()
-        };
         #endregion
 
 
