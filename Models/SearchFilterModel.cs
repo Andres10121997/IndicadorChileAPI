@@ -40,7 +40,8 @@ namespace IndicadorChileAPI.Models
             ),
             Range(
                 minimum: 1,
-                maximum: 12
+                maximum: 12,
+                ErrorMessage = "El mes debe estar entre 1 y 12."
             )
         ]
         public byte? Month { get; init; }
@@ -55,31 +56,12 @@ namespace IndicadorChileAPI.Models
 
             Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
             
-            if (Month < 1)
-            {
-                yield return new ValidationResult(
-                    errorMessage: "El mes no puede ser inferior a 1.",
-                    memberNames: new[] {
-                        nameof(Month)
-                    }
-                );
-            }
-            else
-            if (Month > 12)
-            {
-                yield return new ValidationResult(
-                    errorMessage: "El mes no puede ser superior a 12.",
-                    memberNames: new[] {
-                        nameof(Month)
-                    }
-                );
-            }
-            else
             if (Year > Date.Year)
             {
                 yield return new ValidationResult(
                     errorMessage: $"El año no puede ser superior a {Date.Year}.",
-                    memberNames: new[] {
+                    memberNames: new[]
+                    {
                         nameof(Year)
                     }
                 );
@@ -91,7 +73,8 @@ namespace IndicadorChileAPI.Models
             {
                 yield return new ValidationResult(
                     errorMessage: $"El mes y año no puede ser posterior a {Date.ToString(format: "MM-yyyy")}.",
-                    memberNames: new[] {
+                    memberNames: new[]
+                    {
                         nameof(Month),
                         nameof(Year)
                     }

@@ -34,6 +34,9 @@ namespace IndicadorChileAPI.Context
             : base()
         {
             #region Variables
+            this.V_Currency = 0;
+            this.V_CurrencyConversion = 0;
+            
             #region Readonly
             this.VR_Url = Url;
             this.VR_Year = SearchFilter.Year;
