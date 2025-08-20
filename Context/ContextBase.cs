@@ -18,13 +18,15 @@ namespace IndicadorChileAPI.Context
 
         #region Readonly
         private readonly string VR_Url;
-        private readonly ushort VR_Year;
-        private readonly ushort? VR_Month;
         #endregion
         #endregion
 
         #region Arrays
         private CurrencyModel[] A_CurrencyList;
+        #endregion
+
+        #region Objects
+        private SearchFilterModel O_SearchFilter;
         #endregion
 
 
@@ -40,13 +42,15 @@ namespace IndicadorChileAPI.Context
             
             #region Readonly
             this.VR_Url = Url;
-            this.VR_Year = SearchFilter.Year;
-            this.VR_Month = SearchFilter.Month;
             #endregion
             #endregion
 
             #region Arrays
             this.A_CurrencyList = Array.Empty<CurrencyModel>();
+            #endregion
+
+            #region Objects
+            this.O_SearchFilter = SearchFilter;
             #endregion
         }
         #endregion
@@ -98,16 +102,6 @@ namespace IndicadorChileAPI.Context
         {
             get => this.VR_Url.Trim();
         }
-
-        protected ushort Year
-        {
-            get => this.VR_Year;
-        }
-
-        protected ushort? Month
-        {
-            get => this.VR_Month;
-        }
         #endregion
         #endregion
 
@@ -123,6 +117,14 @@ namespace IndicadorChileAPI.Context
             }
         }
         #endregion
+
+        #region Objects
+        public SearchFilterModel SearchFilter
+        {
+            get => this.O_SearchFilter;
+            set => this.O_SearchFilter = value;
+        }
+        #endregion
         #endregion
 
 
@@ -130,7 +132,7 @@ namespace IndicadorChileAPI.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
-            Transform transform = new Transform(this.Year);
+            Transform transform = new Transform(this.SearchFilter.Year);
             
             return (
                 await transform.ToCurrencyModelsAsync(
@@ -154,9 +156,9 @@ namespace IndicadorChileAPI.Context
         {
             return (await this.AnnualValuesAsync())
                 .AsParallel<CurrencyModel>()
-                .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.Year
+                .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
                                                           &&
-                                                          Model.Date.Month == this.Month)
+                                                          Model.Date.Month == this.SearchFilter.Month)
                 .ToArray<CurrencyModel>();
         }
 
