@@ -30,15 +30,14 @@ namespace IndicadorChileAPI.Context
 
         #region Constructor Method
         public ContextBase(string Url,
-                           ushort Year,
-                           ushort? Month)
+                           SearchFilterModel SearchFilter)
             : base()
         {
             #region Variables
             #region Readonly
             this.VR_Url = Url;
-            this.VR_Year = Year;
-            this.VR_Month = Month;
+            this.VR_Year = SearchFilter.Year;
+            this.VR_Month = SearchFilter.Month;
             #endregion
             #endregion
 

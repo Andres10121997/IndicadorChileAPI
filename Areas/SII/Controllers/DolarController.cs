@@ -60,8 +60,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new ContextBase(
                     Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    Year: SearchFilter.Year,
-                    Month: SearchFilter.Month
+                    SearchFilter: SearchFilter
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
@@ -108,8 +107,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new ContextBase(
                     Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    Year: SearchFilter.Year,
-                    Month: SearchFilter.Month
+                    SearchFilter: SearchFilter
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
@@ -145,8 +143,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new ContextBase(
                     Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    Year: SearchFilter.Year,
-                    Month: SearchFilter.Month
+                    SearchFilter: SearchFilter
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
@@ -182,8 +179,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new ContextBase(
                     Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    Year: SearchFilter.Year,
-                    Month: SearchFilter.Month
+                    SearchFilter: SearchFilter
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
@@ -219,8 +215,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new ContextBase(
                     Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    Year: SearchFilter.Year,
-                    Month: SearchFilter.Month
+                    SearchFilter: SearchFilter
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
@@ -256,8 +251,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new ContextBase(
                     Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    Year: SearchFilter.Year,
-                    Month: SearchFilter.Month
+                    SearchFilter: SearchFilter
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
@@ -293,8 +287,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Context = new ContextBase(
                     Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    Year: SearchFilter.Year,
-                    Month: SearchFilter.Month
+                    SearchFilter: SearchFilter
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
@@ -341,8 +334,11 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         oldValue: "{Year}",
                         newValue: Date.Year.ToString()
                     ),
-                    Year: Convert.ToUInt16(value: Date.Year),
-                    Month: Convert.ToByte(value: Date.Month)
+                    SearchFilter: new SearchFilterModel
+                    {
+                        Year = Convert.ToUInt16(value: Date.Year),
+                        Month = Convert.ToByte(value: Date.Month)
+                    }
                 );
 
                 return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionIntoAnotherCurrencyAsync(Date: Date, Pesos: Pesos)));
@@ -381,8 +377,11 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                         oldValue: "{Year}",
                         newValue: Date.Year.ToString()
                     ),
-                    Year: Convert.ToUInt16(value: Date.Year),
-                    Month: Convert.ToByte(value: Date.Month)
+                    SearchFilter: new SearchFilterModel
+                    {
+                        Year = Convert.ToUInt16(value: Date.Year),
+                        Month = Convert.ToByte(value: Date.Month)
+                    }
                 );
 
                 return await Task.Run<OkObjectResult>(
