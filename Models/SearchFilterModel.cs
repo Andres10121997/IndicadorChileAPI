@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace IndicadorChileAPI.Models
 {
-    public record SearchFilterModel
+    public record SearchFilterModel : IValidatableObject
     {
         [
             Display(
@@ -32,7 +35,7 @@ namespace IndicadorChileAPI.Models
                 Description = "Parámetro para buscar el mes",
                 GroupName = "",
                 Name = "Mes",
-                Order = 1,
+                Order = 2,
                 Prompt = "Ingrese aquí el mes.",
                 ShortName = "Mes"
             ),
@@ -42,5 +45,36 @@ namespace IndicadorChileAPI.Models
             )
         ]
         public byte? Month { get; init; }
+
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            #region Variables
+            DateOnly Date;
+            bool[] MonthValidations;
+            #endregion
+
+            Date = DateOnly.FromDateTime(DateTime.Now);
+            MonthValidations = new bool[]
+            {
+                Month < 1
+                ||
+                Month > 12,
+                Month > Date.Month
+                &&
+                (Year == Date.Year || Year.Equals(obj: Date.Year))
+            };
+
+            ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
+                value: Year,
+                other: Date.Year
+            );
+
+            if (MonthValidations.Contains(value: true))
+            {
+                yield return new ValidationResult("Error con el mes.", new[] { nameof(Month) });
+            }
+        }
     }
 }
