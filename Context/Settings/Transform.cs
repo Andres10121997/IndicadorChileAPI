@@ -9,8 +9,10 @@ namespace IndicadorChileAPI.Context.Settings
 {
     public class Transform
     {
+        #region Variables
         private ushort Year;
-        
+        #endregion
+
 
 
         public Transform(ushort Year)

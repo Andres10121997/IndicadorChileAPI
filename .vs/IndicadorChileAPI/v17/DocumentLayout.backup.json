@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\context\\contextbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|solutionrelative:context\\contextbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\areas\\sii\\controllers\\dolarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|solutionrelative:areas\\sii\\controllers\\dolarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\areas\\sii\\controllers\\ufcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}|IndicadorChileAPI.csproj|solutionrelative:areas\\sii\\controllers\\ufcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,15 +26,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ContextBase.cs",
-              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Context\\ContextBase.cs",
-              "RelativeDocumentMoniker": "Context\\ContextBase.cs",
-              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Context\\ContextBase.cs",
-              "RelativeToolTip": "Context\\ContextBase.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAAOoAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "UFController.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Controllers\\UFController.cs",
+              "RelativeDocumentMoniker": "Areas\\SII\\Controllers\\UFController.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Controllers\\UFController.cs",
+              "RelativeToolTip": "Areas\\SII\\Controllers\\UFController.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAACkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-20T21:42:40.733Z",
+              "WhenOpened": "2025-08-21T12:15:19.631Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "DolarController.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Controllers\\DolarController.cs",
+              "RelativeDocumentMoniker": "Areas\\SII\\Controllers\\DolarController.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Controllers\\DolarController.cs",
+              "RelativeToolTip": "Areas\\SII\\Controllers\\DolarController.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAAwCkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T12:14:16.486Z",
               "EditorCaption": ""
             }
           ]

@@ -65,8 +65,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
-
                 Now = DateTime.Now;
 
                 CurrencyList = new CurrencyListHeaderModel()
@@ -112,8 +110,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
-
                 return await Task.Run<OkObjectResult>(
                     function: () => this.Ok(value: Context.CurrencyList.Count<CurrencyModel>())
                 );
@@ -147,8 +143,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
                 return await Task.Run<OkObjectResult>(
                     function: () => this.Ok(value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency))
@@ -184,8 +178,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
-
                 return await Task.Run<OkObjectResult>(
                     function: () => this.Ok(value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency))
                 );
@@ -219,8 +211,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
                 return await Task.Run<OkObjectResult>(
                     function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency))
@@ -256,8 +246,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
-
                 return await Task.Run<OkObjectResult>(
                     function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2)))
                 );
@@ -291,8 +279,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 );
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
 
                 return await Task.Run<OkObjectResult>(
                     function: () => this.Ok(value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency))

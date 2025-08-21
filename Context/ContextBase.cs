@@ -133,22 +133,20 @@ namespace IndicadorChileAPI.Context
         {
             Transform transform = new Transform(Year: this.SearchFilter.Year);
             
-            return (
-                await transform.ToCurrencyModelsAsync(
+            return (await transform.ToCurrencyModelsAsync(
                         CurrencyData: await this.ExtractValuesAsync(
                             htmlContent: await this.GetHtmlContentAsync(),
                             tableId: "table_export".Trim()
                         )
-                    )
-                )
-                .AsParallel<CurrencyModel>()
-                .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
-                                                          &&
-                                                          !float.IsInfinity(f: Model.Currency)
-                                                          &&
-                                                          !float.IsNegative(f: Model.Currency))
-                .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                .ToArray<CurrencyModel>();
+                   ))
+                   .AsParallel<CurrencyModel>()
+                   .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
+                                                    &&
+                                                    !float.IsInfinity(f: Model.Currency)
+                                                    &&
+                                                    !float.IsNegative(f: Model.Currency))
+                   .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                   .ToArray<CurrencyModel>();
         }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
