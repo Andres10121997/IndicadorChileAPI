@@ -77,16 +77,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     List = Context.CurrencyList
                 };
 
-                return await Task.Run<OkObjectResult>(function: () => this.Ok(value: CurrencyList));
+                return this.Ok(value: CurrencyList);
             }
             catch (Exception ex)
             {
                 Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
+                return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
             }
         }
         #endregion
@@ -114,33 +112,19 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 switch (Statistics)
                 {
                     case StatisticsEnum.Count:
-                        return await Task.Run<OkObjectResult>(
-                            function: () => this.Ok(value: Context.CurrencyList.Count<CurrencyModel>())
-                        );
+                        return this.Ok(value: Context.CurrencyList.Count<CurrencyModel>());
                     case StatisticsEnum.Minimum:
-                        return await Task.Run<OkObjectResult>(
-                            function: () => this.Ok(value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency))
-                        );
+                        return this.Ok(value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency));
                     case StatisticsEnum.Maximum:
-                        return await Task.Run<OkObjectResult>(
-                            function: () => this.Ok(value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency))
-                        );
+                        return this.Ok(value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency));
                     case StatisticsEnum.Sum:
-                        return await Task.Run<OkObjectResult>(
-                            function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency))
-                        );
+                        return this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency));
                     case StatisticsEnum.SumOfSquares:
-                        return await Task.Run<OkObjectResult>(
-                            function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2)))
-                        );
+                        return this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2)));
                     case StatisticsEnum.Average:
-                        return await Task.Run<OkObjectResult>(
-                            function: () => this.Ok(value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency))
-                        );
+                        return this.Ok(value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency));
                     default:
-                        return await Task.Run<StatusCodeResult>(
-                            function: () => this.StatusCode(statusCode: (int)HttpStatusCode.NotAcceptable)
-                        );
+                        return this.StatusCode(statusCode: (int)HttpStatusCode.NotAcceptable);
                 }
             }
             catch (Exception ex)
@@ -148,9 +132,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
 
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
+                return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
             }
         }
         #endregion
@@ -186,16 +168,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     }
                 );
 
-                return await Task.Run<OkObjectResult>(function: async () => this.Ok(value: await Context.ConversionIntoAnotherCurrencyAsync(Date: Date, Pesos: Pesos)));
+                return this.Ok(value: await Context.ConversionIntoAnotherCurrencyAsync(Date: Date, Pesos: Pesos));
             }
             catch (Exception ex)
             {
                 Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
+                return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
             }
         }
 
@@ -229,18 +209,14 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     }
                 );
 
-                return await Task.Run<OkObjectResult>(
-                    function: async () => this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, AmountOfCurrency: Dolar))
-                );
+                return this.Ok(value: await Context.ConversionInChileanPesosAsync(Date: Date, AmountOfCurrency: Dolar));
             }
             catch (Exception ex)
             {
                 Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
+                return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
             }
         }
         #endregion
