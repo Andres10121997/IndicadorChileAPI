@@ -6,6 +6,7 @@ namespace IndicadorChileAPI.Models
 {
     public record SearchFilterModel : IValidatableObject
     {
+        #region Property
         [
             Display(
                 AutoGenerateField = false,
@@ -45,6 +46,7 @@ namespace IndicadorChileAPI.Models
             )
         ]
         public byte? Month { get; init; }
+        #endregion
 
 
 
@@ -55,7 +57,7 @@ namespace IndicadorChileAPI.Models
             #endregion
 
             Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
-            
+
             if (Year > Date.Year)
             {
                 yield return new ValidationResult(
@@ -72,7 +74,7 @@ namespace IndicadorChileAPI.Models
                 (Year == Date.Year || Year.Equals(obj: Date.Year)))
             {
                 yield return new ValidationResult(
-                    errorMessage: $"El mes y año no puede ser posterior a {Date.ToString(format: "MM-yyyy")}.",
+                    errorMessage: $"El mes y año no puede ser posterior a {Date.ToString(format: "MMMM-yyyy")}.",
                     memberNames: new[]
                     {
                         nameof(Month),

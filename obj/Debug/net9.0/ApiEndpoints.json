@@ -239,7 +239,7 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.DolarController",
-    "Method": "GetSumOfSquares",
+    "Method": "GetSumOfSquaresAsync",
     "RelativePath": "api/SII/Dolar/Statistics/GetSumOfSquares",
     "HttpMethod": "GET",
     "IsController": true,
@@ -508,7 +508,7 @@
   },
   {
     "ContainingType": "IndicadorChileAPI.Areas.SII.Controllers.UFController",
-    "Method": "GetSumOfSquares",
+    "Method": "GetSumOfSquaresAsync",
     "RelativePath": "api/SII/UF/Statistics/GetSumOfSquares",
     "HttpMethod": "GET",
     "IsController": true,
