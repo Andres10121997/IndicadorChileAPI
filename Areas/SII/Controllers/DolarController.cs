@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using static IndicadorChileAPI.App.Interfaces.IStatistics;
 
 namespace IndicadorChileAPI.Areas.SII.Controllers
 {
@@ -92,10 +93,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
         #region Statistics
         [
-            HttpGet(template: "Statistics/[action]"),
+            HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<int>> GetCountAsync([FromQuery] SearchFilterModel SearchFilter)
+        public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics, [FromQuery] SearchFilterModel SearchFilter)
         {
             #region Objects
             ContextBase Context;
@@ -110,185 +111,37 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                return await Task.Run<OkObjectResult>(
-                    function: () => this.Ok(value: Context.CurrencyList.Count<CurrencyModel>())
-                );
-            }
-            catch (Exception ex)
-            {
-                Utils.MessageError(ex: ex, OType: this.GetType());
-                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
-
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
-            }
-        }
-
-        [
-            HttpGet(template: "Statistics/[action]"),
-            RequireHttps
-        ]
-        public async Task<ActionResult<float>> GetMinimumAsync([FromQuery] SearchFilterModel SearchFilter)
-        {
-            #region Objects
-            ContextBase Context;
-            #endregion
-
-            try
-            {
-                Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    SearchFilter: SearchFilter
-                );
-
-                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                return await Task.Run<OkObjectResult>(
-                    function: () => this.Ok(value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency))
-                );
-            }
-            catch (Exception ex)
-            {
-                Utils.MessageError(ex: ex, OType: this.GetType());
-                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
-
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
-            }
-        }
-
-        [
-            HttpGet(template: "Statistics/[action]"),
-            RequireHttps
-        ]
-        public async Task<ActionResult<float>> GetMaximumAsync([FromQuery] SearchFilterModel SearchFilter)
-        {
-            #region Objects
-            ContextBase Context;
-            #endregion
-
-            try
-            {
-                Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    SearchFilter: SearchFilter
-                );
-
-                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                return await Task.Run<OkObjectResult>(
-                    function: () => this.Ok(value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency))
-                );
-            }
-            catch (Exception ex)
-            {
-                Utils.MessageError(ex: ex, OType: this.GetType());
-                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
-
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
-            }
-        }
-
-        [
-            HttpGet(template: "Statistics/[action]"),
-            RequireHttps
-        ]
-        public async Task<ActionResult<float>> GetSumAsync([FromQuery] SearchFilterModel SearchFilter)
-        {
-            #region Objects
-            ContextBase Context;
-            #endregion
-
-            try
-            {
-                Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
-                    SearchFilter: SearchFilter
-                );
-
-                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                return await Task.Run<OkObjectResult>(
-                    function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency))
-                );
-            }
-            catch (Exception ex)
-            {
-                Utils.MessageError(ex: ex, OType: this.GetType());
-                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
-
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
-            }
-        }
-
-        [
-            HttpGet(template: "Statistics/[action]"),
-            RequireHttps
-        ]
-        public async Task<ActionResult<float>> GetSumOfSquaresAsync([FromQuery] SearchFilterModel SearchFilter)
-        {
-            #region Objects
-            ContextBase Context;
-            #endregion
-
-            try
-            {
-                Context = new ContextBase(
-                    Url: C_Url.Replace(
-                        oldValue: "{Year}",
-                        newValue: SearchFilter.Year.ToString()
-                    ),
-                    SearchFilter: SearchFilter
-                );
-
-                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                return await Task.Run<OkObjectResult>(
-                    function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2)))
-                );
-            }
-            catch (Exception ex)
-            {
-                Utils.MessageError(ex: ex, OType: this.GetType());
-                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
-
-                return await Task.Run<StatusCodeResult>(
-                    function: () => this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError)
-                );
-            }
-        }
-
-        [
-            HttpGet(template: "Statistics/[action]"),
-            RequireHttps
-        ]
-        public async Task<ActionResult<float>> GetAverageAsync([FromQuery] SearchFilterModel SearchFilter)
-        {
-            #region Objects
-            ContextBase Context;
-            #endregion
-
-            try
-            {
-                Context = new ContextBase(
-                    Url: C_Url.Replace(
-                        oldValue: "{Year}",
-                        newValue: SearchFilter.Year.ToString()
-                    ),
-                    SearchFilter: SearchFilter
-                );
-
-                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                return await Task.Run<OkObjectResult>(
-                    function: () => this.Ok(value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency))
-                );
+                switch (Statistics)
+                {
+                    case StatisticsEnum.Count:
+                        return await Task.Run<OkObjectResult>(
+                            function: () => this.Ok(value: Context.CurrencyList.Count<CurrencyModel>())
+                        );
+                    case StatisticsEnum.Minimum:
+                        return await Task.Run<OkObjectResult>(
+                            function: () => this.Ok(value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency))
+                        );
+                    case StatisticsEnum.Maximum:
+                        return await Task.Run<OkObjectResult>(
+                            function: () => this.Ok(value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency))
+                        );
+                    case StatisticsEnum.Sum:
+                        return await Task.Run<OkObjectResult>(
+                            function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency))
+                        );
+                    case StatisticsEnum.SumOfSquares:
+                        return await Task.Run<OkObjectResult>(
+                            function: () => this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2)))
+                        );
+                    case StatisticsEnum.Average:
+                        return await Task.Run<OkObjectResult>(
+                            function: () => this.Ok(value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency))
+                        );
+                    default:
+                        return await Task.Run<StatusCodeResult>(
+                            function: () => this.StatusCode(statusCode: (int)HttpStatusCode.NotAcceptable)
+                        );
+                }
             }
             catch (Exception ex)
             {

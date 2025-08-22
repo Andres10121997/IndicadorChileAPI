@@ -57,287 +57,20 @@
         }
       }
     },
-    "/api/SII/Dolar/Statistics/GetCount": {
+    "/api/SII/Dolar/GetStatistics": {
       "get": {
         "tags": [
           "Dolar"
         ],
         "parameters": [
           {
-            "name": "Year",
+            "name": "Statistics",
             "in": "query",
             "required": true,
             "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/StatisticsEnum"
             }
           },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/Dolar/Statistics/GetMinimum": {
-      "get": {
-        "tags": [
-          "Dolar"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/Dolar/Statistics/GetMaximum": {
-      "get": {
-        "tags": [
-          "Dolar"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/Dolar/Statistics/GetSum": {
-      "get": {
-        "tags": [
-          "Dolar"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/Dolar/Statistics/GetSumOfSquares": {
-      "get": {
-        "tags": [
-          "Dolar"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/Dolar/Statistics/GetAverage": {
-      "get": {
-        "tags": [
-          "Dolar"
-        ],
-        "parameters": [
           {
             "name": "Year",
             "in": "query",
@@ -499,6 +232,13 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "statistics",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/StatisticsEnum"
+            }
           }
         ],
         "responses": {
@@ -525,287 +265,20 @@
         }
       }
     },
-    "/api/SII/UF/Statistics/GetCount": {
+    "/api/SII/UF/GetStatistics": {
       "get": {
         "tags": [
           "UF"
         ],
         "parameters": [
           {
-            "name": "Year",
+            "name": "Statistics",
             "in": "query",
             "required": true,
             "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/StatisticsEnum"
             }
           },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int32"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/UF/Statistics/GetMinimum": {
-      "get": {
-        "tags": [
-          "UF"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/UF/Statistics/GetMaximum": {
-      "get": {
-        "tags": [
-          "UF"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/UF/Statistics/GetSum": {
-      "get": {
-        "tags": [
-          "UF"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/UF/Statistics/GetSumOfSquares": {
-      "get": {
-        "tags": [
-          "UF"
-        ],
-        "parameters": [
-          {
-            "name": "Year",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "maximum": 2147483647,
-              "minimum": 2013,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "Month",
-            "in": "query",
-            "schema": {
-              "maximum": 12,
-              "minimum": 1,
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/SII/UF/Statistics/GetAverage": {
-      "get": {
-        "tags": [
-          "UF"
-        ],
-        "parameters": [
           {
             "name": "Year",
             "in": "query",
@@ -1011,6 +484,17 @@
           }
         },
         "additionalProperties": false
+      },
+      "StatisticsEnum": {
+        "enum": [
+          "Count",
+          "Minimum",
+          "Maximum",
+          "Sum",
+          "SumOfSquares",
+          "Average"
+        ],
+        "type": "string"
       }
     }
   }

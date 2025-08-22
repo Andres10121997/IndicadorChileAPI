@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 namespace IndicadorChileAPI.App.Start
 {
@@ -47,7 +48,11 @@ namespace IndicadorChileAPI.App.Start
         #region Configure
         private static void ConfigureServices(WebApplicationBuilder Builder)
         {
-            Builder.Services.AddControllers();
+            Builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
             Builder.Services.AddEndpointsApiExplorer();
             Builder.Services.AddSwaggerGen(options =>
             {
