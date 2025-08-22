@@ -94,7 +94,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics, [FromQuery] SearchFilterModel SearchFilter)
+        public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
+                                                                  [FromQuery] SearchFilterModel SearchFilter)
         {
             #region Objects
             ContextBase Context;
@@ -103,7 +104,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Url: C_Url.Replace(
+                        oldValue: "{Year}",
+                        newValue: SearchFilter.Year.ToString()
+                    ),
                     SearchFilter: SearchFilter
                 );
 
@@ -112,19 +116,33 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                 switch (Statistics)
                 {
                     case StatisticsEnum.Count:
-                        return this.Ok(value: Context.CurrencyList.Count<CurrencyModel>());
+                        return this.Ok(
+                            value: Context.CurrencyList.Count<CurrencyModel>()
+                        );
                     case StatisticsEnum.Minimum:
-                        return this.Ok(value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency));
+                        return this.Ok(
+                            value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency)
+                        );
                     case StatisticsEnum.Maximum:
-                        return this.Ok(value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency));
+                        return this.Ok(
+                            value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency)
+                        );
                     case StatisticsEnum.Sum:
-                        return this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency));
+                        return this.Ok(
+                            value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency)
+                        );
                     case StatisticsEnum.SumOfSquares:
-                        return this.Ok(value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2)));
+                        return this.Ok(
+                            value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2))
+                        );
                     case StatisticsEnum.Average:
-                        return this.Ok(value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency));
+                        return this.Ok(
+                            value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency)
+                        );
                     default:
-                        return this.StatusCode(statusCode: (int)HttpStatusCode.NotAcceptable);
+                        return this.StatusCode(
+                            statusCode: (int)HttpStatusCode.NotAcceptable
+                        );
                 }
             }
             catch (Exception ex)

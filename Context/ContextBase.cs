@@ -179,13 +179,13 @@ namespace IndicadorChileAPI.Context
                     MonthlyValues
                         .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
                         .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                        .FirstOrDefault<CurrencyModel>()
+                    ??
+                    // Si aún no se encuentra, buscar en valores anuales
+                    (await this.AnnualValuesAsync())
+                        .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
+                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                         .FirstOrDefault<CurrencyModel>();
-
-            // Si aún no se encuentra, buscar en valores anuales
-            Value ??= (await this.AnnualValuesAsync())
-                    .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
-                    .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                    .FirstOrDefault<CurrencyModel>();
 
             ArgumentNullException.ThrowIfNull(argument: Value);
 
