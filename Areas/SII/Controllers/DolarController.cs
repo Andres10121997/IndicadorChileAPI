@@ -240,7 +240,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Url: C_Url.Replace(
+                        oldValue: "{Year}",
+                        newValue: SearchFilter.Year.ToString()
+                    ),
                     SearchFilter: SearchFilter
                 );
 
@@ -274,7 +277,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             try
             {
                 Context = new ContextBase(
-                    Url: C_Url.Replace(oldValue: "{Year}", newValue: SearchFilter.Year.ToString()),
+                    Url: C_Url.Replace(
+                        oldValue: "{Year}",
+                        newValue: SearchFilter.Year.ToString()
+                    ),
                     SearchFilter: SearchFilter
                 );
 

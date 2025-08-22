@@ -57,7 +57,7 @@ namespace IndicadorChileAPI.Context
 
 
 
-        #region Getters And Setters
+        #region Property
         #region Variables
         public float Currency
         {
