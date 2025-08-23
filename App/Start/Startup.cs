@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace IndicadorChileAPI.App.Start
 {
@@ -27,6 +28,7 @@ namespace IndicadorChileAPI.App.Start
 
 
 
+        #region Init
         public static WebApplication InitApp(string[] args)
         {
             WebApplicationBuilder builder;
@@ -43,6 +45,9 @@ namespace IndicadorChileAPI.App.Start
             return app;
         }
 
+        public static async Task<WebApplication> InitAppAsync(string[] args) => await Task.Run<WebApplication>(function: () => InitApp(args: args));
+        #endregion
+
 
 
         #region Configure
@@ -51,7 +56,7 @@ namespace IndicadorChileAPI.App.Start
             Builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
-                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.Converters.Add(item: new JsonStringEnumConverter());
                 });
             Builder.Services.AddEndpointsApiExplorer();
             Builder.Services.AddSwaggerGen(options =>

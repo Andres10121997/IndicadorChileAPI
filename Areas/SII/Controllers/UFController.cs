@@ -143,9 +143,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                             value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency)
                         );
                     default:
-                        return this.StatusCode(
-                            statusCode: (int)HttpStatusCode.NotAcceptable
-                        );
+                        return this.BadRequest();
                 }
             }
             catch (Exception ex)

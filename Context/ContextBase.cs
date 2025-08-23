@@ -243,9 +243,9 @@ namespace IndicadorChileAPI.Context
                                                           string tableId)
         {
             #region Variables
-            string tablePattern = string.Empty;
-            string tableHtml = string.Empty;
-            string rowPattern = string.Empty;
+            string tablePattern;
+            string tableHtml;
+            string rowPattern;
             #endregion
 
             #region Dictionary
@@ -260,6 +260,7 @@ namespace IndicadorChileAPI.Context
             #region Validations
             ArgumentNullException.ThrowIfNullOrEmpty(argument: htmlContent);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: htmlContent);
+
             ArgumentNullException.ThrowIfNullOrEmpty(argument: tableId);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: tableId);
             #endregion
@@ -277,7 +278,11 @@ namespace IndicadorChileAPI.Context
 
             // Regex para las filas de la tabla
             rowPattern = @"<tr>(.*?)<\/tr>";
-            rowMatches = Regex.Matches(input: tableHtml, pattern: rowPattern, options: RegexOptions.Singleline);
+            rowMatches = Regex.Matches(
+                input: tableHtml,
+                pattern: rowPattern,
+                options: RegexOptions.Singleline
+            );
 
             foreach (Match rowMatch in rowMatches)
             {
@@ -292,7 +297,11 @@ namespace IndicadorChileAPI.Context
 
                 // Regex para las celdas (<th> y <td>)
                 cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
-                cellMatches = Regex.Matches(input: rowHtml, pattern: cellPattern, options: RegexOptions.Singleline);
+                cellMatches = Regex.Matches(
+                    input: rowHtml,
+                    pattern: cellPattern,
+                    options: RegexOptions.Singleline
+                );
 
                 if (cellMatches.Count > 0)
                 {
