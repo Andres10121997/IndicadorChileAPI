@@ -56,11 +56,14 @@ namespace IndicadorChileAPI.App.Start
             Builder.Services.AddEndpointsApiExplorer();
             Builder.Services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Indicadores de Chile",
-                    Version = "v1"
-                });
+                options.SwaggerDoc(
+                    name: "v1",
+                    info: new OpenApiInfo
+                    {
+                        Title = "Indicadores de Chile",
+                        Version = "v1"
+                    }
+                );
             });
         }
 

@@ -15,11 +15,13 @@ namespace IndicadorChileAPI.Context.Settings
 
 
 
+        #region Constructor Method
         public Transform(ushort Year)
             : base()
         {
             this.Year = Year;
         }
+        #endregion
 
 
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IndicadorChileAPI.Models
 {
-    public class CurrencyListHeaderModel
+    public record CurrencyListHeaderModel
     {
         [
             DataType(
