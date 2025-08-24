@@ -232,13 +232,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "statistics",
-            "in": "query",
-            "schema": {
-              "$ref": "#/components/schemas/StatisticsEnum"
-            }
           }
         ],
         "responses": {

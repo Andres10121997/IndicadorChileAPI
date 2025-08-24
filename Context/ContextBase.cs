@@ -355,7 +355,10 @@ namespace IndicadorChileAPI.Context
                                                                            string tableId)
         {
             return await Task.Run<Dictionary<byte, float[]>>(
-                function: () => this.ExtractValues(htmlContent: htmlContent, tableId: tableId)
+                function: () => this.ExtractValues(
+                    htmlContent: htmlContent,
+                    tableId: tableId
+                )
             );
         }
         #endregion

@@ -1,12 +1,12 @@
 ﻿using IndicadorChileAPI.App.Interfaces;
 using IndicadorChileAPI.Context;
+using IndicadorChileAPI.Mathematics;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using static IndicadorChileAPI.App.Interfaces.IStatistics;
@@ -116,34 +116,13 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                switch (Statistics)
+                if (CurrencyMath.MathematicalOperations(CurrencyList: Context.CurrencyList).TryGetValue(key: Statistics, value: out double Value))
                 {
-                    case StatisticsEnum.Count:
-                        return this.Ok(
-                            value: Context.CurrencyList.Count<CurrencyModel>()
-                        );
-                    case StatisticsEnum.Minimum:
-                        return this.Ok(
-                            value: Context.CurrencyList.Min<CurrencyModel>(selector: x => x.Currency)
-                        );
-                    case StatisticsEnum.Maximum:
-                        return this.Ok(
-                            value: Context.CurrencyList.Max<CurrencyModel>(selector: x => x.Currency)
-                        );
-                    case StatisticsEnum.Sum:
-                        return this.Ok(
-                            value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency)
-                        );
-                    case StatisticsEnum.SumOfSquares:
-                        return this.Ok(
-                            value: Context.CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2))
-                        );
-                    case StatisticsEnum.Average:
-                        return this.Ok(
-                            value: Context.CurrencyList.Average<CurrencyModel>(selector: x => x.Currency)
-                        );
-                    default:
-                        return this.BadRequest();
+                    return this.Ok(value: Value);
+                }
+                else
+                {
+                    return this.BadRequest();
                 }
             }
             catch (Exception ex)
