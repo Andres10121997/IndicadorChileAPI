@@ -116,7 +116,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                if (CurrencyMath.MathematicalOperations(CurrencyList: Context.CurrencyList).TryGetValue(key: Statistics, value: out double Value))
+                if (CurrencyMath.MathematicalOperations(CurrencyList: Context.CurrencyList).TryGetValue(key: Statistics, value: out float Value))
                 {
                     return this.Ok(value: Value);
                 }

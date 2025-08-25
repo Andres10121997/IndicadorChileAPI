@@ -15,9 +15,9 @@ namespace IndicadorChileAPI.Mathematics
 
 
 
-        public static Dictionary<StatisticsEnum, double> MathematicalOperations(CurrencyModel[] CurrencyList)
+        public static Dictionary<StatisticsEnum, float> MathematicalOperations(CurrencyModel[] CurrencyList)
         {
-            return new Dictionary<StatisticsEnum, double>
+            return new Dictionary<StatisticsEnum, float>
             {
                 {
                     StatisticsEnum.Count,
@@ -25,23 +25,23 @@ namespace IndicadorChileAPI.Mathematics
                 },
                 {
                     StatisticsEnum.Minimum,
-                    Math.Round(value: CurrencyList.Min<CurrencyModel>(selector: x => x.Currency), digits: 2)
+                    CurrencyList.Min<CurrencyModel>(selector: x => x.Currency)
                 },
                 {
                     StatisticsEnum.Maximum,
-                    Math.Round(value: CurrencyList.Max<CurrencyModel>(selector: x => x.Currency), digits: 2)
+                    CurrencyList.Max<CurrencyModel>(selector: x => x.Currency)
                 },
                 {
                     StatisticsEnum.Sum,
-                    Math.Round(value: CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency), digits: 2)
+                    CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency)
                 },
                 {
                     StatisticsEnum.SumOfSquares,
-                    CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2))
+                    (float)CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2))
                 },
                 {
                     StatisticsEnum.Average,
-                    Math.Round(value: CurrencyList.Average<CurrencyModel>(selector: x => x.Currency), digits: 2)
+                    CurrencyList.Average<CurrencyModel>(selector: x => x.Currency)
                 }
             };
         }
