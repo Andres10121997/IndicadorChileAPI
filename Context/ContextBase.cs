@@ -13,7 +13,7 @@ namespace IndicadorChileAPI.Context
     public class ContextBase
     {
         #region Variables
-        private float V_Currency;
+        private double V_Currency;
         private double V_CurrencyConversion;
 
         #region Readonly
@@ -59,24 +59,24 @@ namespace IndicadorChileAPI.Context
 
         #region Property
         #region Variables
-        public float Currency
+        public double Currency
         {
             get => this.V_Currency;
             set
             {
-                ArgumentOutOfRangeException.ThrowIfEqual<float>(
+                ArgumentOutOfRangeException.ThrowIfEqual<double>(
                     value: value,
-                    other: float.NaN
+                    other: double.NaN
                 );
-                ArgumentOutOfRangeException.ThrowIfEqual<float>(
+                ArgumentOutOfRangeException.ThrowIfEqual<double>(
                     value: value,
-                    other: float.PositiveInfinity
+                    other: double.PositiveInfinity
                 );
-                ArgumentOutOfRangeException.ThrowIfEqual<float>(
+                ArgumentOutOfRangeException.ThrowIfEqual<double>(
                     value: value,
-                    other: float.NegativeInfinity
+                    other: double.NegativeInfinity
                 );
-                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(value: value);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<double>(value: value);
 
                 this.V_Currency = value;
             }
@@ -140,11 +140,11 @@ namespace IndicadorChileAPI.Context
                         )
                    ))
                    .AsParallel<CurrencyModel>()
-                   .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
+                   .Where<CurrencyModel>(predicate: Model => !double.IsNaN(d: Model.Currency)
                                                     &&
-                                                    !float.IsInfinity(f: Model.Currency)
+                                                    !double.IsInfinity(d: Model.Currency)
                                                     &&
-                                                    !float.IsNegative(f: Model.Currency))
+                                                    !double.IsNegative(d: Model.Currency))
                    .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                    .ToArray<CurrencyModel>();
         }
@@ -197,7 +197,7 @@ namespace IndicadorChileAPI.Context
 
         #region Conversion
         public async Task<uint> ConversionInChileanPesosAsync(DateOnly Date,
-                                                              float AmountOfCurrency)
+                                                              double AmountOfCurrency)
         {
             #region Variables
             uint Pesos;
@@ -212,11 +212,11 @@ namespace IndicadorChileAPI.Context
             return Pesos;
         }
 
-        public async Task<float> ConversionIntoAnotherCurrencyAsync(DateOnly Date,
+        public async Task<double> ConversionIntoAnotherCurrencyAsync(DateOnly Date,
                                                                     ulong Pesos)
         {
             #region Variables
-            float AnotherCurrency;
+            double AnotherCurrency;
             #endregion
 
             this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
@@ -239,7 +239,7 @@ namespace IndicadorChileAPI.Context
             return await client.GetStringAsync(requestUri: this.Url);
         }
 
-        protected Dictionary<byte, float[]> ExtractValues(string htmlContent,
+        protected Dictionary<byte, double[]> ExtractValues(string htmlContent,
                                                           string tableId)
         {
             #region Variables
@@ -249,7 +249,7 @@ namespace IndicadorChileAPI.Context
             #endregion
 
             #region Dictionary
-            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
+            Dictionary<byte, double[]> Data = new Dictionary<byte, double[]>();
             #endregion
 
             #region Match
@@ -309,7 +309,7 @@ namespace IndicadorChileAPI.Context
                     if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
                     {
                         #region Arrays
-                        float[] Values = new float[12];
+                        double[] Values = new double[12];
                         #endregion
 
                         for (byte i = 1; i < cellMatches.Count; i++)
@@ -332,13 +332,13 @@ namespace IndicadorChileAPI.Context
                                 );
 
                             #region GuardarValores
-                            if (float.TryParse(s: Value, style: NumberStyles.Float, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
+                            if (double.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out double currencyValue))
                             {
                                 Values[i - 1] = currencyValue;
                             }
                             else
                             {
-                                Values[i - 1] = float.NaN;
+                                Values[i - 1] = double.NaN;
                             }
                             #endregion
                         }
@@ -351,10 +351,10 @@ namespace IndicadorChileAPI.Context
             return Data;
         }
 
-        protected async Task<Dictionary<byte, float[]>> ExtractValuesAsync(string htmlContent,
+        protected async Task<Dictionary<byte, double[]>> ExtractValuesAsync(string htmlContent,
                                                                            string tableId)
         {
-            return await Task.Run<Dictionary<byte, float[]>>(
+            return await Task.Run<Dictionary<byte, double[]>>(
                 function: () => this.ExtractValues(
                     htmlContent: htmlContent,
                     tableId: tableId

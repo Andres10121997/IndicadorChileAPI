@@ -100,19 +100,19 @@
               "text/plain": {
                 "schema": {
                   "type": "number",
-                  "format": "float"
+                  "format": "double"
                 }
               },
               "application/json": {
                 "schema": {
                   "type": "number",
-                  "format": "float"
+                  "format": "double"
                 }
               },
               "text/json": {
                 "schema": {
                   "type": "number",
-                  "format": "float"
+                  "format": "double"
                 }
               }
             }
@@ -301,19 +301,19 @@
               "text/plain": {
                 "schema": {
                   "type": "number",
-                  "format": "float"
+                  "format": "double"
                 }
               },
               "application/json": {
                 "schema": {
                   "type": "number",
-                  "format": "float"
+                  "format": "double"
                 }
               },
               "text/json": {
                 "schema": {
                   "type": "number",
-                  "format": "float"
+                  "format": "double"
                 }
               }
             }

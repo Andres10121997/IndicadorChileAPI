@@ -108,7 +108,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Single",
+        "Type": "System.Double",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -227,7 +227,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Single",
+        "Type": "System.Double",
         "MediaTypes": [
           "text/plain",
           "application/json",

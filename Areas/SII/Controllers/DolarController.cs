@@ -97,8 +97,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
-                                                                  [FromQuery] SearchFilterModel SearchFilter)
+        public async Task<ActionResult<double>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
+                                                                   [FromQuery] SearchFilterModel SearchFilter)
         {
             #region Objects
             ContextBase Context;
@@ -116,7 +116,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
                 Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
 
-                if (CurrencyMath.MathematicalOperations(CurrencyList: Context.CurrencyList).TryGetValue(key: Statistics, value: out float Value))
+                if (CurrencyMath.MathematicalOperations(CurrencyList: Context.CurrencyList).TryGetValue(key: Statistics, value: out double Value))
                 {
                     return this.Ok(value: Value);
                 }

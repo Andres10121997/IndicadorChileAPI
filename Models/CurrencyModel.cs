@@ -82,9 +82,9 @@ namespace IndicadorChileAPI.Models
             ),
             Range(
                 minimum: 0,
-                maximum: float.MaxValue
+                maximum: double.MaxValue
             )
         ]
-        public required float Currency { get; init; }
+        public required double Currency { get; init; }
     }
 }
