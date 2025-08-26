@@ -17,7 +17,7 @@ namespace IndicadorChileAPI.Mathematics
 
         public static Dictionary<StatisticsEnum, double> MathematicalOperations(CurrencyModel[] CurrencyList)
         {
-            return new Dictionary<StatisticsEnum, double>
+            return new Dictionary<StatisticsEnum, double>()
             {
                 {
                     StatisticsEnum.Count,

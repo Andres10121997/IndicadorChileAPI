@@ -67,7 +67,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = SearchFilter.Year,
                     MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    List = await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)
+                    Currencies = await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)
                 };
 
                 return this.Ok(value: CurrencyList);

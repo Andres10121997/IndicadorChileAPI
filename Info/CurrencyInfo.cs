@@ -13,7 +13,8 @@ namespace IndicadorChileAPI.Info
 
 
 
-        public static async Task<CurrencyModel[]> GetValuesAsync(SearchFilterModel SearchFilter, string Url)
+        public static async Task<CurrencyModel[]> GetValuesAsync(SearchFilterModel SearchFilter,
+                                                                 string Url)
         {
             ContextBase Context;
 
@@ -25,7 +26,8 @@ namespace IndicadorChileAPI.Info
                 SearchFilter: SearchFilter
             );
 
-            Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+            // Ternaria para obtener datos.
+            Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync());
 
             return Context.CurrencyList;
         }

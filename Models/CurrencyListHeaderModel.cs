@@ -91,6 +91,20 @@ namespace IndicadorChileAPI.Models
             )
         ]
         public string? MonthName { get; set; }
-        public required CurrencyModel[] List { get; set; }
+
+        [
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(CurrencyListHeaderModel),
+                Name = "Currencies",
+                Order = 5,
+                Prompt = "",
+                ShortName = "List"
+            ),
+            Required
+        ]
+        public required CurrencyModel[] Currencies { get; set; }
     }
 }

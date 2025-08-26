@@ -414,7 +414,7 @@
         "required": [
           "consultationDate",
           "consultationTime",
-          "list",
+          "currencies",
           "year"
         ],
         "type": "object",
@@ -438,12 +438,11 @@
             "format": "string",
             "nullable": true
           },
-          "list": {
+          "currencies": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/CurrencyModel"
-            },
-            "nullable": true
+            }
           }
         },
         "additionalProperties": false
