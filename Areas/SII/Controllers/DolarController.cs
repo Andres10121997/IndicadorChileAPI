@@ -1,6 +1,6 @@
 ﻿using IndicadorChileAPI.App.Interfaces;
 using IndicadorChileAPI.Context;
-using IndicadorChileAPI.Info;
+using IndicadorChileAPI.Information;
 using IndicadorChileAPI.Mathematics;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;

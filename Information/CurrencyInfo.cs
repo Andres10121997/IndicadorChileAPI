@@ -2,7 +2,7 @@
 using IndicadorChileAPI.Models;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.Info
+namespace IndicadorChileAPI.Information
 {
     public static class CurrencyInfo
     {

@@ -19,15 +19,15 @@ namespace IndicadorChileAPI
         public static void MessageError(Exception ex,
                                         Type OType)
         {
-            Console.Error.WriteLine("");
-            Console.Error.WriteLine("---");
-            Console.Error.WriteLine(OType);
-            Console.Error.WriteLine(DateTime.Now);
-            Console.Error.WriteLine($"Stack Trace: {ex.StackTrace}");
-            Console.Error.WriteLine($"Message: {ex.Message}");
-            Console.Error.WriteLine(ex);
-            Console.Error.WriteLine("---");
-            Console.Error.WriteLine("");
+            Console.Error.WriteLine(value: "");
+            Console.Error.WriteLine(value: "---");
+            Console.Error.WriteLine(value: OType);
+            Console.Error.WriteLine(value: DateTime.Now);
+            Console.Error.WriteLine(value: $"Stack Trace: {ex.StackTrace}");
+            Console.Error.WriteLine(value: $"Message: {ex.Message}");
+            Console.Error.WriteLine(value: ex);
+            Console.Error.WriteLine(value: "---");
+            Console.Error.WriteLine(value: "");
         }
 
         public static async Task MessageErrorAsync(Exception ex,
@@ -39,13 +39,13 @@ namespace IndicadorChileAPI
         public static void MessageOut(string Message,
                                       Type? OType)
         {
-            Console.Out.WriteLine("");
-            Console.Out.WriteLine("---");
-            Console.Out.WriteLine(OType);
-            Console.Out.WriteLine(DateTime.Now);
-            Console.Out.WriteLine($"Message: {Message}");
-            Console.Out.WriteLine("---");
-            Console.Out.WriteLine("");
+            Console.Out.WriteLine(value: "");
+            Console.Out.WriteLine(value: "---");
+            Console.Out.WriteLine(value: OType);
+            Console.Out.WriteLine(value: DateTime.Now);
+            Console.Out.WriteLine(value: $"Message: {Message}");
+            Console.Out.WriteLine(value: "---");
+            Console.Out.WriteLine(value: "");
         }
 
         public static async Task MessageOutAsync(string Message,
