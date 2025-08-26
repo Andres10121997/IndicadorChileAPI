@@ -40,7 +40,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
 
 
-        private async Task<CurrencyModel[]> GetCurrenciesAsync(SearchFilterModel SearchFilter)
+        private async Task<CurrencyModel[]> GetCurrencyValuesAsync(SearchFilterModel SearchFilter)
         {
             ContextBase Context;
 
@@ -85,7 +85,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = SearchFilter.Year,
                     MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    List = await this.GetCurrenciesAsync(SearchFilter: SearchFilter)
+                    List = await this.GetCurrencyValuesAsync(SearchFilter: SearchFilter)
                 };
 
                 return this.Ok(value: CurrencyList);
@@ -110,7 +110,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         {
             try
             {
-                if (CurrencyMath.MathematicalOperations(CurrencyList: await this.GetCurrenciesAsync(SearchFilter: SearchFilter)).TryGetValue(key: Statistics, value: out double Value))
+                if (CurrencyMath.MathematicalOperations(CurrencyList: await this.GetCurrencyValuesAsync(SearchFilter: SearchFilter)).TryGetValue(key: Statistics, value: out double Value))
                 {
                     return this.Ok(value: Value);
                 }
