@@ -40,6 +40,25 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
 
 
+        private async Task<CurrencyModel[]> GetCurrenciesAsync(SearchFilterModel SearchFilter)
+        {
+            ContextBase Context;
+
+            Context = new ContextBase(
+                Url: C_Url.Replace(
+                    oldValue: "{Year}",
+                    newValue: SearchFilter.Year.ToString()
+                ),
+                SearchFilter: SearchFilter
+            );
+
+            Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
+
+            return Context.CurrencyList;
+        }
+
+
+
         #region HttpGet
         #region Data
         [
@@ -54,21 +73,10 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
             #region Objects
             CurrencyListHeaderModel CurrencyList;
-            ContextBase Context;
             #endregion
 
             try
             {
-                Context = new ContextBase(
-                    Url: C_Url.Replace(
-                        oldValue: "{Year}",
-                        newValue: SearchFilter.Year.ToString()
-                    ),
-                    SearchFilter: SearchFilter
-                );
-
-                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
                 Now = DateTime.Now;
 
                 CurrencyList = new CurrencyListHeaderModel()
@@ -77,7 +85,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = SearchFilter.Year,
                     MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    List = Context.CurrencyList
+                    List = await this.GetCurrenciesAsync(SearchFilter: SearchFilter)
                 };
 
                 return this.Ok(value: CurrencyList);
@@ -100,23 +108,9 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         public async Task<ActionResult<double>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
                                                                    [FromQuery] SearchFilterModel SearchFilter)
         {
-            #region Objects
-            ContextBase Context;
-            #endregion
-
             try
             {
-                Context = new ContextBase(
-                    Url: C_Url.Replace(
-                        oldValue: "{Year}",
-                        newValue: SearchFilter.Year.ToString()
-                    ),
-                    SearchFilter: SearchFilter
-                );
-
-                Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-                if (CurrencyMath.MathematicalOperations(CurrencyList: Context.CurrencyList).TryGetValue(key: Statistics, value: out double Value))
+                if (CurrencyMath.MathematicalOperations(CurrencyList: await this.GetCurrenciesAsync(SearchFilter: SearchFilter)).TryGetValue(key: Statistics, value: out double Value))
                 {
                     return this.Ok(value: Value);
                 }
