@@ -1,5 +1,6 @@
 ﻿using IndicadorChileAPI.App.Interfaces;
 using IndicadorChileAPI.Context;
+using IndicadorChileAPI.Info;
 using IndicadorChileAPI.Mathematics;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -40,25 +41,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
 
 
-        private async Task<CurrencyModel[]> GetCurrencyValuesAsync(SearchFilterModel SearchFilter)
-        {
-            ContextBase Context;
-
-            Context = new ContextBase(
-                Url: C_Url.Replace(
-                    oldValue: "{Year}",
-                    newValue: SearchFilter.Year.ToString()
-                ),
-                SearchFilter: SearchFilter
-            );
-
-            Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync()); // Ternaria para obtener datos.
-
-            return Context.CurrencyList;
-        }
-
-
-
         #region HttpGet
         #region Data
         [
@@ -85,7 +67,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = SearchFilter.Year,
                     MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    List = await this.GetCurrencyValuesAsync(SearchFilter: SearchFilter)
+                    List = await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)
                 };
 
                 return this.Ok(value: CurrencyList);
@@ -110,7 +92,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         {
             try
             {
-                if (CurrencyMath.MathematicalOperations(CurrencyList: await this.GetCurrencyValuesAsync(SearchFilter: SearchFilter)).TryGetValue(key: Statistics, value: out double Value))
+                if (CurrencyMath.MathematicalOperations(CurrencyList: await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)).TryGetValue(key: Statistics, value: out double Value))
                 {
                     return this.Ok(value: Value);
                 }
