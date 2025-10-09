@@ -14,10 +14,10 @@ namespace IndicadorChileAPI.Models
                 AutoGenerateFilter = false,
                 Description = "",
                 GroupName = nameof(CurrencyListHeaderModel),
-                Name = "Fecha consulta",
+                Name = "Fecha de la consulta",
                 Order = 1,
                 Prompt = "",
-                ShortName = ""
+                ShortName = "Fecha consulta"
             ),
             Required(
                 AllowEmptyStrings = false
@@ -34,10 +34,10 @@ namespace IndicadorChileAPI.Models
                 AutoGenerateFilter = false,
                 Description = "",
                 GroupName = nameof(CurrencyListHeaderModel),
-                Name = "Hora consulta",
+                Name = "Hora de la consulta consulta",
                 Order = 2,
                 Prompt = "",
-                ShortName = ""
+                ShortName = "Hora consulta"
             ),
             Required(
                 AllowEmptyStrings = false
@@ -74,7 +74,7 @@ namespace IndicadorChileAPI.Models
                 AutoGenerateFilter = false,
                 Description = "",
                 GroupName = nameof(CurrencyListHeaderModel),
-                Name = "Month name",
+                Name = "Nombre del mes",
                 Order = 4,
                 Prompt = "",
                 ShortName = "Mes"
@@ -98,10 +98,10 @@ namespace IndicadorChileAPI.Models
                 AutoGenerateFilter = false,
                 Description = "",
                 GroupName = nameof(CurrencyListHeaderModel),
-                Name = "Currencies",
+                Name = "Lista de divisas",
                 Order = 5,
                 Prompt = "",
-                ShortName = "List"
+                ShortName = "Divisas"
             ),
             Required
         ]
