@@ -2,7 +2,7 @@
 
 # Esta fase se usa cuando se ejecuta desde VS en modo rápido (valor predeterminado para la configuración de depuración)
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
-USER $APP_UID
+USER andres1012
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081

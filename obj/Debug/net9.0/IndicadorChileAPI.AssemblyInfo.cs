@@ -15,10 +15,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Andrés Felipe Sagredo Bromberg")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d22022eb9f34502babbc3d0597d1e1097d20d56f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f806e05c9c3108bc953474901cf073928bbf4ef")]
 [assembly: System.Reflection.AssemblyProductAttribute("Indicadores de Chile")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IndicadorChileAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
+[assembly: System.Reflection.AssemblyMetadataAttribute("RepositoryUrl", "https://hub.docker.com/repository/docker/andres1012/indicadorchileapi/general")]
 [assembly: System.Resources.NeutralResourcesLanguageAttribute("es-CL")]
 
 // Generado por la clase WriteCodeFragment de MSBuild.

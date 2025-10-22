@@ -23,6 +23,8 @@
     <UserSecretsId>59e3409e-1c2f-4db4-9846-8c832e461bdc</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
+    <RepositoryUrl>https://hub.docker.com/repository/docker/andres1012/indicadorchileapi/general</RepositoryUrl>
+    <RepositoryType>Docker</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

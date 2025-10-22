@@ -1,0 +1,11 @@
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\IndicadorChileAPI.exe
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\appsettings.Development.json
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\appsettings.json
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\IndicadorChileAPI.dll
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\IndicadorChileAPI.deps.json
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\IndicadorChileAPI.runtimeconfig.json
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\IndicadorChileAPI.pdb
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\Microsoft.OpenApi.dll
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\andre\OneDrive\Escritorio\Proyecto\IndicadorChileAPI\obj\Docker\publish\Swashbuckle.AspNetCore.SwaggerUI.dll
