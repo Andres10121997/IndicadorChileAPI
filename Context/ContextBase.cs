@@ -195,42 +195,6 @@ namespace IndicadorChileAPI.Context
 
 
 
-        #region Conversion
-        public async Task<uint> ConversionInChileanPesosAsync(DateOnly Date,
-                                                              double AmountOfCurrency)
-        {
-            #region Variables
-            uint Pesos;
-            #endregion
-
-            this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
-
-            this.CurrencyConversion = Math.Truncate(d: AmountOfCurrency * this.Currency);
-
-            Pesos = Convert.ToUInt32(value: this.CurrencyConversion);
-
-            return Pesos;
-        }
-
-        public async Task<double> ConversionIntoAnotherCurrencyAsync(DateOnly Date,
-                                                                    ulong Pesos)
-        {
-            #region Variables
-            double AnotherCurrency;
-            #endregion
-
-            this.Currency = (await this.DailyValueAsync(Date: Date)).Currency;
-
-            this.CurrencyConversion = Math.Round(value: Pesos / this.Currency, digits: 2);
-
-            AnotherCurrency = Convert.ToSingle(value: this.CurrencyConversion);
-
-            return AnotherCurrency;
-        }
-        #endregion
-
-
-
         #region HTML
         protected async Task<string> GetHtmlContentAsync()
         {

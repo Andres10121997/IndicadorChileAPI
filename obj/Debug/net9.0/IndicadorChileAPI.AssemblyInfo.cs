@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Andrés Felipe Sagredo Bromberg")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3a8eb682e210f4ed0775c4ac747ac5bf31fbb5b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+744e826aa14066f3746f2305c50af8328716ab9a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Indicadores de Chile")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IndicadorChileAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
