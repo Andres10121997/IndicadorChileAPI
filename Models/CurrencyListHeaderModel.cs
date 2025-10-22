@@ -3,8 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IndicadorChileAPI.Models
 {
-    public record CurrencyListHeaderModel
+    public sealed record CurrencyListHeaderModel
     {
+        #region Property
         [
             DataType(
                 dataType: DataType.Date
@@ -23,7 +24,7 @@ namespace IndicadorChileAPI.Models
                 AllowEmptyStrings = false
             )
         ]
-        public required DateOnly ConsultationDate { get; set; }
+        public required DateOnly ConsultationDate { get; init; }
 
         [
             DataType(
@@ -43,7 +44,7 @@ namespace IndicadorChileAPI.Models
                 AllowEmptyStrings = false
             )
         ]
-        public required TimeOnly ConsultationTime { get; set; }
+        public required TimeOnly ConsultationTime { get; init; }
 
         [
             DataType(
@@ -63,7 +64,7 @@ namespace IndicadorChileAPI.Models
                 AllowEmptyStrings = false
             )
         ]
-        public required ushort Year { get; set; }
+        public required ushort Year { get; init; }
 
         [
             DataType(
@@ -90,7 +91,7 @@ namespace IndicadorChileAPI.Models
                 MinimumLength = 5
             )
         ]
-        public string? MonthName { get; set; }
+        public string? MonthName { get; init; }
 
         [
             Display(
@@ -105,6 +106,7 @@ namespace IndicadorChileAPI.Models
             ),
             Required
         ]
-        public required CurrencyModel[] Currencies { get; set; }
+        public required CurrencyModel[] Currencies { get; init; }
+        #endregion
     }
 }

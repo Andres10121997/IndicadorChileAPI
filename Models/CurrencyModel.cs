@@ -5,6 +5,7 @@ namespace IndicadorChileAPI.Models
 {
     public record CurrencyModel
     {
+        #region Property
         [
             Key,
             Display(
@@ -86,5 +87,6 @@ namespace IndicadorChileAPI.Models
             )
         ]
         public required double Currency { get; init; }
+        #endregion
     }
 }

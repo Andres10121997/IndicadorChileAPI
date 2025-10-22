@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IndicadorChileAPI.Models
 {
-    public record SearchFilterModel : IValidatableObject
+    public sealed record SearchFilterModel : IValidatableObject
     {
         #region Property
         [
