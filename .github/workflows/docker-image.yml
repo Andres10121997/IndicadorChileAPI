@@ -26,4 +26,4 @@ jobs:
         context: . # Construye desde el directorio raíz del proyecto
         push: true # Sube la imagen al registro después de construirla
         #tags: ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:latest # Asigna etiquetas a la imagen
-        tags: ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }} ghcr.io/${{ env.IMAGE_NAME }}:latest # Asigna etiquetas a la imagen
+        tags: ghcr.io/$IMAGE_NAME:${{ github.sha }} ghcr.io/$IMAGE_NAME:latest # Asigna etiquetas a la imagen
