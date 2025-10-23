@@ -8,7 +8,7 @@ on:
 
 jobs:
   build-and-push-image:
-    runs-on: ubuntu-latest
+    runs-on: kalilinux-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3 # Obtiene el código de tu repositorio
