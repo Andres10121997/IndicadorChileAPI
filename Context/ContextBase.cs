@@ -13,8 +13,8 @@ namespace IndicadorChileAPI.Context
     public class ContextBase
     {
         #region Variables
-        private double V_Currency;
-        private double V_CurrencyConversion;
+        private float V_Currency;
+        private float V_CurrencyConversion;
 
         #region Readonly
         private readonly string VR_Url;
@@ -59,39 +59,39 @@ namespace IndicadorChileAPI.Context
 
         #region Property
         #region Variables
-        public double Currency
+        public float Currency
         {
             get => this.V_Currency;
             set
             {
-                ArgumentOutOfRangeException.ThrowIfEqual<double>(
+                ArgumentOutOfRangeException.ThrowIfEqual<float>(
                     value: value,
-                    other: double.NaN
+                    other: float.NaN
                 );
-                ArgumentOutOfRangeException.ThrowIfEqual<double>(
+                ArgumentOutOfRangeException.ThrowIfEqual<float>(
                     value: value,
-                    other: double.PositiveInfinity
+                    other: float.PositiveInfinity
                 );
-                ArgumentOutOfRangeException.ThrowIfEqual<double>(
+                ArgumentOutOfRangeException.ThrowIfEqual<float>(
                     value: value,
-                    other: double.NegativeInfinity
+                    other: float.NegativeInfinity
                 );
-                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<double>(value: value);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(value: value);
 
                 this.V_Currency = value;
             }
         }
 
-        public double CurrencyConversion
+        public float CurrencyConversion
         {
             get => this.V_CurrencyConversion;
             set
             {
-                ArgumentOutOfRangeException.ThrowIfEqual<double>(
+                ArgumentOutOfRangeException.ThrowIfEqual<float>(
                     value: value,
-                    other: double.NaN
+                    other: float.NaN
                 );
-                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<double>(value: value);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(value: value);
 
                 this.V_CurrencyConversion = value;
             }
@@ -140,11 +140,11 @@ namespace IndicadorChileAPI.Context
                         )
                    ))
                    .AsParallel<CurrencyModel>()
-                   .Where<CurrencyModel>(predicate: Model => !double.IsNaN(d: Model.Currency)
+                   .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
                                                     &&
-                                                    !double.IsInfinity(d: Model.Currency)
+                                                    !float.IsInfinity(f: Model.Currency)
                                                     &&
-                                                    !double.IsNegative(d: Model.Currency))
+                                                    !float.IsNegative(f: Model.Currency))
                    .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                    .ToArray<CurrencyModel>();
         }
@@ -203,7 +203,7 @@ namespace IndicadorChileAPI.Context
             return await client.GetStringAsync(requestUri: this.Url);
         }
 
-        protected Dictionary<byte, double[]> ExtractValues(string htmlContent,
+        protected Dictionary<byte, float[]> ExtractValues(string htmlContent,
                                                           string tableId)
         {
             #region Variables
@@ -213,7 +213,7 @@ namespace IndicadorChileAPI.Context
             #endregion
 
             #region Dictionary
-            Dictionary<byte, double[]> Data = new Dictionary<byte, double[]>();
+            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
             #endregion
 
             #region Match
@@ -273,7 +273,7 @@ namespace IndicadorChileAPI.Context
                     if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
                     {
                         #region Arrays
-                        double[] Values = new double[12];
+                        float[] Values = new float[12];
                         #endregion
 
                         for (byte i = 1; i < cellMatches.Count; i++)
@@ -296,13 +296,13 @@ namespace IndicadorChileAPI.Context
                                 );
 
                             #region GuardarValores
-                            if (double.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out double currencyValue))
+                            if (float.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
                             {
                                 Values[i - 1] = currencyValue;
                             }
                             else
                             {
-                                Values[i - 1] = double.NaN;
+                                Values[i - 1] = float.NaN;
                             }
                             #endregion
                         }
@@ -315,10 +315,10 @@ namespace IndicadorChileAPI.Context
             return Data;
         }
 
-        protected async Task<Dictionary<byte, double[]>> ExtractValuesAsync(string htmlContent,
-                                                                           string tableId)
+        protected async Task<Dictionary<byte, float[]>> ExtractValuesAsync(string htmlContent,
+                                                                            string tableId)
         {
-            return await Task.Run<Dictionary<byte, double[]>>(
+            return await Task.Run<Dictionary<byte, float[]>>(
                 function: () => this.ExtractValues(
                     htmlContent: htmlContent,
                     tableId: tableId

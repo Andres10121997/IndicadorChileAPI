@@ -26,8 +26,8 @@ namespace IndicadorChileAPI.Context.Settings
 
 
         #region To
-        protected TModel[] ToModels<TModel>(Dictionary<byte, double[]> Data,
-                                            Func<DateOnly, double, TModel> modelFactory)
+        protected TModel[] ToModels<TModel>(Dictionary<byte, float[]> Data,
+                                            Func<DateOnly, float, TModel> modelFactory)
         {
             #region List
             List<TModel> ModelList = new List<TModel>();
@@ -40,7 +40,7 @@ namespace IndicadorChileAPI.Context.Settings
                     if (day > 0 && day <= DateTime.DaysInMonth(year: this.Year, month: month))
                     {
                         #region Variables
-                        double value;
+                        float value;
                         #endregion
 
                         #region Objects
@@ -66,15 +66,15 @@ namespace IndicadorChileAPI.Context.Settings
             return ModelList.ToArray<TModel>();
         }
 
-        protected async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, double[]> Data,
-                                                             Func<DateOnly, double, TModel> modelFactory)
+        protected async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
+                                                             Func<DateOnly, float, TModel> modelFactory)
         {
             return await Task.Run<TModel[]>(
                 function: () => this.ToModels<TModel>(Data: Data, modelFactory)
             );
         }
 
-        public async Task<CurrencyModel[]> ToCurrencyModelsAsync(Dictionary<byte, double[]> CurrencyData)
+        public async Task<CurrencyModel[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
         {
             return await this.ToModelsAsync<CurrencyModel>(Data: CurrencyData, modelFactory: (Date, Value) => new CurrencyModel
             {
