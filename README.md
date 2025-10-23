@@ -5,9 +5,10 @@ Esta aplicación web API entrega datos sobre cuanto valen ciertas divisas en dí
 # Imagen Docker
 Para que GitHub cree una imagen de Docker, debes configurar una GitHub Action que use un Dockerfile en tu repositorio. La acción automática incluirá pasos para clonar tu código, iniciar sesión en el registro de contenedores (como GitHub Packages o Docker Hub), construir la imagen y luego enviarla al registro.
 
+
 1. Prepara tu repositorio
   - Crea o asegúrate de tener un Dockerfile: Este archivo contendrá todas las instrucciones para construir tu imagen.
-  - Sube el Dockerfile y tu código: Si aún no lo has hecho, sube el Dockerfile y los archivos de tu aplicación a tu repositorio de GitHub. 
+  - Sube el Dockerfile y tu código: Si aún no lo has hecho, sube el Dockerfile y los archivos de tu aplicación a tu repositorio de GitHub.
 2.Configura las credenciales de seguridad
   - Crea un Personal Access Token (PAT): Ve a la configuración de desarrollador de tu cuenta de GitHub, crea un nuevo token con permisos para write:packages y read:packages.
   - Guarda el token como un secreto: En tu repositorio, ve a "Settings" > "Secrets and variables" > "Actions" y crea una nueva variable de repositorio (por ejemplo, DOCKER_TOKEN) donde almacenes el valor del token. 
