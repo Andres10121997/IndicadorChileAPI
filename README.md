@@ -1,25 +1,25 @@
 # Indicadores Chile
 
-Esta aplicaciÛn web API entrega datos sobre cuanto valen ciertas divisas en dÌas determinados.
+Esta aplicaci√≥n web API entrega datos sobre cuanto valen ciertas divisas en d√≠as determinados.
 
 # Imagen Docker
-Para que GitHub cree una imagen de Docker, debes configurar una GitHub Action que use un Dockerfile en tu repositorio. La acciÛn autom·tica incluir· pasos para clonar tu cÛdigo, iniciar sesiÛn en el registro de contenedores (como GitHub Packages o Docker Hub), construir la imagen y luego enviarla al registro.
+Para que GitHub cree una imagen de Docker, debes configurar una GitHub Action que use un Dockerfile en tu repositorio. La acci√≥n autom√°tica incluir√° pasos para clonar tu c√≥digo, iniciar sesi√≥n en el registro de contenedores (como GitHub Packages o Docker Hub), construir la imagen y luego enviarla al registro.
 
-## Prepara tu repositorio
-1. Crea o aseg˙rate de tener un Dockerfile: Este archivo contendr· todas las instrucciones para construir tu imagen.
-2. Sube el Dockerfile y tu cÛdigo: Si a˙n no lo has hecho, sube el Dockerfile y los archivos de tu aplicaciÛn a tu repositorio de GitHub. 
+1. Prepara tu repositorio
+  - Crea o aseg√∫rate de tener un Dockerfile: Este archivo contendr√° todas las instrucciones para construir tu imagen.
+  - Sube el Dockerfile y tu c√≥digo: Si a√∫n no lo has hecho, sube el Dockerfile y los archivos de tu aplicaci√≥n a tu repositorio de GitHub. 
 
-## Configura las credenciales de seguridad
-1. Crea un Personal Access Token (PAT): Ve a la configuraciÛn de desarrollador de tu cuenta de GitHub, crea un nuevo token con permisos para write:packages y read:packages.
-2. Guarda el token como un secreto: En tu repositorio, ve a "Settings" > "Secrets and variables" > "Actions" y crea una nueva variable de repositorio (por ejemplo, DOCKER_TOKEN) donde almacenes el valor del token. 
+2.Configura las credenciales de seguridad
+  - Crea un Personal Access Token (PAT): Ve a la configuraci√≥n de desarrollador de tu cuenta de GitHub, crea un nuevo token con permisos para write:packages y read:packages.
+  - Guarda el token como un secreto: En tu repositorio, ve a "Settings" > "Secrets and variables" > "Actions" y crea una nueva variable de repositorio (por ejemplo, DOCKER_TOKEN) donde almacenes el valor del token. 
 
 ## Crea un flujo de GitHub Actions
 1. Crea un archivo YAML en tu repositorio: Dentro de la carpeta .github/workflows, crea un archivo (por ejemplo, docker-image.yml).
-2. Define el evento de activaciÛn: Configura el flujo para que se ejecute autom·ticamente cada vez que se empuje o se envÌe un pull request a la rama principal (por ejemplo, on: push: branches: main).
-3. AÒade un trabajo (job): Este trabajo contendr· los pasos para construir y enviar la imagen.
+2. Define el evento de activaci√≥n: Configura el flujo para que se ejecute autom√°ticamente cada vez que se empuje o se env√≠e un pull request a la rama principal (por ejemplo, on: push: branches: main).
+3. A√±ade un trabajo (job): Este trabajo contendr√° los pasos para construir y enviar la imagen.
 
-## Escribe el cÛdigo del flujo YAML
-CÛdigo
+## Escribe el c√≥digo del flujo YAML
+C√≥digo
 
 ```
 name: Build and Push Docker Image
@@ -33,26 +33,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3 # Obtiene el cÛdigo de tu repositorio
+      uses: actions/checkout@v3 # Obtiene el c√≥digo de tu repositorio
 
     - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v2 # Permite iniciar sesiÛn en el registro de contenedores
+      uses: docker/login-action@v2 # Permite iniciar sesi√≥n en el registro de contenedores
       with:
         registry: ghcr.io # Usa el registro de contenedores de GitHub
         username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
         password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
 
     - name: Build and push Docker image
-      uses: docker/build-push-action@v4 # AcciÛn para construir y subir im·genes de Docker
+      uses: docker/build-push-action@v4 # Acci√≥n para construir y subir im√°genes de Docker
       with:
-        context: . # Construye desde el directorio raÌz del proyecto
-        push: true # Sube la imagen al registro despuÈs de construirla
+        context: . # Construye desde el directorio ra√≠z del proyecto
+        push: true # Sube la imagen al registro despu√©s de construirla
         tags: ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:latest # Asigna etiquetas a la imagen
 ```
 
-Este ejemplo utiliza la acciÛn docker/login-action para iniciar sesiÛn y la acciÛn docker/build-push-action para construir y publicar. 
+Este ejemplo utiliza la acci√≥n docker/login-action para iniciar sesi√≥n y la acci√≥n docker/build-push-action para construir y publicar. 
 Las etiquetas ghcr.io/${{ github.repository }} se refieren a la URL del registro de GitHub, tu nombre de usuario y el nombre del repositorio. 
 
 ## Confirma y ejecuta el flujo
 Guarda el archivo YAML en .github/workflows/ y confirma los cambios en tu repositorio. 
-GitHub Actions ejecutar· autom·ticamente este flujo en la prÛxima inserciÛn en la rama main, construyendo y publicando tu imagen de Docker en GitHub Packages. 
+GitHub Actions ejecutar√° autom√°ticamente este flujo en la pr√≥xima inserci√≥n en la rama main, construyendo y publicando tu imagen de Docker en GitHub Packages. 
