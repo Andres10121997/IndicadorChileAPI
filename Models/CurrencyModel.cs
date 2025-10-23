@@ -8,10 +8,13 @@ namespace IndicadorChileAPI.Models
         #region Property
         [
             Key,
+            DataType(
+                dataType: DataType.Custom
+            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
-                Description = "",
+                Description = "https://www.youtube.com/shorts/UwcOL3ZL3go",
                 GroupName = nameof(CurrencyModel),
                 Name = "Identificador",
                 Order = 1,
@@ -22,7 +25,7 @@ namespace IndicadorChileAPI.Models
                 AllowEmptyStrings = false
             )
         ]
-        public required uint ID { get; init; }
+        public required Guid ID { get; init; }
 
         [
             DataType(
