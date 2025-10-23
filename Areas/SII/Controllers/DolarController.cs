@@ -1,5 +1,4 @@
 ﻿using IndicadorChileAPI.App.Interfaces;
-using IndicadorChileAPI.Context;
 using IndicadorChileAPI.Information;
 using IndicadorChileAPI.Mathematics;
 using IndicadorChileAPI.Models;

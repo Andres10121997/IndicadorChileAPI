@@ -6,10 +6,12 @@ namespace IndicadorChileAPI.Information
 {
     public static class CurrencyInfo
     {
+        #region Constructor Method
         static CurrencyInfo()
         {
             
         }
+        #endregion
 
 
 

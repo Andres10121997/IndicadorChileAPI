@@ -1,4 +1,4 @@
-﻿using IndicadorChileAPI.Context.Settings;
+﻿using IndicadorChileAPI.Context.Tool;
 using IndicadorChileAPI.Models;
 using System;
 using System.Collections.Generic;

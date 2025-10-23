@@ -6,7 +6,7 @@ namespace IndicadorChileAPI
 {
     internal static class Utils
     {
-        #region ConstructorMethod
+        #region Constructor Method
         static Utils()
         {
 

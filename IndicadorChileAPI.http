@@ -1,4 +1,4 @@
-@IndicadorChileAPI_HostAddress = http://localhost:5132
+@IndicadorChileAPI_HostAddress = http://localhost:8080
 
 GET {{IndicadorChileAPI_HostAddress}}/weatherforecast/
 Accept: application/json
