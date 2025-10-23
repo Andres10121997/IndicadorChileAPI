@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 using System.Text.Json.Serialization;
+using System.Threading.RateLimiting;
 using System.Threading.Tasks;
 
 namespace IndicadorChileAPI.App.Start
@@ -59,6 +63,23 @@ namespace IndicadorChileAPI.App.Start
                     options.JsonSerializerOptions.Converters.Add(item: new JsonStringEnumConverter());
                 });
             Builder.Services.AddEndpointsApiExplorer();
+
+            // Limitar peticiones por IP.
+            // https://www.youtube.com/shorts/EoJl5wgE5UQ
+            Builder.Services.AddRateLimiter(options =>
+            {
+                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+
+                options.AddFixedWindowLimiter(policyName: "Limiter", fixedWindowOptions =>
+                {
+                    fixedWindowOptions.PermitLimit = 4; // Solicitudes máximas permitidas
+                    fixedWindowOptions.Window = TimeSpan.FromSeconds(seconds: 12); // Ventana de tiempo
+                    fixedWindowOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst; // Cómo manejar solicitudes en cola
+                    fixedWindowOptions.QueueLimit = 2; // Máximo de solicitudes para hacer cola
+                });
+            });
+
+            // Cierta información que se visualiza en la interfaz de usuario.
             Builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc(
@@ -81,9 +102,13 @@ namespace IndicadorChileAPI.App.Start
                 App.UseSwaggerUI();
             }
 
+            App.UseRateLimiter();
+
             App.UseHttpsRedirection();
 
             App.UseAuthorization();
+
+            App.MapControllers().RequireRateLimiting(policyName: "Limiter"); ;
 
             App.MapAreaControllerRoute(
                 name: "MyAreaSII",
