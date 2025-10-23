@@ -82,12 +82,25 @@ namespace IndicadorChileAPI.App.Start
             // Cierta información que se visualiza en la interfaz de usuario.
             Builder.Services.AddSwaggerGen(options =>
             {
+                // https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-3.1&tabs=visual-studio
                 options.SwaggerDoc(
                     name: "v1",
                     info: new OpenApiInfo
                     {
                         Title = "Indicadores de Chile",
-                        Version = "v1"
+                        Version = "v1",
+                        Description = "Una API para obtener, principalmente, la lista de distintas \"divisas\", como la UF y el dólar.",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Andrés Sagredo",
+                            Email = string.Empty,
+                            Url = new Uri("https://github.com/Andres10121997")
+                        },
+                        License = new OpenApiLicense
+                        {
+                            Name = "Uso bajo Apache 2.0",
+                            Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0")
+                        }
                     }
                 );
             });
