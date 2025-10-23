@@ -21,11 +21,13 @@ Para que GitHub cree una imagen de Docker, debes configurar una GitHub Action qu
 ## 4. Escribe el código del flujo YAML
 Código
 
-```
+```YAML
 name: Build and Push Docker Image
 
 on:
   push:
+    branches: [ main ]
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -47,7 +49,9 @@ jobs:
       with:
         context: . # Construye desde el directorio raíz del proyecto
         push: true # Sube la imagen al registro después de construirla
-        tags: ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:latest # Asigna etiquetas a la imagen
+        tags: |
+          ghcr.io/${{ vars.IMAGE_NAME }}:${{ github.sha }}
+          ghcr.io/${{ vars.IMAGE_NAME }}:latest
 ```
  * Este ejemplo utiliza la acción `docker/login-action` para iniciar sesión y la acción `docker/build-push-action` para construir y publicar. 
  * Las etiquetas `ghcr.io/${{ github.repository }}` se refieren a la URL del registro de GitHub, tu nombre de usuario y el nombre del repositorio. 
