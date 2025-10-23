@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace IndicadorChileAPI.Models
 {
-    public sealed record CurrencyListHeaderModel
+    public sealed record CurrencyListHeaderModel : IValidatableObject
     {
         #region Property
         [
@@ -108,5 +109,23 @@ namespace IndicadorChileAPI.Models
         ]
         public required CurrencyModel[] Currencies { get; init; }
         #endregion
+
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (this.Currencies.Length == 0
+                ||
+                this.Currencies.Length.Equals(obj: 0))
+            {
+                yield return new ValidationResult(
+                    errorMessage: "Debe de haber al menos un registro.",
+                    memberNames: new[]
+                    {
+                        nameof(this.Currencies)
+                    }
+                );
+            }
+        }
     }
 }

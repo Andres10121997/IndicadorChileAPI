@@ -58,27 +58,27 @@ namespace IndicadorChileAPI.Models
 
             Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
-            if (Year > Date.Year)
+            if (this.Year > Date.Year)
             {
                 yield return new ValidationResult(
                     errorMessage: $"El año no puede ser superior a {Date.Year}.",
                     memberNames: new[]
                     {
-                        nameof(Year)
+                        nameof(this.Year)
                     }
                 );
             }
             else
-            if (Month > Date.Month
+            if (this.Month > Date.Month
                 &&
-                (Year == Date.Year || Year.Equals(obj: Date.Year)))
+                (this.Year == Date.Year || this.Year.Equals(obj: Date.Year)))
             {
                 yield return new ValidationResult(
                     errorMessage: $"El mes y año no puede ser posterior a {Date.ToString(format: "MMMM-yyyy")}.",
                     memberNames: new[]
                     {
-                        nameof(Month),
-                        nameof(Year)
+                        nameof(this.Month),
+                        nameof(this.Year)
                     }
                 );
             }

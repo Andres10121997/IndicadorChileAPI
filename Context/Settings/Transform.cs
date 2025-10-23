@@ -78,7 +78,18 @@ namespace IndicadorChileAPI.Context.Settings
         {
             return await this.ToModelsAsync<CurrencyModel>(Data: CurrencyData, modelFactory: (Date, Value) => new CurrencyModel
             {
-                ID = Guid.CreateVersion7(timestamp: new DateTimeOffset(year: Date.Year, month: Date.Month, day: Date.Day, hour: 0, minute: 0, second: 0, offset: TimeSpan.Zero)), // https://www.youtube.com/shorts/UwcOL3ZL3go
+                // https://www.youtube.com/shorts/UwcOL3ZL3go
+                ID = Guid.CreateVersion7(
+                    timestamp: new DateTimeOffset(
+                        year: Date.Year,
+                        month: Date.Month,
+                        day: Date.Day,
+                        hour: 0,
+                        minute: 0,
+                        second: 0,
+                        offset: TimeSpan.Zero
+                    )
+                ),
                 Date = Date,
                 WeekdayName = Date.ToString(format: "dddd", provider: CultureInfo.CreateSpecificCulture(name: "es")),
                 Currency = Value
