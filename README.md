@@ -49,7 +49,7 @@ jobs:
       with:
         context: . # Construye desde el directorio raíz del proyecto
         push: true # Sube la imagen al registro después de construirla
-        tags: |
+        tags: | # Asigna etiquetas a la imagen
           ghcr.io/${{ github.repository }}:${{ github.sha }}
           ghcr.io/${{ github.repository }}:latest
 ```
