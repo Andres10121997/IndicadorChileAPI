@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35707.178 d17.12
+VisualStudioVersion = 17.14.36616.10 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndicadorChileAPI", "IndicadorChileAPI.csproj", "{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IndicadorChileAPI", "IndicadorChileAPI.csproj", "{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E4CCA4F-7246-40E2-AAD4-E33E680B353E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {835E519F-F749-4391-B26C-F3FF39A04C72}
 	EndGlobalSection
 EndGlobal
