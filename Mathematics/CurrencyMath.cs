@@ -25,23 +25,23 @@ namespace IndicadorChileAPI.Mathematics
                 },
                 {
                     StatisticsEnum.Minimum,
-                    CurrencyList.Min<CurrencyModel>(selector: x => x.Currency)
+                    CurrencyList.Min<CurrencyModel>(selector: item => item.Currency)
                 },
                 {
                     StatisticsEnum.Maximum,
-                    CurrencyList.Max<CurrencyModel>(selector: x => x.Currency)
+                    CurrencyList.Max<CurrencyModel>(selector: item => item.Currency)
                 },
                 {
                     StatisticsEnum.Sum,
-                    Math.Round(CurrencyList.Sum<CurrencyModel>(selector: x => x.Currency), 2)
+                    CurrencyList.Sum<CurrencyModel>(selector: item => item.Currency)
                 },
                 {
                     StatisticsEnum.SumOfSquares,
-                    CurrencyList.Sum<CurrencyModel>(selector: x => Math.Pow(x: x.Currency, y: 2))
+                    CurrencyList.Sum<CurrencyModel>(selector: item => Math.Pow(x: item.Currency, y: 2))
                 },
                 {
                     StatisticsEnum.Average,
-                    CurrencyList.Average<CurrencyModel>(selector: x => x.Currency)
+                    CurrencyList.Average<CurrencyModel>(selector: item => item.Currency)
                 }
             };
         }
