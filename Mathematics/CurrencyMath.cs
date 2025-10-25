@@ -37,7 +37,7 @@ namespace IndicadorChileAPI.Mathematics
                 },
                 {
                     StatisticsEnum.SumOfSquares,
-                    (float)CurrencyList.Sum<CurrencyModel>(selector: item => Math.Pow(x: item.Currency, y: 2))
+                    checked(Convert.ToSingle(value: CurrencyList.Sum<CurrencyModel>(selector: item => Math.Pow(x: item.Currency, y: 2))))
                 },
                 {
                     StatisticsEnum.Average,
