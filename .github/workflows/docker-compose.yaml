@@ -30,7 +30,7 @@ jobs:
           ghcr.io/${{ vars.IMAGE_NAME }}:latest
   update_time:
     runs-on: ubuntu-latest
-
+    needs: build-and-push-image
     steps:
       - name: Ejecutar en contenedor
         uses: docker://ubuntu:latest # Reemplaza con tu imagen de contenedor
