@@ -131,7 +131,7 @@ namespace IndicadorChileAPI.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
-            Transform transform = new Transform(Year: this.SearchFilter.Year);
+            Transform transform = new Transform(Search: this.SearchFilter);
             
             return (await transform.ToCurrencyModelsAsync(
                         CurrencyData: await this.ExtractValuesAsync(

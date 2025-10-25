@@ -9,25 +9,33 @@ namespace IndicadorChileAPI.Context.Tool
 {
     public class Transform
     {
-        #region Variables
-        private ushort Year;
+        #region Object
+        private SearchFilterModel search;
         #endregion
 
 
 
         #region Constructor Method
-        public Transform(ushort Year)
-            : base()
+        public Transform(SearchFilterModel Search)
         {
-            this.Year = Year;
+            this.search = Search;
+        }
+        #endregion
+
+
+
+        #region Property
+        public SearchFilterModel Search
+        {
+            get => this.search;
         }
         #endregion
 
 
 
         #region To
-        protected TModel[] ToModels<TModel>(Dictionary<byte, float[]> Data,
-                                            Func<DateOnly, float, TModel> modelFactory)
+        private TModel[] ToModels<TModel>(Dictionary<byte, float[]> Data,
+                                          Func<DateOnly, float, TModel> modelFactory)
         {
             #region List
             List<TModel> ModelList = new List<TModel>();
@@ -37,7 +45,7 @@ namespace IndicadorChileAPI.Context.Tool
             {
                 for (byte month = 1; month <= values.Length; month++)
                 {
-                    if (day > 0 && day <= DateTime.DaysInMonth(year: this.Year, month: month))
+                    if (day > 0 && day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
                     {
                         #region Variables
                         float value;
@@ -51,7 +59,7 @@ namespace IndicadorChileAPI.Context.Tool
 
                         model = modelFactory(
                             new DateOnly(
-                                year: this.Year,
+                                year: this.Search.Year,
                                 month: month,
                                 day: day
                             ),
@@ -66,8 +74,8 @@ namespace IndicadorChileAPI.Context.Tool
             return ModelList.ToArray<TModel>();
         }
 
-        protected async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
-                                                             Func<DateOnly, float, TModel> modelFactory)
+        private async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
+                                                           Func<DateOnly, float, TModel> modelFactory)
         {
             return await Task.Run<TModel[]>(
                 function: () => this.ToModels<TModel>(Data: Data, modelFactory)
