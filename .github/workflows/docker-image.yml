@@ -43,7 +43,7 @@ jobs:
   
     - name: Update time in container (set timezone)
       run: |
-        docker exec my-container bash -c "ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime && echo 'America/Santiago' > /etc/timezone && date"
+        docker exec -u root my-container bash -c "ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime && echo 'America/Santiago' > /etc/timezone && date"
   
     - name: Verify time change
       run: |
