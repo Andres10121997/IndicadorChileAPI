@@ -28,3 +28,29 @@ jobs:
         tags: | # Asigna etiquetas a la imagen
           ghcr.io/${{ vars.IMAGE_NAME }}:${{ github.sha }}
           ghcr.io/${{ vars.IMAGE_NAME }}:latest
+  
+  update-time:
+    runs-on: ubuntu-latest
+    needs: build-and-push-image
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build and run Docker container
+      run: |
+        docker build -t my-app .
+        docker run -d --name my-container -p 80:80 my-app
+
+    - name: Update time in container
+      run: |
+        # Para ejecutar comandos en el contenedor que ya está corriendo
+        docker exec my-container sh -c "export TZ='America/Santiago' && date"
+
+    - name: Verify time change
+      run: |
+        docker exec my-container date
+
+    - name: Stop and remove container
+      run: |
+        docker stop my-container
+        docker rm my-container
