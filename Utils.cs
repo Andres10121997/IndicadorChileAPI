@@ -59,19 +59,27 @@ namespace IndicadorChileAPI
 
         #region Logger
         internal static void LoogerInformation(ILogger Logger,
-                                               string Message,
-                                               Type OType)
+                                               Type OType,
+                                               string Message)
         {
+            DateTime Now = DateTime.Now;
+            DateOnly Date = DateOnly.FromDateTime(Now);
+            TimeOnly Time = TimeOnly.FromDateTime(Now);
+            
             Logger.LogInformation(message: "");
             Logger.LogInformation(message: "---");
             Logger.LogInformation(message: OType.ToString());
-            Logger.LogInformation(message: DateTime.Now.ToString());
+
+            // Fecha y Hora
+            Logger.LogInformation(message: $"Fecha: {Date}");
+            Logger.LogInformation(message: $"Hora: {Time}");
+
             Logger.LogInformation(message: Message);
             Logger.LogInformation(message: "---");
             Logger.LogInformation(message: "");
         }
 
-        internal static async Task LoogerInformationAsync(ILogger Logger, string Message, Type OType) => await Task.Run(action: () => LoogerInformation(Logger: Logger, Message: Message, OType: OType));
+        internal static async Task LoogerInformationAsync(ILogger Logger, Type OType, string Message) => await Task.Run(action: () => LoogerInformation(Logger: Logger, Message: Message, OType: OType));
 
         internal static void LoggerError(ILogger Logger, Exception ex, Type OType)
         {

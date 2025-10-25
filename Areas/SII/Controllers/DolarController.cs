@@ -60,6 +60,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Now = DateTime.Now;
 
+                await Utils.LoogerInformationAsync(Logger: this.Logger, OType: this.GetType(), Message: "El usuario llamó al método GetDataListAsync");
+
                 CurrencyList = new CurrencyListHeaderModel()
                 {
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
@@ -68,7 +70,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
                     Currencies = await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)
                 };
-
+                
                 return this.Ok(value: CurrencyList);
             }
             catch (Exception ex)
