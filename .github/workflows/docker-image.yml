@@ -39,16 +39,26 @@ jobs:
     - name: Build and run Docker container
       run: |
         docker build -t my-app .
-        docker run -d --name my-container -p 80:80 my-app
+        docker run -d --name my-container -p 80:80 --user root my-app
   
     - name: Update time in container (set timezone)
       run: |
-        docker exec -u root my-container bash -c "ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime && echo 'America/Santiago' > /etc/timezone && date"
+        docker exec -u root my-container bash -c "ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime && echo 'America/Santiago' > /etc/timezone && echo 'export TZ=\"America/Santiago\"' >> /etc/profile && date"
   
-    - name: Verify time change
+    - name: Stop and restart container to apply timezone changes
       run: |
-        # Verifica que la zona horaria se haya aplicado correctamente
+        docker stop my-container
+        docker rm my-container
+        docker run -d --name my-container -p 80:80 --user root my-app
+  
+    - name: Verify time change after restart
+      run: |
         docker exec my-container date
+  
+    - name: Check /etc/timezone and /etc/localtime
+      run: |
+        docker exec my-container cat /etc/timezone
+        docker exec my-container ls -l /etc/localtime
   
     - name: Stop and remove container
       run: |
