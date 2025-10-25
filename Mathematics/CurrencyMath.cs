@@ -15,9 +15,9 @@ namespace IndicadorChileAPI.Mathematics
 
 
 
-        public static Dictionary<StatisticsEnum, double> MathematicalOperations(CurrencyModel[] CurrencyList)
+        public static Dictionary<StatisticsEnum, float> MathematicalOperations(CurrencyModel[] CurrencyList)
         {
-            return new Dictionary<StatisticsEnum, double>()
+            return new Dictionary<StatisticsEnum, float>()
             {
                 {
                     StatisticsEnum.Count,
@@ -37,7 +37,7 @@ namespace IndicadorChileAPI.Mathematics
                 },
                 {
                     StatisticsEnum.SumOfSquares,
-                    CurrencyList.Sum<CurrencyModel>(selector: item => Math.Pow(x: item.Currency, y: 2))
+                    (float)CurrencyList.Sum<CurrencyModel>(selector: item => Math.Pow(x: item.Currency, y: 2))
                 },
                 {
                     StatisticsEnum.Average,

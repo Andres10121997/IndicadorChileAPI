@@ -17,6 +17,6 @@ namespace IndicadorChileAPI.App.Interfaces
         }
 
 
-        public Task<ActionResult<double>> GetStatisticsAsync(StatisticsEnum Statistics, [FromQuery] SearchFilterModel SearchFilter);
+        public Task<ActionResult<float>> GetStatisticsAsync(StatisticsEnum Statistics, [FromQuery] SearchFilterModel SearchFilter);
     }
 }

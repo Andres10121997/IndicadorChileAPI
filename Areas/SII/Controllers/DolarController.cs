@@ -86,12 +86,12 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             HttpGet(template: "[action]"),
             RequireHttps
         ]
-        public async Task<ActionResult<double>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
+        public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
                                                                    [FromQuery] SearchFilterModel SearchFilter)
         {
             try
             {
-                if (CurrencyMath.MathematicalOperations(CurrencyList: await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)).TryGetValue(key: Statistics, value: out double Value))
+                if (CurrencyMath.MathematicalOperations(CurrencyList: await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)).TryGetValue(key: Statistics, value: out float Value))
                 {
                     return this.Ok(value: Value);
                 }
