@@ -32,14 +32,12 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-and-push-image
     steps:
-    - name: Checkout code
+    - name: Desproteger el código
       uses: actions/checkout@v4
-      
-    - name: Configurar zona horaria a Chile
+
+    - name: Configurar y ejecutar Docker Compose
+      run: docker-compose up -d
+
+    - name: Verificar la hora del contenedor (opcional)
       run: |
-        sudo ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime
-        echo "Europe/Madrid" | sudo tee /etc/timezone
-        sudo dpkg-reconfigure --frontend noninteractive tzdata
-    
-    - name: Verificar la zona horaria
-      run: date
+        docker-compose exec mi_servicio date
