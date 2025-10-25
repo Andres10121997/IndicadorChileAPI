@@ -35,21 +35,22 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-
+  
     - name: Build and run Docker container
       run: |
         docker build -t my-app .
         docker run -d --name my-container -p 80:80 my-app
-
-    - name: Update time in container
+  
+    - name: Update time in container (set timezone)
       run: |
-        # Para ejecutar comandos en el contenedor que ya está corriendo
-        docker exec my-container sh -c "export TZ='America/Santiago' && date"
-
+        # Cambiar la zona horaria dentro del contenedor a America/Santiago
+        docker exec my-container bash -c "ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime && echo 'America/Santiago' > /etc/timezone && date"
+    
     - name: Verify time change
       run: |
+        # Verifica que la zona horaria se haya aplicado correctamente
         docker exec my-container date
-
+  
     - name: Stop and remove container
       run: |
         docker stop my-container
