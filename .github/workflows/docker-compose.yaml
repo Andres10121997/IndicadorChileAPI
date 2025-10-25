@@ -28,16 +28,3 @@ jobs:
         tags: | # Asigna etiquetas a la imagen
           ghcr.io/${{ vars.IMAGE_NAME }}:${{ github.sha }}
           ghcr.io/${{ vars.IMAGE_NAME }}:latest
-  update_time:
-    runs-on: ubuntu-latest
-    needs: build-and-push-image
-    steps:
-      - name: Ejecutar en contenedor
-        uses: docker://ubuntu:latest # Reemplaza con tu imagen de contenedor
-        with:
-          args: |
-            echo "Configurando zona horaria..."
-            # Esto crea el enlace simbólico para que el contenedor use la zona horaria de Chile
-            ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime
-            echo "Zona horaria configurada."
-            date
