@@ -1,1 +1,43 @@
+name: Build and Push Docker Image
 
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3 # Obtiene el código de tu repositorio
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2 # Permite iniciar sesión en el registro de contenedores
+      with:
+        registry: ghcr.io # Usa el registro de contenedores de GitHub
+        username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
+        password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4 # Acción para construir y subir imágenes de Docker
+      with:
+        context: . # Construye desde el directorio raíz del proyecto
+        push: true # Sube la imagen al registro después de construirla
+        tags: | # Asigna etiquetas a la imagen
+          ghcr.io/${{ vars.IMAGE_NAME }}:${{ github.sha }}
+          ghcr.io/${{ vars.IMAGE_NAME }}:latest
+  update_time:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ejecutar en contenedor
+        uses: docker://ubuntu:latest # Reemplaza con tu imagen de contenedor
+        with:
+          args: |
+            echo "Configurando zona horaria..."
+            # Esto crea el enlace simbólico para que el contenedor use la zona horaria de Chile
+            ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime
+            echo "Zona horaria configurada."
+            date
