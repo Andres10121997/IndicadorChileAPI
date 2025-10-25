@@ -1,0 +1,11 @@
+﻿version: '1.0.0'
+
+services:
+  indicadorchileapi:
+    # Una de estas opciones debe estar definida para construir la imagen:
+    # Opción 1: Construir desde un Dockerfile
+    build: .
+    ports:
+        - "8080:81"
+    volumes:
+        - ./app:/app
