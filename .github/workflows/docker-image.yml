@@ -28,39 +28,3 @@ jobs:
         tags: | # Asigna etiquetas a la imagen
           ghcr.io/${{ vars.IMAGE_NAME }}:${{ github.sha }}
           ghcr.io/${{ vars.IMAGE_NAME }}:latest
-  
-  update-time:
-    runs-on: ubuntu-latest
-    needs: build-and-push-image
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-  
-    - name: Build and run Docker container
-      run: |
-        docker build -t my-app .
-        docker run -d --name my-container -p 80:80 --user root my-app
-  
-    - name: Update time in container (set timezone)
-      run: |
-        docker exec -u root my-container bash -c "ln -sf /usr/share/zoneinfo/America/Santiago /etc/localtime && echo 'America/Santiago' > /etc/timezone && echo 'export TZ=\"America/Santiago\"' >> /etc/profile && date"
-  
-    - name: Stop and restart container to apply timezone changes
-      run: |
-        docker stop ${{ vars.IMAGE_NAME }}
-        docker rm ${{ vars.IMAGE_NAME }}
-        docker run -d --name ${{ vars.IMAGE_NAME }} -p 80:80 --user root my-app
-  
-    - name: Verify time change after restart
-      run: |
-        docker exec ${{ vars.IMAGE_NAME }} date
-  
-    - name: Check /etc/timezone and /etc/localtime
-      run: |
-        docker exec ${{ vars.IMAGE_NAME }} cat /etc/timezone
-        docker exec ${{ vars.IMAGE_NAME }} ls -l /etc/localtime
-  
-    - name: Stop and remove container
-      run: |
-        docker stop ${{ vars.IMAGE_NAME }}
-        docker rm ${{ vars.IMAGE_NAME }}
