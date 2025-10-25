@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\areas\\sii\\controllers\\dolarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}|IndicadorChileAPI.csproj|solutionrelative:areas\\sii\\controllers\\dolarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}|IndicadorChileAPI.csproj|solutionrelative:utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}|IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{F35DA9FE-56D9-91CF-552B-1E9E3E594E7D}|IndicadorChileAPI.csproj|solutionrelative:dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -26,28 +22,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Utils.cs",
-              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Utils.cs",
-              "RelativeDocumentMoniker": "Utils.cs",
-              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Utils.cs",
-              "RelativeToolTip": "Utils.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAADsAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T19:56:10.51Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DolarController.cs",
-              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Controllers\\DolarController.cs",
-              "RelativeDocumentMoniker": "Areas\\SII\\Controllers\\DolarController.cs",
-              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Areas\\SII\\Controllers\\DolarController.cs",
-              "RelativeToolTip": "Areas\\SII\\Controllers\\DolarController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAAwD4AAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T19:52:47.057Z",
+              "Title": "Dockerfile",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Dockerfile",
+              "RelativeDocumentMoniker": "Dockerfile",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Dockerfile",
+              "RelativeToolTip": "Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-10-25T20:42:53.123Z",
               "EditorCaption": ""
             }
           ]
