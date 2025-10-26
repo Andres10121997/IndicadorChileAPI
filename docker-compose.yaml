@@ -1,7 +1,0 @@
-﻿version: '3.8'
-
-services:
-  time_zone:
-    build: .
-    environment:
-      - TZ=America/Santiago
