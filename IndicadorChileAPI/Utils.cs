@@ -64,11 +64,10 @@ namespace IndicadorChileAPI
         {
             #region Variables
             DateTime Now = DateTime.Now;
-            DateOnly Date = DateOnly.FromDateTime(Now);
-            TimeOnly Time = TimeOnly.FromDateTime(Now);
+            DateOnly Date = DateOnly.FromDateTime(dateTime: Now);
+            TimeOnly Time = TimeOnly.FromDateTime(dateTime: Now);
             #endregion
 
-            Logger.LogInformation(message: "");
             Logger.LogInformation(message: "---");
             Logger.LogInformation(message: OType.ToString());
 
@@ -78,20 +77,18 @@ namespace IndicadorChileAPI
 
             Logger.LogInformation(message: Message);
             Logger.LogInformation(message: "---");
-            Logger.LogInformation(message: "");
         }
 
-        internal static async Task LoogerInformationAsync(ILogger Logger, Type OType, string Message) => await Task.Run(action: () => LoogerInformation(Logger: Logger, Message: Message, OType: OType));
-
-        internal static void LoggerError(ILogger Logger, Type OType, Exception ex)
+        internal static void LoggerError(ILogger Logger,
+                                         Type OType,
+                                         Exception ex)
         {
             #region Variables
             DateTime Now = DateTime.Now;
-            DateOnly Date = DateOnly.FromDateTime(Now);
-            TimeOnly Time = TimeOnly.FromDateTime(Now);
+            DateOnly Date = DateOnly.FromDateTime(dateTime: Now);
+            TimeOnly Time = TimeOnly.FromDateTime(dateTime: Now);
             #endregion
 
-            Logger.LogError(message: "");
             Logger.LogError(message: "---");
             Logger.LogError(message: OType.ToString());
 
@@ -99,14 +96,12 @@ namespace IndicadorChileAPI
             Logger.LogError(message: $"Fecha: {Date}");
             Logger.LogError(message: $"Hora: {Time}");
 
+            // Excepción
             Logger.LogError(message: $"Stack Trace: {ex.StackTrace}");
             Logger.LogError(message: $"Message: {ex.Message}");
             Logger.LogError(message: ex.ToString());
             Logger.LogError(message: "---");
-            Logger.LogError(message: "");
         }
-
-        internal static async Task LoggerErrorAsync(ILogger Logger, Type OType, Exception ex) => await Task.Run(action: () => LoggerError(Logger: Logger, OType: OType, ex: ex));
         #endregion
     }
 }

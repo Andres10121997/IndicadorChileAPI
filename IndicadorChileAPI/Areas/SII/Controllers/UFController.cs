@@ -73,7 +73,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
 
                 return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
@@ -102,7 +101,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Utils.MessageError(ex: ex, OType: this.GetType());
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
 
                 return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
