@@ -4,7 +4,7 @@ services:
     time-zone:
         build: .
         ports:
-            - "8080:80"
+            - "8080:81"
         environment:
             # Establece la variable de entorno para la zona horaria
             - TZ=America/Santiago
