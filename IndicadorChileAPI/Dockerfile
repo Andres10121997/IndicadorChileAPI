@@ -12,10 +12,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["IndicadorChileAPI.csproj", "."]
-RUN dotnet restore "./IndicadorChileAPI.csproj"
+COPY ["IndicadorChileAPI/IndicadorChileAPI.csproj", "IndicadorChileAPI/"]
+RUN dotnet restore "./IndicadorChileAPI/IndicadorChileAPI.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/IndicadorChileAPI"
 RUN dotnet build "./IndicadorChileAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase se usa para publicar el proyecto de servicio que se copiará en la fase final.

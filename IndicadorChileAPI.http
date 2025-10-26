@@ -1,6 +1,0 @@
-@IndicadorChileAPI_HostAddress = http://localhost:32771
-
-GET {{IndicadorChileAPI_HostAddress}}/api/SII/Dolar/GetDataList?Year=2025
-Accept: application/json
-
-###
