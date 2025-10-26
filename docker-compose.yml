@@ -1,0 +1,6 @@
+services:
+    indicadorchileapi:
+        image: ${DOCKER_REGISTRY-}indicadorchileapi
+        build:
+            context: .
+            dockerfile: IndicadorChileAPI/Dockerfile
