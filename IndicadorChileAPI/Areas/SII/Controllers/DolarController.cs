@@ -60,8 +60,6 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
             {
                 Now = DateTime.Now;
 
-                await Utils.LoogerInformationAsync(Logger: this.Logger, OType: this.GetType(), Message: "El usuario llamó al método GetDataListAsync");
-
                 CurrencyList = new CurrencyListHeaderModel()
                 {
                     ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
