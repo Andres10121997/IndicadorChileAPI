@@ -23,7 +23,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v4 # Acción para construir y subir imágenes de Docker
       with:
-        context: ./IndicadorChileAPI # Construye desde el directorio raíz del proyecto
+        context: . # Construye desde el directorio raíz del proyecto
+        file: ./IndicadorChileAPI/Dockerfile
         push: true # Sube la imagen al registro después de construirla
         tags: | # Asigna etiquetas a la imagen
           ghcr.io/${{ vars.IMAGE_NAME }}-api:${{ github.sha }}
