@@ -1,6 +1,10 @@
 ﻿version: '1.0'
 
 services:
+    image: indicadorchileapi    
     time-zone:
         environment:
             - TZ=America/Santiago
+        #volumes:
+        #    - /etc/timezone:/etc/timezone:ro
+        #    - /etc/localtime:/etc/localtime:ro
