@@ -1,6 +1,9 @@
+version: "3.8"
+
 services:
     indicadorchileapi:
         image: ${DOCKER_REGISTRY-}indicadorchileapi
+        restart: always
         build:
             context: .
             dockerfile: IndicadorChileAPI/Dockerfile
