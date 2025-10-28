@@ -278,7 +278,7 @@ namespace IndicadorChileAPI.Context
                         float[] Values = new float[12];
                         #endregion
 
-                        Parallel.For(1, cellMatches.Count, i =>
+                        Parallel.For(fromInclusive: 1, toExclusive: cellMatches.Count, body: i =>
                         {
                             #region Variables
                             string Value = string.Empty;

@@ -37,7 +37,7 @@ namespace IndicadorChileAPI.Context.Tool
         private TModel[] ToModels<TModel>(Dictionary<byte, float[]> Data,
                                           Func<DateOnly, float, TModel> modelFactory)
         {
-            object _lockObject = new object();
+            object lockObject = new object();
 
             #region List
             List<TModel> ModelList = new List<TModel>();
@@ -68,7 +68,7 @@ namespace IndicadorChileAPI.Context.Tool
                             value
                         );
 
-                        lock (_lockObject)
+                        lock (lockObject)
                         {
                             ModelList.Add(item: model);
                         }
