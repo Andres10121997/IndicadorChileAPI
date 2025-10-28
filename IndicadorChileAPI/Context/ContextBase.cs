@@ -212,20 +212,22 @@ namespace IndicadorChileAPI.Context
             string rowPattern;
             #endregion
 
-            #region Dictionary
-            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
-            #endregion
+            #region Objects
+            object lockObject = new object();
 
             #region Match
             Match tableMatch;
             MatchCollection rowMatches;
             #endregion
+            #endregion
+
+            #region Dictionary
+            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
+            #endregion
 
             #region Validations
-            ArgumentNullException.ThrowIfNullOrEmpty(argument: htmlContent);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: htmlContent);
 
-            ArgumentNullException.ThrowIfNullOrEmpty(argument: tableId);
             ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: tableId);
             #endregion
 
@@ -276,6 +278,41 @@ namespace IndicadorChileAPI.Context
                         float[] Values = new float[12];
                         #endregion
 
+                        Parallel.For(1, cellMatches.Count, i =>
+                        {
+                            #region Variables
+                            string Value = string.Empty;
+                            #endregion
+
+                            Value = cellMatches[i].Groups[1].Value
+                                .Trim()
+                                // Eliminar puntos
+                                .Replace(
+                                    oldValue: ".",
+                                    newValue: ""
+                                )
+                                // Cambiar comas por puntos
+                                .Replace(
+                                    oldValue: ",",
+                                    newValue: "."
+                                );
+
+                            #region Guardar Valores
+                            lock (lockObject)
+                            {
+                                if (float.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
+                                {
+                                    Values[i - 1] = currencyValue;
+                                }
+                                else
+                                {
+                                    Values[i - 1] = float.NaN;
+                                }
+                            }
+                            #endregion
+                        });
+                        
+                        /*
                         for (byte i = 1; i < cellMatches.Count; i++)
                         {
                             #region Variables
@@ -306,6 +343,7 @@ namespace IndicadorChileAPI.Context
                             }
                             #endregion
                         }
+                        */
 
                         Data[day] = Values;
                     }
@@ -316,7 +354,7 @@ namespace IndicadorChileAPI.Context
         }
 
         protected async Task<Dictionary<byte, float[]>> ExtractValuesAsync(string htmlContent,
-                                                                            string tableId)
+                                                                           string tableId)
         {
             return await Task.Run<Dictionary<byte, float[]>>(
                 function: () => this.ExtractValues(

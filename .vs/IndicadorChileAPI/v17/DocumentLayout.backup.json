@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\indicadorchileapi\\context\\contextbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|solutionrelative:indicadorchileapi\\context\\contextbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\indicadorchileapi\\context\\tool\\transform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|solutionrelative:indicadorchileapi\\context\\tool\\transform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -22,15 +26,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Transform.cs",
               "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Context\\Tool\\Transform.cs",
               "RelativeDocumentMoniker": "IndicadorChileAPI\\Context\\Tool\\Transform.cs",
               "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Context\\Tool\\Transform.cs",
               "RelativeToolTip": "IndicadorChileAPI\\Context\\Tool\\Transform.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAwC8AAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAACMAAAAAAAAAAAAAwCcAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-28T16:56:58.262Z",
+              "WhenOpened": "2025-10-28T17:49:53.386Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ContextBase.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Context\\ContextBase.cs",
+              "RelativeDocumentMoniker": "IndicadorChileAPI\\Context\\ContextBase.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Context\\ContextBase.cs",
+              "RelativeToolTip": "IndicadorChileAPI\\Context\\ContextBase.cs",
+              "ViewState": "AgIAAA0BAAAAAAAAAAAkwCsBAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-28T17:46:30.754Z",
               "EditorCaption": ""
             }
           ]
