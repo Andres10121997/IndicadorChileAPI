@@ -74,34 +74,6 @@ namespace IndicadorChileAPI.Context.Tool
                         }
                     }
                 });
-                /*
-                for (byte month = 1; month <= values.Length; month++)
-                {
-                    if (day > 0 && day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
-                    {
-                        #region Variables
-                        float value;
-                        #endregion
-
-                        #region Objects
-                        TModel model;
-                        #endregion
-
-                        value = values[month - 1];
-
-                        model = modelFactory(
-                            new DateOnly(
-                                year: this.Search.Year,
-                                month: month,
-                                day: day
-                            ),
-                            value
-                        );
-
-                        ModelList.Add(item: model);
-                    }
-                }
-                */
             }
 
             return ModelList.ToArray<TModel>();
