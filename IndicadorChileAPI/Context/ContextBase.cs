@@ -312,39 +312,6 @@ namespace IndicadorChileAPI.Context
                             #endregion
                         });
                         
-                        /*
-                        for (byte i = 1; i < cellMatches.Count; i++)
-                        {
-                            #region Variables
-                            string Value = string.Empty;
-                            #endregion
-
-                            Value = cellMatches[i].Groups[1].Value
-                                .Trim()
-                                // Eliminar puntos
-                                .Replace(
-                                    oldValue: ".",
-                                    newValue: ""
-                                )
-                                // Cambiar comas por puntos
-                                .Replace(
-                                    oldValue: ",",
-                                    newValue: "."
-                                );
-
-                            #region GuardarValores
-                            if (float.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
-                            {
-                                Values[i - 1] = currencyValue;
-                            }
-                            else
-                            {
-                                Values[i - 1] = float.NaN;
-                            }
-                            #endregion
-                        }
-                        */
-
                         Data[day] = Values;
                     }
                 }
