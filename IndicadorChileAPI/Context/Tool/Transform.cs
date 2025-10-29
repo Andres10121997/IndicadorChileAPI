@@ -45,7 +45,7 @@ namespace IndicadorChileAPI.Context.Tool
 
             foreach (var (day, values) in Data)
             {
-                Parallel.For(1, values.Length, month =>
+                for (byte month = 1; month <= values.Length; month++)
                 {
                     if (day > 0 && day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
                     {
@@ -68,12 +68,9 @@ namespace IndicadorChileAPI.Context.Tool
                             value
                         );
 
-                        lock (lockObject)
-                        {
-                            ModelList.Add(item: model);
-                        }
+                        ModelList.Add(item: model);
                     }
-                });
+                }
             }
 
             return ModelList.ToArray<TModel>();

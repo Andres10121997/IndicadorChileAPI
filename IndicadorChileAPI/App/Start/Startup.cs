@@ -23,15 +23,6 @@ namespace IndicadorChileAPI.App.Start
 
 
 
-        #region Destroyer method
-        ~Startup()
-        {
-
-        }
-        #endregion
-
-
-
         #region Init
         public static WebApplication InitApp(string[] args)
         {

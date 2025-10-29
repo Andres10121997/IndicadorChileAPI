@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\indicadorchileapi\\context\\contextbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|solutionrelative:indicadorchileapi\\context\\contextbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\indicadorchileapi\\context\\tool\\transform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|solutionrelative:indicadorchileapi\\context\\tool\\transform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,14 +23,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ContextBase.cs",
-              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Context\\ContextBase.cs",
-              "RelativeDocumentMoniker": "IndicadorChileAPI\\Context\\ContextBase.cs",
-              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Context\\ContextBase.cs",
-              "RelativeToolTip": "IndicadorChileAPI\\Context\\ContextBase.cs",
-              "ViewState": "AgIAABABAAAAAAAAAAAkwD4BAAAMAAAAAAAAAA==",
+              "Title": "Transform.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Context\\Tool\\Transform.cs",
+              "RelativeDocumentMoniker": "IndicadorChileAPI\\Context\\Tool\\Transform.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Context\\Tool\\Transform.cs",
+              "RelativeToolTip": "IndicadorChileAPI\\Context\\Tool\\Transform.cs",
+              "ViewState": "AgIAACUAAAAAAAAAAAAQwEgAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-29T11:08:00.768Z",
+              "WhenOpened": "2025-10-29T11:59:41.134Z",
               "EditorCaption": ""
             }
           ]

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace IndicadorChileAPI.Models
 {
-    public record CurrencyModel
+    public record CurrencyModel : IValidatableObject
     {
         #region Property
         [
@@ -91,5 +92,21 @@ namespace IndicadorChileAPI.Models
         ]
         public required float Currency { get; init; }
         #endregion
+
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (this.Currency == float.NaN)
+            {
+                yield return new ValidationResult(
+                    errorMessage: $"No puede ser {nameof(float.NaN)}",
+                    memberNames: new[]
+                    {
+                        nameof(this.Currency)
+                    }
+                );
+            }
+        }
     }
 }
