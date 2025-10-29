@@ -1,4 +1,5 @@
 ﻿using IndicadorChileAPI.App.Interfaces;
+using IndicadorChileAPI.Controllers;
 using IndicadorChileAPI.Information;
 using IndicadorChileAPI.Mathematics;
 using IndicadorChileAPI.Models;
@@ -18,12 +19,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         Area(areaName: "SII"),
         Route(template: "api/[area]/[controller]")
     ]
-    public class DolarController : ControllerBase, IStatistics
+    public class DolarController : BaseController, IStatistics
     {
-        #region Constant
-        private const string C_Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm";
-        #endregion
-
         #region Interfaces
         private readonly ILogger<DolarController> Logger;
         #endregion
@@ -32,7 +29,8 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
 
         #region Constructor Method
         public DolarController(ILogger<DolarController> Logger)
-            : base()
+            : base(Logger: Logger,
+                   url: "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm")
         {
             this.Logger = Logger;
         }
@@ -66,7 +64,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
                     ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                     Year = SearchFilter.Year,
                     MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM", provider: CultureInfo.CreateSpecificCulture(name: "es")) : null,
-                    Currencies = await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)
+                    Currencies = await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: this.URL)
                 };
                 
                 return this.Ok(value: CurrencyList);
@@ -90,7 +88,7 @@ namespace IndicadorChileAPI.Areas.SII.Controllers
         {
             try
             {
-                if (CurrencyMath.MathematicalOperations(CurrencyList: await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: C_Url)).TryGetValue(key: Statistics, value: out float Value))
+                if (CurrencyMath.MathematicalOperations(CurrencyList: await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: this.URL)).TryGetValue(key: Statistics, value: out float Value))
                 {
                     return this.Ok(value: Value);
                 }

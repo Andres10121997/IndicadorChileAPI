@@ -76,7 +76,9 @@ namespace IndicadorChileAPI.Context
                     value: value,
                     other: float.NegativeInfinity
                 );
-                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(value: value);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(
+                    value: value
+                );
 
                 this.currency = value;
             }
@@ -91,7 +93,9 @@ namespace IndicadorChileAPI.Context
                     value: value,
                     other: float.NaN
                 );
-                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(value: value);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(
+                    value: value
+                );
 
                 this.currencyConversion = value;
             }
