@@ -13,8 +13,8 @@ namespace IndicadorChileAPI.Context
     public class ContextBase
     {
         #region Variables
-        private float V_Currency;
-        private float V_CurrencyConversion;
+        private float currency;
+        private float currencyConversion;
 
         #region Readonly
         private readonly string VR_Url;
@@ -22,11 +22,11 @@ namespace IndicadorChileAPI.Context
         #endregion
 
         #region Arrays
-        private CurrencyModel[] A_CurrencyList;
+        private CurrencyModel[] currencyList;
         #endregion
 
         #region Objects
-        private SearchFilterModel O_SearchFilter;
+        private SearchFilterModel searchFilter;
         #endregion
 
 
@@ -37,8 +37,8 @@ namespace IndicadorChileAPI.Context
             : base()
         {
             #region Variables
-            this.V_Currency = 0;
-            this.V_CurrencyConversion = 0;
+            this.currency = 0;
+            this.currencyConversion = 0;
             
             #region Readonly
             this.VR_Url = Url;
@@ -46,11 +46,11 @@ namespace IndicadorChileAPI.Context
             #endregion
 
             #region Arrays
-            this.A_CurrencyList = Array.Empty<CurrencyModel>();
+            this.currencyList = Array.Empty<CurrencyModel>();
             #endregion
 
             #region Objects
-            this.O_SearchFilter = SearchFilter;
+            this.searchFilter = SearchFilter;
             #endregion
         }
         #endregion
@@ -61,7 +61,7 @@ namespace IndicadorChileAPI.Context
         #region Variables
         public float Currency
         {
-            get => this.V_Currency;
+            get => this.currency;
             set
             {
                 ArgumentOutOfRangeException.ThrowIfEqual<float>(
@@ -78,13 +78,13 @@ namespace IndicadorChileAPI.Context
                 );
                 ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(value: value);
 
-                this.V_Currency = value;
+                this.currency = value;
             }
         }
 
         public float CurrencyConversion
         {
-            get => this.V_CurrencyConversion;
+            get => this.currencyConversion;
             set
             {
                 ArgumentOutOfRangeException.ThrowIfEqual<float>(
@@ -93,7 +93,7 @@ namespace IndicadorChileAPI.Context
                 );
                 ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(value: value);
 
-                this.V_CurrencyConversion = value;
+                this.currencyConversion = value;
             }
         }
 
@@ -108,12 +108,12 @@ namespace IndicadorChileAPI.Context
         #region Arrays
         public CurrencyModel[] CurrencyList
         {
-            get => this.A_CurrencyList;
+            get => this.currencyList;
             set
             {
                 ArgumentNullException.ThrowIfNull(argument: value);
 
-                this.A_CurrencyList = value;
+                this.currencyList = value;
             }
         }
         #endregion
@@ -121,7 +121,7 @@ namespace IndicadorChileAPI.Context
         #region Objects
         protected SearchFilterModel SearchFilter
         {
-            get => this.O_SearchFilter;
+            get => this.searchFilter;
         }
         #endregion
         #endregion

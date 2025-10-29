@@ -38,11 +38,11 @@ namespace IndicadorChileAPI.Context.Tool
                                           Func<DateOnly, float, TModel> modelFactory)
         {
             #region Objects
-            object lockObject = new object();
+            var lockObject = new object();
             #endregion
 
             #region List
-            List<TModel> ModelList = new List<TModel>();
+            var ModelList = new List<TModel>();
             #endregion
 
             Parallel.ForEach(source: Data, body: item =>
