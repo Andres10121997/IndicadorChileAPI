@@ -37,12 +37,49 @@ namespace IndicadorChileAPI.Context.Tool
         private TModel[] ToModels<TModel>(Dictionary<byte, float[]> Data,
                                           Func<DateOnly, float, TModel> modelFactory)
         {
+            #region Objects
             object lockObject = new object();
+            #endregion
 
             #region List
             List<TModel> ModelList = new List<TModel>();
             #endregion
 
+            Parallel.ForEach(source: Data, body: item =>
+            {
+                var (day, values) = item;
+
+                for (byte month = 1; month <= values.Length; month++)
+                {
+                    if (day > 0 && day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
+                    {
+                        #region Variables
+                        float value;
+                        #endregion
+
+                        #region Objects
+                        TModel model;
+                        #endregion
+
+                        value = values[month - 1];
+
+                        model = modelFactory(
+                            new DateOnly(
+                                year: this.Search.Year,
+                                month: month,
+                                day: day
+                            ),
+                            value
+                        );
+
+                        lock (lockObject)
+                        {
+                            ModelList.Add(item: model);
+                        }
+                    }
+                }
+            });
+            /*
             foreach (var (day, values) in Data)
             {
                 for (byte month = 1; month <= values.Length; month++)
@@ -72,7 +109,7 @@ namespace IndicadorChileAPI.Context.Tool
                     }
                 }
             }
-
+            */
             return ModelList.ToArray<TModel>();
         }
 
