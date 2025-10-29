@@ -213,7 +213,7 @@ namespace IndicadorChileAPI.Context
             #endregion
 
             #region Objects
-            object lockObject = new object();
+            // object lockObject = new object();
 
             #region Match
             Match tableMatch;
@@ -278,7 +278,8 @@ namespace IndicadorChileAPI.Context
                         float[] Values = new float[12];
                         #endregion
 
-                        Parallel.For(fromInclusive: 1, toExclusive: cellMatches.Count, body: i =>
+                        // Parallel.For(fromInclusive: 1, toExclusive: cellMatches.Count, body: i =>
+                        for (byte i = 1; i < cellMatches.Count; i++)
                         {
                             #region Variables
                             string Value = string.Empty;
@@ -298,19 +299,16 @@ namespace IndicadorChileAPI.Context
                                 );
 
                             #region Guardar Valores
-                            lock (lockObject)
+                            if (float.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
                             {
-                                if (float.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
-                                {
-                                    Values[i - 1] = currencyValue;
-                                }
-                                else
-                                {
-                                    Values[i - 1] = float.NaN;
-                                }
+                                Values[i - 1] = currencyValue;
+                            }
+                            else
+                            {
+                                Values[i - 1] = float.NaN;
                             }
                             #endregion
-                        });
+                        };
                         
                         Data[day] = Values;
                     }
