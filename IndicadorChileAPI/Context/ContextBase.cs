@@ -131,7 +131,7 @@ namespace IndicadorChileAPI.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
-            Transform transform = new Transform(Search: this.SearchFilter);
+            Transform transform = new(Search: this.SearchFilter);
             
             return (await transform.ToCurrencyModelsAsync(
                         CurrencyData: await this.ExtractValuesAsync(
@@ -198,7 +198,7 @@ namespace IndicadorChileAPI.Context
         #region HTML
         protected async Task<string> GetHtmlContentAsync()
         {
-            using HttpClient client = new HttpClient();
+            using HttpClient client = new();
 
             return await client.GetStringAsync(requestUri: this.Url);
         }
@@ -213,7 +213,7 @@ namespace IndicadorChileAPI.Context
             #endregion
 
             #region Objects
-            // object lockObject = new object();
+            object lockObject = new object();
 
             #region Match
             Match tableMatch;
@@ -250,7 +250,7 @@ namespace IndicadorChileAPI.Context
                 options: RegexOptions.Singleline
             );
 
-            foreach (Match rowMatch in rowMatches)
+            Parallel.ForEach(source: rowMatches, body: rowMatch =>
             {
                 #region Variables
                 string rowHtml = string.Empty;
@@ -278,7 +278,6 @@ namespace IndicadorChileAPI.Context
                         float[] Values = new float[12];
                         #endregion
 
-                        // Parallel.For(fromInclusive: 1, toExclusive: cellMatches.Count, body: i =>
                         for (byte i = 1; i < cellMatches.Count; i++)
                         {
                             #region Variables
@@ -308,13 +307,16 @@ namespace IndicadorChileAPI.Context
                                 Values[i - 1] = float.NaN;
                             }
                             #endregion
-                        };
-                        
-                        Data[day] = Values;
+                        }
+
+                        lock (lockObject)
+                        {
+                            Data[day] = Values;
+                        }
                     }
                 }
-            }
-
+            });
+            
             return Data;
         }
 
