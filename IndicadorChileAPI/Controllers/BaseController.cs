@@ -16,7 +16,8 @@ namespace IndicadorChileAPI.Controllers
 
 
         #region Constructor Method
-        public BaseController(ILogger<BaseController> Logger, string url)
+        public BaseController(ILogger<BaseController> Logger,
+                              string url)
             : base()
         {
             this.Logger = Logger;

@@ -105,6 +105,9 @@ namespace IndicadorChileAPI.Models
                 Prompt = "",
                 ShortName = "Divisas"
             ),
+            MinLength(
+                length: 1
+            ),
             Required
         ]
         public required CurrencyModel[] Currencies { get; init; }
@@ -114,6 +117,19 @@ namespace IndicadorChileAPI.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            if (this.Currencies == null
+                ||
+                this.Currencies.Equals(null))
+            {
+                yield return new ValidationResult(
+                    errorMessage: "No puede ser nulo.",
+                    memberNames: new[]
+                    {
+                        nameof(this.Currencies)
+                    }
+                );
+            }
+            else
             if (this.Currencies.Length == 0
                 ||
                 this.Currencies.Length.Equals(obj: 0))

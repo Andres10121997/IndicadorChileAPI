@@ -8,10 +8,12 @@ namespace IndicadorChileAPI.Mathematics
 {
     public static class CurrencyMath
     {
+        #region Constructor Method
         static CurrencyMath()
         {
             
         }
+        #endregion
 
 
 

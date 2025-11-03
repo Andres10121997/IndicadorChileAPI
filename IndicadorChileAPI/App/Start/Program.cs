@@ -4,11 +4,13 @@ namespace IndicadorChileAPI.App.Start
 {
     public class Program
     {
+        #region Constructor Method
         public Program()
             : base()
         {
 
         }
+        #endregion
 
 
 
