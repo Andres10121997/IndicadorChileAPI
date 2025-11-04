@@ -8,7 +8,9 @@ services:
             context: .
             dockerfile: IndicadorChileAPI/Dockerfile
         environment:
+            # Time Zone
             - TZ=America/Santiago
+            # Idioma
             - LANG=es_CL.UTF-8
             - LANGUAGE=es_CL:es
             - LC_ALL=es_CL.UTF-8

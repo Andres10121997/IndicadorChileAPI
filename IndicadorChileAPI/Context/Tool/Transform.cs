@@ -108,7 +108,7 @@ namespace IndicadorChileAPI.Context.Tool
                     )
                 ),
                 Date = Date,
-                WeekdayName = Date.ToString(format: "dddd", provider: CultureInfo.CreateSpecificCulture(name: "es")),
+                WeekdayName = Date.ToString(format: "dddd"),
                 Currency = Value
             });
         }
