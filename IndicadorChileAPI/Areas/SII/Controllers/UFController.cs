@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 using static IndicadorChileAPI.App.Interfaces.IStatistics;

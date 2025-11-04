@@ -8,13 +8,16 @@ namespace IndicadorChileAPI.Context.Tool
 {
     public static class Extract
     {
+        #region Constructor Method
         static Extract()
         {
 
         }
+        #endregion
 
 
 
+        #region Values
         public static Dictionary<byte, float[]> Values(string htmlContent,
                                                        string tableId)
         {
@@ -142,5 +145,6 @@ namespace IndicadorChileAPI.Context.Tool
                 )
             );
         }
+        #endregion
     }
 }
