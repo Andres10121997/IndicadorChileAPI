@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\indicadorchileapi\\areas\\sii\\controllers\\dolarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|solutionrelative:indicadorchileapi\\areas\\sii\\controllers\\dolarcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\indicadorchileapi\\models\\currencylistheadermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|solutionrelative:indicadorchileapi\\models\\currencylistheadermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81DDED9D-158B-E303-5F62-77A2896D2A5A}|docker-compose.dcproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{81DDED9D-158B-E303-5F62-77A2896D2A5A}|docker-compose.dcproj|solutionrelative:docker-compose.yml||{8B382828-6202-11D1-8870-0000F87579D2}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,14 +31,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "DolarController.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Areas\\SII\\Controllers\\DolarController.cs",
+              "RelativeDocumentMoniker": "IndicadorChileAPI\\Areas\\SII\\Controllers\\DolarController.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Areas\\SII\\Controllers\\DolarController.cs",
+              "RelativeToolTip": "IndicadorChileAPI\\Areas\\SII\\Controllers\\DolarController.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAAwDgAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-04T11:23:34.142Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "CurrencyListHeaderModel.cs",
               "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Models\\CurrencyListHeaderModel.cs",
               "RelativeDocumentMoniker": "IndicadorChileAPI\\Models\\CurrencyListHeaderModel.cs",
               "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\Models\\CurrencyListHeaderModel.cs",
               "RelativeToolTip": "IndicadorChileAPI\\Models\\CurrencyListHeaderModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIYAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHgAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-03T23:14:42.555Z",
+              "WhenOpened": "2025-11-04T11:22:06.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "docker-compose.yml",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\docker-compose.yml",
+              "RelativeDocumentMoniker": "docker-compose.yml",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\docker-compose.yml",
+              "RelativeToolTip": "docker-compose.yml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003775|",
+              "WhenOpened": "2025-11-04T11:02:56.312Z",
               "EditorCaption": ""
             }
           ]

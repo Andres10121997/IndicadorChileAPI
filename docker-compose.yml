@@ -9,3 +9,6 @@ services:
             dockerfile: IndicadorChileAPI/Dockerfile
         environment:
             - TZ=America/Santiago
+            - LANG=es_CL.UTF-8
+            - LANGUAGE=es_CL:es
+            - LC_ALL=es_CL.UTF-8

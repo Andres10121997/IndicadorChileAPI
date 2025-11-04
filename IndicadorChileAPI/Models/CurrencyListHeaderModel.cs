@@ -118,8 +118,8 @@ namespace IndicadorChileAPI.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            CultureInfo cl = new CultureInfo("es-CL");
-            string[] Months  = cl.DateTimeFormat.MonthGenitiveNames;
+            // CultureInfo cl = new CultureInfo("es-CL");
+            string[] Months = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames; // cl.DateTimeFormat.MonthGenitiveNames;
 
             if (MonthName is not null
                 &&
