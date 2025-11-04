@@ -6,18 +6,17 @@ using System.Threading.Tasks;
 
 namespace IndicadorChileAPI.Context.Tool
 {
-    public class Extract
+    public static class Extract
     {
-        public Extract()
-            : base()
+        static Extract()
         {
 
         }
 
 
 
-        public Dictionary<byte, float[]> Values(string htmlContent,
-                                                string tableId)
+        public static Dictionary<byte, float[]> Values(string htmlContent,
+                                                       string tableId)
         {
             #region Variables
             string tablePattern;
@@ -133,11 +132,11 @@ namespace IndicadorChileAPI.Context.Tool
             return Data;
         }
 
-        public async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
-                                                                 string tableId)
+        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
+                                                                        string tableId)
         {
             return await Task.Run<Dictionary<byte, float[]>>(
-                function: () => this.Values(
+                function: () => Values(
                     htmlContent: htmlContent,
                     tableId: tableId
                 )
