@@ -53,9 +53,40 @@ jobs:
           ghcr.io/${{ github.repository }}:${{ github.sha }}
           ghcr.io/${{ github.repository }}:latest
 ```
- * Este ejemplo utiliza la acción `docker/login-action` para iniciar sesión y la acción `docker/build-push-action` para construir y publicar. 
- * Las etiquetas `ghcr.io/${{ github.repository }}` se refieren a la URL del registro de GitHub, tu nombre de usuario y el nombre del repositorio. 
+ * Este ejemplo utiliza la acción `docker/login-action` para iniciar sesión y la acción `docker/build-push-action` para construir y publicar.
+ * Las etiquetas `ghcr.io/${{ github.repository }}` se refieren a la URL del registro de GitHub, tu nombre de usuario y el nombre del repositorio.
 
 ## 5. Confirma y ejecuta el flujo
- * Guarda el archivo YAML en `.github/workflows/` y confirma los cambios en tu repositorio. 
- * GitHub Actions ejecutará automáticamente este flujo en la próxima inserción en la rama `main`, construyendo y publicando tu imagen de Docker en GitHub Packages. 
+ * Guarda el archivo YAML en `.github/workflows/` y confirma los cambios en tu repositorio.
+ * GitHub Actions ejecutará automáticamente este flujo en la próxima inserción en la rama `main`, construyendo y publicando tu imagen de Docker en GitHub Packages.
+
+# Docker Compose
+## `LANG`, `LANGUAGE` y `LC_ALL`
+
+Para configurar `LANG`, `LANGUAGE` y `LC_ALL` en `docker-compose.yml`, debes definirlas como variables de entorno dentro de la sección environment de tu servicio. Esto asegura que el idioma y la configuración regional se establezcan correctamente dentro del contenedor de la aplicación, por ejemplo, `environment: - LANG=es_ES.UTF-8 - LANGUAGE=es_ES:es - LC_ALL=es_ES.UTF-8`.
+
+### Cómo hacerlo
+1. Abre tu archivo `docker-compose.yml`.
+2. Busca la sección `services` y el servicio para el que quieres configurar el idioma.
+3. Añade la sección `environment` si aún no existe.
+4. Define las variables de entorno dentro de la sección environment con los valores en español.
+
+### Ejemplo práctico
+```YML
+version: '3.8'
+
+services:
+  mi-aplicacion:
+    image: mi-imagen-de-aplicacion
+    environment:
+      - LANG=es_ES.UTF-8
+      - LANGUAGE=es_ES:es
+      - LC_ALL=es_ES.UTF-8
+    ports:
+      - "8080:80"
+```
+
+### Explicación de las variables
+* `LANG`: Establece la configuración regional predeterminada para la mayoría de los programas.
+* `LANGUAGE`: Se utiliza principalmente para la traducción de mensajes de interfaz de usuario y puede tener múltiples valores.
+* `LC_ALL`: Anula todas las otras variables `LC_*` y `LANG`. Al establecerla, se aplica a todas las categorías de configuración regional.
