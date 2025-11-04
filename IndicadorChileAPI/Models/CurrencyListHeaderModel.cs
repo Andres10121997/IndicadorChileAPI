@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace IndicadorChileAPI.Models
 {
@@ -117,28 +118,18 @@ namespace IndicadorChileAPI.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (this.Currencies == null
-                ||
-                this.Currencies.Equals(null))
+            CultureInfo cl = new CultureInfo("es-CL");
+            string[] Months  = cl.DateTimeFormat.MonthGenitiveNames;
+
+            if (MonthName is not null
+                &&
+                !MonthName.Contains(value: this.MonthName))
             {
                 yield return new ValidationResult(
-                    errorMessage: "No puede ser nulo.",
+                    errorMessage: "Error",
                     memberNames: new[]
                     {
-                        nameof(this.Currencies)
-                    }
-                );
-            }
-            else
-            if (this.Currencies.Length == 0
-                ||
-                this.Currencies.Length.Equals(obj: 0))
-            {
-                yield return new ValidationResult(
-                    errorMessage: "Debe de haber al menos un registro.",
-                    memberNames: new[]
-                    {
-                        nameof(this.Currencies)
+                        nameof(this.MonthName)
                     }
                 );
             }
