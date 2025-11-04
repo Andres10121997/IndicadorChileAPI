@@ -20,8 +20,8 @@ namespace IndicadorChileAPI.Controllers
                               string url)
             : base()
         {
-            this.Logger = Logger;
             this.url = url;
+            this.Logger = Logger;
         }
         #endregion
 
