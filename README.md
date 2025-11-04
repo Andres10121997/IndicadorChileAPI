@@ -2,7 +2,7 @@
 
 Esta aplicación web API entrega datos sobre cuanto valen ciertas divisas en días determinados.
 
-# Imagen Docker
+# GitHub Actions
 Para que GitHub cree una imagen de Docker, debes configurar una GitHub Action que use un `Dockerfile` en tu repositorio. La acción automática incluirá pasos para clonar tu código, iniciar sesión en el registro de contenedores (como GitHub Packages o Docker Hub), construir la imagen y luego enviarla al registro.
 
 ## 1. Prepara tu repositorio
@@ -87,6 +87,6 @@ services:
 ```
 
 ### Explicación de las variables
-* `LANG`: Establece la configuración regional predeterminada para la mayoría de los programas.
-* `LANGUAGE`: Se utiliza principalmente para la traducción de mensajes de interfaz de usuario y puede tener múltiples valores.
-* `LC_ALL`: Anula todas las otras variables `LC_*` y `LANG`. Al establecerla, se aplica a todas las categorías de configuración regional.
+* **<ins>`LANG`</ins>:** Establece la configuración regional predeterminada para la mayoría de los programas.
+* **<ins>`LANGUAGE`</ins>:** Se utiliza principalmente para la traducción de mensajes de interfaz de usuario y puede tener múltiples valores.
+* **<ins>`LC_ALL`</ins>:** Anula todas las otras variables `LC_*` y `LANG`. Al establecerla, se aplica a todas las categorías de configuración regional.
