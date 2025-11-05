@@ -1,7 +1,7 @@
 ﻿using IndicadorChileAPI.App.Interfaces;
+using IndicadorChileAPI.App.Mathematics;
 using IndicadorChileAPI.Controllers;
 using IndicadorChileAPI.Information;
-using IndicadorChileAPI.Mathematics;
 using IndicadorChileAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
