@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3 # Obtiene el código de tu repositorio
+      uses: actions/checkout@v4 # Obtiene el código de tu repositorio
 
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v2 # Permite iniciar sesión en el registro de contenedores
