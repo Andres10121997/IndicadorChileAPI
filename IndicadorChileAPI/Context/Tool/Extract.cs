@@ -96,7 +96,7 @@ namespace IndicadorChileAPI.Context.Tool
                         for (byte i = 1; i < cellMatches.Count; i++)
                         {
                             #region Variables
-                            string Value = string.Empty;
+                            string Value;
                             #endregion
 
                             Value = cellMatches[i].Groups[1].Value
