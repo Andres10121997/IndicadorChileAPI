@@ -6,7 +6,7 @@ services:
         restart: always
         build:
             context: .
-            dockerfile: IndicadorChileAPI/Dockerfile
+            dockerfile: API/Dockerfile
         environment:
             # Time Zone
             - TZ=America/Santiago
