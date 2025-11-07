@@ -26,6 +26,10 @@
         <!--Title, end-->
     </head>
     <body>
+        @await Html.PartialAsync(
+            partialViewName: "~/Views/Shared/Partial/_NavBar.cshtml"
+        )
+
         <main role="main">
             @RenderBody()
         </main>
