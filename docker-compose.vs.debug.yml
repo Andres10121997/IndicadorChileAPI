@@ -1,7 +1,7 @@
 #See https://aka.ms/overrideVSDockerComposeConfiguration to understand how Visual Studio uses this override file.
 
 #services:
-  #indicadorchileapi:
+  #api:
     #labels:
       #com.microsoft.visualstudio.debuggee.program: "dotnet"
       #com.microsoft.visualstudio.debuggee.arguments: "\"/app/bin/Debug/net9.0/IndicadorChileAPI.dll\""

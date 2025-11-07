@@ -1,8 +1,8 @@
-﻿using IndicadorChileAPI.Models;
+﻿using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.App.Interfaces
+namespace API.App.Interfaces
 {
     public interface IStatistics
     {

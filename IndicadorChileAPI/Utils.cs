@@ -2,7 +2,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI
+namespace API
 {
     internal static class Utils
     {

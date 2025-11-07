@@ -1,8 +1,8 @@
 version: "3.9"
 
 services:
-    indicadorchileapi:
-        image: ${DOCKER_REGISTRY-}indicadorchileapi
+    api:
+        image: ${DOCKER_REGISTRY-}api
         restart: always
         build:
             context: .
@@ -21,7 +21,7 @@ services:
             context: .
             dockerfile: Website/Dockerfile
         depends_on:
-            - indicadorchileapi
+            - api
         environment:
             # Time Zone
             - TZ=America/Santiago

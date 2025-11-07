@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace IndicadorChileAPI.Controllers
+namespace API.Controllers
 {
     public class BaseController : ControllerBase
     {

@@ -1,11 +1,11 @@
-﻿using IndicadorChileAPI.Context.Tool;
-using IndicadorChileAPI.Models;
+﻿using API.Context.Tool;
+using API.Models;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.Context
+namespace API.Context
 {
     public class ContextBase
     {

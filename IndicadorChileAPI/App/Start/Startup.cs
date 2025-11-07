@@ -9,7 +9,7 @@ using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.App.Start
+namespace API.App.Start
 {
     public class Startup
     {

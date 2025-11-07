@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.Context.Tool
+namespace API.Context.Tool
 {
     public static class Extract
     {

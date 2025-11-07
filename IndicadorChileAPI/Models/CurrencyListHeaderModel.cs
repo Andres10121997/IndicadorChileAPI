@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-namespace IndicadorChileAPI.Models
+namespace API.Models
 {
     public sealed record CurrencyListHeaderModel : IValidatableObject
     {

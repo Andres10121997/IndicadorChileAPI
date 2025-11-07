@@ -1,17 +1,17 @@
-﻿using IndicadorChileAPI.App.Interfaces;
-using IndicadorChileAPI.App.Mathematics;
-using IndicadorChileAPI.Controllers;
-using IndicadorChileAPI.Information;
-using IndicadorChileAPI.Models;
+﻿using API.App.Interfaces;
+using API.App.Mathematics;
+using API.Controllers;
+using API.Information;
+using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
-using static IndicadorChileAPI.App.Interfaces.IStatistics;
+using static API.App.Interfaces.IStatistics;
 
-namespace IndicadorChileAPI.Areas.SII.Controllers
+namespace API.Areas.SII.Controllers
 {
     [
         ApiController,

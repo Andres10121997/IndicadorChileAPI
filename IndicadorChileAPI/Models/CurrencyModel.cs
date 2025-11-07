@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace IndicadorChileAPI.Models
+namespace API.Models
 {
     public record CurrencyModel : IValidatableObject
     {

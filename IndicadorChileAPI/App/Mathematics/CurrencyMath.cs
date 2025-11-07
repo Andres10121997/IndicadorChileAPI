@@ -1,10 +1,10 @@
-﻿using IndicadorChileAPI.Models;
+﻿using API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static IndicadorChileAPI.App.Interfaces.IStatistics;
+using static API.App.Interfaces.IStatistics;
 
-namespace IndicadorChileAPI.App.Mathematics
+namespace API.App.Mathematics
 {
     public static class CurrencyMath
     {

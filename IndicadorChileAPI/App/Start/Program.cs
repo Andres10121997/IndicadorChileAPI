@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.App.Start
+namespace API.App.Start
 {
     public class Program
     {

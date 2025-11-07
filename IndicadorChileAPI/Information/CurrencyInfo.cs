@@ -1,8 +1,8 @@
-﻿using IndicadorChileAPI.Context;
-using IndicadorChileAPI.Models;
+﻿using API.Context;
+using API.Models;
 using System.Threading.Tasks;
 
-namespace IndicadorChileAPI.Information
+namespace API.Information
 {
     public static class CurrencyInfo
     {

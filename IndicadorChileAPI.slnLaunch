@@ -3,7 +3,7 @@
     "Name": "Nuevo perfil",
     "Projects": [
       {
-        "Path": "IndicadorChileAPI\\IndicadorChileAPI.csproj",
+        "Path": "IndicadorChileAPI\\API.csproj",
         "Action": "Start",
         "DebugTarget": "Container (Dockerfile)"
       },

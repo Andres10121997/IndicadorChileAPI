@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["IndicadorChileAPI/IndicadorChileAPI.csproj", "IndicadorChileAPI/"]
-RUN dotnet restore "./IndicadorChileAPI/IndicadorChileAPI.csproj"
+COPY ["IndicadorChileAPI/API.csproj", "IndicadorChileAPI/"]
+RUN dotnet restore "./IndicadorChileAPI/API.csproj"
 COPY . .
 WORKDIR "/src/IndicadorChileAPI"
-RUN dotnet build "./IndicadorChileAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Esta fase se usa para publicar el proyecto de servicio que se copiará en la fase final.
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./IndicadorChileAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Esta fase se usa en producción o cuando se ejecuta desde VS en modo normal (valor predeterminado cuando no se usa la configuración de depuración)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "IndicadorChileAPI.dll"]
+ENTRYPOINT ["dotnet", "API.dll"]
