@@ -8,11 +8,12 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <ErrorReport>send</ErrorReport>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
-    <Title>Indicadores de Chile</Title>
+    <Title>API</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Andres10121997/IndicadorChileAPI</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <NeutralLanguage>es-CL</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
