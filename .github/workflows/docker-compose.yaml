@@ -20,7 +20,7 @@ jobs:
         username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
         password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
 
-    - name: Build and push Docker image (API)
+    - name: Build and push Docker image
       uses: docker/build-push-action@v4 # Acción para construir y subir imágenes de Docker
       with:
         context: . # Construye desde el directorio raíz del proyecto
@@ -29,7 +29,8 @@ jobs:
         tags: | # Asigna etiquetas a la imagen
           ghcr.io/${{ vars.IMAGE_NAME }}:${{ github.sha }}
           ghcr.io/${{ vars.IMAGE_NAME }}:latest
-    
+
+    # Tengo que hacer que este punto desaparezca, pero fusionarlo con el punto anterior.
     - name: Build and push Docker image (Website)
       uses: docker/build-push-action@v4 # Acción para construir y subir imágenes de Docker
       with:
