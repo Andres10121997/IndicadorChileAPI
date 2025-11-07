@@ -1,7 +1,16 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\indicadorchileapi\\indicadorchileapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{AF025D46-1E4B-48BC-A595-64328DA0D6ED}|IndicadorChileAPI\\IndicadorChileAPI.csproj|solutionrelative:indicadorchileapi\\indicadorchileapi.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1DA59495-5FC7-43D1-9648-08E5B46FB48D}|Website\\Website.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\website\\website.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1DA59495-5FC7-43D1-9648-08E5B46FB48D}|Website\\Website.csproj|solutionrelative:website\\website.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +18,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IndicadorChileAPI",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\IndicadorChileAPI.csproj",
+              "RelativeDocumentMoniker": "IndicadorChileAPI\\IndicadorChileAPI.csproj",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\IndicadorChileAPI\\IndicadorChileAPI.csproj",
+              "RelativeToolTip": "IndicadorChileAPI\\IndicadorChileAPI.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-07T18:32:56.785Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Website",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Website\\Website.csproj",
+              "RelativeDocumentMoniker": "Website\\Website.csproj",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\Website\\Website.csproj",
+              "RelativeToolTip": "Website\\Website.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-07T18:32:55.427Z",
+              "EditorCaption": ""
             }
           ]
         }
