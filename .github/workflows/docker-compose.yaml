@@ -37,5 +37,5 @@ jobs:
         file: ./Website/Dockerfile
         push: true # Sube la imagen al registro después de construirla
         tags: | # Asigna etiquetas a la imagen
-          ghcr.io/${{ vars.IMAGE_NAME }}-Website:${{ github.sha }}
-          ghcr.io/${{ vars.IMAGE_NAME }}-Website:latest
+          ghcr.io/${{ vars.IMAGE_NAME }}-website:${{ github.sha }}
+          ghcr.io/${{ vars.IMAGE_NAME }}-website:latest
