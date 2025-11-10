@@ -29,14 +29,3 @@ jobs:
         tags: | # Asigna etiquetas a la imagen
           ghcr.io/${{ vars.IMAGE_NAME }}:${{ github.sha }}
           ghcr.io/${{ vars.IMAGE_NAME }}:latest
-
-    # Tengo que hacer que este punto desaparezca, pero fusionarlo con el punto anterior.
-    - name: Build and push Docker image (Website)
-      uses: docker/build-push-action@v4 # Acción para construir y subir imágenes de Docker
-      with:
-        context: . # Construye desde el directorio raíz del proyecto
-        file: ./Website/Dockerfile
-        push: true # Sube la imagen al registro después de construirla
-        tags: | # Asigna etiquetas a la imagen
-          ghcr.io/${{ vars.IMAGE_NAME }}-website:${{ github.sha }}
-          ghcr.io/${{ vars.IMAGE_NAME }}-website:latest
