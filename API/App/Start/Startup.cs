@@ -29,7 +29,7 @@ namespace API.App.Start
             WebApplicationBuilder builder;
             WebApplication app;
 
-            builder = WebApplication.CreateBuilder(args);
+            builder = WebApplication.CreateBuilder(args: args);
 
             ConfigureServices(builder);
 
