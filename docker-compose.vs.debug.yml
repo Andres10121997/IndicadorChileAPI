@@ -7,9 +7,3 @@
       #com.microsoft.visualstudio.debuggee.arguments: "\"/app/bin/Debug/net9.0/IndicadorChileAPI.dll\""
       #com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
       #com.microsoft.visualstudio.debuggee.killprogram: "$kill_command$"
-  #website:
-    #labels:
-      #com.microsoft.visualstudio.debuggee.program: "dotnet"
-      #com.microsoft.visualstudio.debuggee.arguments: "\"/app/bin/Debug/net9.0/Website.dll\""
-      #com.microsoft.visualstudio.debuggee.workingdirectory: "/app"
-      #com.microsoft.visualstudio.debuggee.killprogram: "$kill_command$"

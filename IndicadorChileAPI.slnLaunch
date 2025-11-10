@@ -3,12 +3,12 @@
     "Name": "Nuevo perfil",
     "Projects": [
       {
-        "Path": "IndicadorChileAPI\\API.csproj",
-        "Action": "Start",
-        "DebugTarget": "Container (Dockerfile)"
+        "Path": "docker-compose.dcproj",
+        "Action": "StartWithoutDebugging",
+        "DebugTarget": "Docker Compose"
       },
       {
-        "Path": "Website\\Website.csproj",
+        "Path": "API\\API.csproj",
         "Action": "Start",
         "DebugTarget": "Container (Dockerfile)"
       }
