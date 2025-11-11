@@ -92,24 +92,27 @@ namespace API.Context.Tool
 
         public async Task<CurrencyModel[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
         {
-            return await this.ToModelsAsync<CurrencyModel>(Data: CurrencyData, modelFactory: (Date, Value) => new CurrencyModel
-            {
-                // https://www.youtube.com/shorts/UwcOL3ZL3go
-                ID = Guid.CreateVersion7(
-                    timestamp: new DateTimeOffset(
-                        year: Date.Year,
-                        month: Date.Month,
-                        day: Date.Day,
-                        hour: 0,
-                        minute: 0,
-                        second: 0,
-                        offset: TimeSpan.Zero
-                    )
-                ),
-                Date = Date,
-                WeekdayName = Date.ToString(format: "dddd"),
-                Currency = Value
-            });
+            return await this.ToModelsAsync<CurrencyModel>(
+                Data: CurrencyData,
+                modelFactory: (Date, Value) => new CurrencyModel
+                {
+                    // https://www.youtube.com/shorts/UwcOL3ZL3go
+                    ID = Guid.CreateVersion7(
+                        timestamp: new DateTimeOffset(
+                            year: Date.Year,
+                            month: Date.Month,
+                            day: Date.Day,
+                            hour: 0,
+                            minute: 0,
+                            second: 0,
+                            offset: TimeSpan.Zero
+                        )
+                    ),
+                    Date = Date,
+                    WeekdayName = Date.ToString(format: "dddd"),
+                    Currency = Value
+                }
+            );
         }
         #endregion
     }
