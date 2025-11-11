@@ -31,7 +31,7 @@ namespace API.App.Start
 
             builder = WebApplication.CreateBuilder(args: args);
 
-            ConfigureServices(builder);
+            ConfigureServices(Builder: builder);
 
             app = builder.Build();
 
@@ -61,13 +61,15 @@ namespace API.App.Start
             {
                 options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
-                options.AddFixedWindowLimiter(policyName: "Limiter", fixedWindowOptions =>
-                {
-                    fixedWindowOptions.PermitLimit = 4; // Solicitudes máximas permitidas
-                    fixedWindowOptions.Window = TimeSpan.FromSeconds(seconds: 12); // Ventana de tiempo
-                    fixedWindowOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst; // Cómo manejar solicitudes en cola
-                    fixedWindowOptions.QueueLimit = 2; // Máximo de solicitudes para hacer cola
-                });
+                options.AddFixedWindowLimiter(
+                    policyName: "Limiter",
+                    fixedWindowOptions =>
+                    {
+                        fixedWindowOptions.PermitLimit = 4; // Solicitudes máximas permitidas
+                        fixedWindowOptions.Window = TimeSpan.FromSeconds(seconds: 12); // Ventana de tiempo
+                        fixedWindowOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst; // Cómo manejar solicitudes en cola
+                        fixedWindowOptions.QueueLimit = 2; // Máximo de solicitudes para hacer cola
+                    });
             });
 
             // Cierta información que se visualiza en la interfaz de usuario.
@@ -85,12 +87,12 @@ namespace API.App.Start
                         {
                             Name = "Andrés Sagredo",
                             Email = string.Empty,
-                            Url = new Uri("https://github.com/Andres10121997")
+                            Url = new Uri(uriString: "https://github.com/Andres10121997")
                         },
                         License = new OpenApiLicense
                         {
                             Name = "Uso bajo Apache 2.0",
-                            Url = new Uri("https://www.apache.org/licenses/LICENSE-2.0")
+                            Url = new Uri(uriString: "https://www.apache.org/licenses/LICENSE-2.0")
                         }
                     }
                 );
