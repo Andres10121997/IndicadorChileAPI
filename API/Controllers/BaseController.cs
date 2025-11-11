@@ -9,6 +9,10 @@ namespace API.Controllers
         private readonly string url;
         #endregion
 
+        #region Constant
+        protected const string ContentType = "application/json";
+        #endregion
+
         #region Interfaces
         private readonly ILogger<BaseController> Logger;
         #endregion

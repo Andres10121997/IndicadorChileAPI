@@ -42,7 +42,7 @@ namespace API.Areas.SII.Controllers
         [
             HttpGet(template: "[action]"),
             Produces(
-                contentType: "application/json"
+                contentType: ContentType
             ),
             RequireHttps
         ]
@@ -84,7 +84,7 @@ namespace API.Areas.SII.Controllers
         [
             HttpGet(template: "[action]"),
             Produces(
-                contentType: "application/json"
+                contentType: ContentType
             ),
             RequireHttps
         ]
