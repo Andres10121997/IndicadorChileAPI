@@ -41,6 +41,9 @@ namespace API.Areas.SII.Controllers
         #region Data
         [
             HttpGet(template: "[action]"),
+            Produces(
+                contentType: "application/json"
+            ),
             RequireHttps
         ]
         public async Task<ActionResult<CurrencyListHeaderModel>> GetDataListAsync([FromQuery] SearchFilterModel SearchFilter)
@@ -80,6 +83,9 @@ namespace API.Areas.SII.Controllers
         #region Statistics
         [
             HttpGet(template: "[action]"),
+            Produces(
+                contentType: "application/json"
+            ),
             RequireHttps
         ]
         public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics,

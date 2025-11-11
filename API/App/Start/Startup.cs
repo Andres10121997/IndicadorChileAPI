@@ -73,7 +73,7 @@ namespace API.App.Start
             // Cierta información que se visualiza en la interfaz de usuario.
             Builder.Services.AddSwaggerGen(options =>
             {
-                // https://learn.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-3.1&tabs=visual-studio
+                // https://learn.microsoft.com/es-mx/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-3.1&tabs=visual-studio
                 options.SwaggerDoc(
                     name: "v1",
                     info: new OpenApiInfo
