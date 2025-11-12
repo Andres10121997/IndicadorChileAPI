@@ -26,7 +26,20 @@ namespace API.Models
                 maximum: int.MaxValue
             )
         ]
-        public required ushort Year { get; init; }
+        public required ushort Year
+        {
+            get => field;
+            init
+            {
+                DateOnly Date;
+
+                Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+
+                ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(value: value, other: Date.Year);
+
+                field = value;
+            }
+        }
 
         [
             Display(
@@ -58,17 +71,6 @@ namespace API.Models
 
             Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
-            if (this.Year > Date.Year)
-            {
-                yield return new ValidationResult(
-                    errorMessage: $"El año no puede ser superior a {Date.Year}.",
-                    memberNames: new[]
-                    {
-                        nameof(this.Year)
-                    }
-                );
-            }
-            else
             if (this.Month > Date.Month
                 &&
                 (this.Year == Date.Year || this.Year.Equals(obj: Date.Year)))
