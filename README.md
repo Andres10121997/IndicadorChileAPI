@@ -21,7 +21,7 @@ Para que GitHub cree una imagen de Docker, debes configurar una GitHub Action qu
 ## 4. Escribe el código del flujo YAML
 Código
 
-```YAML
+```YAML Código
 name: Build and Push Docker Image
 
 on:

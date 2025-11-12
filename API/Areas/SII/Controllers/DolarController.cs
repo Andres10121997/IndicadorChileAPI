@@ -40,7 +40,9 @@ namespace API.Areas.SII.Controllers
         #region HttpGet
         #region Data
         [
-            HttpGet(template: "[action]"),
+            HttpGet(
+                template: "[action]"
+            ),
             Produces(
                 contentType: ContentType
             ),
@@ -82,7 +84,9 @@ namespace API.Areas.SII.Controllers
 
         #region Statistics
         [
-            HttpGet(template: "[action]"),
+            HttpGet(
+                template: "[action]"
+            ),
             Produces(
                 contentType: ContentType
             ),
