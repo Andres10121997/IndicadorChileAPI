@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
 namespace API.Models
 {
-    public sealed record CurrencyListHeaderModel : IValidatableObject
+    public sealed record CurrencyListHeaderModel
     {
         #region Property
         [
@@ -93,7 +92,29 @@ namespace API.Models
                 MinimumLength = 5
             )
         ]
-        public string? MonthName { get; init; }
+        public string? MonthName
+        {
+            get => field;
+            init
+            {
+                string[] Months = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
+
+                if (value is not null
+                    &&
+                    !Months.Contains(value: value, StringComparer.OrdinalIgnoreCase))
+                {
+                    new ValidationResult(
+                        errorMessage: "Error",
+                        memberNames: new[]
+                        {
+                            nameof(MonthName)
+                        }
+                    );
+                }
+
+                field = value;
+            }
+        }
 
         [
             Display(
@@ -113,25 +134,5 @@ namespace API.Models
         ]
         public required CurrencyModel[] Currencies { get; init; }
         #endregion
-
-
-
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            string[] Months = CultureInfo.CurrentCulture.DateTimeFormat.MonthNames;
-
-            if (MonthName is not null
-                &&
-                !MonthName.Contains(value: this.MonthName))
-            {
-                yield return new ValidationResult(
-                    errorMessage: "Error",
-                    memberNames: new[]
-                    {
-                        nameof(this.MonthName)
-                    }
-                );
-            }
-        }
     }
 }
