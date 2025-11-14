@@ -32,11 +32,6 @@ namespace API.Information
             // Ternaria para obtener datos.
             Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync());
 
-            #region Exception
-            ArgumentNullException.ThrowIfNull(argument: Context.CurrencyList);
-            ArgumentOutOfRangeException.ThrowIfNegativeOrZero<int>(value: Context.CurrencyList.Length);
-            #endregion
-
             return Context.CurrencyList;
         }
     }

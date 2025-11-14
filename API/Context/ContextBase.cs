@@ -9,13 +9,12 @@ namespace API.Context
 {
     public class ContextBase
     {
-        #region Variables
-        private float currency;
-        private float currencyConversion;
-
         #region Readonly
         private readonly string VR_Url;
         #endregion
+
+        #region Variables
+        private float currency;
         #endregion
 
         #region Arrays
@@ -33,13 +32,12 @@ namespace API.Context
                            SearchFilterModel SearchFilter)
             : base()
         {
-            #region Variables
-            this.currency = 0;
-            this.currencyConversion = 0;
-            
             #region Readonly
             this.VR_Url = Url;
             #endregion
+
+            #region Variables
+            this.currency = 0;
             #endregion
 
             #region Arrays
@@ -55,6 +53,13 @@ namespace API.Context
 
 
         #region Property
+        #region Readonly
+        protected string Url
+        {
+            get => this.VR_Url.Trim();
+        }
+        #endregion
+
         #region Variables
         public float Currency
         {
@@ -80,30 +85,6 @@ namespace API.Context
                 this.currency = value;
             }
         }
-
-        public float CurrencyConversion
-        {
-            get => this.currencyConversion;
-            set
-            {
-                ArgumentOutOfRangeException.ThrowIfEqual<float>(
-                    value: value,
-                    other: float.NaN
-                );
-                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(
-                    value: value
-                );
-
-                this.currencyConversion = value;
-            }
-        }
-
-        #region Readonly
-        protected string Url
-        {
-            get => this.VR_Url.Trim();
-        }
-        #endregion
         #endregion
 
         #region Arrays
@@ -112,7 +93,10 @@ namespace API.Context
             get => this.currencyList;
             set
             {
+                #region Exception
                 ArgumentNullException.ThrowIfNull(argument: value);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value: value.Length);
+                #endregion
 
                 this.currencyList = value;
             }
