@@ -1,5 +1,4 @@
 ﻿using API.App.Interfaces;
-using API.App.Mathematics;
 using API.Controllers;
 using API.Information;
 using API.Models;
@@ -111,7 +110,7 @@ namespace API.Areas.SII.Controllers
         {
             try
             {
-                if (CurrencyMath.MathematicalOperations(CurrencyList: await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, this.URL)).TryGetValue(key: Statistics, value: out float Value))
+                if (Utils.MathematicalOperations(CurrencyList: await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, this.URL)).TryGetValue(key: Statistics, value: out float Value))
                 {
                     return this.Ok(value: Value);
                 }
