@@ -75,13 +75,21 @@ namespace API.Areas.SII.Controllers
             }
             catch (ArgumentNullException ane)
             {
-                Utils.LoggerError(Logger: this.Logger, ex: ane, OType: this.GetType());
+                Utils.LoggerError(
+                    Logger: this.Logger,
+                    ex: ane,
+                    OType: this.GetType()
+                );
 
                 return this.NotFound(value: ane);
             }
             catch (Exception ex)
             {
-                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());
+                Utils.LoggerError(
+                    Logger: this.Logger,
+                    ex: ex,
+                    OType: this.GetType()
+                );
 
                 return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
             }
@@ -114,7 +122,11 @@ namespace API.Areas.SII.Controllers
             }
             catch (Exception ex)
             {
-                Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType()); ;
+                Utils.LoggerError(
+                    Logger: this.Logger,
+                    ex: ex,
+                    OType: this.GetType()
+                );
 
                 return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
             }
