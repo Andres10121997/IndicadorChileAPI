@@ -73,6 +73,12 @@ namespace API.Areas.SII.Controllers
 
                 return this.Ok(value: CurrencyList);
             }
+            catch (ArgumentNullException ane)
+            {
+                Utils.LoggerError(Logger: this.Logger, ex: ane, OType: this.GetType());
+
+                return this.NotFound(value: ane);
+            }
             catch (Exception ex)
             {
                 Utils.LoggerError(Logger: this.Logger, ex: ex, OType: this.GetType());

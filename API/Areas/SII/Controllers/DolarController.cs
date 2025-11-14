@@ -70,8 +70,14 @@ namespace API.Areas.SII.Controllers
                     MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM") : null,
                     Currencies = await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, Url: this.URL)
                 };
-                
+
                 return this.Ok(value: CurrencyList);
+            }
+            catch (ArgumentNullException ane)
+            {
+                Utils.LoggerError(Logger: this.Logger, ex: ane, OType: this.GetType());
+
+                return this.NotFound(value: ane);
             }
             catch (Exception ex)
             {
