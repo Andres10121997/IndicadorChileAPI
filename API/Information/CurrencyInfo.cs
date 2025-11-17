@@ -1,6 +1,5 @@
 ﻿using API.Context;
 using API.Models;
-using System;
 using System.Threading.Tasks;
 
 namespace API.Information

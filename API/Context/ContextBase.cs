@@ -116,30 +116,35 @@ namespace API.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
-            return (await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(
-                        CurrencyData: await Extract.ValuesAsync(
-                            htmlContent: await this.GetHtmlContentAsync(),
-                            tableId: "table_export".Trim()
-                        )
-                   ))
-                   .AsParallel<CurrencyModel>()
-                   .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
-                                                    &&
-                                                    !float.IsInfinity(f: Model.Currency)
-                                                    &&
-                                                    !float.IsNegative(f: Model.Currency))
-                   .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                   .ToArray<CurrencyModel>();
+            this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(
+                CurrencyData: await Extract.ValuesAsync(
+                    htmlContent: await this.GetHtmlContentAsync(),
+                    tableId: "table_export".Trim()
+                )
+            );
+
+
+            return this.CurrencyList
+                       .AsParallel<CurrencyModel>()
+                       .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
+                                                        &&
+                                                        !float.IsInfinity(f: Model.Currency)
+                                                        &&
+                                                        !float.IsNegative(f: Model.Currency))
+                       .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                       .ToArray<CurrencyModel>();
         }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
         {
-            return (await this.AnnualValuesAsync())
-                .AsParallel<CurrencyModel>()
-                .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
-                                                          &&
-                                                          Model.Date.Month == this.SearchFilter.Month)
-                .ToArray<CurrencyModel>();
+            this.CurrencyList = await this.AnnualValuesAsync();
+            
+            return this.CurrencyList
+                       .AsParallel<CurrencyModel>()
+                       .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
+                                                                 &&
+                                                                 Model.Date.Month == this.SearchFilter.Month)
+                       .ToArray<CurrencyModel>();
         }
 
         public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
