@@ -27,8 +27,8 @@ namespace API.Areas.SII.Controllers
 
         #region Constructor Method
         public DolarController(ILogger<DolarController> Logger)
-            : base(Logger: Logger,
-                   url: "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm")
+            : base(url: "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
+                   Logger: Logger)
         {
             this.Logger = Logger;
         }

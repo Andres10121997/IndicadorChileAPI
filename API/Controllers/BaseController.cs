@@ -7,25 +7,24 @@ namespace API.Controllers
     {
         #region Readonly
         private readonly string url;
+        private readonly ILogger<BaseController> Logger;
         #endregion
 
         #region Constant
         protected const string ContentType = "application/json";
         #endregion
 
-        #region Interfaces
-        private readonly ILogger<BaseController> Logger;
-        #endregion
-
 
 
         #region Constructor Method
-        public BaseController(ILogger<BaseController> Logger,
-                              string url)
+        public BaseController(string url,
+                              ILogger<BaseController> Logger)
             : base()
         {
+            #region Readonly
             this.url = url;
             this.Logger = Logger;
+            #endregion
         }
         #endregion
 

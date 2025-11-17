@@ -27,8 +27,8 @@ namespace API.Areas.SII.Controllers
 
         #region Constructor Method
         public UFController(ILogger<UFController> Logger)
-            : base(Logger: Logger,
-                   url: "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm")
+            : base(url: "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
+                   Logger: Logger)
         {
             this.Logger = Logger;
         }
