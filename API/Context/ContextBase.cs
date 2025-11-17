@@ -149,22 +149,18 @@ namespace API.Context
 
         public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
         {
-            #region Arrays
-            CurrencyModel[] MonthlyValues;
-            #endregion
-
             #region Objects
             CurrencyModel? Value;
             #endregion
 
-            MonthlyValues = await this.MonthlyValuesAsync();
+            this.CurrencyList = await this.MonthlyValuesAsync();
 
             // Buscar valor exacto
-            Value = MonthlyValues
+            Value = this.CurrencyList
                         .FirstOrDefault<CurrencyModel>(predicate: model => model.Date == Date)
                     ??
                     // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-                    MonthlyValues
+                    this.CurrencyList
                         .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
                         .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                         .FirstOrDefault<CurrencyModel>()
