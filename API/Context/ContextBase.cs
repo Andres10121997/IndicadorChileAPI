@@ -10,7 +10,7 @@ namespace API.Context
     public class ContextBase
     {
         #region Readonly
-        private readonly string VR_Url;
+        private readonly string url;
         #endregion
 
         #region Variables
@@ -33,7 +33,7 @@ namespace API.Context
             : base()
         {
             #region Readonly
-            this.VR_Url = Url;
+            this.url = Url;
             #endregion
 
             #region Variables
@@ -56,7 +56,7 @@ namespace API.Context
         #region Readonly
         protected string Url
         {
-            get => this.VR_Url.Trim();
+            get => this.url.Trim();
         }
         #endregion
 
