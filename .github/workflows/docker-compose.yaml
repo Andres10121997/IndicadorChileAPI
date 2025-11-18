@@ -8,7 +8,9 @@ on:
 
 jobs:
   build-and-push-image:
-    runs-on: kalilinux/kali-rolling:latest
+    runs-on: ubuntu-latest
+
+    container: kalilinux/kali-rolling:latest # Use a Kali Linux Docker image
     
     steps:
     - name: Checkout code
