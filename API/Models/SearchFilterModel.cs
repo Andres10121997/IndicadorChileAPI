@@ -8,6 +8,9 @@ namespace API.Models
     {
         #region Property
         [
+            DataType(
+                dataType: DataType.Currency
+            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
@@ -31,17 +34,25 @@ namespace API.Models
             get => field;
             init
             {
-                DateOnly Date;
+                #region Variables
+                DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+                #endregion
 
-                Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
-
-                ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(value: value, other: Date.Year);
+                #region Exception
+                ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
+                    value: value,
+                    other: Date.Year
+                );
+                #endregion
 
                 field = value;
             }
         }
 
         [
+            DataType(
+                dataType: DataType.Currency
+            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
