@@ -111,7 +111,7 @@ namespace API
 
 
         #region Math
-        public static Dictionary<StatisticsEnum, float> MathematicalOperations(CurrencyModel[] CurrencyList)
+        internal static Dictionary<StatisticsEnum, float> MathematicalOperations(CurrencyModel[] CurrencyList)
         {
             return new Dictionary<StatisticsEnum, float>()
             {
