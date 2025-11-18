@@ -8,12 +8,8 @@ on:
 
 jobs:
   build-and-push-image:
-    runs-on: ubuntu-latest
+    runs-on: kalilinux/kali-rolling:latest
     
-    container:
-      image: kalilinux/kali-rolling:latest # O cualquier otra imagen específica de Kali Linux
-      options: --user root # Ejecutar como administrador si es necesario para las herramientas de Kali
-      
     steps:
     - name: Checkout code
       uses: actions/checkout@v4 # Obtiene el código de tu repositorio
