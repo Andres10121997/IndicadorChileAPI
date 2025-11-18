@@ -11,18 +11,8 @@ using System.Threading.Tasks;
 
 namespace API.App.Start
 {
-    public class Startup
+    public static class Startup
     {
-        #region Constructor method
-        public Startup()
-            : base()
-        {
-
-        }
-        #endregion
-
-
-
         #region Init
         public static WebApplication InitApp(string[] args)
         {
