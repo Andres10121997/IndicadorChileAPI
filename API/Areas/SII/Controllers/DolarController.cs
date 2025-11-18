@@ -14,8 +14,15 @@ namespace API.Areas.SII.Controllers
 {
     [
         ApiController,
-        Area(areaName: "SII"),
-        Route(template: "api/[area]/[controller]")
+        Area(
+            areaName: "SII"
+        ),
+        Produces(
+            contentType: ContentType
+        ),
+        Route(
+            template: "api/[area]/[controller]"
+        )
     ]
     public class DolarController : BaseController, IStatistics
     {
@@ -41,9 +48,6 @@ namespace API.Areas.SII.Controllers
         [
             HttpGet(
                 template: "[action]"
-            ),
-            Produces(
-                contentType: ContentType
             ),
             RequireHttps
         ]
@@ -99,9 +103,6 @@ namespace API.Areas.SII.Controllers
         [
             HttpGet(
                 template: "[action]"
-            ),
-            Produces(
-                contentType: ContentType
             ),
             RequireHttps
         ]
