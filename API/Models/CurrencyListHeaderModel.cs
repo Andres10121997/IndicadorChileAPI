@@ -156,7 +156,9 @@ namespace API.Models
             MinLength(
                 length: 1
             ),
-            Required
+            Required(
+                AllowEmptyStrings = false
+            )
         ]
         public required CurrencyModel[] Currencies { get; init; }
         #endregion

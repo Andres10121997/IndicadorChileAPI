@@ -79,7 +79,7 @@ namespace API.Models
 
         [
             DataType(
-                DataType.Currency
+                dataType: DataType.Currency
             ),
             Display(
                 AutoGenerateField = false,
