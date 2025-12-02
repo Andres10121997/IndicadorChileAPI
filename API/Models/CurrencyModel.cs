@@ -21,6 +21,9 @@ namespace API.Models
                 Prompt = "",
                 ShortName = "ID"
             ),
+            Editable(
+                allowEdit: false
+            ),
             Key,
             Required(
                 AllowEmptyStrings = false
@@ -42,6 +45,9 @@ namespace API.Models
                 Prompt = "Ingrese aquí la fecha.",
                 ShortName = "Fecha"
             ),
+            Editable(
+                allowEdit: false
+            ),
             Required(
                 AllowEmptyStrings = false
             )
@@ -62,6 +68,9 @@ namespace API.Models
                 Prompt = "Ingrese aquí el nombre del día de la semana.",
                 ShortName = "Día de la semana"
             ),
+            Editable(
+                allowEdit: false
+            ),
             Required(
                 AllowEmptyStrings = false
             )
@@ -81,6 +90,9 @@ namespace API.Models
                 Order = 4,
                 Prompt = "Ingrese aquí el valor de la divisa.",
                 ShortName = "Divisa"
+            ),
+            Editable(
+                allowEdit: false
             ),
             Required(
                 AllowEmptyStrings = false

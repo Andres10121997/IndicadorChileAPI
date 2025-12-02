@@ -21,6 +21,9 @@ namespace API.Models
                 Prompt = "Ingrese aquí el año.",
                 ShortName = "Año"
             ),
+            Editable(
+                allowEdit: true
+            ),
             Required(
                 AllowEmptyStrings = false
             ),
@@ -62,6 +65,9 @@ namespace API.Models
                 Order = 2,
                 Prompt = "Ingrese aquí el mes.",
                 ShortName = "Mes"
+            ),
+            Editable(
+                allowEdit: true
             ),
             Range(
                 minimum: 1,

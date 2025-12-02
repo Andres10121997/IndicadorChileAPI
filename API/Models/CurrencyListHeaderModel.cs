@@ -21,6 +21,9 @@ namespace API.Models
                 Prompt = "",
                 ShortName = "Fecha consulta"
             ),
+            Editable(
+                allowEdit: false
+            ),
             Required(
                 AllowEmptyStrings = false
             )
@@ -40,6 +43,9 @@ namespace API.Models
                 Order = 2,
                 Prompt = "",
                 ShortName = "Hora consulta"
+            ),
+            Editable(
+                allowEdit: false
             ),
             Required(
                 AllowEmptyStrings = false
@@ -61,6 +67,9 @@ namespace API.Models
                 Prompt = "Ingrese aquí el año.",
                 ShortName = "Año"
             ),
+            Editable(
+                allowEdit: false
+            ),
             Required(
                 AllowEmptyStrings = false
             )
@@ -80,6 +89,9 @@ namespace API.Models
                 Order = 4,
                 Prompt = "",
                 ShortName = "Mes"
+            ),
+            Editable(
+                allowEdit: false
             ),
             MaxLength(
                 length: 10
@@ -126,6 +138,9 @@ namespace API.Models
                 Order = 5,
                 Prompt = "",
                 ShortName = "Divisas"
+            ),
+            Editable(
+                allowEdit: false
             ),
             MinLength(
                 length: 1
