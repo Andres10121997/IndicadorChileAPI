@@ -8,7 +8,6 @@ namespace API.Models
     {
         #region Property
         [
-            Key,
             DataType(
                 dataType: DataType.Custom
             ),
@@ -22,6 +21,7 @@ namespace API.Models
                 Prompt = "",
                 ShortName = "ID"
             ),
+            Key,
             Required(
                 AllowEmptyStrings = false
             )
