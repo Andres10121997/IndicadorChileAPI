@@ -8,9 +8,6 @@ namespace API.Models
     {
         #region Property
         [
-            DataType(
-                dataType: DataType.Currency
-            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
@@ -29,7 +26,7 @@ namespace API.Models
             ),
             Range(
                 minimum: 2013,
-                maximum: int.MaxValue
+                maximum: ushort.MaxValue
             )
         ]
         public required ushort Year

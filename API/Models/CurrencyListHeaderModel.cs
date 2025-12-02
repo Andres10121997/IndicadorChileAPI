@@ -28,7 +28,21 @@ namespace API.Models
                 AllowEmptyStrings = false
             )
         ]
-        public required DateOnly ConsultationDate { get; init; }
+        public required DateOnly ConsultationDate
+        {
+            get => field;
+            init
+            {
+                #region Exception
+                ArgumentOutOfRangeException.ThrowIfGreaterThan<DateOnly>(
+                    value: value,
+                    other: DateOnly.FromDateTime(dateTime: DateTime.Now)
+                );
+                #endregion
+
+                field = value;
+            }
+        }
 
         [
             DataType(
@@ -54,9 +68,6 @@ namespace API.Models
         public required TimeOnly ConsultationTime { get; init; }
 
         [
-            DataType(
-                dataType: DataType.Currency
-            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
