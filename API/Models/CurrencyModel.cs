@@ -9,7 +9,8 @@ namespace API.Models
         #region Property
         [
             DataType(
-                dataType: DataType.Custom
+                dataType: DataType.Custom,
+                ErrorMessageResourceType = typeof(Guid)
             ),
             Display(
                 AutoGenerateField = false,
@@ -26,14 +27,16 @@ namespace API.Models
             ),
             Key,
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(Guid)
             )
         ]
         public required Guid ID { get; init; }
 
         [
             DataType(
-                dataType: DataType.Date
+                dataType: DataType.Date,
+                ErrorMessageResourceType = typeof(DateOnly)
             ),
             Display(
                 AutoGenerateField = false,
@@ -49,14 +52,16 @@ namespace API.Models
                 allowEdit: false
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(DateOnly)
             )
         ]
         public required DateOnly Date { get; init; }
 
         [
             DataType(
-                dataType: DataType.Text
+                dataType: DataType.Text,
+                ErrorMessageResourceType = typeof(string)
             ),
             Display(
                 AutoGenerateField = false,
@@ -72,14 +77,16 @@ namespace API.Models
                 allowEdit: false
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(string)
             )
         ]
         public required string WeekdayName { get; init; }
 
         [
             DataType(
-                dataType: DataType.Currency
+                dataType: DataType.Currency,
+                ErrorMessageResourceType = typeof(float)
             ),
             Display(
                 AutoGenerateField = false,
@@ -95,11 +102,13 @@ namespace API.Models
                 allowEdit: false
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(float)
             ),
             Range(
                 minimum: 0,
-                maximum: float.MaxValue
+                maximum: float.MaxValue,
+                ErrorMessageResourceType = typeof(float)
             )
         ]
         public required float Currency { get; init; }

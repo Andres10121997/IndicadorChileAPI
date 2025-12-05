@@ -9,7 +9,8 @@ namespace API.Models
         #region Property
         [
             DataType(
-                dataType: DataType.Date
+                dataType: DataType.Date,
+                ErrorMessageResourceType = typeof(DateOnly)
             ),
             Display(
                 AutoGenerateField = false,
@@ -25,7 +26,8 @@ namespace API.Models
                 allowEdit: false
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(DateOnly)
             )
         ]
         public required DateOnly ConsultationDate
@@ -46,7 +48,8 @@ namespace API.Models
 
         [
             DataType(
-                dataType: DataType.Time
+                dataType: DataType.Time,
+                ErrorMessageResourceType = typeof(TimeOnly)
             ),
             Display(
                 AutoGenerateField = false,
@@ -62,7 +65,8 @@ namespace API.Models
                 allowEdit: false
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(TimeOnly)
             )
         ]
         public required TimeOnly ConsultationTime { get; init; }
@@ -82,14 +86,16 @@ namespace API.Models
                 allowEdit: false
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(ushort)
             )
         ]
         public required ushort Year { get; init; }
 
         [
             DataType(
-                dataType: DataType.Text
+                dataType: DataType.Text,
+                ErrorMessageResourceType = typeof(string)
             ),
             Display(
                 AutoGenerateField = false,
@@ -105,14 +111,17 @@ namespace API.Models
                 allowEdit: false
             ),
             MaxLength(
-                length: 10
+                length: 10,
+                ErrorMessageResourceType = typeof(string)
             ),
             MinLength(
-                length: 5
+                length: 5,
+                ErrorMessageResourceType = typeof(string)
             ),
             StringLength(
                 maximumLength: 10,
-                MinimumLength = 5
+                MinimumLength = 5,
+                ErrorMessageResourceType = typeof(string)
             )
         ]
         public string? MonthName
@@ -154,10 +163,12 @@ namespace API.Models
                 allowEdit: false
             ),
             MinLength(
-                length: 1
+                length: 1,
+                ErrorMessageResourceType = typeof(CurrencyModel[])
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(CurrencyModel[])
             )
         ]
         public required CurrencyModel[] Currencies { get; init; }
