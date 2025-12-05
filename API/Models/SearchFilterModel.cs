@@ -42,6 +42,10 @@ namespace API.Models
                 #endregion
 
                 #region Exception
+                ArgumentOutOfRangeException.ThrowIfLessThan<int>(
+                    value: value,
+                    other: 2013
+                );
                 ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
                     value: value,
                     other: Date.Year
