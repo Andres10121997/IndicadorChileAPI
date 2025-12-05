@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 namespace API.Controllers
 {
     [
+        AutoValidateAntiforgeryToken,
         Produces(
             contentType: "application/json"
         ),

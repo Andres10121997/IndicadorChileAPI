@@ -16,6 +16,7 @@
     <NeutralLanguage>es-CL</NeutralLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Andrés Felipe Sagredo Bromberg</Authors>
+    <StartupObject>API.App.Start.Program</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

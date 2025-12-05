@@ -1,6 +1,6 @@
-@IndicadorChileAPI_HostAddress = http://localhost:5182
+@IndicadorChileAPI_HostAddress = http://localhost:60848
 
-GET {{IndicadorChileAPI_HostAddress}}/weatherforecast/
+GET {{IndicadorChileAPI_HostAddress}}/api/SII/Dolar/GetDataList?Year=2025&Month=11
 Accept: application/json
 
 ###

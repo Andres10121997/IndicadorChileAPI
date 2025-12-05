@@ -19,7 +19,7 @@ namespace API.Models
                 GroupName = nameof(CurrencyListHeaderModel),
                 Name = "Fecha de la consulta",
                 Order = 1,
-                Prompt = "",
+                Prompt = "Ingrese aquí la fecha de la consulta.",
                 ShortName = "Fecha consulta"
             ),
             Editable(
@@ -56,9 +56,9 @@ namespace API.Models
                 AutoGenerateFilter = false,
                 Description = "",
                 GroupName = nameof(CurrencyListHeaderModel),
-                Name = "Hora de la consulta consulta",
+                Name = "Hora de la consulta",
                 Order = 2,
-                Prompt = "",
+                Prompt = "Ingrese aquí la hora de la consulta",
                 ShortName = "Hora consulta"
             ),
             Editable(
@@ -104,7 +104,7 @@ namespace API.Models
                 GroupName = nameof(CurrencyListHeaderModel),
                 Name = "Nombre del mes",
                 Order = 4,
-                Prompt = "",
+                Prompt = "Ingrese aquí el nombre del mes.",
                 ShortName = "Mes"
             ),
             Editable(

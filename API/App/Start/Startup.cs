@@ -38,7 +38,7 @@ namespace API.App.Start
         #region Configure
         private static void ConfigureServices(WebApplicationBuilder Builder)
         {
-            Builder.Services.AddControllers()
+            Builder.Services.AddMvc()
                 .AddJsonOptions(options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(item: new JsonStringEnumConverter());
@@ -100,6 +100,7 @@ namespace API.App.Start
 
             App.UseRateLimiter();
 
+            // Forces redirection to HTTPS
             App.UseHttpsRedirection();
 
             App.UseAuthorization();
