@@ -45,8 +45,7 @@ namespace API.Areas.SII.Controllers
         [
             HttpGet(
                 template: "[action]"
-            ),
-            RequireHttps
+            )
         ]
         public async Task<ActionResult<CurrencyListHeaderModel>> GetDataListAsync([FromQuery] SearchFilterModel SearchFilter)
         {
@@ -100,8 +99,7 @@ namespace API.Areas.SII.Controllers
         [
             HttpGet(
                 template: "[action]"
-            ),
-            RequireHttps
+            )
         ]
         public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
                                                                   [FromQuery] SearchFilterModel SearchFilter)

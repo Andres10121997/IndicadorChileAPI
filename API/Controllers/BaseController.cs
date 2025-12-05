@@ -5,7 +5,10 @@ namespace API.Controllers
 {
     [
         Produces(
-            contentType: ContentType
+            contentType: "application/json"
+        ),
+        RequireHttps(
+            Permanent = true
         )
     ]
     public class BaseController : ControllerBase
@@ -13,10 +16,6 @@ namespace API.Controllers
         #region Readonly
         private readonly string url;
         private readonly ILogger<BaseController> Logger;
-        #endregion
-
-        #region Constant
-        protected const string ContentType = "application/json";
         #endregion
 
 
