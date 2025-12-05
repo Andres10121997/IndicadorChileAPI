@@ -16,17 +16,20 @@ namespace API.Models
                 Name = "Año",
                 Order = 1,
                 Prompt = "Ingrese aquí el año.",
+                // ResourceType = typeof(ushort),
                 ShortName = "Año"
             ),
             Editable(
                 allowEdit: true
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(ushort)
             ),
             Range(
                 minimum: 2013,
-                maximum: ushort.MaxValue
+                maximum: ushort.MaxValue,
+                ErrorMessageResourceType = typeof(ushort)
             )
         ]
         public required ushort Year
@@ -50,9 +53,6 @@ namespace API.Models
         }
 
         [
-            DataType(
-                dataType: DataType.Currency
-            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
@@ -61,6 +61,7 @@ namespace API.Models
                 Name = "Mes",
                 Order = 2,
                 Prompt = "Ingrese aquí el mes.",
+                // ResourceType = typeof(byte?),
                 ShortName = "Mes"
             ),
             Editable(
@@ -69,7 +70,7 @@ namespace API.Models
             Range(
                 minimum: 1,
                 maximum: 12,
-                ErrorMessage = "El mes debe estar entre 1 y 12."
+                ErrorMessageResourceType = typeof(byte?)
             )
         ]
         public byte? Month { get; init; }
