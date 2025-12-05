@@ -17,9 +17,6 @@ namespace API.Areas.SII.Controllers
         Area(
             areaName: "SII"
         ),
-        Produces(
-            contentType: ContentType
-        ),
         Route(
             template: "api/[area]/[controller]"
         )
@@ -107,7 +104,7 @@ namespace API.Areas.SII.Controllers
             RequireHttps
         ]
         public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
-                                                                   [FromQuery] SearchFilterModel SearchFilter)
+                                                                  [FromQuery] SearchFilterModel SearchFilter)
         {
             try
             {

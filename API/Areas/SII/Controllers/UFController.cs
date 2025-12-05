@@ -17,9 +17,6 @@ namespace API.Areas.SII.Controllers
         Area(
             areaName: "SII"
         ),
-        Produces(
-            contentType: ContentType
-        ),
         Route(
             template: "api/[area]/[controller]"
         )

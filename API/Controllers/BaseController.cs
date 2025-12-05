@@ -3,6 +3,11 @@ using Microsoft.Extensions.Logging;
 
 namespace API.Controllers
 {
+    [
+        Produces(
+            contentType: ContentType
+        )
+    ]
     public class BaseController : ControllerBase
     {
         #region Readonly
