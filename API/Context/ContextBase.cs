@@ -66,6 +66,7 @@ namespace API.Context
             get => this.currency;
             set
             {
+                #region Exception
                 ArgumentOutOfRangeException.ThrowIfEqual<float>(
                     value: value,
                     other: float.NaN
@@ -81,6 +82,7 @@ namespace API.Context
                 ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(
                     value: value
                 );
+                #endregion
 
                 this.currency = value;
             }
