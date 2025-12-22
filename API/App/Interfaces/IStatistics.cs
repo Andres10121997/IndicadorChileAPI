@@ -6,7 +6,7 @@ namespace API.App.Interfaces
 {
     public interface IStatistics
     {
-        public enum StatisticsEnum
+        public enum StatisticsEnum : byte
         {
             Count,
             Minimum,

@@ -25,7 +25,7 @@ namespace API.App.Start
 
             app = builder.Build();
 
-            Configure(app);
+            Configure(App: app);
 
             return app;
         }
@@ -39,7 +39,7 @@ namespace API.App.Start
         private static void ConfigureServices(WebApplicationBuilder Builder)
         {
             Builder.Services.AddMvc()
-                .AddJsonOptions(options =>
+                .AddJsonOptions(configure: options =>
                 {
                     options.JsonSerializerOptions.Converters.Add(item: new JsonStringEnumConverter());
                 });
