@@ -52,9 +52,9 @@ namespace API.Areas.SII.Controllers
             try
             {
                 return this.Ok(
-                    value: await CurrencyInfo.DataListAsync(
-                        SearchFilter: SearchFilter,
-                        Url: this.URL
+                    value: await CurrencyInfo.CurrencyHeaderAsync(
+                        Url: this.URL,
+                        SearchFilter: SearchFilter
                     )
                 );
             }
@@ -82,7 +82,7 @@ namespace API.Areas.SII.Controllers
         {
             try
             {
-                if (Utils.MathematicalOperations(CurrencyList: await CurrencyInfo.GetValuesAsync(SearchFilter: SearchFilter, this.URL)).TryGetValue(key: Statistics, value: out float Value))
+                if (Utils.MathematicalOperations(CurrencyList: await CurrencyInfo.GetCurrenciesAsync(Url: this.URL, SearchFilter: SearchFilter)).TryGetValue(key: Statistics, value: out float Value))
                 {
                     return this.Ok(value: Value);
                 }
