@@ -173,7 +173,9 @@ namespace API.Context
                         .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
                         .FirstOrDefault<CurrencyModel>();
 
+            #region Exception
             ArgumentNullException.ThrowIfNull(argument: Value);
+            #endregion
 
             return Value;
         }

@@ -51,7 +51,12 @@ namespace API.Areas.SII.Controllers
         {
             try
             {
-                return this.Ok(value: await CurrencyInfo.DataListAsync(SearchFilter: SearchFilter, Url: this.URL));
+                return this.Ok(
+                    value: await CurrencyInfo.DataListAsync(
+                        SearchFilter: SearchFilter,
+                        Url: this.URL
+                    )
+                );
             }
             catch (Exception ex)
             {
