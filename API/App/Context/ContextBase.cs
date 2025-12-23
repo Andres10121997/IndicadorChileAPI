@@ -1,11 +1,11 @@
-﻿using API.Context.Tool;
+﻿using API.App.Context.Tool;
 using API.Models;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace API.Context
+namespace API.App.Context
 {
     public class ContextBase
     {
