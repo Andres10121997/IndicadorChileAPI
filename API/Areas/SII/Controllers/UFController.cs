@@ -1,6 +1,6 @@
 ﻿using API.App.Interfaces;
+using API.Areas.SII.Information;
 using API.Controllers;
-using API.Information;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
