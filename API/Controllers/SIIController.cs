@@ -22,9 +22,8 @@ namespace API.Controllers
 
         #region Constructor Method
         public SIIController(ILogger<SIIController> Logger)
-            : base(url: string.Empty,
-                   Logger: Logger,
-                   dicUrl: new Dictionary<CurrencyTypeEnum, string>
+            : base(Logger: Logger,
+                   URLs: new Dictionary<CurrencyTypeEnum, string>
                    {
                        {
                            CurrencyTypeEnum.USD,
@@ -54,7 +53,7 @@ namespace API.Controllers
             {
                 return this.Ok(
                     value: await CurrencyInfo.CurrencyHeaderAsync(
-                        Url: this.DicUrl.GetValueOrDefault(key: SearchFilter.CurrencyType) ?? throw new ArgumentNullException(paramName: nameof(this.DicUrl)),
+                        Url: this.URLs.GetValueOrDefault(key: SearchFilter.CurrencyType) ?? throw new ArgumentNullException(paramName: nameof(this.URLs)),
                         SearchFilter
                     )
                 );

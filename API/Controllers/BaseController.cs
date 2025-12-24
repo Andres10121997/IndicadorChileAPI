@@ -16,9 +16,8 @@ namespace API.Controllers
     public class BaseController : ControllerBase
     {
         #region Readonly
-        private readonly string url;
         private readonly ILogger<BaseController> Logger;
-        private readonly Dictionary<CurrencyTypeEnum, string> dicUrl;
+        private readonly Dictionary<CurrencyTypeEnum, string> urls;
         #endregion
 
 
@@ -34,15 +33,13 @@ namespace API.Controllers
 
 
         #region Constructor Method
-        public BaseController(string url,
-                              ILogger<BaseController> Logger,
-                              Dictionary<CurrencyTypeEnum, string> dicUrl)
+        public BaseController(ILogger<BaseController> Logger,
+                              Dictionary<CurrencyTypeEnum, string> URLs)
             : base()
         {
             #region Readonly
-            this.url = url;
             this.Logger = Logger;
-            this.dicUrl = dicUrl;
+            this.urls = URLs;
             #endregion
         }
         #endregion
@@ -50,14 +47,9 @@ namespace API.Controllers
 
 
         #region Property
-        public string URL
+        public Dictionary<CurrencyTypeEnum, string> URLs
         {
-            get => url;
-        }
-
-        public Dictionary<CurrencyTypeEnum, string> DicUrl
-        {
-            get => dicUrl;
+            get => urls;
         }
         #endregion
     }
