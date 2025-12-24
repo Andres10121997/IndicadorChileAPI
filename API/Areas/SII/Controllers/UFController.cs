@@ -1,14 +1,11 @@
-﻿using API.App.Interfaces;
-using API.Areas.SII.Information;
+﻿using API.Areas.SII.Information;
 using API.Controllers;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
-using static API.App.Interfaces.IStatistics;
 
 namespace API.Areas.SII.Controllers
 {
@@ -21,7 +18,7 @@ namespace API.Areas.SII.Controllers
             template: "api/[area]/[controller]"
         )
     ]
-    public class UFController : BaseController, IStatistics
+    public class UFController : BaseController
     {
         #region Interfaces
         private readonly ILogger<UFController> Logger;
@@ -57,39 +54,6 @@ namespace API.Areas.SII.Controllers
                         SearchFilter: SearchFilter
                     )
                 );
-            }
-            catch (Exception ex)
-            {
-                Utils.LoggerError(
-                    Logger: this.Logger,
-                    ex: ex,
-                    OType: this.GetType()
-                );
-
-                return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
-            }
-        }
-        #endregion
-
-        #region Statistics
-        [
-            HttpGet(
-                template: "[action]"
-            )
-        ]
-        public async Task<ActionResult<float>> GetStatisticsAsync([Required] StatisticsEnum Statistics,
-                                                                  [FromQuery] SearchFilterModel SearchFilter)
-        {
-            try
-            {
-                if (Utils.MathematicalOperations(CurrencyList: await CurrencyInfo.GetCurrenciesAsync(Url: this.URL, SearchFilter: SearchFilter)).TryGetValue(key: Statistics, value: out float Value))
-                {
-                    return this.Ok(value: Value);
-                }
-                else
-                {
-                    return this.BadRequest();
-                }
             }
             catch (Exception ex)
             {
