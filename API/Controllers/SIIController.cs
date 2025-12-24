@@ -1,35 +1,40 @@
 ﻿using API.Areas.SII.Information;
-using API.Controllers;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace API.Areas.SII.Controllers
+namespace API.Controllers
 {
     [
         ApiController,
-        Area(
-            areaName: "SII"
-        ),
-        Route(
-            template: "api/[area]/[controller]"
-        )
+        Route("api/[controller]")
     ]
-    public class UFController : BaseController
+    public class SIIController : BaseController
     {
         #region Interfaces
-        private readonly ILogger<UFController> Logger;
+        private readonly ILogger<SIIController> Logger;
         #endregion
 
 
 
         #region Constructor Method
-        public UFController(ILogger<UFController> Logger)
-            : base(url: "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
-                   Logger: Logger)
+        public SIIController(ILogger<SIIController> Logger)
+            : base(url: string.Empty,
+                   Logger: Logger,
+                   dicUrl: new Dictionary<CurrencyTypeEnum, string>
+                   {
+                       {
+                           CurrencyTypeEnum.USD,
+                           "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm"
+                       },
+                       {
+                           CurrencyTypeEnum.UF,
+                           "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm"
+                       }
+                   })
         {
             this.Logger = Logger;
         }
@@ -38,7 +43,6 @@ namespace API.Areas.SII.Controllers
 
 
         #region HttpGet
-        #region Data
         [
             HttpGet(
                 template: "[action]"
@@ -50,8 +54,8 @@ namespace API.Areas.SII.Controllers
             {
                 return this.Ok(
                     value: await CurrencyInfo.CurrencyHeaderAsync(
-                        Url: this.URL,
-                        SearchFilter: SearchFilter
+                        Url: this.DicUrl.GetValueOrDefault(key: SearchFilter.CurrencyType) ?? throw new ArgumentNullException(paramName: nameof(this.DicUrl)),
+                        SearchFilter
                     )
                 );
             }
@@ -63,10 +67,9 @@ namespace API.Areas.SII.Controllers
                     OType: this.GetType()
                 );
 
-                return this.StatusCode(statusCode: (int)HttpStatusCode.InternalServerError);
+                throw;
             }
         }
-        #endregion
         #endregion
     }
 }

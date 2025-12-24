@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -12,7 +13,7 @@ namespace API.Models
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "Parámetro para buscar el año",
-                GroupName = "",
+                GroupName = nameof(SearchFilterModel),
                 Name = "Año",
                 Order = 1,
                 Prompt = "Ingrese aquí el año.",
@@ -61,7 +62,7 @@ namespace API.Models
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "Parámetro para buscar el mes",
-                GroupName = "",
+                GroupName = nameof(SearchFilterModel),
                 Name = "Mes",
                 Order = 2,
                 Prompt = "Ingrese aquí el mes.",
@@ -78,6 +79,26 @@ namespace API.Models
             )
         ]
         public byte? Month { get; init; }
+
+        [
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(SearchFilterModel),
+                Name = "Tipo de divisa",
+                Order = 3,
+                Prompt = "",
+                ShortName = "Tipo de divisa"
+            ),
+            Editable(
+                allowEdit: true
+            ),
+            Required(
+                AllowEmptyStrings = false
+            )
+        ]
+        public required BaseController.CurrencyTypeEnum CurrencyType { get; init; }
         #endregion
 
 
