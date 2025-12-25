@@ -1,4 +1,4 @@
-﻿using API.Areas.SII.Information;
+﻿using API.Information;
 using API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
