@@ -107,12 +107,6 @@ namespace API.App.Start
 
             App.MapControllers().RequireRateLimiting(policyName: "Limiter"); ;
 
-            App.MapAreaControllerRoute(
-                name: "MyAreaSII",
-                areaName: "SII",
-                pattern: "SII/{controller=Home}/{action=Index}/{id?}"
-            );
-
             App.MapControllers();
         }
         #endregion
