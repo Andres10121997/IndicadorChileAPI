@@ -53,6 +53,8 @@ namespace API.Controllers
             {
                 if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, out var Value))
                 {
+                    ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Value);
+                    
                     return this.Ok(
                         value: await CurrencyInfo.CurrencyHeaderAsync(
                             Url: Value,

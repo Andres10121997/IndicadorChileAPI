@@ -12,10 +12,30 @@ namespace API.Models
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(SearchFilterModel),
+                Name = "Tipo de divisa",
+                Order = 1,
+                Prompt = "",
+                ShortName = "Tipo de divisa"
+            ),
+            Editable(
+                allowEdit: true
+            ),
+            Required(
+                AllowEmptyStrings = false
+            )
+        ]
+        public required BaseController.CurrencyTypeEnum CurrencyType { get; init; }
+
+        [
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
                 Description = "Parámetro para buscar el año",
                 GroupName = nameof(SearchFilterModel),
                 Name = "Año",
-                Order = 1,
+                Order = 2,
                 Prompt = "Ingrese aquí el año.",
                 // ResourceType = typeof(ushort),
                 ShortName = "Año"
@@ -64,7 +84,7 @@ namespace API.Models
                 Description = "Parámetro para buscar el mes",
                 GroupName = nameof(SearchFilterModel),
                 Name = "Mes",
-                Order = 2,
+                Order = 3,
                 Prompt = "Ingrese aquí el mes.",
                 // ResourceType = typeof(byte?),
                 ShortName = "Mes"
@@ -79,26 +99,6 @@ namespace API.Models
             )
         ]
         public byte? Month { get; init; }
-
-        [
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                GroupName = nameof(SearchFilterModel),
-                Name = "Tipo de divisa",
-                Order = 3,
-                Prompt = "",
-                ShortName = "Tipo de divisa"
-            ),
-            Editable(
-                allowEdit: true
-            ),
-            Required(
-                AllowEmptyStrings = false
-            )
-        ]
-        public required BaseController.CurrencyTypeEnum CurrencyType { get; init; }
         #endregion
 
 
