@@ -10,7 +10,9 @@ namespace API.Controllers
 {
     [
         ApiController,
-        Route("api/[controller]")
+        Route(
+            template:"api/[controller]"
+        )
     ]
     public class SIIController : BaseController
     {
@@ -53,8 +55,10 @@ namespace API.Controllers
             {
                 if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, out var Value))
                 {
+                    #region Exception
                     ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Value);
-                    
+                    #endregion
+
                     return this.Ok(
                         value: await CurrencyInfo.CurrencyHeaderAsync(
                             Url: Value,
