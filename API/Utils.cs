@@ -19,10 +19,20 @@ namespace API
         public static void MessageError(Exception ex,
                                         Type OType)
         {
+            #region Variables
+            DateTime Now = DateTime.Now;
+            DateOnly Date = DateOnly.FromDateTime(dateTime: Now);
+            TimeOnly Time = TimeOnly.FromDateTime(dateTime: Now);
+            #endregion
+
             Console.Error.WriteLine(value: "");
             Console.Error.WriteLine(value: "---");
             Console.Error.WriteLine(value: OType);
-            Console.Error.WriteLine(value: DateTime.Now);
+
+            // Fecha y Hora
+            Console.Error.WriteLine(value: Date);
+            Console.Error.WriteLine(value: Time);
+
             Console.Error.WriteLine(value: $"Stack Trace: {ex.StackTrace}");
             Console.Error.WriteLine(value: $"Message: {ex.Message}");
             Console.Error.WriteLine(value: ex);
@@ -39,10 +49,20 @@ namespace API
         public static void MessageOut(string Message,
                                       Type? OType)
         {
+            #region Variables
+            DateTime Now = DateTime.Now;
+            DateOnly Date = DateOnly.FromDateTime(dateTime: Now);
+            TimeOnly Time = TimeOnly.FromDateTime(dateTime: Now);
+            #endregion
+
             Console.Out.WriteLine(value: "");
             Console.Out.WriteLine(value: "---");
             Console.Out.WriteLine(value: OType);
-            Console.Out.WriteLine(value: DateTime.Now);
+
+            // Fecha y Hora
+            Console.Out.WriteLine(value: Date);
+            Console.Out.WriteLine(value: Time);
+
             Console.Out.WriteLine(value: $"Message: {Message}");
             Console.Out.WriteLine(value: "---");
             Console.Out.WriteLine(value: "");
