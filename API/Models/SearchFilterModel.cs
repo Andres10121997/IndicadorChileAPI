@@ -37,7 +37,6 @@ namespace API.Models
                 Name = "Año",
                 Order = 2,
                 Prompt = "Ingrese aquí el año.",
-                // ResourceType = typeof(ushort),
                 ShortName = "Año"
             ),
             Editable(
@@ -86,7 +85,6 @@ namespace API.Models
                 Name = "Mes",
                 Order = 3,
                 Prompt = "Ingrese aquí el mes.",
-                // ResourceType = typeof(byte?),
                 ShortName = "Mes"
             ),
             Editable(
