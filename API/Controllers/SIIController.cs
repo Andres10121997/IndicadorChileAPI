@@ -51,12 +51,19 @@ namespace API.Controllers
         {
             try
             {
-                return this.Ok(
-                    value: await CurrencyInfo.CurrencyHeaderAsync(
-                        Url: this.URLs.GetValueOrDefault(key: SearchFilter.CurrencyType) ?? throw new ArgumentNullException(paramName: nameof(this.URLs)),
-                        SearchFilter
-                    )
-                );
+                if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, out var Value))
+                {
+                    return this.Ok(
+                        value: await CurrencyInfo.CurrencyHeaderAsync(
+                            Url: Value,
+                            SearchFilter
+                        )
+                    );
+                }
+                else
+                {
+                    return this.BadRequest(error: SearchFilter);
+                }
             }
             catch (Exception ex)
             {
