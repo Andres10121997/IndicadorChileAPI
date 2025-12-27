@@ -20,8 +20,6 @@ namespace API.Controllers
         private readonly Dictionary<CurrencyTypeEnum, string> urls;
         #endregion
 
-
-
         #region enum
         public enum CurrencyTypeEnum
         {
