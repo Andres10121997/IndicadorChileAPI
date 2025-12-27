@@ -23,7 +23,8 @@ namespace API.Models
                 allowEdit: true
             ),
             Required(
-                AllowEmptyStrings = false
+                AllowEmptyStrings = false,
+                ErrorMessageResourceType = typeof(BaseController.CurrencyTypeEnum)
             )
         ]
         public required BaseController.CurrencyTypeEnum CurrencyType { get; init; }
