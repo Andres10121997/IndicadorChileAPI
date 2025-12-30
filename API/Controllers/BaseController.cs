@@ -20,8 +20,8 @@ namespace API.Controllers
         private readonly Dictionary<CurrencyTypeEnum, string> urls;
         #endregion
 
-        #region enum
-        public enum CurrencyTypeEnum
+        #region Enum
+        public enum CurrencyTypeEnum : byte
         {
             USD,
             UF
@@ -45,7 +45,7 @@ namespace API.Controllers
 
 
         #region Property
-        public Dictionary<CurrencyTypeEnum, string> URLs
+        protected Dictionary<CurrencyTypeEnum, string> URLs
         {
             get => urls;
         }
