@@ -3,7 +3,7 @@ using API.Models;
 using System;
 using System.Threading.Tasks;
 
-namespace API.Information
+namespace API.App.Information
 {
     public static class CurrencyInfo
     {
