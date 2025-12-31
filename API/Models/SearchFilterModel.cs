@@ -97,7 +97,30 @@ namespace API.Models
                 ErrorMessageResourceType = typeof(byte?)
             )
         ]
-        public byte? Month { get; init; }
+        public byte? Month
+        {
+            get;
+            init {
+                #region Variables
+                DateOnly Date;
+                #endregion
+
+                Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+
+                // Utils.MessageOut($"{nameof(SearchFilterModel)} | {nameof(Month)} | {nameof(Year)} = {Year}", null);
+
+                if (value > Date.Month
+                    &&
+                    (this.Year == Date.Year || this.Year.Equals(obj: Date.Year)))
+                {
+                    throw new Exception(
+                        message: $"Las propiedades {nameof(this.Month)} y {nameof(this.Year)} en conjunto deben ser menor o igual a {Date}"
+                    );
+                }
+                
+                field = value;
+            }
+        }
         #endregion
 
 
