@@ -20,6 +20,7 @@ namespace API.App.Information
                                                                               SearchFilterModel SearchFilter)
         {
             #region Variables
+            string? MonthName;
             DateTime Now;
             #endregion
 
@@ -27,6 +28,15 @@ namespace API.App.Information
             CurrencyListHeaderModel CurrencyList;
             #endregion
 
+            MonthName = SearchFilter.Month.HasValue
+                        ?
+                        new DateOnly(
+                            year: SearchFilter.Year,
+                            month: Convert.ToInt32(value: SearchFilter.Month),
+                            day: 1
+                        ).ToString(format: "MMMM")
+                        :
+                        null;
             Now = DateTime.Now;
 
             CurrencyList = new CurrencyListHeaderModel()
@@ -34,8 +44,9 @@ namespace API.App.Information
                 ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                 ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                 Year = SearchFilter.Year,
-                MonthName = SearchFilter.Month.HasValue ? new DateOnly(year: SearchFilter.Year, month: Convert.ToInt32(value: SearchFilter.Month), day: 1).ToString(format: "MMMM") : null,
-                Currencies = await GetCurrenciesAsync(SearchFilter: SearchFilter, Url: Url)
+                MonthName = MonthName,
+                Currencies = await GetCurrenciesAsync(SearchFilter: SearchFilter,
+                                                      Url: Url)
             };
 
             return CurrencyList;
