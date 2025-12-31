@@ -37,6 +37,7 @@ namespace API.App.Information
                         ).ToString(format: "MMMM")
                         :
                         null;
+            
             Now = DateTime.Now;
 
             CurrencyList = new CurrencyListHeaderModel()
@@ -55,7 +56,9 @@ namespace API.App.Information
         public static async Task<CurrencyModel[]> GetCurrenciesAsync(string Url,
                                                                      SearchFilterModel SearchFilter)
         {
+            #region Objects
             ContextBase Context;
+            #endregion
 
             Context = new ContextBase(
                 Url: Url.Replace(

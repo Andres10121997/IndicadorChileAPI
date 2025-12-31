@@ -16,8 +16,10 @@ namespace API.App.Start
         #region Init
         public static WebApplication InitApp(string[] args)
         {
+            #region Objects
             WebApplicationBuilder builder;
             WebApplication app;
+            #endregion
 
             builder = WebApplication.CreateBuilder(args: args);
 
