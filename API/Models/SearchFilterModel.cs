@@ -100,7 +100,8 @@ namespace API.Models
         public byte? Month
         {
             get;
-            init {
+            init
+            {
                 #region Variables
                 DateOnly Date;
                 #endregion
@@ -108,12 +109,13 @@ namespace API.Models
                 Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
                 // Utils.MessageOut($"{nameof(SearchFilterModel)} | {nameof(Month)} | {nameof(Year)} = {Year}", null);
-
+                
                 if (value > Date.Month
                     &&
                     (this.Year == Date.Year || this.Year.Equals(obj: Date.Year)))
                 {
-                    throw new Exception(
+                    throw new ArgumentOutOfRangeException(
+                        paramName: nameof(Month),
                         message: $"Las propiedades {nameof(this.Month)} y {nameof(this.Year)} en conjunto deben ser menor o igual a {Date}"
                     );
                 }
