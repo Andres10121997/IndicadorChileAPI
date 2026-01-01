@@ -90,7 +90,21 @@ namespace API.Models
                 ErrorMessageResourceType = typeof(ushort)
             )
         ]
-        public required ushort Year { get; init; }
+        public required ushort Year
+        {
+            get => field;
+            init
+            {
+                #region Exception
+                ArgumentOutOfRangeException.ThrowIfGreaterThan(
+                    value: value,
+                    other: DateOnly.FromDateTime(dateTime: DateTime.Now).Year
+                );
+                #endregion
+
+                field = value;
+            }
+        }
 
         [
             DataType(
