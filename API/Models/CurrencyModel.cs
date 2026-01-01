@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Models
 {
-    public record CurrencyModel : IValidatableObject
+    public sealed record CurrencyModel : IValidatableObject
     {
         #region Property
         [
