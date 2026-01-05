@@ -68,7 +68,9 @@ namespace API.Controllers
                 }
                 else
                 {
-                    return this.BadRequest(error: SearchFilter);
+                    return this.BadRequest(
+                        error: SearchFilter
+                    );
                 }
             }
             catch (Exception ex)
