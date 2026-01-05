@@ -58,7 +58,7 @@ namespace API.Controllers
                     #region Exception
                     ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Value);
                     #endregion
-
+                    
                     return this.Ok(
                         value: await CurrencyInfo.CurrencyHeaderAsync(
                             Url: Value,

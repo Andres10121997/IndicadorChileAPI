@@ -16,6 +16,11 @@ namespace API.Controllers
     ]
     public class BaseController : ControllerBase
     {
+        #region Variables
+        private DateOnly date;
+        private TimeOnly time;
+        #endregion
+
         #region Readonly
         private readonly ILogger<BaseController> Logger;
         private readonly Dictionary<CurrencyTypeEnum, string> urls;
@@ -54,45 +59,58 @@ namespace API.Controllers
 
 
 
-        #region Looger
-        protected void LoogerInformation(string Message)
+        #region Logger
+        protected void LoggerInformation(string Message)
         {
             #region Variables
-            DateTime DateTimeNow = DateTime.Now;
+            DateTime Now = DateTime.Now;
             #endregion
+
+            this.date = DateOnly.FromDateTime(dateTime: Now);
+            this.time = TimeOnly.FromDateTime(dateTime: Now);
 
             this.Logger.LogInformation(
                 message: "---" +
                          "\n" +
 
-                         "Fecha y hora: {DateTimeNow}" +
+                         "Fecha: {date}" +
+                         "\n" +
+                         "Hora: {time}" +
+                         "\n" +
                          Message +
 
 
                          "\n" +
                          "---",
-                
-                DateTimeNow
+
+                this.date,  // {0}
+                this.time   // {1}
             );
         }
 
         protected void LoggerError(Exception ex)
         {
             #region Variables
-            DateTime DateTimeNow = DateTime.Now;
+            DateTime Now = DateTime.Now;
             #endregion
+
+            this.date = DateOnly.FromDateTime(dateTime: Now);
+            this.time = TimeOnly.FromDateTime(dateTime: Now);
 
             this.Logger.LogError(
                 exception: ex,
                 message: "---" +
                          "\n" +
 
-                         "Fecha y hora: {DateTimeNow}" +
+                         "Fecha: {date}" +
+                         "\n" +
+                         "Hora: {time}" +
 
                          "\n" +
                          "---",
 
-                DateTimeNow
+                this.date,  // {0}
+                this.time   // {1}
             );
         }
         #endregion
