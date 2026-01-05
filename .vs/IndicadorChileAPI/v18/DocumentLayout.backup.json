@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|API\\API.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\api\\controllers\\basecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|API\\API.csproj|solutionrelative:api\\controllers\\basecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|API\\API.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\api\\controllers\\siicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|API\\API.csproj|solutionrelative:api\\controllers\\siicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,14 +23,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BaseController.cs",
-              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\API\\Controllers\\BaseController.cs",
-              "RelativeDocumentMoniker": "API\\Controllers\\BaseController.cs",
-              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\API\\Controllers\\BaseController.cs",
-              "RelativeToolTip": "API\\Controllers\\BaseController.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAAwEIAAAAiAAAAAAAAAA==",
+              "Title": "SIIController.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\API\\Controllers\\SIIController.cs",
+              "RelativeDocumentMoniker": "API\\Controllers\\SIIController.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\API\\Controllers\\SIIController.cs",
+              "RelativeToolTip": "API\\Controllers\\SIIController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAAwC4AAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T19:27:29.176Z",
+              "WhenOpened": "2026-01-05T20:22:34.109Z",
               "EditorCaption": ""
             }
           ]

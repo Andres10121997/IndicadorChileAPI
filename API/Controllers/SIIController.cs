@@ -1,5 +1,6 @@
 ﻿using API.App.Information;
 using API.Models;
+using API.Models.Get;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

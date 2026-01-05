@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models
+namespace API.Models.Get
 {
     public sealed record SearchFilterModel : IValidatableObject
     {

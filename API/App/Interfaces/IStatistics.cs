@@ -1,4 +1,4 @@
-﻿using API.Models;
+﻿using API.Models.Get;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
