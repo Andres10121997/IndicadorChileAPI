@@ -51,10 +51,21 @@ namespace API.Controllers
 
 
         #region Property
+        #region Variables
         private DateOnly Date
         {
             get => this.date;
-            set => this.date = value;
+            set
+            {
+                ArgumentOutOfRangeException.ThrowIfGreaterThan<DateOnly>(
+                    value: value,
+                    other: DateOnly.FromDateTime(
+                        dateTime: DateTime.Now
+                    )
+                );
+                
+                this.date = value;
+            }
         }
 
         private TimeOnly Time
@@ -62,11 +73,14 @@ namespace API.Controllers
             get => this.time;
             set => this.time = value;
         }
-        
+        #endregion
+
+        #region Readonly
         protected Dictionary<CurrencyTypeEnum, string> URLs
         {
             get => urls;
         }
+        #endregion
         #endregion
 
 
