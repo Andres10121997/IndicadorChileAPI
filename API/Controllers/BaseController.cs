@@ -51,6 +51,18 @@ namespace API.Controllers
 
 
         #region Property
+        private DateOnly Date
+        {
+            get => this.date;
+            set => this.date = value;
+        }
+
+        private TimeOnly Time
+        {
+            get => this.time;
+            set => this.time = value;
+        }
+        
         protected Dictionary<CurrencyTypeEnum, string> URLs
         {
             get => urls;
@@ -66,16 +78,16 @@ namespace API.Controllers
             DateTime Now = DateTime.Now;
             #endregion
 
-            this.date = DateOnly.FromDateTime(dateTime: Now);
-            this.time = TimeOnly.FromDateTime(dateTime: Now);
+            this.Date = DateOnly.FromDateTime(dateTime: Now);
+            this.Time = TimeOnly.FromDateTime(dateTime: Now);
 
             this.Logger.LogInformation(
                 message: "---" +
                          "\n" +
 
-                         "Fecha: {date}" +
+                         "Fecha: {Date}" +
                          "\n" +
-                         "Hora: {time}" +
+                         "Hora: {Time}" +
                          "\n" +
                          Message +
 
@@ -83,8 +95,8 @@ namespace API.Controllers
                          "\n" +
                          "---",
 
-                this.date,  // {0}
-                this.time   // {1}
+                this.Date,  // {0}
+                this.Time   // {1}
             );
         }
 
@@ -94,23 +106,23 @@ namespace API.Controllers
             DateTime Now = DateTime.Now;
             #endregion
 
-            this.date = DateOnly.FromDateTime(dateTime: Now);
-            this.time = TimeOnly.FromDateTime(dateTime: Now);
+            this.Date = DateOnly.FromDateTime(dateTime: Now);
+            this.Time = TimeOnly.FromDateTime(dateTime: Now);
 
             this.Logger.LogError(
                 exception: ex,
                 message: "---" +
                          "\n" +
 
-                         "Fecha: {date}" +
+                         "Fecha: {Date}" +
                          "\n" +
-                         "Hora: {time}" +
+                         "Hora: {Time}" +
 
                          "\n" +
                          "---",
 
-                this.date,  // {0}
-                this.time   // {1}
+                this.Date,  // {0}
+                this.Time   // {1}
             );
         }
         #endregion
