@@ -75,10 +75,8 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                Utils.LoggerError(
-                    Logger: this.Logger,
-                    ex: ex,
-                    OType: this.GetType()
+                this.LoggerError(
+                    ex: ex
                 );
 
                 throw;

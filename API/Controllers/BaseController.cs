@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 
 namespace API.Controllers
@@ -50,5 +51,30 @@ namespace API.Controllers
             get => urls;
         }
         #endregion
+
+
+
+        protected void LoggerError(Exception ex)
+        {
+            #region Variables
+            DateTime Now = DateTime.Now;
+            DateOnly Date = DateOnly.FromDateTime(dateTime: Now);
+            TimeOnly Time = TimeOnly.FromDateTime(dateTime: Now);
+            #endregion
+
+            Logger.LogError(
+                exception: ex,
+                message: "---" +
+                         "\n" +
+
+                         "Fecha: {0} | Hora: {1}" +
+
+                         "\n" +
+                         "---",
+                
+                Date, // {0}
+                Time  // {1}
+            );
+        }
     }
 }

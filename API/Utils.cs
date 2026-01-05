@@ -98,30 +98,6 @@ namespace API
             Logger.LogInformation(message: Message);
             Logger.LogInformation(message: "---");
         }
-
-        internal static void LoggerError(ILogger Logger,
-                                         Type OType,
-                                         Exception ex)
-        {
-            #region Variables
-            DateTime Now = DateTime.Now;
-            DateOnly Date = DateOnly.FromDateTime(dateTime: Now);
-            TimeOnly Time = TimeOnly.FromDateTime(dateTime: Now);
-            #endregion
-
-            Logger.LogError(message: "---");
-            Logger.LogError(message: OType.ToString());
-
-            // Fecha y Hora
-            Logger.LogError(message: $"Fecha: {Date}");
-            Logger.LogError(message: $"Hora: {Time}");
-
-            // Excepción
-            Logger.LogError(message: $"Stack Trace: {ex.StackTrace}");
-            Logger.LogError(message: $"Message: {ex.Message}");
-            Logger.LogError(message: ex.ToString());
-            Logger.LogError(message: "---");
-        }
         #endregion
     }
 }
