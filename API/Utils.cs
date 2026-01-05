@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace API
@@ -72,31 +71,6 @@ namespace API
                                                  Type? OType)
         {
             await Task.Run(action: () => MessageOut(Message: Message, OType: OType));
-        }
-        #endregion
-
-
-
-        #region Logger
-        internal static void LoogerInformation(ILogger Logger,
-                                               Type OType,
-                                               string Message)
-        {
-            #region Variables
-            DateTime Now = DateTime.Now;
-            DateOnly Date = DateOnly.FromDateTime(dateTime: Now);
-            TimeOnly Time = TimeOnly.FromDateTime(dateTime: Now);
-            #endregion
-
-            Logger.LogInformation(message: "---");
-            Logger.LogInformation(message: OType.ToString());
-
-            // Fecha y Hora
-            Logger.LogInformation(message: $"Fecha: {Date}");
-            Logger.LogInformation(message: $"Hora: {Time}");
-
-            Logger.LogInformation(message: Message);
-            Logger.LogInformation(message: "---");
         }
         #endregion
     }

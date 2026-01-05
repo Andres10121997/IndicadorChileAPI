@@ -54,27 +54,47 @@ namespace API.Controllers
 
 
 
-        protected void LoggerError(Exception ex)
+        #region Looger
+        protected void LoogerInformation(string Message)
         {
             #region Variables
-            DateTime Now = DateTime.Now;
-            DateOnly Date = DateOnly.FromDateTime(dateTime: Now);
-            TimeOnly Time = TimeOnly.FromDateTime(dateTime: Now);
+            DateTime DateTimeNow = DateTime.Now;
             #endregion
 
-            Logger.LogError(
-                exception: ex,
+            this.Logger.LogInformation(
                 message: "---" +
                          "\n" +
 
-                         "Fecha: {0} | Hora: {1}" +
+                         "Fecha y hora: {DateTimeNow}" +
+                         Message +
+
 
                          "\n" +
                          "---",
                 
-                Date, // {0}
-                Time  // {1}
+                DateTimeNow
             );
         }
+
+        protected void LoggerError(Exception ex)
+        {
+            #region Variables
+            DateTime DateTimeNow = DateTime.Now;
+            #endregion
+
+            this.Logger.LogError(
+                exception: ex,
+                message: "---" +
+                         "\n" +
+
+                         "Fecha y hora: {DateTimeNow}" +
+
+                         "\n" +
+                         "---",
+
+                DateTimeNow
+            );
+        }
+        #endregion
     }
 }
