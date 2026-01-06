@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|API\\API.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\api\\controllers\\siicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|API\\API.csproj|solutionrelative:api\\controllers\\siicontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|API\\API.csproj|c:\\users\\andre\\onedrive\\escritorio\\proyecto\\indicadorchileapi\\api\\models\\get\\searchfiltermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CBFA08EA-AECE-205F-7B85-326FD0B81BAD}|API\\API.csproj|solutionrelative:api\\models\\get\\searchfiltermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,11 +18,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SearchFilterModel.cs",
+              "DocumentMoniker": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\API\\Models\\Get\\SearchFilterModel.cs",
+              "RelativeDocumentMoniker": "API\\Models\\Get\\SearchFilterModel.cs",
+              "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\API\\Models\\Get\\SearchFilterModel.cs",
+              "RelativeToolTip": "API\\Models\\Get\\SearchFilterModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGAAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-06T19:06:56.296Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -28,9 +45,9 @@
               "RelativeDocumentMoniker": "API\\Controllers\\SIIController.cs",
               "ToolTip": "C:\\Users\\andre\\OneDrive\\Escritorio\\Proyecto\\IndicadorChileAPI\\API\\Controllers\\SIIController.cs",
               "RelativeToolTip": "API\\Controllers\\SIIController.cs",
-              "ViewState": "AgIAABYAAAAAAAAAAAAAwC4AAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAADQAAABSAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-05T20:22:34.109Z",
+              "WhenOpened": "2026-01-06T19:00:29.652Z",
               "EditorCaption": ""
             }
           ]

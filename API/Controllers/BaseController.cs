@@ -57,13 +57,15 @@ namespace API.Controllers
             get => this.date;
             set
             {
+                #region Exception
                 ArgumentOutOfRangeException.ThrowIfGreaterThan<DateOnly>(
                     value: value,
                     other: DateOnly.FromDateTime(
                         dateTime: DateTime.Now
                     )
                 );
-                
+                #endregion
+
                 this.date = value;
             }
         }
