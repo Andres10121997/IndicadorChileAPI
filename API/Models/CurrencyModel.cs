@@ -19,7 +19,7 @@ namespace API.Models
                 GroupName = nameof(CurrencyModel),
                 Name = "Identificador",
                 Order = 1,
-                Prompt = "",
+                Prompt = "Ingrese el identificador único aquí.",
                 ShortName = "ID"
             ),
             Editable(

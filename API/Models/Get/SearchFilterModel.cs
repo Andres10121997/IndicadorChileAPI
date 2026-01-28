@@ -56,29 +56,7 @@ namespace API.Models.Get
                 ErrorMessageResourceType = typeof(ushort)
             )
         ]
-        public required ushort Year
-        {
-            get => field;
-            init
-            {
-                #region Variables
-                DateOnly Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
-                #endregion
-
-                #region Exception
-                ArgumentOutOfRangeException.ThrowIfLessThan<int>(
-                    value: value,
-                    other: 2013
-                );
-                ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
-                    value: value,
-                    other: Date.Year
-                );
-                #endregion
-
-                field = value;
-            }
-        }
+        public required ushort Year { get; init; }
 
         [
             Display(
@@ -101,32 +79,7 @@ namespace API.Models.Get
                 ErrorMessageResourceType = typeof(byte?)
             )
         ]
-        public byte? Month
-        {
-            get;
-            init
-            {
-                #region Variables
-                DateOnly Date;
-                #endregion
-
-                Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
-
-                // Utils.MessageOut($"{nameof(SearchFilterModel)} | {nameof(Month)} | {nameof(Year)} = {Year}", null);
-                
-                if (value > Date.Month
-                    &&
-                    (this.Year == Date.Year || this.Year.Equals(obj: Date.Year)))
-                {
-                    throw new ArgumentOutOfRangeException(
-                        paramName: nameof(Month),
-                        message: $"Las propiedades {nameof(this.Month)} y {nameof(this.Year)} en conjunto deben ser menor o igual a {Date}"
-                    );
-                }
-                
-                field = value;
-            }
-        }
+        public byte? Month { get; init; }
         #endregion
 
 
@@ -134,17 +87,28 @@ namespace API.Models.Get
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             #region Variables
-            DateOnly Date;
+            DateOnly Now;
             #endregion
 
-            Date = DateOnly.FromDateTime(dateTime: DateTime.Now);
+            Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
-            if (this.Month > Date.Month
-                &&
-                (this.Year == Date.Year || this.Year.Equals(obj: Date.Year)))
+            if (this.Year > Now.Year)
             {
                 yield return new ValidationResult(
-                    errorMessage: $"El mes y año no puede ser posterior a {Date.ToString(format: "MMMM-yyyy")}.",
+                    errorMessage: $"La propiedad '{nameof(this.Year)}' no puede ser posterior al año {Now.Year}",
+                    memberNames: new[]
+                    {
+                        nameof(this.Year)
+                    }
+                );
+            }
+
+            if (this.Month > Now.Month
+                &&
+                (this.Year == Now.Year || this.Year.Equals(obj: Now.Year)))
+            {
+                yield return new ValidationResult(
+                    errorMessage: $"Las propiedades '{nameof(this.Month)}' y '{nameof(this.Year)}' no puede ser posterior a {Now.ToString(format: "MMMM-yyyy")}.",
                     memberNames: new[]
                     {
                         nameof(this.Month),
