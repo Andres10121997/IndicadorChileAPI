@@ -50,10 +50,10 @@ namespace API.App.Context.Tool
             tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: tableId)}""[^>]*>(.*?)<\/table>";
             tableMatch = Regex.Match(input: htmlContent, pattern: tablePattern, options: RegexOptions.Singleline);
 
-            if (!tableMatch.Success)
-            {
-                throw new Exception(message: $"No se encontró la tabla con ID '{tableId}'.");
-            }
+            ArgumentOutOfRangeException.ThrowIfEqual<bool>(
+                value: tableMatch.Success,
+                other: false
+            );
 
             tableHtml = tableMatch.Groups[1].Value;
 

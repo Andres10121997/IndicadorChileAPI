@@ -95,6 +95,7 @@ namespace API.Models.Get
 
             Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
+            #region Validations
             if (this.Year > Now.Year)
             {
                 yield return new ValidationResult(
@@ -119,6 +120,7 @@ namespace API.Models.Get
                     }
                 );
             }
+            #endregion
         }
     }
 }

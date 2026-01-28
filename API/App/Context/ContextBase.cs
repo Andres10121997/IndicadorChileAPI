@@ -187,10 +187,7 @@ namespace API.App.Context
         #region HTML
         protected async Task<string> GetHtmlContentAsync()
         {
-            using (HttpClient client = new HttpClient())
-            {
-                return await client.GetStringAsync(requestUri: this.Url);
-            }
+            using (HttpClient client = new HttpClient()) return await client.GetStringAsync(requestUri: this.Url);
         }
         #endregion
     }
