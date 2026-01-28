@@ -23,6 +23,9 @@ namespace API.Models.Get
             Editable(
                 allowEdit: true
             ),
+            EnumDataType(
+                enumType: typeof(BaseController.CurrencyTypeEnum)
+            ),
             FromQuery,
             Required(
                 AllowEmptyStrings = false,

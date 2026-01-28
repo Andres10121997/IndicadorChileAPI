@@ -50,7 +50,7 @@ namespace API.Controllers
                 template: "[action]"
             )
         ]
-        public async Task<ActionResult<CurrencyListHeaderModel>> GetDataListAsync(SearchFilterModel SearchFilter)
+        public async Task<ActionResult<CurrencyListHeaderModel>> GetCurrencyListAsync(SearchFilterModel SearchFilter)
         {
             try
             {
