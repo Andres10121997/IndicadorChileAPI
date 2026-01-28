@@ -57,12 +57,16 @@ namespace API.Controllers
             get => this.date;
             set
             {
+                #region Variables
+                DateOnly Now;
+                #endregion
+
+                Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
+
                 #region Exception
                 ArgumentOutOfRangeException.ThrowIfGreaterThan<DateOnly>(
                     value: value,
-                    other: DateOnly.FromDateTime(
-                        dateTime: DateTime.Now
-                    )
+                    other: Now
                 );
                 #endregion
 
@@ -106,7 +110,6 @@ namespace API.Controllers
                          "Hora: {Time}" +
                          "\n" +
                          Message +
-
 
                          "\n" +
                          "---",

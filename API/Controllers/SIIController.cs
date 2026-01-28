@@ -54,7 +54,7 @@ namespace API.Controllers
         {
             try
             {
-                if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out var Value))
+                if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out string? Value))
                 {
                     #region Exception
                     ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Value);
