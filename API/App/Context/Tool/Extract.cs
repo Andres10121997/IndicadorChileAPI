@@ -18,7 +18,7 @@ namespace API.App.Context.Tool
 
 
         #region Values
-        public static Dictionary<byte, float[]> Values(string htmlContent,
+        private static Dictionary<byte, float[]> Values(string htmlContent,
                                                        string tableId)
         {
             #region Variables
@@ -48,7 +48,11 @@ namespace API.App.Context.Tool
 
             // Regex para encontrar la tabla con el ID dinámico
             tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: tableId)}""[^>]*>(.*?)<\/table>";
-            tableMatch = Regex.Match(input: htmlContent, pattern: tablePattern, options: RegexOptions.Singleline);
+            tableMatch = Regex.Match(
+                input: htmlContent,
+                pattern: tablePattern,
+                options: RegexOptions.Singleline
+            );
 
             ArgumentOutOfRangeException.ThrowIfEqual<bool>(
                 value: tableMatch.Success,
@@ -136,15 +140,12 @@ namespace API.App.Context.Tool
         }
 
         public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
-                                                                        string tableId)
-        {
-            return await Task.Run<Dictionary<byte, float[]>>(
-                function: () => Values(
-                    htmlContent: htmlContent,
-                    tableId: tableId
-                )
-            );
-        }
+                                                                        string tableId) => await Task.Run<Dictionary<byte, float[]>>(
+                                                                            function: () => Values(
+                                                                                htmlContent: htmlContent,
+                                                                                tableId: tableId
+                                                                                )
+                                                                            );
         #endregion
     }
 }
