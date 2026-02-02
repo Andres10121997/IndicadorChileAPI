@@ -19,7 +19,7 @@ namespace API.App.Context.Tool
 
         #region Values
         private static Dictionary<byte, float[]> Values(string htmlContent,
-                                                       string tableId)
+                                                        string tableId)
         {
             #region Variables
             string tablePattern;
@@ -87,15 +87,20 @@ namespace API.App.Context.Tool
         private static async Task<Dictionary<byte, float[]>> OrganizeValuesAsync(MatchCollection RowMatches)
         {
             #region Objects
-            object lockObject = new object();
+            object LockObject;
             ParallelOptions ParallelOptions = new ParallelOptions
             {
                 MaxDegreeOfParallelism = Environment.ProcessorCount
             };
-            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
+            Dictionary<byte, float[]> Data;
             #endregion
 
-            await Parallel.ForEachAsync<Match>(source: RowMatches, parallelOptions: ParallelOptions, body: async (rowMatch, ct) =>
+            #region Init
+            LockObject = new object();
+            Data = new Dictionary<byte, float[]>();
+            #endregion
+
+            await Parallel.ForEachAsync<Match>(source: RowMatches, parallelOptions: ParallelOptions, body: async (rowMatch, cancellationToken) =>
             {
                 #region Variables
                 string rowHtml = string.Empty;
@@ -154,7 +159,7 @@ namespace API.App.Context.Tool
                             #endregion
                         }
 
-                        lock (lockObject)
+                        lock (LockObject)
                         {
                             Data[day] = Values;
                         }
