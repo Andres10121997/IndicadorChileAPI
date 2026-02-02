@@ -27,13 +27,9 @@ namespace API.App.Context.Tool
             string rowPattern;
             #endregion
 
-            #region Objects
-            object lockObject = new object();
-
             #region Match
             Match tableMatch;
             MatchCollection rowMatches;
-            #endregion
             #endregion
 
             #region Dictionary
@@ -69,7 +65,37 @@ namespace API.App.Context.Tool
                 options: RegexOptions.Singleline
             );
 
-            Parallel.ForEach(source: rowMatches, body: rowMatch =>
+            Data = Task.Run(async () => await OrganizeValuesAsync(RowMatches: rowMatches)).GetAwaiter().GetResult();
+
+            return Data;
+        }
+
+        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
+                                                                        string tableId)
+        {
+            return await Task.Run<Dictionary<byte, float[]>>(
+                function: () => Values(
+                    htmlContent: htmlContent,
+                    tableId: tableId
+                    )
+                );
+        }
+        #endregion
+
+
+
+        private static async Task<Dictionary<byte, float[]>> OrganizeValuesAsync(MatchCollection RowMatches)
+        {
+            #region Objects
+            object lockObject = new object();
+            ParallelOptions ParallelOptions = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = Environment.ProcessorCount
+            };
+            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
+            #endregion
+
+            await Parallel.ForEachAsync<Match>(source: RowMatches, parallelOptions: ParallelOptions, body: async (rowMatch, ct) =>
             {
                 #region Variables
                 string rowHtml = string.Empty;
@@ -138,14 +164,5 @@ namespace API.App.Context.Tool
 
             return Data;
         }
-
-        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
-                                                                        string tableId) => await Task.Run<Dictionary<byte, float[]>>(
-                                                                            function: () => Values(
-                                                                                htmlContent: htmlContent,
-                                                                                tableId: tableId
-                                                                                )
-                                                                            );
-        #endregion
     }
 }
