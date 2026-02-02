@@ -21,6 +21,42 @@ namespace API.App.Context.Tool
         private static Dictionary<byte, float[]> Values(string htmlContent,
                                                         string tableId)
         {
+            #region Dictionary
+            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
+            #endregion
+
+            #region Exception
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: htmlContent);
+
+            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: tableId);
+            #endregion
+
+            Data = Task.Run(
+                async () => await OrganizeTheDataObtainedAsync(
+                    RowMatches: GetTableData(htmlContent: htmlContent, tableId: tableId)
+                )
+            ).GetAwaiter().GetResult();
+
+            return Data;
+        }
+
+        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
+                                                                        string tableId)
+        {
+            return await Task.Run<Dictionary<byte, float[]>>(
+                function: () => Values(
+                    htmlContent: htmlContent,
+                    tableId: tableId
+                    )
+                );
+        }
+        #endregion
+
+
+
+        private static MatchCollection GetTableData(string htmlContent,
+                                                    string tableId)
+        {
             #region Variables
             string tablePattern;
             string tableHtml;
@@ -30,16 +66,6 @@ namespace API.App.Context.Tool
             #region Match
             Match tableMatch;
             MatchCollection rowMatches;
-            #endregion
-
-            #region Dictionary
-            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
-            #endregion
-
-            #region Validations
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: htmlContent);
-
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: tableId);
             #endregion
 
             // Regex para encontrar la tabla con el ID dinámico
@@ -65,26 +91,10 @@ namespace API.App.Context.Tool
                 options: RegexOptions.Singleline
             );
 
-            Data = Task.Run(async () => await OrganizeValuesAsync(RowMatches: rowMatches)).GetAwaiter().GetResult();
-
-            return Data;
+            return rowMatches;
         }
 
-        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
-                                                                        string tableId)
-        {
-            return await Task.Run<Dictionary<byte, float[]>>(
-                function: () => Values(
-                    htmlContent: htmlContent,
-                    tableId: tableId
-                    )
-                );
-        }
-        #endregion
-
-
-
-        private static async Task<Dictionary<byte, float[]>> OrganizeValuesAsync(MatchCollection RowMatches)
+        private static async Task<Dictionary<byte, float[]>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
         {
             #region Objects
             object LockObject;
