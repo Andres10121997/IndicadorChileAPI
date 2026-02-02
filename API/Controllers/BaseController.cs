@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -92,7 +93,8 @@ namespace API.Controllers
 
 
         #region Logger
-        protected void LoggerInformation(string Message)
+        #region Information
+        private void LoggerInformation(string Message)
         {
             #region Variables
             DateTime Now = DateTime.Now;
@@ -119,7 +121,11 @@ namespace API.Controllers
             );
         }
 
-        protected void LoggerError(Exception ex)
+        protected async Task LoggerInformationAsync(string Message) => await Task.Run(action: () => this.LoggerInformation(Message: Message));
+        #endregion
+
+        #region Error
+        private void LoggerError(Exception ex)
         {
             #region Variables
             DateTime Now = DateTime.Now;
@@ -144,6 +150,9 @@ namespace API.Controllers
                 this.Time   // {1}
             );
         }
+
+        protected async Task LoggerErrorAsync(Exception ex) => await Task.Run(action: () => this.LoggerError(ex: ex));
+        #endregion
         #endregion
     }
 }

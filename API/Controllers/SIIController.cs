@@ -27,16 +27,16 @@ namespace API.Controllers
         public SIIController(ILogger<SIIController> Logger)
             : base(Logger: Logger,
                    URLs: new Dictionary<CurrencyTypeEnum, string>
-                   {
-                       {
-                           CurrencyTypeEnum.USD,
-                           "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm"
-                       },
-                       {
-                           CurrencyTypeEnum.UF,
-                           "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm"
-                       }
-                   })
+                         {
+                             {
+                                 CurrencyTypeEnum.USD,
+                                 "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm"
+                             },
+                             {
+                                 CurrencyTypeEnum.UF,
+                                 "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm"
+                             }
+                         })
         {
             this.Logger = Logger;
         }
@@ -76,7 +76,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                this.LoggerError(
+                await this.LoggerErrorAsync(
                     ex: ex
                 );
 
