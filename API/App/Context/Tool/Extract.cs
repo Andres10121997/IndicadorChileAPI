@@ -17,9 +17,8 @@ namespace API.App.Context.Tool
 
 
 
-        #region Values
-        private static Dictionary<byte, float[]> Values(string htmlContent,
-                                                        string tableId)
+        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
+                                                                        string tableId)
         {
             #region Dictionary
             Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
@@ -31,28 +30,15 @@ namespace API.App.Context.Tool
             ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: tableId);
             #endregion
 
-            Data = Task.Run(
-                async () => await OrganizeTheDataObtainedAsync(
-                    RowMatches: GetTableData(htmlContent: htmlContent, tableId: tableId)
+            Data = await OrganizeTheDataObtainedAsync(
+                RowMatches: GetTableData(
+                    htmlContent: htmlContent,
+                    tableId: tableId
                 )
-            ).GetAwaiter().GetResult();
+            );
 
             return Data;
         }
-
-        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
-                                                                        string tableId)
-        {
-            return await Task.Run<Dictionary<byte, float[]>>(
-                function: () => Values(
-                    htmlContent: htmlContent,
-                    tableId: tableId
-                    )
-                );
-        }
-        #endregion
-
-
 
         private static MatchCollection GetTableData(string htmlContent,
                                                     string tableId)
