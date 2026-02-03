@@ -113,8 +113,8 @@ namespace API.App.Context.Tool
             await Parallel.ForEachAsync<Match>(source: RowMatches, parallelOptions: ParallelOptions, body: async (rowMatch, cancellationToken) =>
             {
                 #region Variables
-                string rowHtml = string.Empty;
-                string cellPattern = string.Empty;
+                string rowHtml;
+                string cellPattern;
                 #endregion
 
                 MatchCollection cellMatches;

@@ -34,8 +34,8 @@ namespace API.App.Context.Tool
 
 
         #region To
-        private TModel[] ToModels<TModel>(Dictionary<byte, float[]> Data,
-                                          Func<DateOnly, float, TModel> modelFactory)
+        private async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
+                                                           Func<DateOnly, float, TModel> modelFactory)
         {
             #region Objects
             var lockObject = new object();
@@ -45,7 +45,7 @@ namespace API.App.Context.Tool
             var ModelList = new List<TModel>();
             #endregion
 
-            Parallel.ForEach(source: Data, body: item =>
+            await Parallel.ForEachAsync(source: Data, body: async (item, cancellationToken) =>
             {
                 var (day, values) = item;
 
@@ -81,14 +81,6 @@ namespace API.App.Context.Tool
             });
             
             return ModelList.ToArray<TModel>();
-        }
-
-        private async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
-                                                           Func<DateOnly, float, TModel> modelFactory)
-        {
-            return await Task.Run<TModel[]>(
-                function: () => this.ToModels<TModel>(Data: Data, modelFactory)
-            );
         }
 
         public async Task<CurrencyModel[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
