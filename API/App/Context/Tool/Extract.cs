@@ -21,7 +21,7 @@ namespace API.App.Context.Tool
                                                                         string tableId)
         {
             #region Dictionary
-            Dictionary<byte, float[]> Data = new Dictionary<byte, float[]>();
+            Dictionary<byte, float[]> Data;
             #endregion
 
             #region Exception
@@ -92,78 +92,80 @@ namespace API.App.Context.Tool
             Data = new Dictionary<byte, float[]>();
             #endregion
 
-            await Parallel.ForEachAsync<Match>(source: RowMatches,
-                                               parallelOptions: new ParallelOptions
-                                               {
-                                                   MaxDegreeOfParallelism = Environment.ProcessorCount,
-                                                   TaskScheduler = TaskScheduler.Current
-                                               },
-                                               body: async (rowMatch, cancellationToken) =>
-            {
-                #region Variables
+            await Parallel.ForEachAsync<Match>(
+                source: RowMatches,
+                parallelOptions: new ParallelOptions
+                {
+                    MaxDegreeOfParallelism = Environment.ProcessorCount,
+                    TaskScheduler = TaskScheduler.Current
+                },
+                body: async (rowMatch, cancellationToken) =>
+                {
+                    #region Variables
                 string rowHtml;
                 string cellPattern;
                 #endregion
 
-                MatchCollection cellMatches;
+                    MatchCollection cellMatches;
 
-                rowHtml = rowMatch.Groups[1].Value;
+                    rowHtml = rowMatch.Groups[1].Value;
 
-                // Regex para las celdas (<th> y <td>)
-                cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
-                cellMatches = Regex.Matches(
-                    input: rowHtml,
-                    pattern: cellPattern,
-                    options: RegexOptions.Singleline
-                );
+                    // Regex para las celdas (<th> y <td>)
+                    cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
+                    cellMatches = Regex.Matches(
+                        input: rowHtml,
+                        pattern: cellPattern,
+                        options: RegexOptions.Singleline
+                    );
 
-                if (cellMatches.Count > 0)
-                {
-                    // Primera celda: el día
-                    if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
+                    if (cellMatches.Count > 0)
                     {
-                        #region Arrays
-                        float[] Values = new float[12];
-                        #endregion
-
-                        for (byte i = 1; i < cellMatches.Count; i++)
+                        // Primera celda: el día
+                        if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
                         {
-                            #region Variables
-                            string Value;
+                            #region Arrays
+                            float[] Values = new float[12];
                             #endregion
 
-                            Value = cellMatches[i].Groups[1].Value
-                                .Trim()
-                                // Eliminar puntos
-                                .Replace(
-                                    oldValue: ".",
-                                    newValue: ""
-                                )
-                                // Cambiar comas por puntos
-                                .Replace(
-                                    oldValue: ",",
-                                    newValue: "."
-                                );
-
-                            #region Guardar Valores
-                            if (float.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
+                            for (byte i = 1; i < cellMatches.Count; i++)
                             {
-                                Values[i - 1] = currencyValue;
-                            }
-                            else
-                            {
-                                Values[i - 1] = float.NaN;
-                            }
-                            #endregion
-                        }
+                                #region Variables
+                                string Value;
+                                #endregion
 
-                        lock (LockObject)
-                        {
-                            Data[day] = Values;
+                                Value = cellMatches[i].Groups[1].Value
+                                    .Trim()
+                                    // Eliminar puntos
+                                    .Replace(
+                                        oldValue: ".",
+                                        newValue: ""
+                                    )
+                                    // Cambiar comas por puntos
+                                    .Replace(
+                                        oldValue: ",",
+                                        newValue: "."
+                                    );
+
+                                #region Guardar Valores
+                                if (float.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
+                                {
+                                    Values[i - 1] = currencyValue;
+                                }
+                                else
+                                {
+                                    Values[i - 1] = float.NaN;
+                                }
+                                #endregion
+                            }
+
+                            lock (LockObject)
+                            {
+                                Data[day] = Values;
+                            }
                         }
                     }
                 }
-            });
+            );
 
             return Data;
         }
