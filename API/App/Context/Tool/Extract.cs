@@ -98,10 +98,6 @@ namespace API.App.Context.Tool
         {
             #region Objects
             object LockObject;
-            ParallelOptions ParallelOptions = new ParallelOptions
-            {
-                MaxDegreeOfParallelism = Environment.ProcessorCount
-            };
             Dictionary<byte, float[]> Data;
             #endregion
 
@@ -110,7 +106,13 @@ namespace API.App.Context.Tool
             Data = new Dictionary<byte, float[]>();
             #endregion
 
-            await Parallel.ForEachAsync<Match>(source: RowMatches, parallelOptions: ParallelOptions, body: async (rowMatch, cancellationToken) =>
+            await Parallel.ForEachAsync<Match>(source: RowMatches,
+                                               parallelOptions: new ParallelOptions
+                                               {
+                                                   MaxDegreeOfParallelism = Environment.ProcessorCount,
+                                                   TaskScheduler = TaskScheduler.Current
+                                               },
+                                               body: async (rowMatch, cancellationToken) =>
             {
                 #region Variables
                 string rowHtml;

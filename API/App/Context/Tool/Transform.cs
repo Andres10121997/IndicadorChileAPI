@@ -45,7 +45,13 @@ namespace API.App.Context.Tool
             var ModelList = new List<TModel>();
             #endregion
 
-            await Parallel.ForEachAsync(source: Data, body: async (item, cancellationToken) =>
+            await Parallel.ForEachAsync(source: Data,
+                                        parallelOptions: new ParallelOptions
+                                        {
+                                            MaxDegreeOfParallelism = Environment.ProcessorCount,
+                                            TaskScheduler = TaskScheduler.Current
+                                        },
+                                        body: async (item, cancellationToken) =>
             {
                 var (day, values) = item;
 
