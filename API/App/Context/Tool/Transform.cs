@@ -38,53 +38,60 @@ namespace API.App.Context.Tool
                                                            Func<DateOnly, float, TModel> modelFactory)
         {
             #region Objects
-            var lockObject = new object();
+            object LockObject;
             #endregion
 
             #region List
-            var ModelList = new List<TModel>();
+            List<TModel> ModelList;
             #endregion
 
-            await Parallel.ForEachAsync(source: Data,
-                                        parallelOptions: new ParallelOptions
-                                        {
-                                            MaxDegreeOfParallelism = Environment.ProcessorCount,
-                                            TaskScheduler = TaskScheduler.Current
-                                        },
-                                        body: async (item, cancellationToken) =>
-            {
-                var (day, values) = item;
+            #region Init
+            LockObject = new object();
+            ModelList = new List<TModel>();
+            #endregion
 
-                for (byte month = 1; month <= values.Length; month++)
+            await Parallel.ForEachAsync(
+                source: Data,
+                parallelOptions: new ParallelOptions
                 {
-                    if (day > 0 && day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
+                    MaxDegreeOfParallelism = Environment.ProcessorCount,
+                    TaskScheduler = TaskScheduler.Current
+                },
+                body: async (item, cancellationToken) =>
+                {
+                    var (day, values) = item;
+
+                    for (byte month = 1; month <= values.Length; month++)
                     {
-                        #region Variables
-                        float value;
-                        #endregion
-
-                        #region Objects
-                        TModel model;
-                        #endregion
-
-                        value = values[month - 1];
-
-                        model = modelFactory(
-                            new DateOnly(
-                                year: this.Search.Year,
-                                month: month,
-                                day: day
-                            ),
-                            value
-                        );
-
-                        lock (lockObject)
+                        if (day > 0 && day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
                         {
-                            ModelList.Add(item: model);
+                            #region Variables
+                            float value;
+                            #endregion
+
+                            #region Objects
+                            TModel model;
+                            #endregion
+
+                            value = values[month - 1];
+
+                            model = modelFactory(
+                                new DateOnly(
+                                    year: this.Search.Year,
+                                    month: month,
+                                    day: day
+                                ),
+                                value
+                            );
+
+                            lock (LockObject)
+                            {
+                                ModelList.Add(item: model);
+                            }
                         }
                     }
                 }
-            });
+            );
             
             return ModelList.ToArray<TModel>();
         }

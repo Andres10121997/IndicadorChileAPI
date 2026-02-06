@@ -62,10 +62,12 @@ namespace API.App.Context.Tool
                 options: RegexOptions.Singleline
             );
 
+            #region Exception
             ArgumentOutOfRangeException.ThrowIfEqual<bool>(
                 value: tableMatch.Success,
                 other: false
             );
+            #endregion
 
             tableHtml = tableMatch.Groups[1].Value;
 
@@ -104,9 +106,11 @@ namespace API.App.Context.Tool
                     #region Variables
                 string rowHtml;
                 string cellPattern;
-                #endregion
+                    #endregion
 
+                    #region Collection
                     MatchCollection cellMatches;
+                    #endregion
 
                     rowHtml = rowMatch.Groups[1].Value;
 
