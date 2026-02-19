@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -80,7 +81,10 @@ namespace API.Controllers
                     ex: ex
                 );
 
-                throw;
+                return this.StatusCode(
+                    statusCode: (int)HttpStatusCode.InternalServerError,
+                    value: "Se produjo un error interno del servidor."
+                );
             }
         }
         #endregion
