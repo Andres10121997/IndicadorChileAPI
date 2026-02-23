@@ -1,11 +1,11 @@
 ﻿using API.App.Information;
 using API.Models;
 using API.Models.Get;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -49,6 +49,15 @@ namespace API.Controllers
         [
             HttpGet(
                 template: "[action]"
+            ),
+            ProducesResponseType(
+                statusCode: StatusCodes.Status200OK
+            ),
+            ProducesResponseType(
+                statusCode: StatusCodes.Status400BadRequest
+            ),
+            ProducesResponseType(
+                statusCode: StatusCodes.Status500InternalServerError
             )
         ]
         public async Task<ActionResult<CurrencyListHeaderModel>> GetCurrencyListAsync(SearchFilterModel SearchFilter)
@@ -82,7 +91,7 @@ namespace API.Controllers
                 );
 
                 return this.StatusCode(
-                    statusCode: (int)HttpStatusCode.InternalServerError,
+                    statusCode: StatusCodes.Status500InternalServerError,
                     value: "Se produjo un error interno del servidor."
                 );
             }
