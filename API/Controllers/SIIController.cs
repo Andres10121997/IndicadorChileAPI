@@ -16,7 +16,7 @@ namespace API.Controllers
             template: "api/[controller]"
         )
     ]
-    public class SIIController : BaseController
+    public sealed class SIIController : BaseController
     {
         #region Interfaces
         private readonly ILogger<SIIController> Logger;

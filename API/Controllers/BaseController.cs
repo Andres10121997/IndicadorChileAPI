@@ -15,7 +15,7 @@ namespace API.Controllers
             Permanent = true
         )
     ]
-    public class BaseController : ControllerBase
+    public abstract class BaseController : ControllerBase
     {
         #region Variables
         private DateOnly date;
