@@ -51,13 +51,16 @@ namespace API.Controllers
                 template: "[action]"
             ),
             ProducesResponseType(
-                statusCode: StatusCodes.Status200OK
+                statusCode: StatusCodes.Status200OK,
+                Type = typeof(CurrencyListHeaderModel)
             ),
             ProducesResponseType(
-                statusCode: StatusCodes.Status400BadRequest
+                statusCode: StatusCodes.Status400BadRequest,
+                Type = typeof(SearchFilterModel)
             ),
             ProducesResponseType(
-                statusCode: StatusCodes.Status500InternalServerError
+                statusCode: StatusCodes.Status500InternalServerError,
+                Type = typeof(Exception)
             )
         ]
         public async Task<ActionResult<CurrencyListHeaderModel>> GetCurrencyListAsync(SearchFilterModel SearchFilter)
@@ -89,10 +92,10 @@ namespace API.Controllers
                 await this.LoggerErrorAsync(
                     ex: ex
                 );
-
+                
                 return this.StatusCode(
                     statusCode: StatusCodes.Status500InternalServerError,
-                    value: "Se produjo un error interno del servidor."
+                    value: ex
                 );
             }
         }
