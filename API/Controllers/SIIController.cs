@@ -59,6 +59,9 @@ namespace API.Controllers
                 Type = typeof(SearchFilterModel)
             ),
             ProducesResponseType(
+                statusCode: StatusCodes.Status404NotFound
+            ),
+            ProducesResponseType(
                 statusCode: StatusCodes.Status500InternalServerError,
                 Type = typeof(Exception)
             )
@@ -67,6 +70,13 @@ namespace API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return this.BadRequest(
+                        error: SearchFilter
+                    );
+                }
+                
                 if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out string? Value))
                 {
                     #region Exception
@@ -82,8 +92,8 @@ namespace API.Controllers
                 }
                 else
                 {
-                    return this.BadRequest(
-                        error: SearchFilter
+                    return this.NotFound(
+                        value: this.URLs
                     );
                 }
             }
