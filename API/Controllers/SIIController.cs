@@ -51,18 +51,25 @@ namespace API.Controllers
                 template: "[action]"
             ),
             ProducesResponseType(
+                type: typeof(CurrencyListHeaderModel),
                 statusCode: StatusCodes.Status200OK,
+                StatusCode = StatusCodes.Status200OK,
                 Type = typeof(CurrencyListHeaderModel)
             ),
             ProducesResponseType(
+                type: typeof(SearchFilterModel),
                 statusCode: StatusCodes.Status400BadRequest,
+                StatusCode = StatusCodes.Status400BadRequest,
                 Type = typeof(SearchFilterModel)
             ),
             ProducesResponseType(
-                statusCode: StatusCodes.Status404NotFound
+                statusCode: StatusCodes.Status404NotFound,
+                StatusCode = StatusCodes.Status404NotFound
             ),
             ProducesResponseType(
+                type: typeof(Exception),
                 statusCode: StatusCodes.Status500InternalServerError,
+                StatusCode = StatusCodes.Status500InternalServerError,
                 Type = typeof(Exception)
             )
         ]
@@ -76,25 +83,20 @@ namespace API.Controllers
                         error: SearchFilter
                     );
                 }
-                
-                if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out string? Value))
+
+                switch (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out string? Value))
                 {
-                    #region Exception
-                    ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: Value);
-                    #endregion
-                    
-                    return this.Ok(
-                        value: await CurrencyInfo.CurrencyHeaderAsync(
-                            Url: Value,
-                            SearchFilter: SearchFilter
-                        )
-                    );
-                }
-                else
-                {
-                    return this.NotFound(
-                        value: this.URLs
-                    );
+                    case true:
+                        return this.Ok(
+                            value: await CurrencyInfo.CurrencyHeaderAsync(
+                                Url: Value,
+                                SearchFilter: SearchFilter
+                            )
+                        );
+                    case false:
+                        return this.NotFound(
+                            value: Value
+                        );
                 }
             }
             catch (Exception ex)
