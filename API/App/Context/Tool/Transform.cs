@@ -63,7 +63,9 @@ namespace API.App.Context.Tool
 
                     for (byte month = 1; month <= values.Length; month++)
                     {
-                        if (day > 0 && day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
+                        if (day > 0
+                            &&
+                            day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
                         {
                             #region Variables
                             float value;

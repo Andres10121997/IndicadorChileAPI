@@ -151,13 +151,17 @@ namespace API.App.Context.Tool
                                     );
 
                                 #region Guardar Valores
-                                if (float.TryParse(s: Value, style: NumberStyles.Number, provider: CultureInfo.InvariantCulture, result: out float currencyValue))
+                                switch (float.TryParse(s: Value,
+                                                       style: NumberStyles.Number,
+                                                       provider: CultureInfo.InvariantCulture,
+                                                       result: out float currencyValue))
                                 {
-                                    Values[i - 1] = currencyValue;
-                                }
-                                else
-                                {
-                                    Values[i - 1] = float.NaN;
+                                    case true:
+                                        Values[i - 1] = currencyValue;
+                                        break;
+                                    case false:
+                                        Values[i - 1] = float.NaN;
+                                        break;
                                 }
                                 #endregion
                             }
