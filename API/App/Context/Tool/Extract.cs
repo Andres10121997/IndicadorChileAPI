@@ -31,7 +31,7 @@ namespace API.App.Context.Tool
             #endregion
 
             Data = await OrganizeTheDataObtainedAsync(
-                RowMatches: GetTableData(
+                RowMatches: await GetTableDataAsync(
                     htmlContent: htmlContent,
                     tableId: tableId
                 )
@@ -40,6 +40,9 @@ namespace API.App.Context.Tool
             return Data;
         }
 
+
+
+        #region Get Table Data
         private static MatchCollection GetTableData(string htmlContent,
                                                     string tableId)
         {
@@ -81,6 +84,15 @@ namespace API.App.Context.Tool
 
             return rowMatches;
         }
+
+        private static async Task<MatchCollection> GetTableDataAsync(string htmlContent,
+                                                                     string tableId)
+        {
+            return await Task.Run(function: () => GetTableData(htmlContent: htmlContent, tableId: tableId));
+        }
+        #endregion
+
+
 
         private static async Task<Dictionary<byte, float[]>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
         {
