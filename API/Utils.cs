@@ -14,6 +14,22 @@ namespace API
 
 
 
+        #region Field
+        internal static ParallelOptions parallelOptions
+        {
+            get
+            {
+                return new ParallelOptions
+                {
+                    MaxDegreeOfParallelism = Environment.ProcessorCount,
+                    TaskScheduler = TaskScheduler.Current
+                };
+            }
+        }
+        #endregion
+
+
+
         #region Message
         public static void MessageError(Exception ex,
                                         Type OType)

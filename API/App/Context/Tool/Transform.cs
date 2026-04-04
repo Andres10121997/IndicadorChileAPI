@@ -52,11 +52,7 @@ namespace API.App.Context.Tool
 
             await Parallel.ForEachAsync(
                 source: Data,
-                parallelOptions: new ParallelOptions
-                {
-                    MaxDegreeOfParallelism = Environment.ProcessorCount,
-                    TaskScheduler = TaskScheduler.Current
-                },
+                parallelOptions: Utils.parallelOptions,
                 body: async (item, cancellationToken) =>
                 {
                     var (day, values) = item;

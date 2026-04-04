@@ -110,11 +110,7 @@ namespace API.App.Context.Tool
 
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
-                parallelOptions: new ParallelOptions
-                {
-                    MaxDegreeOfParallelism = Environment.ProcessorCount,
-                    TaskScheduler = TaskScheduler.Current
-                },
+                parallelOptions: Utils.parallelOptions,
                 body: async (rowMatch, cancellationToken) =>
                 {
                     #region Variables
