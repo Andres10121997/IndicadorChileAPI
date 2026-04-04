@@ -50,7 +50,7 @@ namespace API.Controllers
 
 
 
-        #region Property
+        #region Field
         #region Variables
         private DateOnly Date
         {

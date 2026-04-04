@@ -53,7 +53,7 @@ namespace API.App.Context
 
 
 
-        #region Property
+        #region Field
         #region Readonly
         protected string Url
         {

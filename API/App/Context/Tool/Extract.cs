@@ -17,6 +17,7 @@ namespace API.App.Context.Tool
 
 
 
+        #region Constructor Method
         public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
                                                                         string tableId)
         {
@@ -39,6 +40,7 @@ namespace API.App.Context.Tool
 
             return Data;
         }
+        #endregion
 
 
 
