@@ -8,7 +8,7 @@ namespace API.Models.Get
 {
     public sealed record SearchFilterModel : IValidatableObject
     {
-        #region Property
+        #region Field
         [
             Display(
                 AutoGenerateField = false,

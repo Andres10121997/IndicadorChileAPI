@@ -6,7 +6,7 @@ namespace API.Models
 {
     public sealed record CurrencyListHeaderModel
     {
-        #region Property
+        #region Field
         [
             DataType(
                 dataType: DataType.Date,

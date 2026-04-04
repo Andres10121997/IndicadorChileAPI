@@ -6,7 +6,7 @@ namespace API.Models
 {
     public sealed record CurrencyModel : IValidatableObject
     {
-        #region Property
+        #region Field
         [
             DataType(
                 dataType: DataType.Custom,
