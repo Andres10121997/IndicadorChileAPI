@@ -21,3 +21,8 @@ services:
             - LANG=es_CL.UTF-8
             - LANGUAGE=es_CL:es
             - LC_ALL=es_CL.UTF-8
+        volumes:
+            - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+            - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
