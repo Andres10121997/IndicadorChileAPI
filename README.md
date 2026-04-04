@@ -14,7 +14,7 @@ Qué cosas necesitas para instalar el software y cómo instalarlas:
 
 | Nombre | Descripción | URL de referencia |
 | :--- | :--- | :--- |
-| Docker | Ingrese al sitio web de Docker, descargue el instalador del software e instálelo. | 1. [Sitio web](https://www.docker.com/) |
+| Docker | Ingrese al sitio web de Docker, descargue el instalador del software e instálelo. <br /> En caso de tener algún problema, ver el video | 1. [Sitio web](https://www.docker.com/) <br /> 2. [Video instalación (ejemplo)](https://www.youtube.com/watch?v=cWuirzMOwwg) |
 | Visual Studio (IDE) | Ingrese al sitio web de Visual Studio, descargue el instalador del software e instálelo. | 1. [Sitio web](https://visualstudio.microsoft.com/es/) |
 
 # GitHub Actions
