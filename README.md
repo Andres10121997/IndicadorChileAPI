@@ -1,6 +1,6 @@
 # Indicadores Chile
 
-Esta aplicación web API entrega datos sobre cuanto valen ciertas divisas en días determinados.
+Esta aplicación web API entrega datos sobre cuanto valen cierta(s) divisa(s) o unidad(es) de cuenta en pesos chilenos en días determinados.
 
 # GitHub Actions
 Para que GitHub cree una imagen de Docker, debes configurar una GitHub Action que use un `Dockerfile` en tu repositorio. La acción automática incluirá pasos para clonar tu código, iniciar sesión en el registro de contenedores (como GitHub Packages o Docker Hub), construir la imagen y luego enviarla al registro.
