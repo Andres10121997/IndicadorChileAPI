@@ -2,6 +2,21 @@
 
 Esta aplicación web API entrega datos sobre cuanto valen cierta(s) divisa(s) o unidad(es) de cuenta en pesos chilenos en días determinados.
 
+## Comenzando
+
+Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas.
+
+### Prerrequisitos
+
+Qué cosas necesitas para instalar el software y cómo instalarlas:
+
+#### Software
+
+| Nombre | Descripción | URL de referencia |
+| :--- | :--- | :--- |
+| Docker | Ingrese al sitio web de Docker, descargue el instalador del software e instálelo. | 1. [Sitio web](https://www.docker.com/) |
+| Visual Studio (IDE) | Ingrese al sitio web de Visual Studio, descargue el instalador del software e instálelo. | 1. [Sitio web](https://visualstudio.microsoft.com/es/) |
+
 # GitHub Actions
 Para que GitHub cree una imagen de Docker, debes configurar una GitHub Action que use un `Dockerfile` en tu repositorio. La acción automática incluirá pasos para clonar tu código, iniciar sesión en el registro de contenedores (como GitHub Packages o Docker Hub), construir la imagen y luego enviarla al registro.
 
