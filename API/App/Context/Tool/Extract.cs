@@ -111,24 +111,24 @@ namespace API.App.Context.Tool
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
                 parallelOptions: Utils.ParallelForEachOptions,
-                body: async (rowMatch, cancellationToken) =>
+                body: async (RowMatch, CancellationToken) =>
                 {
                     #region Variables
-                    string rowHtml;
-                    string cellPattern;
+                    string RowHtml;
+                    string CellPattern;
                     #endregion
 
                     #region Collection
                     MatchCollection cellMatches;
                     #endregion
 
-                    rowHtml = rowMatch.Groups[1].Value;
+                    RowHtml = RowMatch.Groups[1].Value;
 
                     // Regex para las celdas (<th> y <td>)
-                    cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
+                    CellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
                     cellMatches = Regex.Matches(
-                        input: rowHtml,
-                        pattern: cellPattern,
+                        input: RowHtml,
+                        pattern: CellPattern,
                         options: RegexOptions.Singleline
                     );
 
@@ -144,44 +144,40 @@ namespace API.App.Context.Tool
                             float[] Values = new float[12];
                             #endregion
 
-                            Parallel.For(
-                                fromInclusive: 1,
-                                toExclusive: cellMatches.Count,
-                                body: i =>
+                            for (byte i = 1; i < cellMatches.Count; i++)
+                            {
+                                #region Variables
+                                string Value;
+                                #endregion
+
+                                Value = cellMatches[i].Groups[1].Value
+                                    .Trim()
+                                    // Eliminar puntos
+                                    .Replace(
+                                        oldValue: ".",
+                                        newValue: ""
+                                    )
+                                    // Cambiar comas por puntos
+                                    .Replace(
+                                        oldValue: ",",
+                                        newValue: "."
+                                    );
+
+                                #region Guardar Valores
+                                switch (float.TryParse(s: Value,
+                                                       style: NumberStyles.Number,
+                                                       provider: CultureInfo.InvariantCulture,
+                                                       result: out float currencyValue))
                                 {
-                                    #region Variables
-                                            string Value;
-                                            #endregion
-                                    
-                                    Value = cellMatches[i].Groups[1].Value
-                                        .Trim()
-                                        // Eliminar puntos
-                                        .Replace(
-                                            oldValue: ".",
-                                            newValue: ""
-                                        )
-                                        // Cambiar comas por puntos
-                                        .Replace(
-                                            oldValue: ",",
-                                            newValue: "."
-                                        );
-                                    
-                                    #region Guardar Valores
-                                            switch (float.TryParse(s: Value,
-                                                                   style: NumberStyles.Number,
-                                                                   provider: CultureInfo.InvariantCulture,
-                                                                   result: out float currencyValue))
-                                            {
-                                                case true:
-                                                    Values[i - 1] = currencyValue;
-                                                    break;
-                                                case false:
-                                                    Values[i - 1] = float.NaN;
-                                                    break;
-                                            }
-                                            #endregion
+                                    case true:
+                                        Values[i - 1] = currencyValue;
+                                        break;
+                                    case false:
+                                        Values[i - 1] = float.NaN;
+                                        break;
                                 }
-                            );
+                                #endregion
+                            }
 
                             lock (LockObject)
                             {

@@ -35,7 +35,7 @@ namespace API.App.Context.Tool
 
         #region To
         private async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
-                                                           Func<DateOnly, float, TModel> modelFactory)
+                                                           Func<DateOnly, float, TModel> ModelFactory)
         {
             #region Objects
             object LockObject;
@@ -53,15 +53,15 @@ namespace API.App.Context.Tool
             await Parallel.ForEachAsync<KeyValuePair<byte, float[]>>(
                 source: Data,
                 parallelOptions: Utils.ParallelForEachOptions,
-                body: async (Item, cancellationToken) =>
+                body: async (Item, CancellationToken) =>
                 {
-                    var (day, values) = Item;
+                    var (Day, Values) = Item;
 
-                    for (byte month = 1; month <= values.Length; month++)
+                    for (byte month = 1; month <= Values.Length; month++)
                     {
-                        if (day > 0
+                        if (Day > 0
                             &&
-                            day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
+                            Day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
                         {
                             #region Variables
                             float value;
@@ -71,13 +71,13 @@ namespace API.App.Context.Tool
                             TModel model;
                             #endregion
 
-                            value = values[month - 1];
+                            value = Values[month - 1];
 
-                            model = modelFactory(
+                            model = ModelFactory(
                                 new DateOnly(
                                     year: this.Search.Year,
                                     month: month,
-                                    day: day
+                                    day: Day
                                 ),
                                 value
                             );
@@ -98,7 +98,7 @@ namespace API.App.Context.Tool
         {
             return await this.ToModelsAsync<CurrencyModel>(
                 Data: CurrencyData,
-                modelFactory: (Date, Value) => new CurrencyModel
+                ModelFactory: (Date, Value) => new CurrencyModel
                 {
                     // https://www.youtube.com/shorts/UwcOL3ZL3go
                     ID = Guid.CreateVersion7(
