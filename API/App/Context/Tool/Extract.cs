@@ -144,40 +144,44 @@ namespace API.App.Context.Tool
                             float[] Values = new float[12];
                             #endregion
 
-                            for (byte i = 1; i < cellMatches.Count; i++)
-                            {
-                                #region Variables
-                                string Value;
-                                #endregion
-
-                                Value = cellMatches[i].Groups[1].Value
-                                    .Trim()
-                                    // Eliminar puntos
-                                    .Replace(
-                                        oldValue: ".",
-                                        newValue: ""
-                                    )
-                                    // Cambiar comas por puntos
-                                    .Replace(
-                                        oldValue: ",",
-                                        newValue: "."
-                                    );
-
-                                #region Guardar Valores
-                                switch (float.TryParse(s: Value,
-                                                       style: NumberStyles.Number,
-                                                       provider: CultureInfo.InvariantCulture,
-                                                       result: out float currencyValue))
+                            Parallel.For(
+                                fromInclusive: 1,
+                                toExclusive: cellMatches.Count,
+                                body: i =>
                                 {
-                                    case true:
-                                        Values[i - 1] = currencyValue;
-                                        break;
-                                    case false:
-                                        Values[i - 1] = float.NaN;
-                                        break;
+                                    #region Variables
+                                            string Value;
+                                            #endregion
+                                    
+                                    Value = cellMatches[i].Groups[1].Value
+                                        .Trim()
+                                        // Eliminar puntos
+                                        .Replace(
+                                            oldValue: ".",
+                                            newValue: ""
+                                        )
+                                        // Cambiar comas por puntos
+                                        .Replace(
+                                            oldValue: ",",
+                                            newValue: "."
+                                        );
+                                    
+                                    #region Guardar Valores
+                                            switch (float.TryParse(s: Value,
+                                                                   style: NumberStyles.Number,
+                                                                   provider: CultureInfo.InvariantCulture,
+                                                                   result: out float currencyValue))
+                                            {
+                                                case true:
+                                                    Values[i - 1] = currencyValue;
+                                                    break;
+                                                case false:
+                                                    Values[i - 1] = float.NaN;
+                                                    break;
+                                            }
+                                            #endregion
                                 }
-                                #endregion
-                            }
+                            );
 
                             lock (LockObject)
                             {
