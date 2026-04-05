@@ -50,7 +50,7 @@ namespace API.App.Context.Tool
             ModelList = new List<TModel>();
             #endregion
 
-            await Parallel.ForEachAsync(
+            await Parallel.ForEachAsync<KeyValuePair<byte, float[]>>(
                 source: Data,
                 parallelOptions: Utils.ParallelForEachOptions,
                 body: async (item, cancellationToken) =>

@@ -96,9 +96,9 @@ namespace API.Models
             init
             {
                 #region Exception
-                ArgumentOutOfRangeException.ThrowIfGreaterThan(
+                ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
                     value: value,
-                    other: DateOnly.FromDateTime(dateTime: DateTime.Now).Year
+                    other: DateTime.Now.Year
                 );
                 #endregion
 
