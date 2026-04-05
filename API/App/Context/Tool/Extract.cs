@@ -8,16 +8,26 @@ namespace API.App.Context.Tool
 {
     public static class Extract
     {
-        #region Constructor Method
-        static Extract()
-        {
+        #region Objects
+        private static object LockObject;
+        #endregion
 
-        }
+        #region Collections
+        private static Dictionary<byte, float[]> Data;
         #endregion
 
 
 
         #region Constructor Method
+        static Extract()
+        {
+            LockObject = new object();
+            Data = new Dictionary<byte, float[]>();
+        }
+        #endregion
+
+
+
         public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
                                                                         string tableId)
         {
@@ -32,7 +42,7 @@ namespace API.App.Context.Tool
             #endregion
 
             Data = await OrganizeTheDataObtainedAsync(
-                RowMatches: await GetTableDataAsync(
+                RowMatches: GetTableData(
                     htmlContent: htmlContent,
                     tableId: tableId
                 )
@@ -40,11 +50,9 @@ namespace API.App.Context.Tool
 
             return Data;
         }
-        #endregion
 
 
 
-        #region Get Table Data
         private static MatchCollection GetTableData(string htmlContent,
                                                     string tableId)
         {
@@ -87,27 +95,8 @@ namespace API.App.Context.Tool
             return rowMatches;
         }
 
-        private static async Task<MatchCollection> GetTableDataAsync(string htmlContent,
-                                                                     string tableId)
-        {
-            return await Task.Run(function: () => GetTableData(htmlContent: htmlContent, tableId: tableId));
-        }
-        #endregion
-
-
-
         private static async Task<Dictionary<byte, float[]>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
         {
-            #region Objects
-            object LockObject;
-            Dictionary<byte, float[]> Data;
-            #endregion
-
-            #region Init
-            LockObject = new object();
-            Data = new Dictionary<byte, float[]>();
-            #endregion
-
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
                 parallelOptions: Utils.ParallelForEachOptions,
@@ -134,61 +123,66 @@ namespace API.App.Context.Tool
 
                     if (cellMatches.Count > 0)
                     {
-                        // Primera celda: el día
-                        if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value,
-                                                           pattern: @"\D",
-                                                           replacement: ""),
-                                          result: out byte day))
-                        {
-                            #region Arrays
-                            float[] Values = new float[12];
-                            #endregion
-
-                            for (byte i = 1; i < cellMatches.Count; i++)
-                            {
-                                #region Variables
-                                string Value;
-                                #endregion
-
-                                Value = cellMatches[i].Groups[1].Value
-                                    .Trim()
-                                    // Eliminar puntos
-                                    .Replace(
-                                        oldValue: ".",
-                                        newValue: ""
-                                    )
-                                    // Cambiar comas por puntos
-                                    .Replace(
-                                        oldValue: ",",
-                                        newValue: "."
-                                    );
-
-                                #region Guardar Valores
-                                switch (float.TryParse(s: Value,
-                                                       style: NumberStyles.Number,
-                                                       provider: CultureInfo.InvariantCulture,
-                                                       result: out float currencyValue))
-                                {
-                                    case true:
-                                        Values[i - 1] = currencyValue;
-                                        break;
-                                    case false:
-                                        Values[i - 1] = float.NaN;
-                                        break;
-                                }
-                                #endregion
-                            }
-
-                            lock (LockObject)
-                            {
-                                Data[day] = Values;
-                            }
-                        }
+                        ParseData(CellMatches: cellMatches);
                     }
                 }
             );
 
             return Data;
+        }
+
+        private static void ParseData(MatchCollection CellMatches)
+        {
+            // Primera celda: el día
+            if (byte.TryParse(s: Regex.Replace(input: CellMatches[0].Groups[1].Value,
+                                               pattern: @"\D",
+                                               replacement: ""),
+                              result: out byte day))
+            {
+                #region Arrays
+                float[] Values = new float[12];
+                #endregion
+
+                for (byte i = 1; i < CellMatches.Count; i++)
+                {
+                    #region Variables
+                    string Value;
+                    #endregion
+
+                    Value = CellMatches[i].Groups[1].Value
+                        .Trim()
+                        // Eliminar puntos
+                        .Replace(
+                            oldValue: ".",
+                            newValue: ""
+                        )
+                        // Cambiar comas por puntos
+                        .Replace(
+                            oldValue: ",",
+                            newValue: "."
+                        );
+
+                    #region Guardar Valores
+                    switch (float.TryParse(s: Value,
+                                           style: NumberStyles.Number,
+                                           provider: CultureInfo.InvariantCulture,
+                                           result: out float currencyValue))
+                    {
+                        case true:
+                            Values[i - 1] = currencyValue;
+                            break;
+                        case false:
+                            Values[i - 1] = float.NaN;
+                            break;
+                    }
+                    #endregion
+                }
+
+                lock (LockObject)
+                {
+                    Data[day] = Values;
+                }
+            }
         }
     }
 }
