@@ -5,26 +5,29 @@ namespace API
 {
     internal static class Utils
     {
+        #region Variables
+        private static ParallelOptions parallelForEachOptions;
+        #endregion
+
+
+
         #region Constructor Method
         static Utils()
         {
-
+            parallelForEachOptions = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = Environment.ProcessorCount,
+                TaskScheduler = TaskScheduler.Current
+            };
         }
         #endregion
 
 
 
         #region Field
-        internal static ParallelOptions parallelOptions
+        internal static ParallelOptions ParallelForEachOptions
         {
-            get
-            {
-                return new ParallelOptions
-                {
-                    MaxDegreeOfParallelism = Environment.ProcessorCount,
-                    TaskScheduler = TaskScheduler.Current
-                };
-            }
+            get => parallelForEachOptions;
         }
         #endregion
 

@@ -52,7 +52,7 @@ namespace API.App.Context.Tool
 
             await Parallel.ForEachAsync(
                 source: Data,
-                parallelOptions: Utils.parallelOptions,
+                parallelOptions: Utils.ParallelForEachOptions,
                 body: async (item, cancellationToken) =>
                 {
                     var (day, values) = item;

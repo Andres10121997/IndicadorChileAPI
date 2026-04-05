@@ -110,7 +110,7 @@ namespace API.App.Context.Tool
 
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
-                parallelOptions: Utils.parallelOptions,
+                parallelOptions: Utils.ParallelForEachOptions,
                 body: async (rowMatch, cancellationToken) =>
                 {
                     #region Variables
