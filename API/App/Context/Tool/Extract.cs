@@ -123,7 +123,7 @@ namespace API.App.Context.Tool
 
                     if (cellMatches.Count > 0)
                     {
-                        ParseData(CellMatches: cellMatches);
+                        ParseAndSetData(CellMatches: cellMatches);
                     }
                 }
             );
@@ -131,17 +131,19 @@ namespace API.App.Context.Tool
             return Data;
         }
 
-        private static void ParseData(MatchCollection CellMatches)
+        private static void ParseAndSetData(MatchCollection CellMatches)
         {
+            #region Collections
+            float[] Values;
+            #endregion
+
             // Primera celda: el día
             if (byte.TryParse(s: Regex.Replace(input: CellMatches[0].Groups[1].Value,
                                                pattern: @"\D",
                                                replacement: ""),
                               result: out byte day))
             {
-                #region Arrays
-                float[] Values = new float[12];
-                #endregion
+                Values = new float[12];
 
                 for (byte i = 1; i < CellMatches.Count; i++)
                 {
