@@ -128,14 +128,14 @@ namespace API.App.Context
 
 
             return this.CurrencyList
-                       .AsParallel<CurrencyModel>()
-                       .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
-                                                        &&
-                                                        !float.IsInfinity(f: Model.Currency)
-                                                        &&
-                                                        !float.IsNegative(f: Model.Currency))
-                       .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                       .ToArray<CurrencyModel>();
+                .AsParallel<CurrencyModel>()
+                .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
+                                                          &&
+                                                          !float.IsInfinity(f: Model.Currency)
+                                                          &&
+                                                          !float.IsNegative(f: Model.Currency))
+                .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
+                .ToArray<CurrencyModel>();
         }
 
         public async Task<CurrencyModel[]> MonthlyValuesAsync()
@@ -143,11 +143,11 @@ namespace API.App.Context
             this.CurrencyList = await this.AnnualValuesAsync();
             
             return this.CurrencyList
-                       .AsParallel<CurrencyModel>()
-                       .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
-                                                                 &&
-                                                                 Model.Date.Month == this.SearchFilter.Month)
-                       .ToArray<CurrencyModel>();
+                .AsParallel<CurrencyModel>()
+                .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
+                                                          &&
+                                                          Model.Date.Month == this.SearchFilter.Month)
+                .ToArray<CurrencyModel>();
         }
 
         public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
@@ -187,7 +187,10 @@ namespace API.App.Context
         #region HTML
         protected async Task<string> GetHtmlContentAsync()
         {
-            using (HttpClient client = new HttpClient()) return await client.GetStringAsync(requestUri: this.Url);
+            using (HttpClient client = new HttpClient())
+            {
+                return await client.GetStringAsync(requestUri: this.Url);
+            }
         }
         #endregion
     }

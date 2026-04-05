@@ -28,6 +28,7 @@ namespace API
         internal static ParallelOptions ParallelForEachOptions
         {
             get => parallelForEachOptions;
+            set => parallelForEachOptions = value;
         }
         #endregion
     }
