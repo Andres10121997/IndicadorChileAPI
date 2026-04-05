@@ -114,8 +114,8 @@ namespace API.App.Context.Tool
                 body: async (rowMatch, cancellationToken) =>
                 {
                     #region Variables
-                string rowHtml;
-                string cellPattern;
+                    string rowHtml;
+                    string cellPattern;
                     #endregion
 
                     #region Collection
@@ -135,7 +135,10 @@ namespace API.App.Context.Tool
                     if (cellMatches.Count > 0)
                     {
                         // Primera celda: el día
-                        if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value, pattern: @"\D", replacement: ""), result: out byte day))
+                        if (byte.TryParse(s: Regex.Replace(input: cellMatches[0].Groups[1].Value,
+                                                           pattern: @"\D",
+                                                           replacement: ""),
+                                          result: out byte day))
                         {
                             #region Arrays
                             float[] Values = new float[12];

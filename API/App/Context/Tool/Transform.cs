@@ -53,9 +53,9 @@ namespace API.App.Context.Tool
             await Parallel.ForEachAsync<KeyValuePair<byte, float[]>>(
                 source: Data,
                 parallelOptions: Utils.ParallelForEachOptions,
-                body: async (item, cancellationToken) =>
+                body: async (Item, cancellationToken) =>
                 {
-                    var (day, values) = item;
+                    var (day, values) = Item;
 
                     for (byte month = 1; month <= values.Length; month++)
                     {
@@ -109,6 +109,8 @@ namespace API.App.Context.Tool
                             hour: 0,
                             minute: 0,
                             second: 0,
+                            millisecond: 0,
+                            microsecond: 0,
                             offset: TimeSpan.Zero
                         )
                     ),
