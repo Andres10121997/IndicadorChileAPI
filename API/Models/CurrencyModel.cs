@@ -17,9 +17,9 @@ namespace API.Models
                 AutoGenerateFilter = false,
                 Description = "https://www.youtube.com/shorts/UwcOL3ZL3go",
                 GroupName = nameof(CurrencyModel),
-                Name = "Identificador",
+                Name = "Identificador único",
                 Order = 1,
-                Prompt = "Ingrese el identificador único aquí.",
+                Prompt = "Ingrese el identificador único único aquí.",
                 ShortName = "ID"
             ),
             Editable(
@@ -93,7 +93,7 @@ namespace API.Models
                 AutoGenerateFilter = false,
                 Description = "",
                 GroupName = nameof(CurrencyModel),
-                Name = "Valor Divisa",
+                Name = "Valor divisa",
                 Order = 4,
                 Prompt = "Ingrese aquí el valor de la divisa.",
                 ShortName = "Divisa"
