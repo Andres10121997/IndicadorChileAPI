@@ -48,9 +48,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
+      id: checkoutCode
       uses: actions/checkout@v4 # Obtiene el código de tu repositorio
 
     - name: Log in to GitHub Container Registry
+      id: logInGitHub
       uses: docker/login-action@v3 # Permite iniciar sesión en el registro de contenedores
       with:
         registry: ghcr.io # Usa el registro de contenedores de GitHub
@@ -58,6 +60,7 @@ jobs:
         password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
 
     - name: Build and push Docker image
+      id: buildPushImage
       uses: docker/build-push-action@v6 # Acción para construir y subir imágenes de Docker
       with:
         context: . # Construye desde el directorio raíz del proyecto
