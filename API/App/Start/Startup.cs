@@ -58,9 +58,9 @@ namespace API.App.Start
                     fixedWindowOptions =>
                     {
                         fixedWindowOptions.PermitLimit = 4; // Solicitudes máximas permitidas
-                        fixedWindowOptions.Window = TimeSpan.FromSeconds(seconds: 12); // Ventana de tiempo
+                        fixedWindowOptions.Window = TimeSpan.FromSeconds(seconds: 15); // Ventana de tiempo
                         fixedWindowOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst; // Cómo manejar solicitudes en cola
-                        fixedWindowOptions.QueueLimit = 2; // Máximo de solicitudes para hacer cola
+                        fixedWindowOptions.QueueLimit = 1; // Máximo de solicitudes para hacer cola
                     });
             });
 
