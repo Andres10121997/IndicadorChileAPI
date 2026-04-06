@@ -27,15 +27,23 @@ namespace API.Controllers
         #region Constructor Method
         public SIIController(ILogger<SIIController> Logger)
             : base(Logger: Logger,
-                   URLs: new Dictionary<CurrencyTypeEnum, string>
+                   URLs: new Dictionary<CurrencyTypeEnum, string[]>
                          {
                              {
                                  CurrencyTypeEnum.USD,
-                                 "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm"
+                                 new string[]
+                                 {
+                                     "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
+                                     "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm"
+                                 }
                              },
                              {
                                  CurrencyTypeEnum.UF,
-                                 "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm"
+                                 new string[]
+                                 {
+                                     "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
+                                     "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm"
+                                 }
                              }
                          })
         {
@@ -77,25 +85,26 @@ namespace API.Controllers
         {
             try
             {
-                if (!ModelState.IsValid)
-                {
-                    return this.BadRequest(
-                        error: SearchFilter
-                    );
-                }
-
-                switch (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out string? Value))
+                switch (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out string[]? Values))
                 {
                     case true:
-                        return this.Ok(
-                            value: await CurrencyInfo.CurrencyHeaderAsync(
+                        foreach (string Value in Values)
+                        {
+                            var Currency = await CurrencyInfo.CurrencyHeaderAsync(
                                 Url: Value,
                                 SearchFilter: SearchFilter
-                            )
-                        );
+                            );
+
+                            if (Currency is not null)
+                            {
+                                return this.Ok(value: Currency);
+                            }
+                        }
+
+                        return this.NoContent();
                     case false:
                         return this.NotFound(
-                            value: Value
+                            value: Values
                         );
                 }
             }

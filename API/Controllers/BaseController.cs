@@ -23,7 +23,7 @@ namespace API.Controllers
 
         #region Readonly
         private readonly ILogger<BaseController> Logger;
-        private readonly Dictionary<CurrencyTypeEnum, string> urls;
+        private readonly Dictionary<CurrencyTypeEnum, string[]> urls;
         #endregion
 
         #region Enum
@@ -38,7 +38,7 @@ namespace API.Controllers
 
         #region Constructor Method
         public BaseController(ILogger<BaseController> Logger,
-                              Dictionary<CurrencyTypeEnum, string> URLs)
+                              Dictionary<CurrencyTypeEnum, string[]> URLs)
             : base()
         {
             #region Readonly
@@ -82,7 +82,7 @@ namespace API.Controllers
         #endregion
 
         #region Readonly
-        protected Dictionary<CurrencyTypeEnum, string> URLs
+        protected Dictionary<CurrencyTypeEnum, string[]> URLs
         {
             get => urls;
         }

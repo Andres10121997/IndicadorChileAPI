@@ -119,10 +119,21 @@ namespace API.App.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
+            string TableId;
+
+            if (SearchFilter.Year >= 2013)
+            {
+                TableId = "table_export".Trim();
+            }
+            else
+            {
+                TableId = "tabla".Trim();
+            }
+            
             this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(
                 CurrencyData: await Extract.ValuesAsync(
                     htmlContent: await this.GetHtmlContentAsync(),
-                    tableId: "table_export".Trim()
+                    tableId: TableId
                 )
             );
 
