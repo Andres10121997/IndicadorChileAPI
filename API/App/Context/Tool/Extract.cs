@@ -31,24 +31,27 @@ namespace API.App.Context.Tool
         public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
                                                                         string tableId)
         {
-            #region Dictionary
-            Dictionary<byte, float[]> Data;
-            #endregion
-
-            #region Exception
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: htmlContent);
-
-            ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: tableId);
-            #endregion
-
-            Data = await OrganizeTheDataObtainedAsync(
-                RowMatches: GetTableData(
-                    htmlContent: htmlContent,
-                    tableId: tableId
-                )
+            var Row = GetTableData(
+                htmlContent: htmlContent,
+                tableId: tableId
             );
 
-            return Data;
+            if (Row is not null)
+            {
+                #region Collection
+                Dictionary<byte, float[]> Data;
+                #endregion
+
+                Data = await OrganizeTheDataObtainedAsync(
+                    RowMatches: Row
+                );
+
+                return Data;
+            }
+            else
+            {
+                throw new NullReferenceException(message: nameof(Row));
+            }
         }
 
 
