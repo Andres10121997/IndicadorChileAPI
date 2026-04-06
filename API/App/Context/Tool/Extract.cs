@@ -31,27 +31,19 @@ namespace API.App.Context.Tool
         public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
                                                                         string tableId)
         {
-            var Row = GetTableData(
+            #region Collection
+            Dictionary<byte, float[]> Data;
+            MatchCollection Rows;
+            #endregion
+
+            Rows = GetTableData(
                 htmlContent: htmlContent,
                 tableId: tableId
             );
 
-            if (Row is not null)
-            {
-                #region Collection
-                Dictionary<byte, float[]> Data;
-                #endregion
+            Data = await OrganizeTheDataObtainedAsync(RowMatches: Rows);
 
-                Data = await OrganizeTheDataObtainedAsync(
-                    RowMatches: Row
-                );
-
-                return Data;
-            }
-            else
-            {
-                throw new NullReferenceException(message: nameof(Row));
-            }
+            return Data;
         }
 
 
@@ -124,10 +116,12 @@ namespace API.App.Context.Tool
                         options: RegexOptions.Singleline
                     );
 
-                    if (cellMatches.Count > 0)
-                    {
-                        ParseAndSetData(CellMatches: cellMatches);
-                    }
+                    ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(
+                        value: cellMatches.Count,
+                        other: 0
+                    );
+
+                    ParseAndSetData(CellMatches: cellMatches);
                 }
             );
 
