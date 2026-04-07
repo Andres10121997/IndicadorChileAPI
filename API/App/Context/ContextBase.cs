@@ -11,11 +11,6 @@ namespace API.App.Context
 {
     public class ContextBase
     {
-        #region Readonly
-        private readonly string url;
-        private readonly string tableId;
-        #endregion
-
         #region Variables
         private float currency;
         #endregion
@@ -25,6 +20,7 @@ namespace API.App.Context
         #endregion
 
         #region Objects
+        private CurrencyInfoRecord currencyInfo;
         private SearchFilterModel searchFilter;
         #endregion
 
@@ -35,11 +31,6 @@ namespace API.App.Context
                            SearchFilterModel SearchFilter)
             : base()
         {
-            #region Readonly
-            this.url = CurrencyInfo.Url;
-            this.tableId = CurrencyInfo.TableId;
-            #endregion
-
             #region Variables
             this.currency = 0;
             #endregion
@@ -49,6 +40,7 @@ namespace API.App.Context
             #endregion
 
             #region Objects
+            this.currencyInfo = CurrencyInfo;
             this.searchFilter = SearchFilter;
             #endregion
         }
@@ -57,18 +49,6 @@ namespace API.App.Context
 
 
         #region Field
-        #region Readonly
-        protected string Url
-        {
-            get => this.url;
-        }
-
-        protected string TableId
-        {
-            get => this.tableId;
-        }
-        #endregion
-
         #region Variables
         public float Currency
         {
@@ -130,7 +110,7 @@ namespace API.App.Context
             this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(
                 CurrencyData: await Extract.ValuesAsync(
                     htmlContent: await this.GetHtmlContentAsync(),
-                    tableId: TableId
+                    tableId: this.currencyInfo.TableId
                 )
             );
 
@@ -197,7 +177,7 @@ namespace API.App.Context
         {
             using (HttpClient client = new HttpClient())
             {
-                return await client.GetStringAsync(requestUri: this.Url);
+                return await client.GetStringAsync(requestUri: this.currencyInfo.Url);
             }
         }
         #endregion
