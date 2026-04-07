@@ -101,8 +101,16 @@ namespace API.Controllers
                     case true:
                         foreach (CurrencyInfoRecord Value in Values)
                         {
+                            CurrencyInfoRecord UpdatedValue = Value with
+                            {
+                                Url = Value.Url.Replace(
+                                    oldValue: "{Year}",
+                                    newValue: SearchFilter.Year.ToString()
+                                )
+                            };
+                            
                             var Currency = await CurrencyInfo.CurrencyHeaderAsync(
-                                CurrencyInfo: Value,
+                                CurrencyInfo: UpdatedValue,
                                 SearchFilter: SearchFilter
                             );
 
@@ -112,7 +120,7 @@ namespace API.Controllers
                             }
                         }
 
-                        return this.NoContent();
+                        return this.NotFound();
                     case false:
                         return this.NotFound();
                 }

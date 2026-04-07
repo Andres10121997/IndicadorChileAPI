@@ -36,10 +36,7 @@ namespace API.App.Context
             : base()
         {
             #region Readonly
-            this.url = CurrencyInfo.Url.Replace(
-                oldValue: "{Year}",
-                newValue: SearchFilter.Year.ToString()
-            );
+            this.url = CurrencyInfo.Url;
             this.tableId = CurrencyInfo.TableId;
             #endregion
 
