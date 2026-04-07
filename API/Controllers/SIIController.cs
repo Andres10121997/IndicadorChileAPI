@@ -65,12 +65,6 @@ namespace API.Controllers
                 Type = typeof(CurrencyListHeaderModel)
             ),
             ProducesResponseType(
-                type: typeof(SearchFilterModel),
-                statusCode: StatusCodes.Status400BadRequest,
-                StatusCode = StatusCodes.Status400BadRequest,
-                Type = typeof(SearchFilterModel)
-            ),
-            ProducesResponseType(
                 statusCode: StatusCodes.Status404NotFound,
                 StatusCode = StatusCodes.Status404NotFound
             ),
@@ -103,9 +97,7 @@ namespace API.Controllers
 
                         return this.NoContent();
                     case false:
-                        return this.NotFound(
-                            value: Values
-                        );
+                        return this.NotFound();
                 }
             }
             catch (Exception ex)
