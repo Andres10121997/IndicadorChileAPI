@@ -1,4 +1,5 @@
 ﻿using API.App.Context;
+using API.App.Record;
 using API.Models;
 using API.Models.Get;
 using System;
@@ -17,7 +18,7 @@ namespace API.App.Information
 
 
 
-        public static async Task<CurrencyListHeaderModel> CurrencyHeaderAsync(string Url,
+        public static async Task<CurrencyListHeaderModel> CurrencyHeaderAsync(CurrencyInfoRecord CurrencyInfo,
                                                                               SearchFilterModel SearchFilter)
         {
             #region Variables
@@ -48,13 +49,13 @@ namespace API.App.Information
                 Year = SearchFilter.Year,
                 MonthName = MonthName,
                 Currencies = await GetCurrenciesAsync(SearchFilter: SearchFilter,
-                                                      Url: Url)
+                                                      CurrencyInfo: CurrencyInfo)
             };
 
             return CurrencyList;
         }
 
-        public static async Task<CurrencyModel[]> GetCurrenciesAsync(string Url,
+        public static async Task<CurrencyModel[]> GetCurrenciesAsync(CurrencyInfoRecord CurrencyInfo,
                                                                      SearchFilterModel SearchFilter)
         {
             #region Objects
@@ -62,10 +63,7 @@ namespace API.App.Information
             #endregion
 
             Context = new ContextBase(
-                Url: Url.Replace(
-                    oldValue: "{Year}",
-                    newValue: SearchFilter.Year.ToString()
-                ),
+                CurrencyInfo: CurrencyInfo,
                 SearchFilter: SearchFilter
             );
 

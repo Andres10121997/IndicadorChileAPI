@@ -1,4 +1,5 @@
 ﻿using API.App.Information;
+using API.App.Record;
 using API.Models;
 using API.Models.Get;
 using Microsoft.AspNetCore.Http;
@@ -27,22 +28,38 @@ namespace API.Controllers
         #region Constructor Method
         public SIIController(ILogger<SIIController> Logger)
             : base(Logger: Logger,
-                   URLs: new Dictionary<CurrencyTypeEnum, string[]>
+                   URLs: new Dictionary<CurrencyTypeEnum, CurrencyInfoRecord[]>
                          {
                              {
                                  CurrencyTypeEnum.USD,
-                                 new string[]
+                                 new CurrencyInfoRecord[]
                                  {
-                                     "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
-                                     "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm"
+                                     new CurrencyInfoRecord
+                                     {
+                                         Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
+                                         TableId = "table_export"
+                                     },
+                                     new CurrencyInfoRecord
+                                     {
+                                         Url = "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm",
+                                         TableId = "tabla"
+                                     }
                                  }
                              },
                              {
                                  CurrencyTypeEnum.UF,
-                                 new string[]
+                                 new CurrencyInfoRecord[]
                                  {
-                                     "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
-                                     "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm"
+                                     new CurrencyInfoRecord
+                                     {
+                                         Url = "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
+                                         TableId = "table_export"
+                                     },
+                                     new CurrencyInfoRecord
+                                     {
+                                         Url = "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm",
+                                         TableId = "tabla"
+                                     }
                                  }
                              }
                          })
@@ -79,13 +96,13 @@ namespace API.Controllers
         {
             try
             {
-                switch (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out string[]? Values))
+                switch (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out CurrencyInfoRecord[]? Values))
                 {
                     case true:
-                        foreach (string Value in Values)
+                        foreach (CurrencyInfoRecord Value in Values)
                         {
                             var Currency = await CurrencyInfo.CurrencyHeaderAsync(
-                                Url: Value,
+                                CurrencyInfo: Value,
                                 SearchFilter: SearchFilter
                             );
 

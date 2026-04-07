@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using API.App.Record;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace API.Controllers
 
         #region Readonly
         private readonly ILogger<BaseController> Logger;
-        private readonly Dictionary<CurrencyTypeEnum, string[]> urls;
+        private readonly Dictionary<CurrencyTypeEnum, CurrencyInfoRecord[]> urls;
         #endregion
 
         #region Enum
@@ -38,7 +39,7 @@ namespace API.Controllers
 
         #region Constructor Method
         public BaseController(ILogger<BaseController> Logger,
-                              Dictionary<CurrencyTypeEnum, string[]> URLs)
+                              Dictionary<CurrencyTypeEnum, CurrencyInfoRecord[]> URLs)
             : base()
         {
             #region Readonly
@@ -82,7 +83,7 @@ namespace API.Controllers
         #endregion
 
         #region Readonly
-        protected Dictionary<CurrencyTypeEnum, string[]> URLs
+        protected Dictionary<CurrencyTypeEnum, CurrencyInfoRecord[]> URLs
         {
             get => urls;
         }

@@ -1,4 +1,5 @@
 ﻿using API.App.Context.Tool;
+using API.App.Record;
 using API.Models;
 using API.Models.Get;
 using System;
@@ -12,6 +13,7 @@ namespace API.App.Context
     {
         #region Readonly
         private readonly string url;
+        private readonly string tableId;
         #endregion
 
         #region Variables
@@ -29,12 +31,16 @@ namespace API.App.Context
 
 
         #region Constructor Method
-        public ContextBase(string Url,
+        public ContextBase(CurrencyInfoRecord CurrencyInfo,
                            SearchFilterModel SearchFilter)
             : base()
         {
             #region Readonly
-            this.url = Url;
+            this.url = CurrencyInfo.Url.Replace(
+                oldValue: "{Year}",
+                newValue: SearchFilter.Year.ToString()
+            );
+            this.tableId = CurrencyInfo.TableId;
             #endregion
 
             #region Variables
@@ -57,7 +63,12 @@ namespace API.App.Context
         #region Readonly
         protected string Url
         {
-            get => this.url.Trim();
+            get => this.url;
+        }
+
+        protected string TableId
+        {
+            get => this.tableId;
         }
         #endregion
 
@@ -119,17 +130,6 @@ namespace API.App.Context
         #region Values
         public async Task<CurrencyModel[]> AnnualValuesAsync()
         {
-            string TableId;
-
-            if (SearchFilter.Year >= 2013)
-            {
-                TableId = "table_export".Trim();
-            }
-            else
-            {
-                TableId = "tabla".Trim();
-            }
-            
             this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(
                 CurrencyData: await Extract.ValuesAsync(
                     htmlContent: await this.GetHtmlContentAsync(),
