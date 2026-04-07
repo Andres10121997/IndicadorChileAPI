@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace API.App.Record.Currency
 {
-    public sealed record CurrencyListHeaderModel
+    public sealed record CurrencyListHeaderRecord
     {
         #region Field
         [
@@ -16,7 +16,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyListHeaderModel),
+                GroupName = nameof(CurrencyListHeaderRecord),
                 Name = "Fecha de la consulta",
                 Order = 1,
                 Prompt = "Ingrese aquí la fecha de la consulta.",
@@ -55,7 +55,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyListHeaderModel),
+                GroupName = nameof(CurrencyListHeaderRecord),
                 Name = "Hora de la consulta",
                 Order = 2,
                 Prompt = "Ingrese aquí la hora de la consulta",
@@ -76,7 +76,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyListHeaderModel),
+                GroupName = nameof(CurrencyListHeaderRecord),
                 Name = "Año",
                 Order = 3,
                 Prompt = "Ingrese aquí el año.",
@@ -115,7 +115,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyListHeaderModel),
+                GroupName = nameof(CurrencyListHeaderRecord),
                 Name = "Nombre del mes",
                 Order = 4,
                 Prompt = "Ingrese aquí el nombre del mes.",
@@ -167,7 +167,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyListHeaderModel),
+                GroupName = nameof(CurrencyListHeaderRecord),
                 Name = "Lista de divisas",
                 Order = 5,
                 Prompt = "",
@@ -178,14 +178,14 @@ namespace API.App.Record.Currency
             ),
             MinLength(
                 length: 1,
-                ErrorMessageResourceType = typeof(CurrencyModel[])
+                ErrorMessageResourceType = typeof(CurrencyRecord[])
             ),
             Required(
                 AllowEmptyStrings = false,
-                ErrorMessageResourceType = typeof(CurrencyModel[])
+                ErrorMessageResourceType = typeof(CurrencyRecord[])
             )
         ]
-        public required CurrencyModel[] Currencies { get; init; }
+        public required CurrencyRecord[] Currencies { get; init; }
         #endregion
     }
 }

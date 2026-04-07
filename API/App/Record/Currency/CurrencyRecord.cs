@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.App.Record.Currency
 {
-    public sealed record CurrencyModel : IValidatableObject
+    public sealed record CurrencyRecord : IValidatableObject
     {
         #region Field
         [
@@ -16,7 +16,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "https://www.youtube.com/shorts/UwcOL3ZL3go",
-                GroupName = nameof(CurrencyModel),
+                GroupName = nameof(CurrencyRecord),
                 Name = "Identificador único",
                 Order = 1,
                 Prompt = "Ingrese el identificador único único aquí.",
@@ -42,7 +42,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyModel),
+                GroupName = nameof(CurrencyRecord),
                 Name = "Fecha",
                 Order = 2,
                 Prompt = "Ingrese aquí la fecha.",
@@ -67,7 +67,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyModel),
+                GroupName = nameof(CurrencyRecord),
                 Name = "Nombre del día de la semana",
                 Order = 3,
                 Prompt = "Ingrese aquí el nombre del día de la semana.",
@@ -92,7 +92,7 @@ namespace API.App.Record.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyModel),
+                GroupName = nameof(CurrencyRecord),
                 Name = "Valor divisa",
                 Order = 4,
                 Prompt = "Ingrese aquí el valor de la divisa.",

@@ -1,5 +1,5 @@
 ﻿using API.App.Record.Currency;
-using API.Models.Get;
+using API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,11 +94,11 @@ namespace API.App.Context.Tool
             return ModelList.ToArray<TModel>();
         }
 
-        public async Task<CurrencyModel[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
+        public async Task<CurrencyRecord[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
         {
-            return await this.ToModelsAsync<CurrencyModel>(
+            return await this.ToModelsAsync<CurrencyRecord>(
                 Data: CurrencyData,
-                ModelFactory: (Date, Value) => new CurrencyModel
+                ModelFactory: (Date, Value) => new CurrencyRecord
                 {
                     // https://www.youtube.com/shorts/UwcOL3ZL3go
                     ID = Guid.CreateVersion7(

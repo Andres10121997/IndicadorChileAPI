@@ -1,6 +1,6 @@
 ﻿using API.App.Context.Tool;
 using API.App.Record.Currency;
-using API.Models.Get;
+using API.Models;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -15,7 +15,7 @@ namespace API.App.Context
         #endregion
 
         #region Collections
-        private CurrencyModel[] currencyList;
+        private CurrencyRecord[] currencyList;
         #endregion
 
         #region Objects
@@ -35,7 +35,7 @@ namespace API.App.Context
             #endregion
 
             #region Collections
-            this.currencyList = Array.Empty<CurrencyModel>();
+            this.currencyList = Array.Empty<CurrencyRecord>();
             #endregion
 
             #region Objects
@@ -78,7 +78,7 @@ namespace API.App.Context
         #endregion
 
         #region Arrays
-        public CurrencyModel[] CurrencyList
+        public CurrencyRecord[] CurrencyList
         {
             get => this.currencyList;
             set
@@ -104,7 +104,7 @@ namespace API.App.Context
 
 
         #region Values
-        public async Task<CurrencyModel[]> AnnualValuesAsync()
+        public async Task<CurrencyRecord[]> AnnualValuesAsync()
         {
             this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(
                 CurrencyData: await Extract.ValuesAsync(
@@ -114,51 +114,51 @@ namespace API.App.Context
             );
 
             return this.CurrencyList
-                .AsParallel<CurrencyModel>()
-                .Where<CurrencyModel>(predicate: Model => !float.IsNaN(f: Model.Currency)
+                .AsParallel<CurrencyRecord>()
+                .Where<CurrencyRecord>(predicate: Model => !float.IsNaN(f: Model.Currency)
                                                           &&
                                                           !float.IsInfinity(f: Model.Currency)
                                                           &&
                                                           !float.IsNegative(f: Model.Currency))
-                .OrderBy<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                .ToArray<CurrencyModel>();
+                .OrderBy<CurrencyRecord, DateOnly>(keySelector: Model => Model.Date)
+                .ToArray<CurrencyRecord>();
         }
 
-        public async Task<CurrencyModel[]> MonthlyValuesAsync()
+        public async Task<CurrencyRecord[]> MonthlyValuesAsync()
         {
             this.CurrencyList = await this.AnnualValuesAsync();
             
             return this.CurrencyList
-                .AsParallel<CurrencyModel>()
-                .Where<CurrencyModel>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
+                .AsParallel<CurrencyRecord>()
+                .Where<CurrencyRecord>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
                                                           &&
                                                           Model.Date.Month == this.SearchFilter.Month)
-                .ToArray<CurrencyModel>();
+                .ToArray<CurrencyRecord>();
         }
 
-        public async Task<CurrencyModel> DailyValueAsync(DateOnly Date)
+        public async Task<CurrencyRecord> DailyValueAsync(DateOnly Date)
         {
             #region Objects
-            CurrencyModel? Value;
+            CurrencyRecord? Value;
             #endregion
 
             this.CurrencyList = await this.MonthlyValuesAsync();
 
             // Buscar valor exacto
             Value = this.CurrencyList
-                        .FirstOrDefault<CurrencyModel>(predicate: model => model.Date == Date)
+                        .FirstOrDefault<CurrencyRecord>(predicate: model => model.Date == Date)
                     ??
                     // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
                     this.CurrencyList
-                        .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
-                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                        .FirstOrDefault<CurrencyModel>()
+                        .Where<CurrencyRecord>(predicate: Model => Model.Date < Date)
+                        .OrderByDescending<CurrencyRecord, DateOnly>(keySelector: Model => Model.Date)
+                        .FirstOrDefault<CurrencyRecord>()
                     ??
                     // Si aún no se encuentra, buscar en valores anuales
                     (await this.AnnualValuesAsync())
-                        .Where<CurrencyModel>(predicate: Model => Model.Date < Date)
-                        .OrderByDescending<CurrencyModel, DateOnly>(keySelector: Model => Model.Date)
-                        .FirstOrDefault<CurrencyModel>();
+                        .Where<CurrencyRecord>(predicate: Model => Model.Date < Date)
+                        .OrderByDescending<CurrencyRecord, DateOnly>(keySelector: Model => Model.Date)
+                        .FirstOrDefault<CurrencyRecord>();
 
             #region Exception
             ArgumentNullException.ThrowIfNull(argument: Value);

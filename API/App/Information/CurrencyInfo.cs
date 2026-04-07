@@ -1,6 +1,6 @@
 ﻿using API.App.Context;
 using API.App.Record.Currency;
-using API.Models.Get;
+using API.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -17,7 +17,7 @@ namespace API.App.Information
 
 
 
-        public static async Task<CurrencyListHeaderModel> CurrencyHeaderAsync(CurrencyInfoRecord CurrencyInfo,
+        public static async Task<CurrencyListHeaderRecord> CurrencyHeaderAsync(CurrencyInfoRecord CurrencyInfo,
                                                                               SearchFilterModel SearchFilter)
         {
             #region Variables
@@ -26,7 +26,7 @@ namespace API.App.Information
             #endregion
 
             #region Objects
-            CurrencyListHeaderModel CurrencyList;
+            CurrencyListHeaderRecord CurrencyList;
             #endregion
 
             MonthName = SearchFilter.Month.HasValue
@@ -41,7 +41,7 @@ namespace API.App.Information
             
             Now = DateTime.Now;
 
-            CurrencyList = new CurrencyListHeaderModel()
+            CurrencyList = new CurrencyListHeaderRecord()
             {
                 ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                 ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
@@ -54,7 +54,7 @@ namespace API.App.Information
             return CurrencyList;
         }
 
-        public static async Task<CurrencyModel[]> GetCurrenciesAsync(CurrencyInfoRecord CurrencyInfo,
+        public static async Task<CurrencyRecord[]> GetCurrenciesAsync(CurrencyInfoRecord CurrencyInfo,
                                                                      SearchFilterModel SearchFilter)
         {
             #region Objects

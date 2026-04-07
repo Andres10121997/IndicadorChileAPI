@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models.Get
+namespace API.Models
 {
     public sealed record SearchFilterModel : IValidatableObject
     {

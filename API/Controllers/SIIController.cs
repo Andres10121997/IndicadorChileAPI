@@ -1,6 +1,6 @@
 ﻿using API.App.Information;
 using API.App.Record.Currency;
-using API.Models.Get;
+using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -75,10 +75,10 @@ namespace API.Controllers
                 template: "[action]"
             ),
             ProducesResponseType(
-                type: typeof(CurrencyListHeaderModel),
+                type: typeof(CurrencyListHeaderRecord),
                 statusCode: StatusCodes.Status200OK,
                 StatusCode = StatusCodes.Status200OK,
-                Type = typeof(CurrencyListHeaderModel)
+                Type = typeof(CurrencyListHeaderRecord)
             ),
             ProducesResponseType(
                 statusCode: StatusCodes.Status404NotFound,
@@ -91,7 +91,7 @@ namespace API.Controllers
                 Type = typeof(Exception)
             )
         ]
-        public async Task<ActionResult<CurrencyListHeaderModel>> GetCurrencyListAsync(SearchFilterModel SearchFilter)
+        public async Task<ActionResult<CurrencyListHeaderRecord>> GetCurrencyListAsync(SearchFilterModel SearchFilter)
         {
             try
             {
