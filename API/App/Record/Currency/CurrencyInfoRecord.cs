@@ -1,4 +1,4 @@
-﻿namespace API.App.Record
+﻿namespace API.App.Record.Currency
 {
     public sealed record CurrencyInfoRecord
     {

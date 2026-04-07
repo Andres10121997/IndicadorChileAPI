@@ -1,6 +1,5 @@
 ﻿using API.App.Information;
-using API.App.Record;
-using API.Models;
+using API.App.Record.Currency;
 using API.Models.Get;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

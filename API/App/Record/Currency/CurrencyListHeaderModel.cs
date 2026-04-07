@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-namespace API.Models
+namespace API.App.Record.Currency
 {
     public sealed record CurrencyListHeaderModel
     {

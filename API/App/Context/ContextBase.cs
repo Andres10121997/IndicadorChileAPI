@@ -1,6 +1,5 @@
 ﻿using API.App.Context.Tool;
-using API.App.Record;
-using API.Models;
+using API.App.Record.Currency;
 using API.Models.Get;
 using System;
 using System.Linq;
@@ -15,7 +14,7 @@ namespace API.App.Context
         private float currency;
         #endregion
 
-        #region Arrays
+        #region Collections
         private CurrencyModel[] currencyList;
         #endregion
 
@@ -35,7 +34,7 @@ namespace API.App.Context
             this.currency = 0;
             #endregion
 
-            #region Arrays
+            #region Collections
             this.currencyList = Array.Empty<CurrencyModel>();
             #endregion
 
@@ -113,7 +112,6 @@ namespace API.App.Context
                     tableId: this.currencyInfo.TableId
                 )
             );
-
 
             return this.CurrencyList
                 .AsParallel<CurrencyModel>()

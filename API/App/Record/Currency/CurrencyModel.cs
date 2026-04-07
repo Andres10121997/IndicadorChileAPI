@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models
+namespace API.App.Record.Currency
 {
     public sealed record CurrencyModel : IValidatableObject
     {
