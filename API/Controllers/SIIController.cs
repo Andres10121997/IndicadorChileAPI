@@ -117,37 +117,34 @@ namespace API.Controllers
                             bool[] CurrencyValidation;
                             #endregion
 
-                            #region Object
-                            CurrencyListHeaderRecord? Currency;
-                            #endregion
-
                             Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
-                            CurrencyInfoRecord UpdatedValue = Value with
+                            CurrencyValidation = new bool[2]
                             {
-                                Url = Value.Url.Replace(
-                                    oldValue: "{Year}",
-                                    newValue: SearchFilter.Year.ToString()
-                                )
+                                SearchFilter.Year >= Value.StartDate.Year,
+                                SearchFilter.Year <= Value.EndDate.Year
                             };
 
-                            CurrencyValidation = new bool[]
+                            if (CurrencyValidation.All(value => value == true))
                             {
-                                SearchFilter.Year >= UpdatedValue.StartDate.Year,
-                                SearchFilter.Year <= UpdatedValue.EndDate.Year
-                            };
+                                #region Object
+                                CurrencyListHeaderRecord Currency;
+                                CurrencyInfoRecord UpdatedValue;
+                                #endregion
 
-                            Currency = CurrencyValidation.All(value => value == true)
-                                ?
-                                await CurrencyInfo.CurrencyHeaderAsync(
+                                UpdatedValue = Value with
+                                {
+                                    Url = Value.Url.Replace(
+                                        oldValue: "{Year}",
+                                        newValue: SearchFilter.Year.ToString()
+                                    )
+                                };
+
+                                Currency = await CurrencyInfo.CurrencyHeaderAsync(
                                     CurrencyInfo: UpdatedValue,
                                     SearchFilter: SearchFilter
-                                )
-                                :
-                                null;
+                                );
 
-                            if (Currency is not null)
-                            {
                                 return this.Ok(value: Currency);
                             }
                         }
