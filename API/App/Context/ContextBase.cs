@@ -2,6 +2,7 @@
 using API.App.Record.Currency;
 using API.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -77,7 +78,7 @@ namespace API.App.Context
         }
         #endregion
 
-        #region Arrays
+        #region Collections
         public CurrencyRecord[] CurrencyList
         {
             get => this.currencyList;
@@ -106,20 +107,30 @@ namespace API.App.Context
         #region Values
         public async Task<CurrencyRecord[]> AnnualValuesAsync()
         {
-            this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(
-                CurrencyData: await Extract.ValuesAsync(
-                    htmlContent: await this.GetHtmlContentAsync(),
-                    tableId: this.currencyInfo.TableId
-                )
+            #region Variables
+            string HtmlContent;
+            #endregion
+
+            #region Collections
+            Dictionary<byte, float[]> Values;
+            #endregion
+
+            HtmlContent = await this.GetHtmlContentAsync();
+
+            Values = await Extract.ValuesAsync(
+                htmlContent: HtmlContent,
+                tableId: this.currencyInfo.TableId
             );
+
+            this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: Values);
 
             return this.CurrencyList
                 .AsParallel<CurrencyRecord>()
                 .Where<CurrencyRecord>(predicate: Model => !float.IsNaN(f: Model.Currency)
-                                                          &&
-                                                          !float.IsInfinity(f: Model.Currency)
-                                                          &&
-                                                          !float.IsNegative(f: Model.Currency))
+                                                           &&
+                                                           !float.IsInfinity(f: Model.Currency)
+                                                           &&
+                                                           !float.IsNegative(f: Model.Currency))
                 .OrderBy<CurrencyRecord, DateOnly>(keySelector: Model => Model.Date)
                 .ToArray<CurrencyRecord>();
         }
@@ -131,8 +142,8 @@ namespace API.App.Context
             return this.CurrencyList
                 .AsParallel<CurrencyRecord>()
                 .Where<CurrencyRecord>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
-                                                          &&
-                                                          Model.Date.Month == this.SearchFilter.Month)
+                                                           &&
+                                                           Model.Date.Month == this.SearchFilter.Month)
                 .ToArray<CurrencyRecord>();
         }
 

@@ -18,11 +18,15 @@ namespace API.App.Information
 
 
         public static async Task<CurrencyListHeaderRecord> CurrencyHeaderAsync(CurrencyInfoRecord CurrencyInfo,
-                                                                              SearchFilterModel SearchFilter)
+                                                                               SearchFilterModel SearchFilter)
         {
             #region Variables
             string? MonthName;
             DateTime Now;
+            #endregion
+
+            #region Collections
+            CurrencyRecord[] Currencies;
             #endregion
 
             #region Objects
@@ -41,21 +45,25 @@ namespace API.App.Information
             
             Now = DateTime.Now;
 
+            Currencies = await GetCurrenciesAsync(
+                SearchFilter: SearchFilter,
+                CurrencyInfo: CurrencyInfo
+            );
+
             CurrencyList = new CurrencyListHeaderRecord()
             {
                 ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
                 ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
                 Year = SearchFilter.Year,
                 MonthName = MonthName,
-                Currencies = await GetCurrenciesAsync(SearchFilter: SearchFilter,
-                                                      CurrencyInfo: CurrencyInfo)
+                Currencies = Currencies
             };
 
             return CurrencyList;
         }
 
         public static async Task<CurrencyRecord[]> GetCurrenciesAsync(CurrencyInfoRecord CurrencyInfo,
-                                                                     SearchFilterModel SearchFilter)
+                                                                      SearchFilterModel SearchFilter)
         {
             #region Objects
             ContextBase Context;
