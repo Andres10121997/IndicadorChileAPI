@@ -117,6 +117,10 @@ namespace API.Controllers
                             bool[] CurrencyValidation;
                             #endregion
 
+                            #region Object
+                            CurrencyListHeaderRecord? Currency;
+                            #endregion
+
                             Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
                             CurrencyInfoRecord UpdatedValue = Value with
@@ -133,17 +137,17 @@ namespace API.Controllers
                                 SearchFilter.Year <= UpdatedValue.EndDate.Year
                             };
 
-                            if (CurrencyValidation.All(value => value == true))
-                            {
-                                #region Object
-                                CurrencyListHeaderRecord Currency;
-                                #endregion
-
-                                Currency = await CurrencyInfo.CurrencyHeaderAsync(
+                            Currency = CurrencyValidation.All(value => value == true)
+                                ?
+                                await CurrencyInfo.CurrencyHeaderAsync(
                                     CurrencyInfo: UpdatedValue,
                                     SearchFilter: SearchFilter
-                                );
+                                )
+                                :
+                                null;
 
+                            if (Currency is not null)
+                            {
                                 return this.Ok(value: Currency);
                             }
                         }
