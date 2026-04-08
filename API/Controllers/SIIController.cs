@@ -129,8 +129,8 @@ namespace API.Controllers
 
                             CurrencyValidation = new bool[]
                             {
-                                Now >= UpdatedValue.StartDate,
-                                Now <= UpdatedValue.EndDate
+                                SearchFilter.Year >= UpdatedValue.StartDate.Year,
+                                SearchFilter.Year <= UpdatedValue.EndDate.Year
                             };
 
                             if (CurrencyValidation.All(value => value == true))
