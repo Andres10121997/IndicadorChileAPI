@@ -36,12 +36,16 @@ namespace API.Controllers
                                      new CurrencyInfoRecord
                                      {
                                          Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
-                                         TableId = "table_export"
+                                         TableId = "table_export",
+                                         StartDate = new DateOnly(year: 2013, month: 1, day: 1),
+                                         EndDate = DateOnly.FromDateTime(dateTime: DateTime.Now)
                                      },
                                      new CurrencyInfoRecord
                                      {
                                          Url = "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm",
-                                         TableId = "tabla"
+                                         TableId = "tabla",
+                                         StartDate = new DateOnly(year: 1990, month: 1, day: 1),
+                                         EndDate = new DateOnly(year: 2012, month: 12, day: 31)
                                      }
                                  }
                              },
@@ -52,12 +56,16 @@ namespace API.Controllers
                                      new CurrencyInfoRecord
                                      {
                                          Url = "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
-                                         TableId = "table_export"
+                                         TableId = "table_export",
+                                         StartDate = new DateOnly(year: 2013, month: 1, day: 1),
+                                         EndDate = DateOnly.FromDateTime(dateTime: DateTime.Now)
                                      },
                                      new CurrencyInfoRecord
                                      {
                                          Url = "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm",
-                                         TableId = "tabla"
+                                         TableId = "tabla",
+                                         StartDate = new DateOnly(year: 1990, month: 1, day: 1),
+                                         EndDate = new DateOnly(year: 2012, month: 12, day: 31)
                                      }
                                  }
                              }
@@ -100,9 +108,9 @@ namespace API.Controllers
                     case true:
                         foreach (CurrencyInfoRecord Value in Values)
                         {
-                            #region Object
-                            CurrencyListHeaderRecord Currency;
-                            #endregion
+                            DateOnly Now;
+                            
+                            Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
                             CurrencyInfoRecord UpdatedValue = Value with
                             {
@@ -112,13 +120,19 @@ namespace API.Controllers
                                 )
                             };
 
-                            Currency = await CurrencyInfo.CurrencyHeaderAsync(
-                                CurrencyInfo: UpdatedValue,
-                                SearchFilter: SearchFilter
-                            );
-
-                            if (Currency is not null)
+                            if (Now >= UpdatedValue.StartDate
+                                &&
+                                Now <= UpdatedValue.EndDate)
                             {
+                                #region Object
+                                CurrencyListHeaderRecord Currency;
+                                #endregion
+
+                                Currency = await CurrencyInfo.CurrencyHeaderAsync(
+                                    CurrencyInfo: UpdatedValue,
+                                    SearchFilter: SearchFilter
+                                );
+
                                 return this.Ok(value: Currency);
                             }
                         }
