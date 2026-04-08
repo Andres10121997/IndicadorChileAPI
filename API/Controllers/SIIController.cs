@@ -100,6 +100,10 @@ namespace API.Controllers
                     case true:
                         foreach (CurrencyInfoRecord Value in Values)
                         {
+                            #region Object
+                            CurrencyListHeaderRecord Currency;
+                            #endregion
+
                             CurrencyInfoRecord UpdatedValue = Value with
                             {
                                 Url = Value.Url.Replace(
@@ -107,8 +111,8 @@ namespace API.Controllers
                                     newValue: SearchFilter.Year.ToString()
                                 )
                             };
-                            
-                            var Currency = await CurrencyInfo.CurrencyHeaderAsync(
+
+                            Currency = await CurrencyInfo.CurrencyHeaderAsync(
                                 CurrencyInfo: UpdatedValue,
                                 SearchFilter: SearchFilter
                             );
