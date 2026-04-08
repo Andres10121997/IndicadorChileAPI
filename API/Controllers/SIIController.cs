@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -108,8 +109,14 @@ namespace API.Controllers
                     case true:
                         foreach (CurrencyInfoRecord Value in Values)
                         {
+                            #region Variables
                             DateOnly Now;
-                            
+                            #endregion
+
+                            #region Collections
+                            bool[] CurrencyValidation;
+                            #endregion
+
                             Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
 
                             CurrencyInfoRecord UpdatedValue = Value with
@@ -120,9 +127,13 @@ namespace API.Controllers
                                 )
                             };
 
-                            if (Now >= UpdatedValue.StartDate
-                                &&
-                                Now <= UpdatedValue.EndDate)
+                            CurrencyValidation = new bool[]
+                            {
+                                Now >= UpdatedValue.StartDate,
+                                Now <= UpdatedValue.EndDate
+                            };
+
+                            if (CurrencyValidation.All(value => value == true))
                             {
                                 #region Object
                                 CurrencyListHeaderRecord Currency;
