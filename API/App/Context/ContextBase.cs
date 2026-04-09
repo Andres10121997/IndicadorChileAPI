@@ -150,13 +150,13 @@ namespace API.App.Context
         public async Task<CurrencyRecord> DailyValueAsync(DateOnly Date)
         {
             #region Objects
-            CurrencyRecord? Value;
+            CurrencyRecord? value;
             #endregion
 
             this.Currencies = await this.MonthlyValuesAsync();
 
             // Buscar valor exacto
-            Value = this.Currencies
+            value = this.Currencies
                         .FirstOrDefault<CurrencyRecord>(predicate: model => model.Date == Date)
                     ??
                     // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
@@ -172,10 +172,10 @@ namespace API.App.Context
                         .FirstOrDefault<CurrencyRecord>();
 
             #region Exception
-            ArgumentNullException.ThrowIfNull(argument: Value);
+            ArgumentNullException.ThrowIfNull(argument: value);
             #endregion
 
-            return Value;
+            return value;
         }
         #endregion
 

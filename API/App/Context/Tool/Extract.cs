@@ -21,8 +21,13 @@ namespace API.App.Context.Tool
         #region Constructor Method
         static Extract()
         {
+            #region Objects
             lockObject = new object();
+            #endregion
+
+            #region Collections
             data = new Dictionary<byte, float[]>();
+            #endregion
         }
         #endregion
 
@@ -48,15 +53,15 @@ namespace API.App.Context.Tool
                                                                         string TableId)
         {
             #region Collection
-            MatchCollection Rows;
+            MatchCollection rows;
             #endregion
 
-            Rows = GetTableData(
+            rows = GetTableData(
                 HtmlContent: HtmlContent,
                 TableId: TableId
             );
 
-            Data = await OrganizeTheDataObtainedAsync(RowMatches: Rows);
+            Data = await OrganizeTheDataObtainedAsync(RowMatches: rows);
 
             return Data;
         }
@@ -113,21 +118,21 @@ namespace API.App.Context.Tool
                 body: async (RowMatch, CancellationToken) =>
                 {
                     #region Variables
-                    string RowHtml;
-                    string CellPattern;
+                    string rowHtml;
+                    string cellPattern;
                     #endregion
 
                     #region Collection
                     MatchCollection cellMatches;
                     #endregion
 
-                    RowHtml = RowMatch.Groups[1].Value;
+                    rowHtml = RowMatch.Groups[1].Value;
 
                     // Regex para las celdas (<th> y <td>)
-                    CellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
+                    cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
                     cellMatches = Regex.Matches(
-                        input: RowHtml,
-                        pattern: CellPattern,
+                        input: rowHtml,
+                        pattern: cellPattern,
                         options: RegexOptions.Singleline
                     );
 
@@ -146,7 +151,7 @@ namespace API.App.Context.Tool
         private static void ParseAndSetData(MatchCollection CellMatches)
         {
             #region Collections
-            float[] Values;
+            float[] values;
             #endregion
 
             // Primera celda: el día
@@ -155,7 +160,7 @@ namespace API.App.Context.Tool
                                                replacement: ""),
                               result: out byte day))
             {
-                Values = new float[12];
+                values = new float[12];
 
                 for (byte i = 1; i < CellMatches.Count; i++)
                 {
@@ -176,25 +181,23 @@ namespace API.App.Context.Tool
                             newValue: "."
                         );
 
-                    #region Guardar Valores
                     switch (float.TryParse(s: Value,
                                            style: NumberStyles.Number,
                                            provider: CultureInfo.InvariantCulture,
                                            result: out float currencyValue))
                     {
                         case true:
-                            Values[i - 1] = currencyValue;
+                            values[i - 1] = currencyValue;
                             break;
                         case false:
-                            Values[i - 1] = float.NaN;
+                            values[i - 1] = float.NaN;
                             break;
                     }
-                    #endregion
                 }
 
                 lock (LockObject)
                 {
-                    Data[day] = Values;
+                    Data[day] = values;
                 }
             }
         }

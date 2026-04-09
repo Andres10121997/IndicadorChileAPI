@@ -38,16 +38,16 @@ namespace API.App.Context.Tool
                                                            Func<DateOnly, float, TModel> ModelFactory)
         {
             #region Objects
-            object LockObject;
+            object lockObject;
             #endregion
 
-            #region List
-            List<TModel> ModelList;
+            #region Collections
+            List<TModel> modelList;
             #endregion
 
             #region Init
-            LockObject = new object();
-            ModelList = new List<TModel>();
+            lockObject = new object();
+            modelList = new List<TModel>();
             #endregion
 
             await Parallel.ForEachAsync<KeyValuePair<byte, float[]>>(
@@ -82,16 +82,16 @@ namespace API.App.Context.Tool
                                 value
                             );
 
-                            lock (LockObject)
+                            lock (lockObject)
                             {
-                                ModelList.Add(item: model);
+                                modelList.Add(item: model);
                             }
                         }
                     }
                 }
             );
             
-            return ModelList.ToArray<TModel>();
+            return modelList.ToArray<TModel>();
         }
 
         public async Task<CurrencyRecord[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
