@@ -24,15 +24,15 @@ namespace API.Models
                 allowEdit: true
             ),
             EnumDataType(
-                enumType: typeof(BaseController.CurrencyTypeEnum)
+                enumType: typeof(BaseController.currencyTypeEnum)
             ),
             FromQuery,
             Required(
                 AllowEmptyStrings = false,
-                ErrorMessageResourceType = typeof(BaseController.CurrencyTypeEnum)
+                ErrorMessageResourceType = typeof(BaseController.currencyTypeEnum)
             )
         ]
-        public required BaseController.CurrencyTypeEnum CurrencyType { get; init; }
+        public required BaseController.currencyTypeEnum CurrencyType { get; init; }
 
         [
             Display(

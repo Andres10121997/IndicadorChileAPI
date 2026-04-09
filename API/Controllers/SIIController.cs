@@ -20,7 +20,7 @@ namespace API.Controllers
     public sealed class SIIController : BaseController
     {
         #region Interfaces
-        private readonly ILogger<SIIController> Logger;
+        private readonly ILogger<SIIController> logger;
         #endregion
 
 
@@ -28,10 +28,10 @@ namespace API.Controllers
         #region Constructor Method
         public SIIController(ILogger<SIIController> Logger)
             : base(Logger: Logger,
-                   URLs: new Dictionary<CurrencyTypeEnum, CurrencyInfoRecord[]>
+                   URLs: new Dictionary<currencyTypeEnum, CurrencyInfoRecord[]>
                          {
                              {
-                                 CurrencyTypeEnum.USD,
+                                 currencyTypeEnum.USD,
                                  new CurrencyInfoRecord[]
                                  {
                                      new CurrencyInfoRecord
@@ -51,7 +51,7 @@ namespace API.Controllers
                                  }
                              },
                              {
-                                 CurrencyTypeEnum.UF,
+                                 currencyTypeEnum.UF,
                                  new CurrencyInfoRecord[]
                                  {
                                      new CurrencyInfoRecord
@@ -72,7 +72,7 @@ namespace API.Controllers
                              }
                          })
         {
-            this.Logger = Logger;
+            this.logger = Logger;
         }
         #endregion
 

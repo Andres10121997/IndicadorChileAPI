@@ -22,13 +22,16 @@ namespace API.Controllers
         private TimeOnly time;
         #endregion
 
-        #region Readonly
-        private readonly ILogger<BaseController> Logger;
-        private readonly Dictionary<CurrencyTypeEnum, CurrencyInfoRecord[]> urls;
+        #region Intefaces
+        private readonly ILogger<BaseController> logger;
+        #endregion
+
+        #region Collections
+        private readonly Dictionary<currencyTypeEnum, CurrencyInfoRecord[]> urls;
         #endregion
 
         #region Enum
-        public enum CurrencyTypeEnum : byte
+        public enum currencyTypeEnum : byte
         {
             USD,
             UF
@@ -39,11 +42,14 @@ namespace API.Controllers
 
         #region Constructor Method
         public BaseController(ILogger<BaseController> Logger,
-                              Dictionary<CurrencyTypeEnum, CurrencyInfoRecord[]> URLs)
+                              Dictionary<currencyTypeEnum, CurrencyInfoRecord[]> URLs)
             : base()
         {
-            #region Readonly
-            this.Logger = Logger;
+            #region Interfaces
+            this.logger = Logger;
+            #endregion
+
+            #region Collections
             this.urls = URLs;
             #endregion
         }
@@ -82,8 +88,8 @@ namespace API.Controllers
         }
         #endregion
 
-        #region Readonly
-        protected Dictionary<CurrencyTypeEnum, CurrencyInfoRecord[]> URLs
+        #region Collections
+        protected Dictionary<currencyTypeEnum, CurrencyInfoRecord[]> URLs
         {
             get => urls;
         }
@@ -103,7 +109,7 @@ namespace API.Controllers
             this.Date = DateOnly.FromDateTime(dateTime: Now);
             this.Time = TimeOnly.FromDateTime(dateTime: Now);
 
-            this.Logger.LogInformation(
+            this.logger.LogInformation(
                 message: "---" +
                          "\n" +
 
@@ -134,7 +140,7 @@ namespace API.Controllers
             this.Date = DateOnly.FromDateTime(dateTime: Now);
             this.Time = TimeOnly.FromDateTime(dateTime: Now);
 
-            this.Logger.LogError(
+            this.logger.LogError(
                 exception: ex,
                 message: "---" +
                          "\n" +
