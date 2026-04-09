@@ -9,11 +9,11 @@ namespace API.App.Context.Tool
     public static class Extract
     {
         #region Objects
-        private static object LockObject;
+        private static object lockObject;
         #endregion
 
         #region Collections
-        private static Dictionary<byte, float[]> Data;
+        private static Dictionary<byte, float[]> data;
         #endregion
 
 
@@ -21,24 +21,39 @@ namespace API.App.Context.Tool
         #region Constructor Method
         static Extract()
         {
-            LockObject = new object();
-            Data = new Dictionary<byte, float[]>();
+            lockObject = new object();
+            data = new Dictionary<byte, float[]>();
         }
         #endregion
 
 
 
-        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string htmlContent,
-                                                                        string tableId)
+        #region Field
+        public static object LockObject
+        {
+            get => lockObject;
+            set => lockObject = value;
+        }
+
+        public static Dictionary<byte, float[]> Data
+        {
+            get => data;
+            set => data = value;
+        }
+        #endregion
+
+
+
+        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string HtmlContent,
+                                                                        string TableId)
         {
             #region Collection
-            Dictionary<byte, float[]> Data;
             MatchCollection Rows;
             #endregion
 
             Rows = GetTableData(
-                htmlContent: htmlContent,
-                tableId: tableId
+                HtmlContent: HtmlContent,
+                TableId: TableId
             );
 
             Data = await OrganizeTheDataObtainedAsync(RowMatches: Rows);
@@ -48,8 +63,8 @@ namespace API.App.Context.Tool
 
 
 
-        private static MatchCollection GetTableData(string htmlContent,
-                                                    string tableId)
+        private static MatchCollection GetTableData(string HtmlContent,
+                                                    string TableId)
         {
             #region Variables
             string tablePattern;
@@ -63,9 +78,9 @@ namespace API.App.Context.Tool
             #endregion
 
             // Regex para encontrar la tabla con el ID dinámico
-            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: tableId)}""[^>]*>(.*?)<\/table>";
+            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: TableId)}""[^>]*>(.*?)<\/table>";
             tableMatch = Regex.Match(
-                input: htmlContent,
+                input: HtmlContent,
                 pattern: tablePattern,
                 options: RegexOptions.Singleline
             );

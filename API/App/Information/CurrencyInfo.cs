@@ -21,19 +21,19 @@ namespace API.App.Information
                                                                                SearchFilterModel SearchFilter)
         {
             #region Variables
-            string? MonthName;
-            DateTime Now;
+            string? monthName;
+            DateTime now;
             #endregion
 
             #region Collections
-            CurrencyRecord[] Currencies;
+            CurrencyRecord[] currencies;
             #endregion
 
             #region Objects
-            CurrencyListHeaderRecord CurrencyList;
+            CurrencyListHeaderRecord currencyList;
             #endregion
 
-            MonthName = SearchFilter.Month.HasValue
+            monthName = SearchFilter.Month.HasValue
                         ?
                         new DateOnly(
                             year: SearchFilter.Year,
@@ -42,42 +42,42 @@ namespace API.App.Information
                         ).ToString(format: "MMMM")
                         :
                         null;
-            
-            Now = DateTime.Now;
 
-            Currencies = await GetCurrenciesAsync(
+            now = DateTime.Now;
+
+            currencies = await GetCurrenciesAsync(
                 SearchFilter: SearchFilter,
                 CurrencyInfo: CurrencyInfo
             );
 
-            CurrencyList = new CurrencyListHeaderRecord()
+            currencyList = new CurrencyListHeaderRecord()
             {
-                ConsultationDate = DateOnly.FromDateTime(dateTime: Now),
-                ConsultationTime = TimeOnly.FromDateTime(dateTime: Now),
+                ConsultationDate = DateOnly.FromDateTime(dateTime: now),
+                ConsultationTime = TimeOnly.FromDateTime(dateTime: now),
                 Year = SearchFilter.Year,
-                MonthName = MonthName,
-                Currencies = Currencies
+                MonthName = monthName,
+                Currencies = currencies
             };
 
-            return CurrencyList;
+            return currencyList;
         }
 
         public static async Task<CurrencyRecord[]> GetCurrenciesAsync(CurrencyInfoRecord CurrencyInfo,
                                                                       SearchFilterModel SearchFilter)
         {
             #region Objects
-            ContextBase Context;
+            ContextBase context;
             #endregion
 
-            Context = new ContextBase(
+            context = new ContextBase(
                 CurrencyInfo: CurrencyInfo,
                 SearchFilter: SearchFilter
             );
 
             // Ternaria para obtener datos.
-            Context.CurrencyList = await (SearchFilter.Month.HasValue ? Context.MonthlyValuesAsync() : Context.AnnualValuesAsync());
+            context.CurrencyList = await (SearchFilter.Month.HasValue ? context.MonthlyValuesAsync() : context.AnnualValuesAsync());
 
-            return Context.CurrencyList;
+            return context.CurrencyList;
         }
     }
 }

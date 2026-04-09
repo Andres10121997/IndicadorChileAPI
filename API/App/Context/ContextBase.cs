@@ -108,21 +108,21 @@ namespace API.App.Context
         public async Task<CurrencyRecord[]> AnnualValuesAsync()
         {
             #region Variables
-            Task<string> HtmlContent;
+            Task<string> htmlContent;
             #endregion
 
             #region Collections
-            Task<Dictionary<byte, float[]>> Values;
+            Task<Dictionary<byte, float[]>> values;
             #endregion
 
-            HtmlContent = this.GetHtmlContentAsync();
+            htmlContent = this.GetHtmlContentAsync();
 
-            Values = Extract.ValuesAsync(
-                htmlContent: await HtmlContent,
-                tableId: this.currencyInfo.TableId
+            values = Extract.ValuesAsync(
+                HtmlContent: await htmlContent,
+                TableId: this.currencyInfo.TableId
             );
 
-            this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: await Values);
+            this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
 
             return this.CurrencyList
                 .AsParallel<CurrencyRecord>()
