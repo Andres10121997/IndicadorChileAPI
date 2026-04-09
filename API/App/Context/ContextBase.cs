@@ -122,7 +122,7 @@ namespace API.App.Context
                 TableId: this.currencyInfo.TableId
             );
 
-            this.Currencies = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
+            this.Currencies = await new Transform(SearchFilter: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
 
             return this.Currencies
                 .AsParallel<CurrencyRecord>()

@@ -10,24 +10,24 @@ namespace API.App.Context.Tool
     public class Transform
     {
         #region Object
-        private SearchFilterModel search;
+        private SearchFilterModel searchFilter;
         #endregion
 
 
 
         #region Constructor Method
-        public Transform(SearchFilterModel Search)
+        public Transform(SearchFilterModel SearchFilter)
         {
-            this.search = Search;
+            this.searchFilter = SearchFilter;
         }
         #endregion
 
 
 
         #region Field
-        public SearchFilterModel Search
+        public SearchFilterModel SearchFilter
         {
-            get => this.search;
+            get => this.searchFilter;
         }
         #endregion
 
@@ -55,13 +55,13 @@ namespace API.App.Context.Tool
                 parallelOptions: Utils.ParallelForEachOptions,
                 body: async (Item, CancellationToken) =>
                 {
-                    var (Day, Values) = Item;
+                    var (day, values) = Item;
 
-                    for (byte month = 1; month <= Values.Length; month++)
+                    for (byte month = 1; month <= values.Length; month++)
                     {
-                        if (Day > 0
+                        if (day > 0
                             &&
-                            Day <= DateTime.DaysInMonth(year: this.Search.Year, month: month))
+                            day <= DateTime.DaysInMonth(year: this.SearchFilter.Year, month: month))
                         {
                             #region Variables
                             float value;
@@ -71,13 +71,13 @@ namespace API.App.Context.Tool
                             TModel model;
                             #endregion
 
-                            value = Values[month - 1];
+                            value = values[month - 1];
 
                             model = ModelFactory(
                                 new DateOnly(
-                                    year: this.Search.Year,
+                                    year: this.SearchFilter.Year,
                                     month: month,
-                                    day: Day
+                                    day: day
                                 ),
                                 value
                             );
