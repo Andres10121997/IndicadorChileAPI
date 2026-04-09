@@ -16,7 +16,7 @@ namespace API.App.Context
         #endregion
 
         #region Collections
-        private CurrencyRecord[] currencyList;
+        private CurrencyRecord[] currencies;
         #endregion
 
         #region Objects
@@ -36,7 +36,7 @@ namespace API.App.Context
             #endregion
 
             #region Collections
-            this.currencyList = Array.Empty<CurrencyRecord>();
+            this.currencies = Array.Empty<CurrencyRecord>();
             #endregion
 
             #region Objects
@@ -79,9 +79,9 @@ namespace API.App.Context
         #endregion
 
         #region Collections
-        public CurrencyRecord[] CurrencyList
+        public CurrencyRecord[] Currencies
         {
-            get => this.currencyList;
+            get => this.currencies;
             set
             {
                 #region Exception
@@ -89,7 +89,7 @@ namespace API.App.Context
                 ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value: value.Length);
                 #endregion
 
-                this.currencyList = value;
+                this.currencies = value;
             }
         }
         #endregion
@@ -122,9 +122,9 @@ namespace API.App.Context
                 TableId: this.currencyInfo.TableId
             );
 
-            this.CurrencyList = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
+            this.Currencies = await new Transform(Search: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
 
-            return this.CurrencyList
+            return this.Currencies
                 .AsParallel<CurrencyRecord>()
                 .Where<CurrencyRecord>(predicate: Model => !float.IsNaN(f: Model.Currency)
                                                            &&
@@ -137,9 +137,9 @@ namespace API.App.Context
 
         public async Task<CurrencyRecord[]> MonthlyValuesAsync()
         {
-            this.CurrencyList = await this.AnnualValuesAsync();
+            this.Currencies = await this.AnnualValuesAsync();
             
-            return this.CurrencyList
+            return this.Currencies
                 .AsParallel<CurrencyRecord>()
                 .Where<CurrencyRecord>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
                                                            &&
@@ -153,14 +153,14 @@ namespace API.App.Context
             CurrencyRecord? Value;
             #endregion
 
-            this.CurrencyList = await this.MonthlyValuesAsync();
+            this.Currencies = await this.MonthlyValuesAsync();
 
             // Buscar valor exacto
-            Value = this.CurrencyList
+            Value = this.Currencies
                         .FirstOrDefault<CurrencyRecord>(predicate: model => model.Date == Date)
                     ??
                     // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-                    this.CurrencyList
+                    this.Currencies
                         .Where<CurrencyRecord>(predicate: Model => Model.Date < Date)
                         .OrderByDescending<CurrencyRecord, DateOnly>(keySelector: Model => Model.Date)
                         .FirstOrDefault<CurrencyRecord>()

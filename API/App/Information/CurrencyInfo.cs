@@ -75,9 +75,9 @@ namespace API.App.Information
             );
 
             // Ternaria para obtener datos.
-            context.CurrencyList = await (SearchFilter.Month.HasValue ? context.MonthlyValuesAsync() : context.AnnualValuesAsync());
+            context.Currencies = await (SearchFilter.Month.HasValue ? context.MonthlyValuesAsync() : context.AnnualValuesAsync());
 
-            return context.CurrencyList;
+            return context.Currencies;
         }
     }
 }
