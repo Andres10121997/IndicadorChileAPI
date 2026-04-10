@@ -55,18 +55,23 @@ namespace API.App.Context.Tool
                 parallelOptions: Utils.ParallelForEachOptions,
                 body: async (Item, CancellationToken) =>
                 {
+                    #region Variables
                     var (day, values) = Item;
-                    bool[] validations;
+                    #endregion
+
+                    #region Collections
+                    bool[] dateRange;
+                    #endregion
 
                     for (byte month = 1; month <= values.Length; month++)
                     {
-                        validations = new bool[2]
+                        dateRange = new bool[2]
                         {
                             day > 0,
                             day <= DateTime.DaysInMonth(year: this.SearchFilter.Year, month: month)
                         };
 
-                        if (validations.All(predicate: value => value == true))
+                        if (dateRange.All(predicate: value => value == true))
                         {
                             #region Variables
                             float value;
