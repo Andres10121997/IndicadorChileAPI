@@ -56,12 +56,17 @@ namespace API.App.Context.Tool
                 body: async (Item, CancellationToken) =>
                 {
                     var (day, values) = Item;
+                    bool[] validations;
 
                     for (byte month = 1; month <= values.Length; month++)
                     {
-                        if (day > 0
-                            &&
-                            day <= DateTime.DaysInMonth(year: this.SearchFilter.Year, month: month))
+                        validations = new bool[2]
+                        {
+                            day > 0,
+                            day <= DateTime.DaysInMonth(year: this.SearchFilter.Year, month: month)
+                        };
+
+                        if (validations.All(predicate: value => value == true))
                         {
                             #region Variables
                             float value;
