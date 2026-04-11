@@ -36,6 +36,9 @@ ScaffoldingReadMe.txt
 # NuGet Symbol Packages
 *.snupkg
 
+# Archivos de usuario
+**/*.user
+
 # Visual Studio
 **/.vs/
 **/.vscode/
@@ -59,4 +62,3 @@ nunit-*.xml
 
 # Docker
 **/docker-compose.override.yml
-**/*.dcproj.user
