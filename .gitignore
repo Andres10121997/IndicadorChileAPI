@@ -42,6 +42,7 @@ ScaffoldingReadMe.txt
 # Visual Studio
 **/.vs/
 **/.vscode/
+**/*.slnLaunch
 
 # Others
 ~$*
