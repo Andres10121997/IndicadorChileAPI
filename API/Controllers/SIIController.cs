@@ -100,7 +100,7 @@ namespace API.Controllers
                 Type = typeof(Exception)
             )
         ]
-        public async Task<ActionResult<CurrencyListHeaderRecord>> GetCurrencyListAsync(SearchFilterModel SearchFilter)
+        public async Task<ActionResult<CurrencyListHeaderRecord>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             try
             {

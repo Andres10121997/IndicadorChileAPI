@@ -1,5 +1,4 @@
 ﻿using API.Controllers;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +25,6 @@ namespace API.Models
             EnumDataType(
                 enumType: typeof(BaseController.currencyTypeEnum)
             ),
-            FromQuery,
             Required(
                 AllowEmptyStrings = false,
                 ErrorMessageResourceType = typeof(BaseController.currencyTypeEnum)
@@ -48,7 +46,6 @@ namespace API.Models
             Editable(
                 allowEdit: true
             ),
-            FromQuery,
             Required(
                 AllowEmptyStrings = false,
                 ErrorMessageResourceType = typeof(ushort)
@@ -75,7 +72,6 @@ namespace API.Models
             Editable(
                 allowEdit: true
             ),
-            FromQuery,
             Range(
                 minimum: 1,
                 maximum: 12,
