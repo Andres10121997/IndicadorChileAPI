@@ -36,8 +36,10 @@ ScaffoldingReadMe.txt
 # NuGet Symbol Packages
 *.snupkg
 
-# Archivos de usuario
+# User-specific files
+*.suo
 *.user
+*.sln.docstates
 
 # Visual Studio
 .vs/
@@ -46,10 +48,31 @@ ScaffoldingReadMe.txt
 launch[Ss]ettings.json
 appsettings.[Dd]evelopment.json
 
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+
 # Others
+*.Cache
+ClientBin/
+[Ss]tyle[Cc]op.*
 ~$*
 *~
-CodeCoverage/
+*.dbmdl
+*.[Pp]ublish.xml
+*.pfx
+*.publishsettings
+modulesbin/
+tempbin/
 *.http
 
 # MSBuild Binary and Structured Log
