@@ -35,6 +35,10 @@ ScaffoldingReadMe.txt
 *.nupkg
 # NuGet Symbol Packages
 *.snupkg
+# The packages folder can be ignored because of Package Restore
+**/packages/*
+# except build/, which is used as an MSBuild target.
+!**/packages/build/
 
 # User-specific files
 *.suo
@@ -90,3 +94,15 @@ nunit-*.xml
 # Docker
 docker-compose.override.yml
 docker-compose.override.yaml
+.env
+.env.local
+.env.*.local
+
+# Volúmenes y Datos (ajusta según tus carpetas de montajes)
+data/
+db_data/
+logs/
+
+# Imágenes/Contenedores compilados
+# (Si haces build local)
+# .docker-build/
