@@ -37,12 +37,12 @@ ScaffoldingReadMe.txt
 *.snupkg
 
 # Archivos de usuario
-**/*.user
+*.user
 
 # Visual Studio
-**/.vs/
-**/.vscode/
-**/*.slnLaunch
+.vs/
+.vscode/
+*.slnLaunch
 
 # Others
 ~$*
