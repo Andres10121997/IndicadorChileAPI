@@ -62,4 +62,5 @@ TestResult.xml
 nunit-*.xml
 
 # Docker
-**/docker-compose.override.yml
+docker-compose.override.yml
+docker-compose.override.yaml
