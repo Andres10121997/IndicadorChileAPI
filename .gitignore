@@ -50,7 +50,8 @@ ScaffoldingReadMe.txt
 .vscode/
 *.slnLaunch
 launch[Ss]ettings.json
-appsettings.[Dd]evelopment.json
+appsettings.json
+appsettings.*.json
 
 # Visual C++ cache files
 ipch/
