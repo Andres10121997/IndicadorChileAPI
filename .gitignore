@@ -49,6 +49,7 @@ appsettings.[Dd]evelopment.json
 ~$*
 *~
 CodeCoverage/
+*.http
 
 # MSBuild Binary and Structured Log
 *.binlog
