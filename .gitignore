@@ -43,6 +43,7 @@ ScaffoldingReadMe.txt
 .vs/
 .vscode/
 *.slnLaunch
+appsettings.[Dd]evelopment.json
 
 # Others
 ~$*
