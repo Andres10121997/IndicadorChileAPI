@@ -5,8 +5,8 @@ services:
         image: ${DOCKER_REGISTRY-}api
         restart: always
         ports:
-            - "8080"
-            - "8081"
+            - "1970:8080"
+            - "1973:8081"
         build:
             context: .
             dockerfile: API/Dockerfile

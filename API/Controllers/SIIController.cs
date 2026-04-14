@@ -32,7 +32,7 @@ namespace API.Controllers
                          {
                              {
                                  currencyTypeEnum.USD,
-                                 new CurrencyInfoRecord[]
+                                 new CurrencyInfoRecord[2]
                                  {
                                      new CurrencyInfoRecord
                                      {
