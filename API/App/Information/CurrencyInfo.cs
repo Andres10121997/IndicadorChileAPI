@@ -1,5 +1,5 @@
 ﻿using API.App.Context;
-using API.App.Record.Currency;
+using API.App.DTO.Currency;
 using API.Models;
 using System;
 using System.Threading.Tasks;
@@ -18,7 +18,7 @@ namespace API.App.Information
 
 
         public static async Task<CurrencyListHeaderDto> CurrencyHeaderAsync(CurrencyInfoDto CurrencyInfo,
-                                                                               SearchFilterModel SearchFilter)
+                                                                            SearchFilterModel SearchFilter)
         {
             #region Variables
             string? monthName;
@@ -63,7 +63,7 @@ namespace API.App.Information
         }
 
         public static async Task<CurrencyDto[]> GetCurrenciesAsync(CurrencyInfoDto CurrencyInfo,
-                                                                      SearchFilterModel SearchFilter)
+                                                                   SearchFilterModel SearchFilter)
         {
             #region Objects
             ContextBase context;

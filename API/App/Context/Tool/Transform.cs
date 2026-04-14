@@ -1,4 +1,4 @@
-﻿using API.App.Record.Currency;
+﻿using API.App.DTO.Currency;
 using API.Models;
 using System;
 using System.Collections.Generic;

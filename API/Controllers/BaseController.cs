@@ -1,4 +1,4 @@
-﻿using API.App.Record.Currency;
+﻿using API.App.DTO.Currency;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;

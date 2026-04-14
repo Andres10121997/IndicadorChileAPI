@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace API.App.Record.Currency
+namespace API.App.DTO.Currency
 {
     public sealed record CurrencyDto
     {
