@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace API.Controllers
 {
@@ -18,8 +17,7 @@ namespace API.Controllers
     public abstract class BaseController : ControllerBase
     {
         #region Variables
-        private DateOnly date;
-        private TimeOnly time;
+        private DateTime dateAndTime;
         #endregion
 
         #region Intefaces
@@ -59,39 +57,17 @@ namespace API.Controllers
 
         #region Field
         #region Variables
-        private DateOnly Date
+        private DateTime DateAndTime
         {
-            get => this.date;
-            set
-            {
-                #region Variables
-                DateOnly Now;
-                #endregion
-
-                Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
-
-                #region Exception
-                ArgumentOutOfRangeException.ThrowIfGreaterThan<DateOnly>(
-                    value: value,
-                    other: Now
-                );
-                #endregion
-
-                this.date = value;
-            }
-        }
-
-        private TimeOnly Time
-        {
-            get => this.time;
-            set => this.time = value;
+            get => this.dateAndTime;
+            set => this.dateAndTime = value;
         }
         #endregion
 
         #region Collections
         protected Dictionary<currencyTypeEnum, CurrencyInfoRecord[]> URLs
         {
-            get => urls;
+            get => this.urls;
         }
         #endregion
         #endregion
@@ -99,65 +75,45 @@ namespace API.Controllers
 
 
         #region Logger
-        #region Information
-        private void LoggerInformation(string Message)
-        {
-            #region Variables
-            DateTime Now = DateTime.Now;
-            #endregion
-
-            this.Date = DateOnly.FromDateTime(dateTime: Now);
-            this.Time = TimeOnly.FromDateTime(dateTime: Now);
-
-            this.logger.LogInformation(
-                message: "---" +
-                         "\n" +
-
-                         "Fecha: {Date}" +
-                         "\n" +
-                         "Hora: {Time}" +
-                         "\n" +
-                         Message +
-
-                         "\n" +
-                         "---",
-
-                this.Date,  // {0}
-                this.Time   // {1}
-            );
-        }
-
-        protected async Task LoggerInformationAsync(string Message) => await Task.Run(action: () => this.LoggerInformation(Message: Message));
-        #endregion
-
         #region Error
-        private void LoggerError(Exception ex)
+        protected void LoggerError(Exception ex)
         {
-            #region Variables
-            DateTime Now = DateTime.Now;
-            #endregion
-
-            this.Date = DateOnly.FromDateTime(dateTime: Now);
-            this.Time = TimeOnly.FromDateTime(dateTime: Now);
+            this.DateAndTime = DateTime.Now;
 
             this.logger.LogError(
                 exception: ex,
                 message: "---" +
                          "\n" +
 
-                         "Fecha: {Date}" +
-                         "\n" +
-                         "Hora: {Time}" +
+                         "Fecha y hora: {DateAndTime}" +
 
                          "\n" +
                          "---",
 
-                this.Date,  // {0}
-                this.Time   // {1}
+                this.DateAndTime    // {0}
             );
         }
+        #endregion
 
-        protected async Task LoggerErrorAsync(Exception ex) => await Task.Run(action: () => this.LoggerError(ex: ex));
+        #region Information
+        protected void LoggerInformation(string Message)
+        {
+            this.DateAndTime = DateTime.Now;
+
+            this.logger.LogInformation(
+                message: "---" +
+                         "\n" +
+
+                         "Fecha y hora: {DateAndTime}" +
+                         "\n" +
+                         Message +
+
+                         "\n" +
+                         "---",
+
+                this.DateAndTime    // {0}
+            );
+        }
         #endregion
         #endregion
     }

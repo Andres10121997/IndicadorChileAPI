@@ -156,9 +156,7 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                await this.LoggerErrorAsync(
-                    ex: ex
-                );
+                this.LoggerError(ex: ex);
                 
                 return this.StatusCode(
                     statusCode: StatusCodes.Status500InternalServerError,
