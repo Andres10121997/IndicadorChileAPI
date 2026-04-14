@@ -2,7 +2,7 @@
 
 namespace API.App.Record.Currency
 {
-    public sealed record CurrencyInfoRecord
+    public sealed record CurrencyInfoDto
     {
         #region Field
         public required string Url

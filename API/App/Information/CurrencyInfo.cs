@@ -17,7 +17,7 @@ namespace API.App.Information
 
 
 
-        public static async Task<CurrencyListHeaderRecord> CurrencyHeaderAsync(CurrencyInfoRecord CurrencyInfo,
+        public static async Task<CurrencyListHeaderDto> CurrencyHeaderAsync(CurrencyInfoDto CurrencyInfo,
                                                                                SearchFilterModel SearchFilter)
         {
             #region Variables
@@ -26,11 +26,11 @@ namespace API.App.Information
             #endregion
 
             #region Collections
-            CurrencyRecord[] currencies;
+            CurrencyDto[] currencies;
             #endregion
 
             #region Objects
-            CurrencyListHeaderRecord currencyList;
+            CurrencyListHeaderDto currencyList;
             #endregion
 
             monthName = SearchFilter.Month.HasValue
@@ -50,7 +50,7 @@ namespace API.App.Information
                 CurrencyInfo: CurrencyInfo
             );
 
-            currencyList = new CurrencyListHeaderRecord()
+            currencyList = new CurrencyListHeaderDto()
             {
                 ConsultationDate = DateOnly.FromDateTime(dateTime: now),
                 ConsultationTime = TimeOnly.FromDateTime(dateTime: now),
@@ -62,7 +62,7 @@ namespace API.App.Information
             return currencyList;
         }
 
-        public static async Task<CurrencyRecord[]> GetCurrenciesAsync(CurrencyInfoRecord CurrencyInfo,
+        public static async Task<CurrencyDto[]> GetCurrenciesAsync(CurrencyInfoDto CurrencyInfo,
                                                                       SearchFilterModel SearchFilter)
         {
             #region Objects

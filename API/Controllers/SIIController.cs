@@ -28,20 +28,20 @@ namespace API.Controllers
         #region Constructor Method
         public SIIController(ILogger<SIIController> Logger)
             : base(Logger: Logger,
-                   URLs: new Dictionary<currencyTypeEnum, CurrencyInfoRecord[]>
+                   URLs: new Dictionary<currencyTypeEnum, CurrencyInfoDto[]>
                          {
                              {
                                  currencyTypeEnum.USD,
-                                 new CurrencyInfoRecord[2]
+                                 new CurrencyInfoDto[2]
                                  {
-                                     new CurrencyInfoRecord
+                                     new CurrencyInfoDto
                                      {
                                          Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
                                          TableId = "table_export",
                                          StartDate = new DateOnly(year: 2013, month: 1, day: 1),
                                          EndDate = DateOnly.FromDateTime(dateTime: DateTime.Now)
                                      },
-                                     new CurrencyInfoRecord
+                                     new CurrencyInfoDto
                                      {
                                          Url = "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm",
                                          TableId = "tabla",
@@ -52,16 +52,16 @@ namespace API.Controllers
                              },
                              {
                                  currencyTypeEnum.UF,
-                                 new CurrencyInfoRecord[]
+                                 new CurrencyInfoDto[]
                                  {
-                                     new CurrencyInfoRecord
+                                     new CurrencyInfoDto
                                      {
                                          Url = "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
                                          TableId = "table_export",
                                          StartDate = new DateOnly(year: 2013, month: 1, day: 1),
                                          EndDate = DateOnly.FromDateTime(dateTime: DateTime.Now)
                                      },
-                                     new CurrencyInfoRecord
+                                     new CurrencyInfoDto
                                      {
                                          Url = "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm",
                                          TableId = "tabla",
@@ -84,10 +84,10 @@ namespace API.Controllers
                 template: "[action]"
             ),
             ProducesResponseType(
-                type: typeof(CurrencyListHeaderRecord),
+                type: typeof(CurrencyListHeaderDto),
                 statusCode: StatusCodes.Status200OK,
                 StatusCode = StatusCodes.Status200OK,
-                Type = typeof(CurrencyListHeaderRecord)
+                Type = typeof(CurrencyListHeaderDto)
             ),
             ProducesResponseType(
                 statusCode: StatusCodes.Status404NotFound,
@@ -100,14 +100,14 @@ namespace API.Controllers
                 Type = typeof(Exception)
             )
         ]
-        public async Task<ActionResult<CurrencyListHeaderRecord>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)
+        public async Task<ActionResult<CurrencyListHeaderDto>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             try
             {
-                switch (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out CurrencyInfoRecord[]? Values))
+                switch (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out CurrencyInfoDto[]? Values))
                 {
                     case true:
-                        foreach (CurrencyInfoRecord Value in Values)
+                        foreach (CurrencyInfoDto Value in Values)
                         {
                             #region Variables
                             DateOnly Now;
@@ -128,8 +128,8 @@ namespace API.Controllers
                             if (CurrencyValidation.All(value => value == true))
                             {
                                 #region Object
-                                CurrencyListHeaderRecord Currency;
-                                CurrencyInfoRecord UpdatedValue;
+                                CurrencyListHeaderDto Currency;
+                                CurrencyInfoDto UpdatedValue;
                                 #endregion
 
                                 UpdatedValue = Value with

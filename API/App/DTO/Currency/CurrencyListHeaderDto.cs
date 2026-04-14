@@ -2,7 +2,7 @@
 
 namespace API.App.Record.Currency
 {
-    public sealed record CurrencyListHeaderRecord
+    public sealed record CurrencyListHeaderDto
     {
         #region Field
         public required DateOnly ConsultationDate
@@ -45,7 +45,7 @@ namespace API.App.Record.Currency
             init;
         }
 
-        public required CurrencyRecord[] Currencies { get; init; }
+        public required CurrencyDto[] Currencies { get; init; }
         #endregion
     }
 }

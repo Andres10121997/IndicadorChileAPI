@@ -104,11 +104,11 @@ namespace API.App.Context.Tool
             return modelList.ToArray<TModel>();
         }
 
-        public async Task<CurrencyRecord[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
+        public async Task<CurrencyDto[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
         {
-            return await this.ToModelsAsync<CurrencyRecord>(
+            return await this.ToModelsAsync<CurrencyDto>(
                 Data: CurrencyData,
-                ModelFactory: (Date, Value) => new CurrencyRecord
+                ModelFactory: (Date, Value) => new CurrencyDto
                 {
                     // https://www.youtube.com/shorts/UwcOL3ZL3go
                     ID = Guid.CreateVersion7(

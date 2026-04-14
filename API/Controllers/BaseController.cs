@@ -25,7 +25,7 @@ namespace API.Controllers
         #endregion
 
         #region Collections
-        private readonly Dictionary<currencyTypeEnum, CurrencyInfoRecord[]> urls;
+        private readonly Dictionary<currencyTypeEnum, CurrencyInfoDto[]> urls;
         #endregion
 
         #region Enum
@@ -40,7 +40,7 @@ namespace API.Controllers
 
         #region Constructor Method
         public BaseController(ILogger<BaseController> Logger,
-                              Dictionary<currencyTypeEnum, CurrencyInfoRecord[]> URLs)
+                              Dictionary<currencyTypeEnum, CurrencyInfoDto[]> URLs)
             : base()
         {
             #region Interfaces
@@ -65,7 +65,7 @@ namespace API.Controllers
         #endregion
 
         #region Collections
-        protected Dictionary<currencyTypeEnum, CurrencyInfoRecord[]> URLs
+        protected Dictionary<currencyTypeEnum, CurrencyInfoDto[]> URLs
         {
             get => this.urls;
         }

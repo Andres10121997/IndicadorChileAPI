@@ -2,7 +2,7 @@
 
 namespace API.App.Record.Currency
 {
-    public sealed record CurrencyRecord
+    public sealed record CurrencyDto
     {
         #region Field
         public required Guid ID { get; init; }
