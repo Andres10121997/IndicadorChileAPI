@@ -25,10 +25,6 @@ namespace API.App.Information
             DateTime now;
             #endregion
 
-            #region Collections
-            CurrencyDto[] currencies;
-            #endregion
-
             #region Objects
             CurrencyListHeaderDto currencyList;
             #endregion
@@ -45,7 +41,7 @@ namespace API.App.Information
 
             now = DateTime.Now;
 
-            currencies = await GetCurrenciesAsync(
+            VarGlobal.Currencies = await GetCurrenciesAsync(
                 SearchFilter: SearchFilter,
                 CurrencyInfo: CurrencyInfo
             );
@@ -56,7 +52,7 @@ namespace API.App.Information
                 ConsultationTime = TimeOnly.FromDateTime(dateTime: now),
                 Year = SearchFilter.Year,
                 MonthName = monthName,
-                Currencies = currencies
+                Currencies = VarGlobal.Currencies
             };
 
             return currencyList;
@@ -75,9 +71,9 @@ namespace API.App.Information
             );
 
             // Ternaria para obtener datos.
-            context.Currencies = await (SearchFilter.Month.HasValue ? context.MonthlyValuesAsync() : context.AnnualValuesAsync());
+            VarGlobal.Currencies = await (SearchFilter.Month.HasValue ? context.MonthlyValuesAsync() : context.AnnualValuesAsync());
 
-            return context.Currencies;
+            return VarGlobal.Currencies;
         }
     }
 }
