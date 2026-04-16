@@ -109,30 +109,24 @@ namespace API.Controllers
                     case true:
                         foreach (CurrencyInfoDto Value in Values)
                         {
-                            #region Variables
-                            DateOnly Now;
-                            #endregion
-
                             #region Collections
-                            bool[] CurrencyValidation;
+                            bool[] currencyValidation;
                             #endregion
 
-                            Now = DateOnly.FromDateTime(dateTime: DateTime.Now);
-
-                            CurrencyValidation = new bool[2]
+                            currencyValidation = new bool[2]
                             {
                                 SearchFilter.Year >= Value.StartDate.Year,
                                 SearchFilter.Year <= Value.EndDate.Year
                             };
 
-                            if (CurrencyValidation.All(value => value == true))
+                            if (currencyValidation.All(value => value == true))
                             {
                                 #region Object
-                                CurrencyListHeaderDto Currency;
-                                CurrencyInfoDto UpdatedValue;
+                                CurrencyListHeaderDto currency;
+                                CurrencyInfoDto updatedValue;
                                 #endregion
 
-                                UpdatedValue = Value with
+                                updatedValue = Value with
                                 {
                                     Url = Value.Url.Replace(
                                         oldValue: "{Year}",
@@ -140,12 +134,12 @@ namespace API.Controllers
                                     )
                                 };
 
-                                Currency = await CurrencyInfo.CurrencyHeaderAsync(
-                                    CurrencyInfo: UpdatedValue,
+                                currency = await CurrencyInfo.CurrencyHeaderAsync(
+                                    CurrencyInfo: updatedValue,
                                     SearchFilter: SearchFilter
                                 );
 
-                                return this.Ok(value: Currency);
+                                return this.Ok(value: currency);
                             }
                         }
 
