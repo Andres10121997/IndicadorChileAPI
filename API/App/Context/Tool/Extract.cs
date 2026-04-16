@@ -72,14 +72,34 @@ namespace API.App.Context.Tool
                                                     string TableId)
         {
             #region Variables
-            string tablePattern;
-            string tableHtml;
             string rowPattern;
             #endregion
 
             #region Match
-            Match tableMatch;
             MatchCollection rowMatches;
+            #endregion
+
+            // Regex para las filas de la tabla
+            rowPattern = @"<tr>(.*?)<\/tr>";
+            rowMatches = Regex.Matches(
+                input: TableHtml(HtmlContent: HtmlContent, TableId: TableId),
+                pattern: rowPattern,
+                options: RegexOptions.Singleline
+            );
+
+            return rowMatches;
+        }
+
+        private static string TableHtml(string HtmlContent,
+                                        string TableId)
+        {
+            #region Variables
+            string tablePattern;
+            string tableHtml;
+            #endregion
+
+            #region Object
+            Match tableMatch;
             #endregion
 
             // Regex para encontrar la tabla con el ID dinámico
@@ -99,15 +119,7 @@ namespace API.App.Context.Tool
 
             tableHtml = tableMatch.Groups[1].Value;
 
-            // Regex para las filas de la tabla
-            rowPattern = @"<tr>(.*?)<\/tr>";
-            rowMatches = Regex.Matches(
-                input: tableHtml,
-                pattern: rowPattern,
-                options: RegexOptions.Singleline
-            );
-
-            return rowMatches;
+            return tableHtml;
         }
 
         private static async Task<Dictionary<byte, float[]>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
