@@ -11,10 +11,12 @@ namespace API
 
 
 
+        #region Constructor Method
         static VarGlobal()
         {
             currencies = Array.Empty<CurrencyDto>();
         }
+        #endregion
 
 
 

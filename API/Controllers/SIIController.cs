@@ -84,10 +84,10 @@ namespace API.Controllers
                 template: "[action]"
             ),
             ProducesResponseType(
-                type: typeof(CurrencyListHeaderDto),
+                type: typeof(CurrencyHeaderDto),
                 statusCode: StatusCodes.Status200OK,
                 StatusCode = StatusCodes.Status200OK,
-                Type = typeof(CurrencyListHeaderDto)
+                Type = typeof(CurrencyHeaderDto)
             ),
             ProducesResponseType(
                 statusCode: StatusCodes.Status404NotFound,
@@ -100,7 +100,7 @@ namespace API.Controllers
                 Type = typeof(Exception)
             )
         ]
-        public async Task<ActionResult<CurrencyListHeaderDto>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)
+        public async Task<ActionResult<CurrencyHeaderDto>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             try
             {
@@ -122,7 +122,7 @@ namespace API.Controllers
                             if (currencyValidation.All(value => value == true))
                             {
                                 #region Object
-                                CurrencyListHeaderDto currency;
+                                CurrencyHeaderDto currency;
                                 CurrencyInfoDto updatedValue;
                                 #endregion
 

@@ -2,7 +2,7 @@
 
 namespace API.App.DTO.Currency
 {
-    public sealed record CurrencyListHeaderDto
+    public sealed record CurrencyHeaderDto
     {
         #region Field
         public required DateTime ConsultationDateTime
@@ -10,11 +10,13 @@ namespace API.App.DTO.Currency
             get => field;
             init
             {
+                #region Exception
                 ArgumentOutOfRangeException.ThrowIfGreaterThan<DateTime>(
                     value: value,
                     other: VarGlobal.Now
                 );
-                
+                #endregion
+
                 field = value;
             }
         }

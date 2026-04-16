@@ -17,7 +17,7 @@ namespace API.App.Information
 
 
 
-        public static async Task<CurrencyListHeaderDto> CurrencyHeaderAsync(CurrencyInfoDto CurrencyInfo,
+        public static async Task<CurrencyHeaderDto> CurrencyHeaderAsync(CurrencyInfoDto CurrencyInfo,
                                                                             SearchFilterModel SearchFilter)
         {
             #region Variables
@@ -25,7 +25,7 @@ namespace API.App.Information
             #endregion
 
             #region Objects
-            CurrencyListHeaderDto currencyList;
+            CurrencyHeaderDto currencyList;
             #endregion
 
             monthName = SearchFilter.Month.HasValue
@@ -43,7 +43,7 @@ namespace API.App.Information
                 CurrencyInfo: CurrencyInfo
             );
 
-            currencyList = new CurrencyListHeaderDto()
+            currencyList = new CurrencyHeaderDto()
             {
                 ConsultationDateTime = VarGlobal.Now,
                 Year = SearchFilter.Year,
