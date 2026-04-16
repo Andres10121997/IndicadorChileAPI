@@ -22,7 +22,6 @@ namespace API.App.Information
         {
             #region Variables
             string? monthName;
-            DateTime now;
             #endregion
 
             #region Objects
@@ -39,8 +38,6 @@ namespace API.App.Information
                         :
                         null;
 
-            now = DateTime.Now;
-
             VarGlobal.Currencies = await GetCurrenciesAsync(
                 SearchFilter: SearchFilter,
                 CurrencyInfo: CurrencyInfo
@@ -48,8 +45,7 @@ namespace API.App.Information
 
             currencyList = new CurrencyListHeaderDto()
             {
-                ConsultationDate = DateOnly.FromDateTime(dateTime: now),
-                ConsultationTime = TimeOnly.FromDateTime(dateTime: now),
+                ConsultationDateTime = VarGlobal.Now,
                 Year = SearchFilter.Year,
                 MonthName = monthName,
                 Currencies = VarGlobal.Currencies

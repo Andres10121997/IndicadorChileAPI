@@ -19,6 +19,7 @@ namespace API
 
 
         #region Field
+        #region Collections
         internal static CurrencyDto[] Currencies
         {
             get => currencies;
@@ -32,6 +33,14 @@ namespace API
                 currencies = value;
             }
         }
+        #endregion
+
+        #region Others
+        internal static DateTime Now
+        {
+            get => DateTime.Now;
+        }
+        #endregion
         #endregion
     }
 }

@@ -165,10 +165,10 @@ namespace API.App.Context.Tool
                 for (byte i = 1; i < CellMatches.Count; i++)
                 {
                     #region Variables
-                    string Value;
+                    string value;
                     #endregion
 
-                    Value = CellMatches[i].Groups[1].Value
+                    value = CellMatches[i].Groups[1].Value
                         .Trim()
                         // Eliminar puntos
                         .Replace(
@@ -181,7 +181,7 @@ namespace API.App.Context.Tool
                             newValue: "."
                         );
 
-                    switch (float.TryParse(s: Value,
+                    switch (float.TryParse(s: value,
                                            style: NumberStyles.Number,
                                            provider: CultureInfo.InvariantCulture,
                                            result: out float currencyValue))

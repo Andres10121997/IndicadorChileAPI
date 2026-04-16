@@ -5,23 +5,19 @@ namespace API.App.DTO.Currency
     public sealed record CurrencyListHeaderDto
     {
         #region Field
-        public required DateOnly ConsultationDate
+        public required DateTime ConsultationDateTime
         {
             get => field;
             init
             {
-                #region Exception
-                ArgumentOutOfRangeException.ThrowIfGreaterThan<DateOnly>(
+                ArgumentOutOfRangeException.ThrowIfGreaterThan<DateTime>(
                     value: value,
-                    other: DateOnly.FromDateTime(dateTime: DateTime.Now)
+                    other: VarGlobal.Now
                 );
-                #endregion
-
+                
                 field = value;
             }
         }
-
-        public required TimeOnly ConsultationTime { get; init; }
 
         public required ushort Year
         {
@@ -31,7 +27,7 @@ namespace API.App.DTO.Currency
                 #region Exception
                 ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
                     value: value,
-                    other: DateTime.Now.Year
+                    other: VarGlobal.Now.Year
                 );
                 #endregion
 

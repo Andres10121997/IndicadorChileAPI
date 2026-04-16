@@ -103,10 +103,10 @@ namespace API.App.Context
             return VarGlobal.Currencies
                 .AsParallel<CurrencyDto>()
                 .Where<CurrencyDto>(predicate: Model => !float.IsNaN(f: Model.Currency)
-                                                           &&
-                                                           !float.IsInfinity(f: Model.Currency)
-                                                           &&
-                                                           !float.IsNegative(f: Model.Currency))
+                                                        &&
+                                                        !float.IsInfinity(f: Model.Currency)
+                                                        &&
+                                                        !float.IsNegative(f: Model.Currency))
                 .OrderBy<CurrencyDto, DateOnly>(keySelector: Model => Model.Date)
                 .ToArray<CurrencyDto>();
         }
@@ -118,8 +118,8 @@ namespace API.App.Context
             return VarGlobal.Currencies
                 .AsParallel<CurrencyDto>()
                 .Where<CurrencyDto>(predicate: Model => Model.Date.Year == this.SearchFilter.Year
-                                                           &&
-                                                           Model.Date.Month == this.SearchFilter.Month)
+                                                        &&
+                                                        Model.Date.Month == this.SearchFilter.Month)
                 .ToArray<CurrencyDto>();
         }
 
