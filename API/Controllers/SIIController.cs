@@ -42,8 +42,14 @@ namespace API.Controllers
                                          {
                                              ID = "table_export"
                                          },
-                                         StartDate = new DateOnly(year: 2013, month: 1, day: 1),
-                                         EndDate = DateOnly.FromDateTime(dateTime: DateTime.Now)
+                                         StartDate = new DateOnly(
+                                             year: 2013,
+                                             month: 1,
+                                             day: 1
+                                         ),
+                                         EndDate = DateOnly.FromDateTime(
+                                             dateTime: DateTime.Now
+                                         )
                                      },
                                      new CurrencyInfoDto
                                      {
@@ -52,8 +58,19 @@ namespace API.Controllers
                                          {
                                              ID = "tabla"
                                          },
-                                         StartDate = new DateOnly(year: 1990, month: 1, day: 1),
-                                         EndDate = new DateOnly(year: 2012, month: 12, day: 31)
+                                         StartDate = new DateOnly(
+                                             year: 1990,
+                                             month: 1,
+                                             day: 1
+                                         ),
+                                         EndDate = new DateOnly(
+                                             year: 2012,
+                                             month: 12,
+                                             day: DateTime.DaysInMonth(
+                                                 year: 2012,
+                                                 month: 12
+                                             )
+                                         )
                                      }
                                  }
                              },
@@ -68,8 +85,14 @@ namespace API.Controllers
                                          {
                                              ID = "table_export"
                                          },
-                                         StartDate = new DateOnly(year: 2013, month: 1, day: 1),
-                                         EndDate = DateOnly.FromDateTime(dateTime: DateTime.Now)
+                                         StartDate = new DateOnly(
+                                             year: 2013,
+                                             month: 1,
+                                             day: 1
+                                         ),
+                                         EndDate = DateOnly.FromDateTime(
+                                             dateTime: DateTime.Now
+                                         )
                                      },
                                      new CurrencyInfoDto
                                      {
@@ -78,8 +101,19 @@ namespace API.Controllers
                                          {
                                              ID = "tabla"
                                          },
-                                         StartDate = new DateOnly(year: 1990, month: 1, day: 1),
-                                         EndDate = new DateOnly(year: 2012, month: 12, day: 31)
+                                         StartDate = new DateOnly(
+                                             year: 1990,
+                                             month: 1,
+                                             day: 1
+                                         ),
+                                         EndDate = new DateOnly(
+                                             year: 2012,
+                                             month: 12,
+                                             day: DateTime.DaysInMonth(
+                                                 year: 2012,
+                                                 month: 12
+                                             )
+                                         )
                                      }
                                  }
                              }
