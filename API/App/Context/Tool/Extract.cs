@@ -1,4 +1,4 @@
-﻿using API.App.DTO;
+﻿using API.App.DTO.HTML;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

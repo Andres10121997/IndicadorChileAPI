@@ -1,6 +1,6 @@
 ﻿using API.App.Context.Tool;
-using API.App.DTO;
 using API.App.DTO.Currency;
+using API.App.DTO.HTML;
 using API.Models;
 using System;
 using System.Collections.Generic;
@@ -92,7 +92,10 @@ namespace API.App.Context
                 Html: new HtmlDto
                 {
                     Content = await this.GetHtmlContentAsync(),
-                    TableId = this.currencyInfo.TableId
+                    Table = new TableDto
+                    {
+                        ID = this.currencyInfo.TableId
+                    }
                 }
             );
 

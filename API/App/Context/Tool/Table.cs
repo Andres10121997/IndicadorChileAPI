@@ -1,4 +1,4 @@
-﻿using API.App.DTO;
+﻿using API.App.DTO.HTML;
 using System;
 using System.Text.RegularExpressions;
 
@@ -46,7 +46,7 @@ namespace API.App.Context.Tool
             #endregion
 
             // Regex para encontrar la tabla con el ID dinámico
-            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: Html.TableId)}""[^>]*>(.*?)<\/table>";
+            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: Html.Table.ID)}""[^>]*>(.*?)<\/table>";
             tableMatch = Regex.Match(
                 input: Html.Content,
                 pattern: tablePattern,
