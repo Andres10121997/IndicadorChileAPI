@@ -56,7 +56,7 @@ namespace API.App.Context.Tool
             MatchCollection rows;
             #endregion
 
-            rows = GetTableData(Html: Html);
+            rows = Table.GetData(Html: Html);
 
             Data = await OrganizeTheDataObtainedAsync(RowMatches: rows);
 
@@ -64,58 +64,6 @@ namespace API.App.Context.Tool
         }
 
 
-
-        private static MatchCollection GetTableData(HtmlDto Html)
-        {
-            #region Variables
-            string rowPattern;
-            #endregion
-
-            #region Match
-            MatchCollection rowMatches;
-            #endregion
-
-            // Regex para las filas de la tabla
-            rowPattern = @"<tr>(.*?)<\/tr>";
-            rowMatches = Regex.Matches(
-                input: GetTableHtml(Html: Html),
-                pattern: rowPattern,
-                options: RegexOptions.Singleline
-            );
-
-            return rowMatches;
-        }
-
-        private static string GetTableHtml(HtmlDto Html)
-        {
-            #region Variables
-            string tablePattern;
-            string tableHtml;
-            #endregion
-
-            #region Object
-            Match tableMatch;
-            #endregion
-
-            // Regex para encontrar la tabla con el ID dinámico
-            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: Html.TableId)}""[^>]*>(.*?)<\/table>";
-            tableMatch = Regex.Match(
-                input: Html.Content,
-                pattern: tablePattern,
-                options: RegexOptions.Singleline
-            );
-
-            #region Exception
-            ArgumentOutOfRangeException.ThrowIfEqual<bool>(
-                value: tableMatch.Success,
-                other: false
-            );
-            #endregion
-
-            tableHtml = tableMatch.Groups[1].Value;
-
-            return tableHtml;
-        }
 
         private static async Task<Dictionary<byte, float[]>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
         {
