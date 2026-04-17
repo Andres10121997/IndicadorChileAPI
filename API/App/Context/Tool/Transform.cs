@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    public class Transform
+    internal class Transform
     {
         #region Object
         private SearchFilterModel searchFilter;
@@ -25,7 +25,7 @@ namespace API.App.Context.Tool
 
 
         #region Field
-        public SearchFilterModel SearchFilter
+        internal SearchFilterModel SearchFilter
         {
             get => this.searchFilter;
         }
@@ -104,7 +104,7 @@ namespace API.App.Context.Tool
             return modelList.ToArray<TModel>();
         }
 
-        public async Task<CurrencyDto[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
+        internal async Task<CurrencyDto[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
         {
             return await this.ToModelsAsync<CurrencyDto>(
                 Data: CurrencyData,

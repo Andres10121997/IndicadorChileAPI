@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace API.App.Context.Tool
 {
-    public static class Table
+    internal static class Table
     {
         static Table()
         {
@@ -13,7 +13,7 @@ namespace API.App.Context.Tool
 
 
 
-        public static MatchCollection GetData(HtmlDto Html)
+        internal static MatchCollection GetData(HtmlDto Html)
         {
             #region Variables
             string rowPattern;
