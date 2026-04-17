@@ -35,12 +35,6 @@ namespace API.App.Context.Tool
 
 
         #region Field
-        public static object LockObject
-        {
-            get => lockObject;
-            set => lockObject = value;
-        }
-
         public static Dictionary<byte, float[]> Data
         {
             get => data;
@@ -152,7 +146,7 @@ namespace API.App.Context.Tool
                     }
                 }
 
-                lock (LockObject)
+                lock (lockObject)
                 {
                     Data[day] = values;
                 }

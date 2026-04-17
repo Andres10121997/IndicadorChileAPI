@@ -1,5 +1,6 @@
 ﻿using API.App.Information;
 using API.App.DTO.Currency;
+using API.App.DTO.HTML;
 using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -37,14 +38,20 @@ namespace API.Controllers
                                      new CurrencyInfoDto
                                      {
                                          Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
-                                         TableId = "table_export",
+                                         Table = new TableDto
+                                         {
+                                             ID = "table_export"
+                                         },
                                          StartDate = new DateOnly(year: 2013, month: 1, day: 1),
                                          EndDate = DateOnly.FromDateTime(dateTime: DateTime.Now)
                                      },
                                      new CurrencyInfoDto
                                      {
                                          Url = "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm",
-                                         TableId = "tabla",
+                                         Table = new TableDto
+                                         {
+                                             ID = "tabla"
+                                         },
                                          StartDate = new DateOnly(year: 1990, month: 1, day: 1),
                                          EndDate = new DateOnly(year: 2012, month: 12, day: 31)
                                      }
@@ -57,14 +64,20 @@ namespace API.Controllers
                                      new CurrencyInfoDto
                                      {
                                          Url = "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
-                                         TableId = "table_export",
+                                         Table = new TableDto
+                                         {
+                                             ID = "table_export"
+                                         },
                                          StartDate = new DateOnly(year: 2013, month: 1, day: 1),
                                          EndDate = DateOnly.FromDateTime(dateTime: DateTime.Now)
                                      },
                                      new CurrencyInfoDto
                                      {
                                          Url = "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm",
-                                         TableId = "tabla",
+                                         Table = new TableDto
+                                         {
+                                             ID = "tabla"
+                                         },
                                          StartDate = new DateOnly(year: 1990, month: 1, day: 1),
                                          EndDate = new DateOnly(year: 2012, month: 12, day: 31)
                                      }

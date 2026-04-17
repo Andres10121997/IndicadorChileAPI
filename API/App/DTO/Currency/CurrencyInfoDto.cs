@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.App.DTO.HTML;
+using System;
 
 namespace API.App.DTO.Currency
 {
@@ -10,23 +11,15 @@ namespace API.App.DTO.Currency
             get => field;
             init
             {
+                #region Exception
                 ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: value);
-                
+                #endregion
+
                 field = value;
             }
         }
 
-        public required string TableId
-        {
-            get => field;
-            init
-            {
-                ArgumentNullException.ThrowIfNullOrWhiteSpace(argument: value);
-                
-                field = value;
-            }
-        }
-
+        public required TableDto Table { get; init; }
         public required DateOnly StartDate { get; init; }
         public required DateOnly EndDate { get; init; }
         #endregion

@@ -94,7 +94,7 @@ namespace API.App.Context
                     Content = await this.GetHtmlContentAsync(),
                     Table = new TableDto
                     {
-                        ID = this.currencyInfo.TableId
+                        ID = this.currencyInfo.Table.ID
                     }
                 }
             );
