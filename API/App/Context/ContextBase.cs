@@ -1,4 +1,5 @@
 ﻿using API.App.Context.Tool;
+using API.App.DTO;
 using API.App.DTO.Currency;
 using API.Models;
 using System;
@@ -83,20 +84,21 @@ namespace API.App.Context
         #region Values
         public async Task<CurrencyDto[]> AnnualValuesAsync()
         {
-            #region Variables
-            Task<string> htmlContent;
-            #endregion
-
             #region Collections
             Task<Dictionary<byte, float[]>> values;
             #endregion
 
-            htmlContent = this.GetHtmlContentAsync();
+            #region Object
+            HtmlDto html;
+            #endregion
 
-            values = Extract.ValuesAsync(
-                HtmlContent: await htmlContent,
-                TableId: this.currencyInfo.TableId
-            );
+            html = new HtmlDto
+            {
+                Content = await this.GetHtmlContentAsync(),
+                TableId = this.currencyInfo.TableId
+            };
+
+            values = Extract.ValuesAsync(Html: html);
 
             VarGlobal.Currencies = await new Transform(SearchFilter: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
 

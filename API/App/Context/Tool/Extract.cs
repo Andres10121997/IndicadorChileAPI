@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.App.DTO;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -49,17 +50,13 @@ namespace API.App.Context.Tool
 
 
 
-        public static async Task<Dictionary<byte, float[]>> ValuesAsync(string HtmlContent,
-                                                                        string TableId)
+        public static async Task<Dictionary<byte, float[]>> ValuesAsync(HtmlDto Html)
         {
             #region Collection
             MatchCollection rows;
             #endregion
 
-            rows = GetTableData(
-                HtmlContent: HtmlContent,
-                TableId: TableId
-            );
+            rows = GetTableData(Html: Html);
 
             Data = await OrganizeTheDataObtainedAsync(RowMatches: rows);
 
@@ -68,8 +65,7 @@ namespace API.App.Context.Tool
 
 
 
-        private static MatchCollection GetTableData(string HtmlContent,
-                                                    string TableId)
+        private static MatchCollection GetTableData(HtmlDto Html)
         {
             #region Variables
             string rowPattern;
@@ -82,7 +78,7 @@ namespace API.App.Context.Tool
             // Regex para las filas de la tabla
             rowPattern = @"<tr>(.*?)<\/tr>";
             rowMatches = Regex.Matches(
-                input: TableHtml(HtmlContent: HtmlContent, TableId: TableId),
+                input: TableHtml(Html: Html),
                 pattern: rowPattern,
                 options: RegexOptions.Singleline
             );
@@ -90,8 +86,7 @@ namespace API.App.Context.Tool
             return rowMatches;
         }
 
-        private static string TableHtml(string HtmlContent,
-                                        string TableId)
+        private static string TableHtml(HtmlDto Html)
         {
             #region Variables
             string tablePattern;
@@ -103,9 +98,9 @@ namespace API.App.Context.Tool
             #endregion
 
             // Regex para encontrar la tabla con el ID dinámico
-            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: TableId)}""[^>]*>(.*?)<\/table>";
+            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: Html.TableId)}""[^>]*>(.*?)<\/table>";
             tableMatch = Regex.Match(
-                input: HtmlContent,
+                input: Html.Content,
                 pattern: tablePattern,
                 options: RegexOptions.Singleline
             );
