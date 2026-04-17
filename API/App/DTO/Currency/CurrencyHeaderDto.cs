@@ -7,7 +7,7 @@ namespace API.App.DTO.Currency
         #region Field
         public required DateTime ConsultationDateTime
         {
-            get => field;
+            get;
             init
             {
                 #region Exception
@@ -23,7 +23,7 @@ namespace API.App.DTO.Currency
 
         public required ushort Year
         {
-            get => field;
+            get;
             init
             {
                 #region Exception
@@ -37,12 +37,7 @@ namespace API.App.DTO.Currency
             }
         }
 
-        public string? MonthName
-        {
-            get => field;
-            init;
-        }
-
+        public string? MonthName{ get; init; }
         public required CurrencyDto[] Currencies { get; init; }
         #endregion
     }

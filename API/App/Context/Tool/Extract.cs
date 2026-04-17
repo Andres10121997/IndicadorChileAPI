@@ -78,7 +78,7 @@ namespace API.App.Context.Tool
             // Regex para las filas de la tabla
             rowPattern = @"<tr>(.*?)<\/tr>";
             rowMatches = Regex.Matches(
-                input: TableHtml(Html: Html),
+                input: GetTableHtml(Html: Html),
                 pattern: rowPattern,
                 options: RegexOptions.Singleline
             );
@@ -86,7 +86,7 @@ namespace API.App.Context.Tool
             return rowMatches;
         }
 
-        private static string TableHtml(HtmlDto Html)
+        private static string GetTableHtml(HtmlDto Html)
         {
             #region Variables
             string tablePattern;
@@ -143,10 +143,12 @@ namespace API.App.Context.Tool
                         options: RegexOptions.Singleline
                     );
 
+                    #region Exception
                     ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(
                         value: cellMatches.Count,
                         other: 0
                     );
+                    #endregion
 
                     ParseAndSetData(CellMatches: cellMatches);
                 }
