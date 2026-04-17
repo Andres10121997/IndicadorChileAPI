@@ -88,17 +88,13 @@ namespace API.App.Context
             Task<Dictionary<byte, float[]>> values;
             #endregion
 
-            #region Object
-            HtmlDto html;
-            #endregion
-
-            html = new HtmlDto
-            {
-                Content = await this.GetHtmlContentAsync(),
-                TableId = this.currencyInfo.TableId
-            };
-
-            values = Extract.ValuesAsync(Html: html);
+            values = Extract.ValuesAsync(
+                Html: new HtmlDto
+                {
+                    Content = await this.GetHtmlContentAsync(),
+                    TableId = this.currencyInfo.TableId
+                }
+            );
 
             VarGlobal.Currencies = await new Transform(SearchFilter: this.SearchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
 
