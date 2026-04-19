@@ -12,10 +12,6 @@ namespace API.App.Context
 {
     public class ContextBase
     {
-        #region Variables
-        private float currency;
-        #endregion
-
         #region Objects
         private CurrencyInfoDto currencyInfo;
         private SearchFilterModel searchFilter;
@@ -28,10 +24,6 @@ namespace API.App.Context
                            SearchFilterModel SearchFilter)
             : base()
         {
-            #region Variables
-            this.currency = 0;
-            #endregion
-
             #region Objects
             this.currencyInfo = CurrencyInfo;
             this.searchFilter = SearchFilter;
@@ -42,36 +34,12 @@ namespace API.App.Context
 
 
         #region Field
-        #region Variables
-        public float Currency
-        {
-            get => this.currency;
-            set
-            {
-                #region Exception
-                ArgumentOutOfRangeException.ThrowIfEqual<float>(
-                    value: value,
-                    other: float.NaN
-                );
-                ArgumentOutOfRangeException.ThrowIfEqual<float>(
-                    value: value,
-                    other: float.PositiveInfinity
-                );
-                ArgumentOutOfRangeException.ThrowIfEqual<float>(
-                    value: value,
-                    other: float.NegativeInfinity
-                );
-                ArgumentOutOfRangeException.ThrowIfNegativeOrZero<float>(
-                    value: value
-                );
-                #endregion
-
-                this.currency = value;
-            }
-        }
-        #endregion
-
         #region Objects
+        protected CurrencyInfoDto CurrencyInfo
+        {
+            get => this.currencyInfo;
+        }
+        
         protected SearchFilterModel SearchFilter
         {
             get => this.searchFilter;
@@ -94,7 +62,7 @@ namespace API.App.Context
                     Content = await this.GetHtmlContentAsync(),
                     Table = new TableDto
                     {
-                        ID = this.currencyInfo.Table.ID
+                        ID = this.CurrencyInfo.Table.ID
                     }
                 }
             );
