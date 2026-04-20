@@ -6,13 +6,16 @@ namespace API.App.Context.Tool
 {
     internal static class Table
     {
+        #region Constructor Method
         static Table()
         {
             
         }
+        #endregion
 
 
 
+        #region Get
         internal static MatchCollection GetData(HtmlDto Html)
         {
             #region Variables
@@ -62,5 +65,6 @@ namespace API.App.Context.Tool
 
             return tableHtml;
         }
+        #endregion
     }
 }
