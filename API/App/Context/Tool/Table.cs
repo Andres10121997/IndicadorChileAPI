@@ -45,9 +45,8 @@ namespace API.App.Context.Tool
             TableDto table;
             #endregion
 
-            table = new TableDto
+            table = Html.Table with
             {
-                ID = Html.Table.ID,
                 Pattern = $@"<table[^>]*id=""{Regex.Escape(str: Html.Table.ID)}""[^>]*>(.*?)<\/table>"
             };
 
