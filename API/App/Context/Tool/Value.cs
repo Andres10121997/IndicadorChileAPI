@@ -45,7 +45,8 @@ namespace API.App.Context.Tool
                     Content = await htmlContentAsync,
                     Table = new TableDto
                     {
-                        ID = this.currencyInfo.Table.ID
+                        ID = this.currencyInfo.Table.ID,
+                        Pattern = string.Empty
                     }
                 }
             );
@@ -65,7 +66,7 @@ namespace API.App.Context.Tool
 
         public async Task<CurrencyDto[]> MonthlyAsync()
         {
-            VarGlobal.Currencies = await AnnualAsync();
+            VarGlobal.Currencies = await this.AnnualAsync();
 
             return VarGlobal.Currencies
                 .AsParallel<CurrencyDto>()
@@ -81,7 +82,7 @@ namespace API.App.Context.Tool
             CurrencyDto? value;
             #endregion
 
-            VarGlobal.Currencies = await AnnualAsync();
+            VarGlobal.Currencies = await this.AnnualAsync();
 
             // Buscar valor exacto
             value = VarGlobal.Currencies

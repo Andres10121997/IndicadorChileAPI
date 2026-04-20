@@ -37,19 +37,24 @@ namespace API.App.Context.Tool
         private static string GetHtml(HtmlDto Html)
         {
             #region Variables
-            string tablePattern;
             string tableHtml;
             #endregion
 
             #region Object
             Match tableMatch;
+            TableDto table;
             #endregion
 
+            table = new TableDto
+            {
+                ID = Html.Table.ID,
+                Pattern = $@"<table[^>]*id=""{Regex.Escape(str: Html.Table.ID)}""[^>]*>(.*?)<\/table>"
+            };
+
             // Regex para encontrar la tabla con el ID dinámico
-            tablePattern = $@"<table[^>]*id=""{Regex.Escape(str: Html.Table.ID)}""[^>]*>(.*?)<\/table>";
             tableMatch = Regex.Match(
                 input: Html.Content,
-                pattern: tablePattern,
+                pattern: table.Pattern,
                 options: RegexOptions.Singleline
             );
 
