@@ -67,7 +67,7 @@ namespace API.App.Information
             );
 
             // Ternaria para obtener datos.
-            VarGlobal.Currencies = await (SearchFilter.Month.HasValue ? context.MonthlyValuesAsync() : context.AnnualValuesAsync());
+            VarGlobal.Currencies = await context.Values();
 
             return VarGlobal.Currencies;
         }
