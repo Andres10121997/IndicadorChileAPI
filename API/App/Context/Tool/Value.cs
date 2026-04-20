@@ -19,6 +19,7 @@ namespace API.App.Context.Tool
 
 
 
+        #region Constructor Method
         public Value(CurrencyInfoDto CurrencyInfo,
                      SearchFilterModel SearchFilter,
                      Task<string> HtmlContentAsync)
@@ -30,6 +31,7 @@ namespace API.App.Context.Tool
 
             this.htmlContentAsync = HtmlContentAsync;
         }
+        #endregion
 
 
 
@@ -45,8 +47,7 @@ namespace API.App.Context.Tool
                     Content = await htmlContentAsync,
                     Table = new TableDto
                     {
-                        ID = this.currencyInfo.Table.ID,
-                        Pattern = string.Empty
+                        ID = this.currencyInfo.Table.ID
                     }
                 }
             );

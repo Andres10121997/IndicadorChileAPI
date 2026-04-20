@@ -42,18 +42,12 @@ namespace API.App.Context.Tool
 
             #region Object
             Match tableMatch;
-            TableDto table;
             #endregion
-
-            table = Html.Table with
-            {
-                Pattern = $@"<table[^>]*id=""{Regex.Escape(str: Html.Table.ID)}""[^>]*>(.*?)<\/table>"
-            };
 
             // Regex para encontrar la tabla con el ID dinámico
             tableMatch = Regex.Match(
                 input: Html.Content,
-                pattern: table.Pattern,
+                pattern: Html.Table.Pattern,
                 options: RegexOptions.Singleline
             );
 

@@ -40,8 +40,7 @@ namespace API.Controllers
                                          Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
                                          Table = new TableDto
                                          {
-                                             ID = "table_export",
-                                             Pattern = string.Empty
+                                             ID = "table_export"
                                          },
                                          StartDate = new DateOnly(
                                              year: 2013,
@@ -57,8 +56,7 @@ namespace API.Controllers
                                          Url = "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm",
                                          Table = new TableDto
                                          {
-                                             ID = "tabla",
-                                             Pattern = string.Empty
+                                             ID = "tabla"
                                          },
                                          StartDate = new DateOnly(
                                              year: 1990,
@@ -85,8 +83,7 @@ namespace API.Controllers
                                          Url = "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
                                          Table = new TableDto
                                          {
-                                             ID = "table_export",
-                                             Pattern = string.Empty
+                                             ID = "table_export"
                                          },
                                          StartDate = new DateOnly(
                                              year: 2013,
@@ -102,8 +99,7 @@ namespace API.Controllers
                                          Url = "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm",
                                          Table = new TableDto
                                          {
-                                             ID = "tabla",
-                                             Pattern = string.Empty
+                                             ID = "tabla"
                                          },
                                          StartDate = new DateOnly(
                                              year: 1990,
