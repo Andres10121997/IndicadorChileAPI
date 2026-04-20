@@ -48,20 +48,22 @@ namespace API.App.Context
         #region Values
         public async Task<CurrencyDto[]> Values()
         {
+            #region Objects
+            Value value;
+            #endregion
+
+            value = new Value(
+                CurrencyInfo: this.CurrencyInfo,
+                SearchFilter: this.SearchFilter,
+                HtmlContentAsync: this.GetHtmlContentAsync()
+            );
+
             switch (this.SearchFilter.Month.HasValue)
             {
                 case true:
-                    return await Value.MonthlyAsync(
-                        SearchFilter: this.SearchFilter,
-                        CurrencyInfo: this.CurrencyInfo,
-                        HtmlContentAsync: this.GetHtmlContentAsync()
-                    );
+                    return await value.MonthlyAsync();
                 case false:
-                    return await Value.AnnualAsync(
-                        SearchFilter: this.SearchFilter,
-                        CurrencyInfo: this.CurrencyInfo,
-                        HtmlContentAsync: this.GetHtmlContentAsync()
-                    );
+                    return await value.AnnualAsync();
             }
         }
         #endregion

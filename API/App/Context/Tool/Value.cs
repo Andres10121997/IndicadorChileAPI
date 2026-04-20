@@ -8,16 +8,32 @@ using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    public static class Value
+    public class Value
     {
-        static Value()
+        #region Objects
+        private CurrencyInfoDto currencyInfo;
+        private SearchFilterModel searchFilter;
+        #endregion
+
+        private Task<string> htmlContentAsync;
+
+
+
+        public Value(CurrencyInfoDto CurrencyInfo,
+                     SearchFilterModel SearchFilter,
+                     Task<string> HtmlContentAsync)
         {
-            
+            #region Objects
+            this.currencyInfo = CurrencyInfo;
+            this.searchFilter = SearchFilter;
+            #endregion
+
+            this.htmlContentAsync = HtmlContentAsync;
         }
 
 
 
-        public static async Task<CurrencyDto[]> AnnualAsync(SearchFilterModel SearchFilter, CurrencyInfoDto CurrencyInfo, Task<string> HtmlContentAsync)
+        public async Task<CurrencyDto[]> AnnualAsync()
         {
             #region Collections
             Task<Dictionary<byte, float[]>> values;
@@ -26,15 +42,15 @@ namespace API.App.Context.Tool
             values = Extract.ValuesAsync(
                 Html: new HtmlDto
                 {
-                    Content = await HtmlContentAsync,
+                    Content = await htmlContentAsync,
                     Table = new TableDto
                     {
-                        ID = CurrencyInfo.Table.ID
+                        ID = this.currencyInfo.Table.ID
                     }
                 }
             );
 
-            VarGlobal.Currencies = await new Transform(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
+            VarGlobal.Currencies = await new Transform(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
 
             return VarGlobal.Currencies
                 .AsParallel<CurrencyDto>()
@@ -47,25 +63,25 @@ namespace API.App.Context.Tool
                 .ToArray<CurrencyDto>();
         }
 
-        public static async Task<CurrencyDto[]> MonthlyAsync(SearchFilterModel SearchFilter, CurrencyInfoDto CurrencyInfo, Task<string> HtmlContentAsync)
+        public async Task<CurrencyDto[]> MonthlyAsync()
         {
-            VarGlobal.Currencies = await AnnualAsync(SearchFilter: SearchFilter, CurrencyInfo: CurrencyInfo, HtmlContentAsync: HtmlContentAsync);
+            VarGlobal.Currencies = await AnnualAsync();
 
             return VarGlobal.Currencies
                 .AsParallel<CurrencyDto>()
-                .Where<CurrencyDto>(predicate: Model => Model.Date.Year == SearchFilter.Year
+                .Where<CurrencyDto>(predicate: Model => Model.Date.Year == this.searchFilter.Year
                                                         &&
-                                                        Model.Date.Month == SearchFilter.Month)
+                                                        Model.Date.Month == this.searchFilter.Month)
                 .ToArray<CurrencyDto>();
         }
 
-        public static async Task<CurrencyDto> DailyAsync(SearchFilterModel SearchFilter, CurrencyInfoDto CurrencyInfo, Task<string> HtmlContentAsync, DateOnly Date)
+        public async Task<CurrencyDto> DailyAsync(DateOnly Date)
         {
             #region Objects
             CurrencyDto? value;
             #endregion
 
-            VarGlobal.Currencies = await AnnualAsync(SearchFilter: SearchFilter, CurrencyInfo: CurrencyInfo, HtmlContentAsync: HtmlContentAsync);
+            VarGlobal.Currencies = await AnnualAsync();
 
             // Buscar valor exacto
             value = VarGlobal.Currencies
