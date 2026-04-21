@@ -46,11 +46,17 @@ namespace API.App.Context.Tool
 
         public static async Task<Dictionary<byte, float[]>> ValuesAsync(HtmlDto Html)
         {
+            #region Objects
+            Table table;
+            #endregion
+
             #region Collection
             MatchCollection rows;
             #endregion
 
-            rows = Table.GetData(Html: Html);
+            table = new Table(Html: Html);
+
+            rows = table.GetData();
 
             Data = await OrganizeTheDataObtainedAsync(RowMatches: rows);
 

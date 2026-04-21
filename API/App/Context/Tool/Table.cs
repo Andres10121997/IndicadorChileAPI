@@ -4,19 +4,25 @@ using System.Text.RegularExpressions;
 
 namespace API.App.Context.Tool
 {
-    internal static class Table
+    internal class Table
     {
+        #region Objects
+        private HtmlDto html;
+        #endregion
+
+
+
         #region Constructor Method
-        static Table()
+        public Table(HtmlDto Html)
         {
-            
+            this.html = Html;
         }
         #endregion
 
 
 
         #region Get
-        internal static MatchCollection GetData(HtmlDto Html)
+        internal MatchCollection GetData()
         {
             #region Variables
             string rowPattern;
@@ -29,7 +35,7 @@ namespace API.App.Context.Tool
             // Regex para las filas de la tabla
             rowPattern = @"<tr>(.*?)<\/tr>";
             rowMatches = Regex.Matches(
-                input: GetHtml(Html: Html),
+                input: this.GetHtml(),
                 pattern: rowPattern,
                 options: RegexOptions.Singleline
             );
@@ -37,7 +43,7 @@ namespace API.App.Context.Tool
             return rowMatches;
         }
 
-        private static string GetHtml(HtmlDto Html)
+        private string GetHtml()
         {
             #region Variables
             string tableHtml;
@@ -49,8 +55,8 @@ namespace API.App.Context.Tool
 
             // Regex para encontrar la tabla con el ID dinámico
             tableMatch = Regex.Match(
-                input: Html.Content,
-                pattern: Html.Table.Pattern,
+                input: this.html.Content,
+                pattern: this.html.Table.Pattern,
                 options: RegexOptions.Singleline
             );
 
