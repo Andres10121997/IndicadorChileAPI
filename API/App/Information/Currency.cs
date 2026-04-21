@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace API.App.Information
 {
-    public static class CurrencyInfo
+    public static class Currency
     {
         #region Constructor Method
-        static CurrencyInfo()
+        static Currency()
         {
             
         }
@@ -17,8 +17,8 @@ namespace API.App.Information
 
 
 
-        public static async Task<CurrencyHeaderDto> CurrencyHeaderAsync(CurrencyInfoDto CurrencyInfo,
-                                                                            SearchFilterModel SearchFilter)
+        public static async Task<CurrencyHeaderDto> HeaderAsync(CurrencyInfoDto CurrencyInfo,
+                                                                SearchFilterModel SearchFilter)
         {
             #region Variables
             string? monthName;
@@ -38,7 +38,7 @@ namespace API.App.Information
                         :
                         null;
 
-            VarGlobal.Currencies = await GetCurrenciesAsync(
+            VarGlobal.Currencies = await GetAsync(
                 SearchFilter: SearchFilter,
                 CurrencyInfo: CurrencyInfo
             );
@@ -54,8 +54,8 @@ namespace API.App.Information
             return currencyList;
         }
 
-        public static async Task<CurrencyDto[]> GetCurrenciesAsync(CurrencyInfoDto CurrencyInfo,
-                                                                   SearchFilterModel SearchFilter)
+        private static async Task<CurrencyDto[]> GetAsync(CurrencyInfoDto CurrencyInfo,
+                                                          SearchFilterModel SearchFilter)
         {
             #region Objects
             ContextBase context;

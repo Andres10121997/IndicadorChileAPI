@@ -181,7 +181,7 @@ namespace API.Controllers
                                     )
                                 };
 
-                                currency = await CurrencyInfo.CurrencyHeaderAsync(
+                                currency = await Currency.HeaderAsync(
                                     CurrencyInfo: updatedValue,
                                     SearchFilter: SearchFilter
                                 );
