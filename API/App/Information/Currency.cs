@@ -6,19 +6,26 @@ using System.Threading.Tasks;
 
 namespace API.App.Information
 {
-    public static class Currency
+    public class Currency
     {
+        #region Objects
+        private CurrencyInfoDto currencyInfo;
+        private SearchFilterModel searchFilter;
+        #endregion
+
+
+
         #region Constructor Method
-        static Currency()
+        public Currency(CurrencyInfoDto CurrencyInfo, SearchFilterModel SearchFilter)
         {
-            
+            this.currencyInfo = CurrencyInfo;
+            this.searchFilter = SearchFilter;
         }
         #endregion
 
 
 
-        public static async Task<CurrencyHeaderDto> HeaderAsync(CurrencyInfoDto CurrencyInfo,
-                                                                SearchFilterModel SearchFilter)
+        public async Task<CurrencyHeaderDto> HeaderAsync()
         {
             #region Variables
             string? monthName;
@@ -28,25 +35,22 @@ namespace API.App.Information
             CurrencyHeaderDto currencyHeader;
             #endregion
 
-            monthName = SearchFilter.Month.HasValue
+            monthName = this.searchFilter.Month.HasValue
                         ?
                         new DateOnly(
-                            year: SearchFilter.Year,
-                            month: Convert.ToInt32(value: SearchFilter.Month),
+                            year: this.searchFilter.Year,
+                            month: Convert.ToInt32(value: this.searchFilter.Month),
                             day: 1
                         ).ToString(format: "MMMM")
                         :
                         null;
 
-            VarGlobal.Currencies = await GetAsync(
-                SearchFilter: SearchFilter,
-                CurrencyInfo: CurrencyInfo
-            );
+            VarGlobal.Currencies = await GetAsync();
 
             currencyHeader = new CurrencyHeaderDto
             {
                 ConsultationDateTime = VarGlobal.Now,
-                Year = SearchFilter.Year,
+                Year = this.searchFilter.Year,
                 MonthName = monthName,
                 Currencies = VarGlobal.Currencies
             };
@@ -54,19 +58,17 @@ namespace API.App.Information
             return currencyHeader;
         }
 
-        private static async Task<CurrencyDto[]> GetAsync(CurrencyInfoDto CurrencyInfo,
-                                                          SearchFilterModel SearchFilter)
+        private async Task<CurrencyDto[]> GetAsync()
         {
             #region Objects
             ContextBase context;
             #endregion
 
             context = new ContextBase(
-                CurrencyInfo: CurrencyInfo,
-                SearchFilter: SearchFilter
+                CurrencyInfo: this.currencyInfo,
+                SearchFilter: this.searchFilter
             );
 
-            // Ternaria para obtener datos.
             VarGlobal.Currencies = await context.Values();
 
             return VarGlobal.Currencies;

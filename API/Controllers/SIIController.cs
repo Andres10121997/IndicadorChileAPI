@@ -169,7 +169,7 @@ namespace API.Controllers
                             if (currencyValidation.All(value => value == true))
                             {
                                 #region Object
-                                CurrencyHeaderDto currency;
+                                Currency currency;
                                 CurrencyInfoDto updatedValue;
                                 #endregion
 
@@ -181,12 +181,12 @@ namespace API.Controllers
                                     )
                                 };
 
-                                currency = await Currency.HeaderAsync(
+                                currency = new Currency(
                                     CurrencyInfo: updatedValue,
                                     SearchFilter: SearchFilter
                                 );
 
-                                return this.Ok(value: currency);
+                                return this.Ok(value: await currency.HeaderAsync());
                             }
                         }
 
