@@ -92,64 +92,70 @@ namespace API.App.Context.Tool
                     );
                     #endregion
 
-                    ParseAndSetData(CellMatches: cellMatches);
+                    ParseData(CellMatches: cellMatches);
                 }
             );
 
             return Data;
         }
 
-        private static void ParseAndSetData(MatchCollection CellMatches)
+        private static void ParseData(MatchCollection CellMatches)
         {
-            #region Collections
-            float[] values;
-            #endregion
-
             // Primera celda: el día
             if (byte.TryParse(s: Regex.Replace(input: CellMatches[0].Groups[1].Value,
                                                pattern: @"\D",
                                                replacement: ""),
                               result: out byte day))
             {
-                values = new float[12];
+                SetData(CellMatches: CellMatches, Day: day);
+            }
+        }
 
-                for (byte i = 1; i < CellMatches.Count; i++)
+        private static void SetData(MatchCollection CellMatches,
+                                    byte Day)
+        {
+            #region Collections
+            float[] values;
+            #endregion
+
+            values = new float[12];
+
+            for (byte i = 1; i < CellMatches.Count; i++)
+            {
+                #region Variables
+                string value;
+                #endregion
+
+                value = CellMatches[i].Groups[1].Value
+                    .Trim()
+                    // Eliminar puntos
+                    .Replace(
+                        oldValue: ".",
+                        newValue: ""
+                    )
+                    // Cambiar comas por puntos
+                    .Replace(
+                        oldValue: ",",
+                        newValue: "."
+                    );
+
+                switch (float.TryParse(s: value,
+                                       style: NumberStyles.Number,
+                                       provider: CultureInfo.InvariantCulture,
+                                       result: out float currencyValue))
                 {
-                    #region Variables
-                    string value;
-                    #endregion
-
-                    value = CellMatches[i].Groups[1].Value
-                        .Trim()
-                        // Eliminar puntos
-                        .Replace(
-                            oldValue: ".",
-                            newValue: ""
-                        )
-                        // Cambiar comas por puntos
-                        .Replace(
-                            oldValue: ",",
-                            newValue: "."
-                        );
-
-                    switch (float.TryParse(s: value,
-                                           style: NumberStyles.Number,
-                                           provider: CultureInfo.InvariantCulture,
-                                           result: out float currencyValue))
-                    {
-                        case true:
-                            values[i - 1] = currencyValue;
-                            break;
-                        case false:
-                            values[i - 1] = float.NaN;
-                            break;
-                    }
+                    case true:
+                        values[i - 1] = currencyValue;
+                        break;
+                    case false:
+                        values[i - 1] = float.NaN;
+                        break;
                 }
+            }
 
-                lock (lockObject)
-                {
-                    Data[day] = values;
-                }
+            lock (lockObject)
+            {
+                Data[Day] = values;
             }
         }
     }
