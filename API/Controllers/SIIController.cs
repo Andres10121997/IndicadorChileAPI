@@ -190,7 +190,7 @@ namespace API.Controllers
                             }
                         }
 
-                        return this.NotFound();
+                        return this.StatusCode(statusCode: StatusCodes.Status422UnprocessableEntity);
                     case false:
                         return this.NotFound();
                 }

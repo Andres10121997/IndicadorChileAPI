@@ -37,7 +37,7 @@ namespace API.App.DTO.Currency
             }
         }
 
-        public string? MonthName{ get; init; }
+        public string? MonthName { get; init; }
         public required CurrencyDto[] Currencies { get; init; }
         #endregion
     }
