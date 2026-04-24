@@ -1,6 +1,6 @@
-﻿using API.App.Information;
-using API.App.DTO.Currency;
+﻿using API.App.DTO.Currency;
 using API.App.DTO.HTML;
+using API.App.Information;
 using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -125,7 +125,7 @@ namespace API.Controllers
 
 
 
-        #region HttpGet
+        #region Get
         [
             HttpGet(
                 template: "[action]"
