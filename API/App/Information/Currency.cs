@@ -27,23 +27,9 @@ namespace API.App.Information
 
         public async Task<CurrencyHeaderDto> HeaderAsync()
         {
-            #region Variables
-            string? monthName;
-            #endregion
-
             #region Objects
             CurrencyHeaderDto currencyHeader;
             #endregion
-
-            monthName = this.searchFilter.Month.HasValue
-                        ?
-                        new DateOnly(
-                            year: this.searchFilter.Year,
-                            month: Convert.ToInt32(value: this.searchFilter.Month),
-                            day: 1
-                        ).ToString(format: "MMMM")
-                        :
-                        null;
 
             VarGlobal.Currencies = await GetAsync();
 
@@ -51,7 +37,7 @@ namespace API.App.Information
             {
                 ConsultationDateTime = VarGlobal.Now,
                 Year = this.searchFilter.Year,
-                MonthName = monthName,
+                MonthName = this.MonthName(),
                 Currencies = VarGlobal.Currencies
             };
 
@@ -72,6 +58,21 @@ namespace API.App.Information
             VarGlobal.Currencies = await context.Values();
 
             return VarGlobal.Currencies;
+        }
+
+        private string? MonthName()
+        {
+            switch (this.searchFilter.Month.HasValue)
+            {
+                case true:
+                    return new DateOnly(
+                        year: this.searchFilter.Year,
+                        month: Convert.ToInt32(value: this.searchFilter.Month),
+                        day: 1
+                    ).ToString(format: "MMMM");
+                case false:
+                    return null;
+            }
         }
     }
 }
