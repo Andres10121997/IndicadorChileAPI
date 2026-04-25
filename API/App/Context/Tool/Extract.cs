@@ -70,39 +70,41 @@ namespace API.App.Context.Tool
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
                 parallelOptions: Utils.ParallelForEachOptions,
-                body: async (RowMatch, CancellationToken) =>
-                {
-                    #region Variables
-                    string rowHtml;
-                    string cellPattern;
-                    #endregion
-
-                    #region Collection
-                    MatchCollection cellMatches;
-                    #endregion
-
-                    rowHtml = RowMatch.Groups[1].Value;
-
-                    // Regex para las celdas (<th> y <td>)
-                    cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
-                    cellMatches = Regex.Matches(
-                        input: rowHtml,
-                        pattern: cellPattern,
-                        options: RegexOptions.Singleline
-                    );
-
-                    #region Exception
-                    ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(
-                        value: cellMatches.Count,
-                        other: 0
-                    );
-                    #endregion
-
-                    ParseData(CellMatches: cellMatches);
-                }
+                body: async (RowMatch, CancellationToken) => ParseData(CellMatches: Cell(RowMatch))
             );
 
             return Data;
+        }
+
+        private static MatchCollection Cell(Match RowMatch)
+        {
+            #region Variables
+            string rowHtml;
+            string cellPattern;
+            #endregion
+
+            #region Collection
+            MatchCollection cellMatches;
+            #endregion
+
+            rowHtml = RowMatch.Groups[1].Value;
+
+            // Regex para las celdas (<th> y <td>)
+            cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
+            cellMatches = Regex.Matches(
+                input: rowHtml,
+                pattern: cellPattern,
+                options: RegexOptions.Singleline
+            );
+
+            #region Exception
+            ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(
+                value: cellMatches.Count,
+                other: 0
+            );
+            #endregion
+
+            return cellMatches;
         }
 
         private static void ParseData(MatchCollection CellMatches)
