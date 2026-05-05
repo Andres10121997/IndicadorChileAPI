@@ -8,14 +8,13 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <ErrorReport>send</ErrorReport>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
-    <Title>API</Title>
+    <Title>Indicadores de Chile (API)</Title>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Andres10121997/IndicadorChileAPI</RepositoryUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <NeutralLanguage>es-CL</NeutralLanguage>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Authors>Andrés Felipe Sagredo Bromberg</Authors>
     <StartupObject>API.App.Start.Program</StartupObject>
   </PropertyGroup>
 
