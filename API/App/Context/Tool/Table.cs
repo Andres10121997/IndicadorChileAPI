@@ -1,5 +1,4 @@
 ﻿using API.App.DTO.HTML;
-using System;
 using System.Text.RegularExpressions;
 
 namespace API.App.Context.Tool
@@ -50,11 +49,15 @@ namespace API.App.Context.Tool
             string tableHtml;
             #endregion
 
-            var result = GetMatch();
+            #region Objects
+            Result<Match> result = GetMatch();
+            #endregion
+
+            result = GetMatch();
 
             if (result.IsSuccess)
             {
-                tableHtml = result.Value.Value;
+                tableHtml = result.Value.Groups[1].Value;
 
                 return tableHtml;
             }
