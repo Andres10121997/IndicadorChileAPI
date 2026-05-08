@@ -109,8 +109,6 @@ namespace API.App.Start
 
             App.MapControllers()
                 .RequireRateLimiting(policyName: "Limiter");
-
-            // App.MapControllers();
         }
         #endregion
     }

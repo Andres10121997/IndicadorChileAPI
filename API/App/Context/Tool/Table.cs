@@ -45,10 +45,6 @@ namespace API.App.Context.Tool
         #region Table
         private string GetHtml()
         {
-            #region Variables
-            string tableHtml;
-            #endregion
-
             #region Objects
             Result<Match> result = GetMatch();
             #endregion
@@ -57,14 +53,16 @@ namespace API.App.Context.Tool
 
             if (result.IsSuccess)
             {
+                #region Variables
+                string tableHtml;
+                #endregion
+
                 tableHtml = result.Value.Groups[1].Value;
 
                 return tableHtml;
             }
-            else
-            {
-                return result.Error;
-            }
+
+            return result.Error;
         }
 
         private Result<Match> GetMatch()
@@ -85,7 +83,7 @@ namespace API.App.Context.Tool
                 return Result<Match>.Failure($"La variable {nameof(tableMatch.Success)} no puede ser falso.");
             }
 
-            return Result<Match>.Success(tableMatch);
+            return Result<Match>.Success(Value: tableMatch);
         }
         #endregion
         #endregion

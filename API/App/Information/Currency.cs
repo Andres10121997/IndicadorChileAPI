@@ -2,6 +2,7 @@
 using API.App.DTO.Currency;
 using API.Models;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.App.Information
@@ -16,14 +17,35 @@ namespace API.App.Information
 
 
         #region Constructor Method
-        public Currency(CurrencyInfoDto CurrencyInfo, SearchFilterModel SearchFilter)
+        public Currency(CurrencyInfoDto CurrencyInfo,
+                        SearchFilterModel SearchFilter)
         {
             this.currencyInfo = CurrencyInfo;
             this.searchFilter = SearchFilter;
         }
         #endregion
 
+        /*
+        public Result<bool> Validation(CurrencyInfoDto Value)
+        {
+            #region Collections
+            bool[] currencyValidation;
+            #endregion
 
+            currencyValidation = new bool[2]
+            {
+                searchFilter.Year >= Value.StartDate.Year,
+                searchFilter.Year <= Value.EndDate.Year
+            };
+
+            if (!currencyValidation.All(value => value == true))
+            {
+                return Result<bool>.Failure("El año está fuera de rango.");
+            }
+
+            return Result<bool>.Success(Value: true);
+        }
+        */
 
         public async Task<CurrencyHeaderDto> HeaderAsync()
         {
