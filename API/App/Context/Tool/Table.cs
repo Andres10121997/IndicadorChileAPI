@@ -43,12 +43,20 @@ namespace API.App.Context.Tool
             return rowMatches;
         }
 
+        #region Table
         private string GetHtml()
         {
             #region Variables
             string tableHtml;
             #endregion
 
+            tableHtml = GetMatch().Groups[1].Value;
+
+            return tableHtml;
+        }
+
+        private Match GetMatch()
+        {
             #region Object
             Match tableMatch;
             #endregion
@@ -67,10 +75,9 @@ namespace API.App.Context.Tool
             );
             #endregion
 
-            tableHtml = tableMatch.Groups[1].Value;
-
-            return tableHtml;
+            return tableMatch;
         }
+        #endregion
         #endregion
     }
 }
