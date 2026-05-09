@@ -113,3 +113,7 @@ La matriz `DateTimeFormat.MonthNames` de C# considera el idioma y la configuraci
 * **<ins>Especificidad cultural</ins>:** `DateTimeFormatInfo` es una clase que contiene propiedades para el formato de fecha y hora, como los nombres de los meses, días de la semana, y formatos de números específicos de cada cultura (por ejemplo, `es-CL` para español de Chile o `en-US` para inglés de Estados Unidos).
 * **<ins>Adaptación automática</ins>:** Cuando se utiliza sin especificar una cultura, C# utiliza la cultura actual del sistema operativo como valor predeterminado. Esto significa que `DateTimeFormat.MonthNames` contendrá automáticamente los nombres de los meses correspondientes a esa cultura.
 * **<ins>Uso explícito</ins>:** También es posible sobrescribir este comportamiento y especificar manualmente una cultura diferente al formatear una fecha, por ejemplo, utilizando `ToString("MMMM", new CultureInfo("es-CL"))` para forzar el nombre del mes en inglés.
+
+# Patron(es) de Diseño
+## Result Pattern
+El patrón Result es un patrón de diseño que se utiliza para representar el resultado de una operación. Hace explícita la intención de gestionar el éxito o el fracaso, reemplazando mecanismos ambiguos de manejo de errores como el lanzamiento de excepciones.
