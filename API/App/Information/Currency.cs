@@ -78,7 +78,7 @@ namespace API.App.Information
 
             if (validation == false)
             {
-                return Result<Boolean>.Failure($"La variable '{nameof(this.searchFilter.Year)}' está fuera de rango.");
+                return Result<Boolean>.Failure(Error: $"La variable '{nameof(this.searchFilter.Year)}' está fuera de rango.");
             }
 
             return Result<Boolean>.Success(Value: validation);

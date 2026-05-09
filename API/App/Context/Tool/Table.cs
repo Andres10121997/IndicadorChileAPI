@@ -80,7 +80,7 @@ namespace API.App.Context.Tool
             
             if (tableMatch.Success == false)
             {
-                return Result<Match>.Failure($"La variable {nameof(tableMatch.Success)} no puede ser falso.");
+                return Result<Match>.Failure(Error: $"La variable {nameof(tableMatch.Success)} no puede ser falso.");
             }
 
             return Result<Match>.Success(Value: tableMatch);

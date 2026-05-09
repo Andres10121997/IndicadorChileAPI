@@ -1,5 +1,4 @@
 ﻿using API.App.DTO.HTML;
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -70,13 +69,21 @@ namespace API.App.Context.Tool
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
                 parallelOptions: Utils.ParallelForEachOptions,
-                body: async (RowMatch, CancellationToken) => ParseData(CellMatches: Cell(RowMatch))
+                body: async (RowMatch, CancellationToken) =>
+                {
+                    Result<MatchCollection> cell = Cell(RowMatch: RowMatch);
+
+                    if (cell.IsSuccess)
+                    {
+                        ParseData(CellMatches: cell.Value);
+                    }
+                }
             );
 
             return Data;
         }
 
-        private static MatchCollection Cell(Match RowMatch)
+        private static Result<MatchCollection> Cell(Match RowMatch)
         {
             #region Variables
             string rowHtml;
@@ -97,14 +104,14 @@ namespace API.App.Context.Tool
                 options: RegexOptions.Singleline
             );
 
-            #region Exception
-            ArgumentOutOfRangeException.ThrowIfLessThanOrEqual(
-                value: cellMatches.Count,
-                other: 0
-            );
-            #endregion
+            if (cellMatches.Count <= 0)
+            {
+                return Result<MatchCollection>.Failure(
+                    Error: $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser igual o inferior a 0."
+                );
+            }
 
-            return cellMatches;
+            return Result<MatchCollection>.Success(Value: cellMatches);
         }
 
         private static void ParseData(MatchCollection CellMatches)
