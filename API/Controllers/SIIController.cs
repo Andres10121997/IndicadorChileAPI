@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -132,9 +131,7 @@ namespace API.Controllers
             ),
             ProducesResponseType(
                 type: typeof(CurrencyHeaderDto<float>),
-                statusCode: StatusCodes.Status200OK,
-                StatusCode = StatusCodes.Status200OK,
-                Type = typeof(CurrencyHeaderDto<float>)
+                statusCode: StatusCodes.Status200OK
             ),
             ProducesResponseType(
                 statusCode: StatusCodes.Status404NotFound,
@@ -142,9 +139,7 @@ namespace API.Controllers
             ),
             ProducesResponseType(
                 type: typeof(Exception),
-                statusCode: StatusCodes.Status500InternalServerError,
-                StatusCode = StatusCodes.Status500InternalServerError,
-                Type = typeof(Exception)
+                statusCode: StatusCodes.Status500InternalServerError
             )
         ]
         public async Task<ActionResult<CurrencyHeaderDto<float>>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)

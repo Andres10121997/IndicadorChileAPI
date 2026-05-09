@@ -86,13 +86,13 @@ namespace API.App.Context.Tool
         public async Task<CurrencyDto<T>> DailyAsync(DateOnly Date)
         {
             #region Objects
-            CurrencyDto<T>? value;
+            CurrencyDto<T>? currency;
             #endregion
 
             VarGlobal<T>.Currencies = await this.AnnualAsync();
 
             // Buscar valor exacto
-            value = VarGlobal<T>.Currencies
+            currency = VarGlobal<T>.Currencies
                         .FirstOrDefault(predicate: model => model.Date == Date)
                     ??
                     // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
@@ -105,7 +105,7 @@ namespace API.App.Context.Tool
             ArgumentNullException.ThrowIfNull(argument: value);
             #endregion
 
-            return value;
+            return currency;
         }
     }
 }
