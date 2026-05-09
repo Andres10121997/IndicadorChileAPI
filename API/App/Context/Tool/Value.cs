@@ -102,7 +102,7 @@ namespace API.App.Context.Tool
                         .FirstOrDefault();
 
             #region Exception
-            ArgumentNullException.ThrowIfNull(argument: value);
+            ArgumentNullException.ThrowIfNull(argument: currency);
             #endregion
 
             return currency;
