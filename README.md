@@ -116,4 +116,4 @@ La matriz `DateTimeFormat.MonthNames` de C# considera el idioma y la configuraci
 
 # Patron(es) de Diseño
 ## Result Pattern
-El patrón Result es un patrón de diseño que se utiliza para representar el resultado de una operación. Hace explícita la intención de gestionar el éxito o el fracaso, reemplazando mecanismos ambiguos de manejo de errores como el lanzamiento de excepciones.
+El Patrón Result es un patrón de diseño que se utiliza para representar el resultado de una operación. Hace explícita la intención de gestionar el éxito o el fracaso, reemplazando mecanismos ambiguos de manejo de errores como el lanzamiento de excepciones.
