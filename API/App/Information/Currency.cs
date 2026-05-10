@@ -33,7 +33,7 @@ namespace API.App.Information
         public async Task<CurrencyHeaderDto<T>> HeaderAsync()
         {
             #region Objects
-            Result<Boolean> validationResult = this.Validation();
+            Result<bool> validationResult = this.Validation();
             #endregion
 
             if (validationResult.IsSuccess)
@@ -60,7 +60,7 @@ namespace API.App.Information
             }
         }
 
-        private Result<Boolean> Validation()
+        private Result<bool> Validation()
         {
             #region Variables
             bool validation;
@@ -80,10 +80,10 @@ namespace API.App.Information
 
             if (validation == false)
             {
-                return Result<Boolean>.Failure(Error: $"La variable '{nameof(this.searchFilter.Year)}' está fuera de rango.");
+                return Result<bool>.Failure(Error: $"La variable '{nameof(this.searchFilter.Year)}' está fuera de rango.");
             }
 
-            return Result<Boolean>.Success(Value: validation);
+            return Result<bool>.Success(Value: validation);
         }
 
         private async Task<CurrencyDto<T>[]> GetAsync()
