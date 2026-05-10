@@ -83,7 +83,7 @@ namespace API.App.Context.Tool
                 .ToArray<CurrencyDto<T>>();
         }
 
-        public async Task<CurrencyDto<T>> DailyAsync(DateOnly Date)
+        public async Task<Result<CurrencyDto<T>>> DailyAsync(DateOnly Date)
         {
             #region Objects
             CurrencyDto<T>? currency;
@@ -101,11 +101,12 @@ namespace API.App.Context.Tool
                         .OrderByDescending(keySelector: Model => Model.Date)
                         .FirstOrDefault();
 
-            #region Exception
-            ArgumentNullException.ThrowIfNull(argument: currency);
-            #endregion
+            if (currency == null)
+            {
+                return Result<CurrencyDto<T>>.Failure(Error: $"La variable {nameof(currency)} no puede ser nulo.");
+            }
 
-            return currency;
+            return Result<CurrencyDto<T>>.Success(Value: currency);
         }
     }
 }

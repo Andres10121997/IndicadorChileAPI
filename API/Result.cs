@@ -1,6 +1,6 @@
 ﻿namespace API
 {
-    internal sealed class Result<T>
+    public sealed class Result<T>
         where T : notnull
     {
         #region Variables
@@ -12,9 +12,9 @@
 
 
         #region Constructor Method
-        internal Result(bool IsSuccess,
-                        T Value,
-                        string Error)
+        public Result(bool IsSuccess,
+                      T Value,
+                      string Error)
             : base()
         {
             this.isSuccess = IsSuccess;
@@ -26,17 +26,17 @@
 
 
         #region Field
-        internal T Value
+        public T Value
         {
             get => this.value;
         }
 
-        internal bool IsSuccess
+        public bool IsSuccess
         {
             get => this.isSuccess;
         }
 
-        internal string Error
+        public string Error
         {
             get => this.error;
         }
@@ -44,12 +44,12 @@
 
 
 
-        internal static Result<T> Success(T Value)
+        public static Result<T> Success(T Value)
         {
             return new Result<T>(IsSuccess: true, Value: Value, Error: string.Empty);
         }
 
-        internal static Result<T> Failure(string Error)
+        public static Result<T> Failure(string Error)
         {
             return new Result<T>(IsSuccess: false, Value: default!, Error: Error);
         }
