@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace API.App.Context.Tool
 {
     public static class Extract<T>
-        where T : struct, IFloatingPoint<T>
+        where T : notnull, IFloatingPoint<T>
     {
         #region Objects
         private static object lockObject;
@@ -159,7 +159,7 @@ namespace API.App.Context.Tool
                 switch (T.TryParse(s: value,
                                       style: NumberStyles.Number,
                                       provider: CultureInfo.InvariantCulture,
-                                      result: out T currencyValue))
+                                      result: out var currencyValue))
                 {
                     case true:
                         values[i - 1] = currencyValue;

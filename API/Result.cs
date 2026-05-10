@@ -1,6 +1,7 @@
 ﻿namespace API
 {
     internal sealed class Result<T>
+        where T : notnull
     {
         #region Variables
         private bool isSuccess;

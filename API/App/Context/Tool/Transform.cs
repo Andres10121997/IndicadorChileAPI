@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace API.App.Context.Tool
 {
     internal class Transform<T>
-        where T : struct, IFloatingPoint<T>
+        where T : notnull, IFloatingPoint<T>
     {
         #region Object
         private SearchFilterModel searchFilter;
