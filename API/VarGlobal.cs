@@ -5,7 +5,7 @@ using System.Numerics;
 namespace API
 {
     internal static class VarGlobal<T>
-        where T : notnull, IFloatingPoint<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Collections
         private static CurrencyDto<T>[] currencies;

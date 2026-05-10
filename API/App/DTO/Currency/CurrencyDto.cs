@@ -4,7 +4,7 @@ using System.Numerics;
 namespace API.App.DTO.Currency
 {
     public sealed record CurrencyDto<T>
-        where T : notnull, IFloatingPoint<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Field
         public required Guid ID { get; init; }

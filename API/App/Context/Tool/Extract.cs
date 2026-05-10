@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace API.App.Context.Tool
 {
     public static class Extract<T>
-        where T : notnull, IFloatingPoint<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Objects
         private static object lockObject;

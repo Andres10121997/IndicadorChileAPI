@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace API.App.Context.Tool
 {
     public class Value<T>
-        where T : notnull, IFloatingPoint<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Objects
         private CurrencyInfoDto currencyInfo;
