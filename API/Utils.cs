@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace API
@@ -31,5 +32,22 @@ namespace API
             set => parallelForEachOptions = value;
         }
         #endregion
+
+
+
+        internal static void LoogerInformation(ILogger Logger,
+                                               Type OType,
+                                               string Message)
+        {
+            Logger.LogInformation(
+                $"" +
+                $"---" +
+                $"{OType}" +
+                $"Fecha y hora: {DateTime.Now}" +
+                Message +
+                $"---" +
+                $""
+            );
+        }
     }
 }
