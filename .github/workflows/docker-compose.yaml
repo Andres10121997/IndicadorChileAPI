@@ -13,7 +13,7 @@ jobs:
     steps:
     - name: Checkout code
       id: checkoutCode
-      uses: actions/checkout@v4 # Obtiene el código de tu repositorio
+      uses: actions/checkout@latest # Obtiene el código de tu repositorio
 
     - name: Log in to GitHub Container Registry
       id: logInGitHub
