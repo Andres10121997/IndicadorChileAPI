@@ -17,7 +17,7 @@ jobs:
 
     - name: Log in to GitHub Container Registry
       id: logInGitHub
-      uses: docker/login-action@v3 # Permite iniciar sesión en el registro de contenedores
+      uses: docker/login-action@v4 # Permite iniciar sesión en el registro de contenedores
       with:
         registry: ghcr.io # Usa el registro de contenedores de GitHub
         username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
