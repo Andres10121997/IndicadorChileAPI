@@ -1,20 +1,21 @@
 ﻿namespace API
 {
-    public sealed class Result<T>
-        where T : notnull
+    public sealed class Result<TValue, TError>
+        where TValue : notnull
+        where TError : notnull
     {
         #region Variables
         private bool isSuccess;
-        private T value;
-        private string error;
+        private TValue value;
+        private TError error;
         #endregion
 
 
 
         #region Constructor Method
         public Result(bool IsSuccess,
-                      T Value,
-                      string Error)
+                      TValue Value,
+                      TError Error)
             : base()
         {
             this.isSuccess = IsSuccess;
@@ -26,7 +27,7 @@
 
 
         #region Field
-        public T Value
+        public TValue Value
         {
             get => this.value;
         }
@@ -36,7 +37,7 @@
             get => this.isSuccess;
         }
 
-        public string Error
+        public TError Error
         {
             get => this.error;
         }
@@ -44,14 +45,14 @@
 
 
 
-        public static Result<T> Success(T Value)
+        public static Result<TValue, TError> Success(TValue Value)
         {
-            return new Result<T>(IsSuccess: true, Value: Value, Error: string.Empty);
+            return new Result<TValue, TError>(IsSuccess: true, Value: Value, Error: default!);
         }
 
-        public static Result<T> Failure(string Error)
+        public static Result<TValue, TError> Failure(TError Error)
         {
-            return new Result<T>(IsSuccess: false, Value: default!, Error: Error);
+            return new Result<TValue, TError>(IsSuccess: false, Value: default!, Error: Error);
         }
     }
 }

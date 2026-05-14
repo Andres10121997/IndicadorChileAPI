@@ -73,7 +73,7 @@ namespace API.App.Context.Tool
                 parallelOptions: Utils.ParallelForEachOptions,
                 body: async (RowMatch, CancellationToken) =>
                 {
-                    Result<MatchCollection> cell = Cell(RowMatch: RowMatch);
+                    Result<MatchCollection, string> cell = Cell(RowMatch: RowMatch);
 
                     if (cell.IsSuccess)
                     {
@@ -85,7 +85,7 @@ namespace API.App.Context.Tool
             return Data;
         }
 
-        private static Result<MatchCollection> Cell(Match RowMatch)
+        private static Result<MatchCollection, string> Cell(Match RowMatch)
         {
             #region Variables
             string rowHtml;
@@ -108,12 +108,12 @@ namespace API.App.Context.Tool
 
             if (cellMatches.Count <= 0)
             {
-                return Result<MatchCollection>.Failure(
-                    Error: $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser igual o inferior a 0."
+                return Result<MatchCollection, string>.Failure(
+                    Error: $"La cantidad de datos de la lista {nameof(cellMatches)} no puede ser igual o inferior a 0."
                 );
             }
 
-            return Result<MatchCollection>.Success(Value: cellMatches);
+            return Result<MatchCollection, string>.Success(Value: cellMatches);
         }
 
         private static void ParseData(MatchCollection CellMatches)
