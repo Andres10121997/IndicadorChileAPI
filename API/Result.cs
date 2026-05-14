@@ -5,9 +5,9 @@
         where TError : notnull
     {
         #region Variables
-        private bool isSuccess;
-        private TValue value;
-        private TError error;
+        private readonly bool isSuccess;
+        private readonly TValue value;
+        private readonly TError error;
         #endregion
 
 
