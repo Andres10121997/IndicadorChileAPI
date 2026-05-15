@@ -34,30 +34,25 @@ namespace API.App.Information
         {
             #region Objects
             Result<bool, string> validationResult = this.Validation();
+            CurrencyHeaderDto<T> currencyHeader;
             #endregion
 
-            if (validationResult.IsSuccess)
-            {
-                #region Objects
-                CurrencyHeaderDto<T> currencyHeader;
-                #endregion
-
-                VarGlobal<T>.Currencies = await GetAsync();
-
-                currencyHeader = new CurrencyHeaderDto<T>
-                {
-                    ConsultationDateTime = DateTime.Now,
-                    Year = this.searchFilter.Year,
-                    MonthName = this.MonthName(),
-                    Currencies = VarGlobal<T>.Currencies
-                };
-
-                return currencyHeader;
-            }
-            else
+            if (!validationResult.IsSuccess)
             {
                 return default!;
             }
+
+            VarGlobal<T>.Currencies = await GetAsync();
+
+            currencyHeader = new CurrencyHeaderDto<T>
+            {
+                ConsultationDateTime = DateTime.Now,
+                Year = this.searchFilter.Year,
+                MonthName = this.MonthName(),
+                Currencies = VarGlobal<T>.Currencies
+            };
+
+            return currencyHeader;
         }
 
         private Result<bool, string> Validation()
