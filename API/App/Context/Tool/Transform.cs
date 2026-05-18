@@ -1,4 +1,5 @@
-﻿using API.App.DTO.Currency;
+﻿using API.App.DTO;
+using API.App.DTO.Currency;
 using API.Models;
 using System;
 using System.Collections.Generic;
@@ -106,9 +107,13 @@ namespace API.App.Context.Tool
             return modelList.ToArray<TModel>();
         }
 
-        internal async Task<CurrencyDto<T>[]> ToCurrencyModelsAsync(Dictionary<byte, T[]> CurrencyData)
+        internal async Task<Result<CurrencyDto<T>[]>> ToCurrencyModelsAsync(Dictionary<byte, T[]> CurrencyData)
         {
-            return await this.ToModelsAsync<CurrencyDto<T>>(
+            #region Collections
+            CurrencyDto<T>[] currencies;
+            #endregion
+
+            currencies = await this.ToModelsAsync<CurrencyDto<T>>(
                 Data: CurrencyData,
                 ModelFactory: (Date, Value) => new CurrencyDto<T>
                 {
@@ -131,6 +136,21 @@ namespace API.App.Context.Tool
                     Currency = Value
                 }
             );
+
+            if (currencies.Length == 0)
+            {
+                return Result<CurrencyDto<T>[]>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Transform<T>),
+                        MethodName = nameof(ToCurrencyModelsAsync),
+                        VariableName = nameof(currencies.Length),
+                        Description = $"La cantidad de datos de la variable {nameof(currencies.Length)} no pude ser 0."
+                    }
+                );
+            }
+
+            return Result<CurrencyDto<T>[]>.Success(Value: currencies);
         }
         #endregion
     }

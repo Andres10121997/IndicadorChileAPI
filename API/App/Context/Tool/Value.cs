@@ -42,8 +42,9 @@ namespace API.App.Context.Tool
 
         public async Task<Result<CurrencyDto<T>[]>> AnnualAsync()
         {
-            #region Collections
-            Result<Dictionary<byte, T[]>> result;
+            #region Objects
+            Result<CurrencyDto<T>[]> toCurrencyModelsResult;
+            Result <Dictionary<byte, T[]>> result;
             #endregion
 
             result = await Extract<T>.ValuesAsync(
@@ -74,9 +75,26 @@ namespace API.App.Context.Tool
                 );
             }
 
-            VarGlobal<T>.Currencies = await new Transform<T>(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: result.Value);
+            toCurrencyModelsResult = await new Transform<T>(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: result.Value);
 
-            VarGlobal<T>.Currencies = VarGlobal<T>.Currencies
+            if (!toCurrencyModelsResult.IsSuccess)
+            {
+                return Result<CurrencyDto<T>[]>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Value<T>),
+                        MethodName = nameof(AnnualAsync),
+                        VariableName = nameof(toCurrencyModelsResult.IsSuccess),
+                        Description = $"La variable {toCurrencyModelsResult.IsSuccess} es {false}",
+                        OtherErrors = new[]
+                        {
+                            toCurrencyModelsResult.Error
+                        }
+                    }
+                );
+            }
+
+            VarGlobal<T>.Currencies = toCurrencyModelsResult.Value
                 .AsParallel()
                 .Where(predicate: Model => !T.IsNaN(value: Model.Currency)
                                            &&

@@ -44,7 +44,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
-                        MethodName = nameof(GetData),
+                        MethodName = nameof(this.GetData),
                         VariableName = nameof(result.IsSuccess),
                         Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}.",
                         OtherErrors = new[]
@@ -85,7 +85,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
-                        MethodName = nameof(GetHtml),
+                        MethodName = nameof(this.GetHtml),
                         VariableName = nameof(result.IsSuccess),
                         Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}.",
                         OtherErrors = new[]
@@ -120,7 +120,7 @@ namespace API.App.Context.Tool
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
-                        MethodName = nameof(GetMatchResult),
+                        MethodName = nameof(this.GetMatchResult),
                         VariableName = nameof(tableMatch.Success),
                         Description = $"La variable {nameof(tableMatch.Success)} no puede ser {false}."
                     }

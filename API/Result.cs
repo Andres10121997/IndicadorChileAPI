@@ -28,14 +28,14 @@ namespace API
 
 
         #region Field
-        public TValue Value
-        {
-            get => this.value;
-        }
-
         public bool IsSuccess
         {
             get => this.isSuccess;
+        }
+
+        public TValue Value
+        {
+            get => this.value;
         }
 
         public ResultErrorDto Error
