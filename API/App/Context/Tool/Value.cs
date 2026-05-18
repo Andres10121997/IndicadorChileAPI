@@ -44,10 +44,10 @@ namespace API.App.Context.Tool
         {
             #region Objects
             Result<CurrencyDto<T>[]> toCurrencyModelsResult;
-            Result <Dictionary<byte, T[]>> result;
+            Result <Dictionary<byte, T[]>> valuesResult;
             #endregion
 
-            result = await Extract<T>.ValuesAsync(
+            valuesResult = await Extract<T>.ValuesAsync(
                 Html: new HtmlDto
                 {
                     Content = await htmlContentAsync,
@@ -58,24 +58,24 @@ namespace API.App.Context.Tool
                 }
             );
 
-            if (!result.IsSuccess)
+            if (!valuesResult.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(AnnualAsync),
-                        VariableName = nameof(result.IsSuccess),
-                        Description = $"La variable {result.IsSuccess} es {false}",
+                        VariableName = nameof(valuesResult.IsSuccess),
+                        Description = $"La variable {valuesResult.IsSuccess} es {false}",
                         OtherErrors = new[]
                         {
-                            result.Error
+                            valuesResult.Error
                         }
                     }
                 );
             }
 
-            toCurrencyModelsResult = await new Transform<T>(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: result.Value);
+            toCurrencyModelsResult = await new Transform<T>(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
 
             if (!toCurrencyModelsResult.IsSuccess)
             {
