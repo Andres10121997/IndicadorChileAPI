@@ -33,9 +33,11 @@ namespace API.App.Information
         public async Task<CurrencyHeaderDto<T>> HeaderAsync()
         {
             #region Objects
-            Result<bool, string> validationResult = this.Validation();
+            Result<bool, string> validationResult;
             CurrencyHeaderDto<T> currencyHeader;
             #endregion
+
+            validationResult = this.Validation();
 
             if (!validationResult.IsSuccess)
             {
