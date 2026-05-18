@@ -113,6 +113,7 @@ namespace API.App.Context.Tool
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<T>),
+                        VariableName = nameof(cellMatches),
                         Description = $"La cantidad de datos de la lista {nameof(cellMatches)} no puede ser igual o inferior a 0."
                     }
                 );

@@ -108,6 +108,7 @@ namespace API.App.Context.Tool
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
+                        VariableName = nameof(currency),
                         Description = $"La variable {nameof(currency)} no puede ser nulo."
                     }
                 );

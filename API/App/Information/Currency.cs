@@ -82,6 +82,7 @@ namespace API.App.Information
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Currency<T>),
+                        VariableName = nameof(this.searchFilter.Year),
                         Description = $"La variable '{nameof(this.searchFilter.Year)}' está fuera de rango."
                     }
                 );

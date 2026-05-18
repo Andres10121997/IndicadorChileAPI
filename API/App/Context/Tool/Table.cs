@@ -46,27 +46,27 @@ namespace API.App.Context.Tool
         #region Table
         private string GetHtml()
         {
-            #region Objects
-            Result<Match> result = GetMatch();
+            #region Variables
+            string tableHtml;
             #endregion
 
-            result = GetMatch();
+            #region Objects
+            Result<Match> result;
+            #endregion
 
-            if (result.IsSuccess)
+            result = this.GetMatchResult();
+
+            if (!result.IsSuccess)
             {
-                #region Variables
-                string tableHtml;
-                #endregion
-
-                tableHtml = result.Value.Groups[1].Value;
-
-                return tableHtml;
+                return result.Error.ToString();
             }
 
-            return result.Error.ToString();
+            tableHtml = result.Value.Groups[1].Value;
+
+            return tableHtml;
         }
 
-        private Result<Match> GetMatch()
+        private Result<Match> GetMatchResult()
         {
             #region Object
             Match tableMatch;
@@ -85,7 +85,8 @@ namespace API.App.Context.Tool
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
-                        Description = "$\"La variable {nameof(tableMatch.Success)} no puede ser falso.\""
+                        VariableName = nameof(tableMatch.Success),
+                        Description = $"La variable {nameof(tableMatch.Success)} no puede ser falso."
                     }
                 );
             }
