@@ -46,10 +46,11 @@ namespace API.App.Context.Tool
 
 
 
-        public static async Task<Dictionary<byte, T[]>> ValuesAsync(HtmlDto Html)
+        public static async Task<Result<Dictionary<byte, T[]>>> ValuesAsync(HtmlDto Html)
         {
             #region Objects
             Table table;
+            Result<Dictionary<byte, T[]>> result;
             #endregion
 
             #region Collection
@@ -60,21 +61,42 @@ namespace API.App.Context.Tool
 
             rows = table.GetData();
 
-            Data = await OrganizeTheDataObtainedAsync(RowMatches: rows);
+            result = await OrganizeTheDataObtainedAsync(RowMatches: rows);
 
-            return Data;
+            if (!result.IsSuccess)
+            {
+                return Result<Dictionary<byte, T[]>>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Extract<T>),
+                        MethodName = nameof(ValuesAsync),
+                        VariableName = nameof(result.IsSuccess),
+                        Description = "",
+                        OtherErrors = new[]
+                        {
+                            result.Error
+                        }
+                    }
+                );
+            }
+
+            return result;
         }
 
 
 
-        private static async Task<Dictionary<byte, T[]>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
+        private static async Task<Result<Dictionary<byte, T[]>>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
         {
+            #region Collection
+            Dictionary<byte, T[]> data;
+            #endregion
+
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
                 parallelOptions: Utils.ParallelForEachOptions,
                 body: async (RowMatch, CancellationToken) =>
                 {
-                    Result<MatchCollection> cell = Cell(RowMatch: RowMatch);
+                    Result<MatchCollection> cell = CellResult(RowMatch: RowMatch);
 
                     if (cell.IsSuccess)
                     {
@@ -83,10 +105,25 @@ namespace API.App.Context.Tool
                 }
             );
 
-            return Data;
+            data = Data;
+
+            if (data.Count == 0)
+            {
+                return Result<Dictionary<byte, T[]>>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Extract<T>),
+                        MethodName = nameof(OrganizeTheDataObtainedAsync),
+                        VariableName = nameof(data.Count),
+                        Description = $"La cantidad de datos de la variable {data.Count} no puede ser 0."
+                    }
+                );
+            }
+
+            return Result<Dictionary<byte, T[]>>.Success(Value: data);
         }
 
-        private static Result<MatchCollection> Cell(Match RowMatch)
+        private static Result<MatchCollection> CellResult(Match RowMatch)
         {
             #region Variables
             string rowHtml;
@@ -110,9 +147,10 @@ namespace API.App.Context.Tool
             if (cellMatches.Count <= 0)
             {
                 return Result<MatchCollection>.Failure(
-                    new ResultErrorDto()
+                    Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<T>),
+                        MethodName = nameof(CellResult),
                         VariableName = nameof(cellMatches),
                         Description = $"La cantidad de datos de la lista {nameof(cellMatches)} no puede ser igual o inferior a 0."
                     }

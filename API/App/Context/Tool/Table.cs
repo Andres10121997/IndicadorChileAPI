@@ -85,6 +85,7 @@ namespace API.App.Context.Tool
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
+                        MethodName = nameof(GetMatchResult),
                         VariableName = nameof(tableMatch.Success),
                         Description = $"La variable {nameof(tableMatch.Success)} no puede ser falso."
                     }

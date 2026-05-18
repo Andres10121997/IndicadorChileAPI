@@ -40,13 +40,13 @@ namespace API.App.Context.Tool
 
 
 
-        public async Task<CurrencyDto<T>[]> AnnualAsync()
+        public async Task<Result<CurrencyDto<T>[]>> AnnualAsync()
         {
             #region Collections
-            Task<Dictionary<byte, T[]>> values;
+            Result<Dictionary<byte, T[]>> result;
             #endregion
 
-            values = Extract<T>.ValuesAsync(
+            result = await Extract<T>.ValuesAsync(
                 Html: new HtmlDto
                 {
                     Content = await htmlContentAsync,
@@ -57,9 +57,26 @@ namespace API.App.Context.Tool
                 }
             );
 
-            VarGlobal<T>.Currencies = await new Transform<T>(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
+            if (!result.IsSuccess)
+            {
+                return Result<CurrencyDto<T>[]>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Value<T>),
+                        MethodName = nameof(AnnualAsync),
+                        VariableName = nameof(result.IsSuccess),
+                        Description = $"La variable {result.IsSuccess} es {false}",
+                        OtherErrors = new[]
+                        {
+                            result.Error
+                        }
+                    }
+                );
+            }
 
-            return VarGlobal<T>.Currencies
+            VarGlobal<T>.Currencies = await new Transform<T>(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: result.Value);
+
+            VarGlobal<T>.Currencies = VarGlobal<T>.Currencies
                 .AsParallel()
                 .Where(predicate: Model => !T.IsNaN(value: Model.Currency)
                                            &&
@@ -70,18 +87,39 @@ namespace API.App.Context.Tool
                                            !T.IsNegative(value: Model.Currency))
                 .OrderBy<CurrencyDto<T>, DateOnly>(keySelector: Model => Model.Date)
                 .ToArray<CurrencyDto<T>>();
+
+            return Result<CurrencyDto<T>[]>.Success(Value: VarGlobal<T>.Currencies);
         }
 
-        public async Task<CurrencyDto<T>[]> MonthlyAsync()
+        public async Task<Result<CurrencyDto<T>[]>> MonthlyAsync()
         {
-            VarGlobal<T>.Currencies = await this.AnnualAsync();
+            var result = await this.AnnualAsync();
 
-            return VarGlobal<T>.Currencies
+            if (!result.IsSuccess)
+            {
+                return Result<CurrencyDto<T>[]>.Failure(
+                    new ResultErrorDto()
+                    {
+                        ClassName = nameof(Value<T>),
+                        MethodName = nameof(MonthlyAsync),
+                        VariableName = nameof(result.IsSuccess),
+                        Description = $"La variable ${nameof(result.IsSuccess)} no puede ser ${false}",
+                        OtherErrors = new[]
+                        {
+                            result.Error
+                        }
+                    }
+                );
+            }
+
+             VarGlobal<T>.Currencies = result.Value
                 .AsParallel()
                 .Where(predicate: Model => Model.Date.Year == this.searchFilter.Year
                                            &&
                                            Model.Date.Month == this.searchFilter.Month)
                 .ToArray<CurrencyDto<T>>();
+
+            return Result<CurrencyDto<T>[]>.Success(Value: VarGlobal<T>.Currencies);
         }
 
         public async Task<Result<CurrencyDto<T>>> DailyAsync(DateOnly Date)
@@ -90,14 +128,31 @@ namespace API.App.Context.Tool
             CurrencyDto<T>? currency;
             #endregion
 
-            VarGlobal<T>.Currencies = await this.AnnualAsync();
+            var result = await this.AnnualAsync();
+
+            if (!result.IsSuccess)
+            {
+                return Result<CurrencyDto<T>>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Value<T>),
+                        MethodName = nameof(DailyAsync),
+                        VariableName = nameof(result.IsSuccess),
+                        Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}",
+                        OtherErrors = new[]
+                        {
+                            result.Error
+                        }
+                    }
+                );
+            }
 
             // Buscar valor exacto
-            currency = VarGlobal<T>.Currencies
+            currency = result.Value
                         .FirstOrDefault(predicate: model => model.Date == Date)
                     ??
                     // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-                    VarGlobal<T>.Currencies
+                    result.Value
                         .Where(predicate: Model => Model.Date < Date)
                         .OrderByDescending(keySelector: Model => Model.Date)
                         .FirstOrDefault();
@@ -108,8 +163,9 @@ namespace API.App.Context.Tool
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
+                        MethodName = nameof(DailyAsync),
                         VariableName = nameof(currency),
-                        Description = $"La variable {nameof(currency)} no puede ser nulo."
+                        Description = $"La variable {nameof(currency)} no puede ser ${null}."
                     }
                 );
             }

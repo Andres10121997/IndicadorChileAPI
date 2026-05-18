@@ -31,10 +31,11 @@ namespace API.App.Information
 
 
 
-        public async Task<CurrencyHeaderDto<T>> HeaderAsync()
+        public async Task<Result<CurrencyHeaderDto<T>>> HeaderAsync()
         {
             #region Objects
             Result<bool> validationResult;
+            Result<CurrencyDto<T>[]> getResult;
             CurrencyHeaderDto<T> currencyHeader;
             #endregion
 
@@ -42,10 +43,39 @@ namespace API.App.Information
 
             if (!validationResult.IsSuccess)
             {
-                return default!;
+                return Result<CurrencyHeaderDto<T>>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Currency<T>),
+                        MethodName = nameof(HeaderAsync),
+                        VariableName = nameof(validationResult.IsSuccess),
+                        Description = $"La variable {nameof(validationResult.IsSuccess)} no puede ser {false}",
+                        OtherErrors = new[]
+                        {
+                            validationResult.Error
+                        }
+                    }
+                );
             }
 
-            VarGlobal<T>.Currencies = await GetAsync();
+            getResult = await GetAsync();
+
+            if (!getResult.IsSuccess)
+            {
+                return Result<CurrencyHeaderDto<T>>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Currency<T>),
+                        MethodName = nameof(GetAsync),
+                        VariableName = nameof(getResult.IsSuccess),
+                        Description = $"La variable {nameof(getResult.IsSuccess)} no puede ser {false}",
+                        OtherErrors = new[]
+                        {
+                            getResult.Error
+                        }
+                    }
+                );
+            }
 
             currencyHeader = new CurrencyHeaderDto<T>
             {
@@ -55,7 +85,7 @@ namespace API.App.Information
                 Currencies = VarGlobal<T>.Currencies
             };
 
-            return currencyHeader;
+            return Result<CurrencyHeaderDto<T>>.Success(currencyHeader);
         }
 
         private Result<bool> Validation()
@@ -82,6 +112,7 @@ namespace API.App.Information
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Currency<T>),
+                        MethodName = nameof(Validation),
                         VariableName = nameof(this.searchFilter.Year),
                         Description = $"La variable '{nameof(this.searchFilter.Year)}' está fuera de rango."
                     }
@@ -91,10 +122,11 @@ namespace API.App.Information
             return Result<bool>.Success(Value: validation);
         }
 
-        private async Task<CurrencyDto<T>[]> GetAsync()
+        private async Task<Result<CurrencyDto<T>[]>> GetAsync()
         {
             #region Objects
             ContextBase<T> context;
+            Result<CurrencyDto<T>[]> result;
             #endregion
 
             context = new ContextBase<T>(
@@ -102,9 +134,26 @@ namespace API.App.Information
                 SearchFilter: this.searchFilter
             );
 
-            VarGlobal<T>.Currencies = await context.Values();
+            result = await context.Values();
 
-            return VarGlobal<T>.Currencies;
+            if (!result.IsSuccess)
+            {
+                return Result<CurrencyDto<T>[]>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Currency<T>),
+                        MethodName = nameof(GetAsync),
+                        VariableName = nameof(result.IsSuccess),
+                        Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}",
+                        OtherErrors = new[]
+                        {
+                            result.Error
+                        }
+                    }
+                );
+            }
+
+            return Result<CurrencyDto<T>[]>.Success(Value: result.Value);
         }
 
         private string? MonthName()

@@ -48,7 +48,7 @@ namespace API.App.Context
 
 
         #region Values
-        public async Task<CurrencyDto<T>[]> Values()
+        public async Task<Result<CurrencyDto<T>[]>> Values()
         {
             #region Objects
             Value<T> value;
