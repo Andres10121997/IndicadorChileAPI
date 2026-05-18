@@ -110,7 +110,9 @@ namespace API.App.Context.Tool
                 parallelOptions: Utils.ParallelForEachOptions,
                 body: async (RowMatch, CancellationToken) =>
                 {
-                    Result<MatchCollection> cell = CellResult(RowMatch: RowMatch);
+                    Result<MatchCollection> cell;
+
+                    cell = Cell(RowMatch: RowMatch);
 
                     if (cell.IsSuccess)
                     {
@@ -137,7 +139,7 @@ namespace API.App.Context.Tool
             return Result<Dictionary<byte, T[]>>.Success(Value: data);
         }
 
-        private static Result<MatchCollection> CellResult(Match RowMatch)
+        private static Result<MatchCollection> Cell(Match RowMatch)
         {
             #region Variables
             string rowHtml;
@@ -164,7 +166,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<T>),
-                        MethodName = nameof(CellResult),
+                        MethodName = nameof(Cell),
                         VariableName = nameof(cellMatches.Count),
                         Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser inferior a 0."
                     }
@@ -177,7 +179,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<T>),
-                        MethodName = nameof(CellResult),
+                        MethodName = nameof(Cell),
                         VariableName = nameof(cellMatches.Count),
                         Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser 0."
                     }
