@@ -1,4 +1,5 @@
-﻿using API.App.DTO.HTML;
+﻿using API.App.DTO;
+using API.App.DTO.HTML;
 using System.Text.RegularExpressions;
 
 namespace API.App.Context.Tool
@@ -46,7 +47,7 @@ namespace API.App.Context.Tool
         private string GetHtml()
         {
             #region Objects
-            Result<Match, string> result = GetMatch();
+            Result<Match> result = GetMatch();
             #endregion
 
             result = GetMatch();
@@ -62,10 +63,10 @@ namespace API.App.Context.Tool
                 return tableHtml;
             }
 
-            return result.Error;
+            return result.Error.ToString();
         }
 
-        private Result<Match, string> GetMatch()
+        private Result<Match> GetMatch()
         {
             #region Object
             Match tableMatch;
@@ -80,10 +81,16 @@ namespace API.App.Context.Tool
             
             if (tableMatch.Success == false)
             {
-                return Result<Match, string>.Failure(Error: $"La variable {nameof(tableMatch.Success)} no puede ser falso.");
+                return Result<Match>.Failure(
+                    new ResultErrorDto()
+                    {
+                        ClassName = nameof(Table),
+                        Description = "$\"La variable {nameof(tableMatch.Success)} no puede ser falso.\""
+                    }
+                );
             }
 
-            return Result<Match, string>.Success(Value: tableMatch);
+            return Result<Match>.Success(Value: tableMatch);
         }
         #endregion
         #endregion

@@ -1,4 +1,5 @@
-﻿using API.App.DTO.Currency;
+﻿using API.App.DTO;
+using API.App.DTO.Currency;
 using API.App.DTO.HTML;
 using API.Models;
 using System;
@@ -83,7 +84,7 @@ namespace API.App.Context.Tool
                 .ToArray<CurrencyDto<T>>();
         }
 
-        public async Task<Result<CurrencyDto<T>, string>> DailyAsync(DateOnly Date)
+        public async Task<Result<CurrencyDto<T>>> DailyAsync(DateOnly Date)
         {
             #region Objects
             CurrencyDto<T>? currency;
@@ -103,10 +104,16 @@ namespace API.App.Context.Tool
 
             if (currency == null)
             {
-                return Result<CurrencyDto<T>, string>.Failure(Error: $"La variable {nameof(currency)} no puede ser nulo.");
+                return Result<CurrencyDto<T>>.Failure(
+                    new ResultErrorDto()
+                    {
+                        ClassName = nameof(Value<T>),
+                        Description = $"La variable {nameof(currency)} no puede ser nulo."
+                    }
+                );
             }
 
-            return Result<CurrencyDto<T>, string>.Success(Value: currency);
+            return Result<CurrencyDto<T>>.Success(Value: currency);
         }
     }
 }

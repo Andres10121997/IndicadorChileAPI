@@ -1,13 +1,14 @@
-﻿namespace API
+﻿using API.App.DTO;
+
+namespace API
 {
-    public sealed class Result<TValue, TError>
+    public sealed class Result<TValue>
         where TValue : notnull
-        where TError : notnull
     {
         #region Variables
         private readonly bool isSuccess;
         private readonly TValue value;
-        private readonly TError error;
+        private readonly ResultErrorDto error;
         #endregion
 
 
@@ -15,7 +16,7 @@
         #region Constructor Method
         public Result(bool IsSuccess,
                       TValue Value,
-                      TError Error)
+                      ResultErrorDto Error)
             : base()
         {
             this.isSuccess = IsSuccess;
@@ -37,7 +38,7 @@
             get => this.isSuccess;
         }
 
-        public TError Error
+        public ResultErrorDto Error
         {
             get => this.error;
         }
@@ -45,14 +46,14 @@
 
 
 
-        public static Result<TValue, TError> Success(TValue Value)
+        public static Result<TValue> Success(TValue Value)
         {
-            return new Result<TValue, TError>(IsSuccess: true, Value: Value, Error: default!);
+            return new Result<TValue>(IsSuccess: true, Value: Value, Error: default!);
         }
 
-        public static Result<TValue, TError> Failure(TError Error)
+        public static Result<TValue> Failure(ResultErrorDto Error)
         {
-            return new Result<TValue, TError>(IsSuccess: false, Value: default!, Error: Error);
+            return new Result<TValue>(IsSuccess: false, Value: default!, Error: Error);
         }
     }
 }
