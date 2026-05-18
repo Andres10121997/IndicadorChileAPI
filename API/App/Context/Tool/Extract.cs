@@ -51,17 +51,31 @@ namespace API.App.Context.Tool
             #region Objects
             Table table;
             Result<Dictionary<byte, T[]>> result;
-            #endregion
-
-            #region Collection
-            MatchCollection rows;
+            Result<MatchCollection> rowsResult;
             #endregion
 
             table = new Table(Html: Html);
 
-            rows = table.GetData();
+            rowsResult = table.GetData();
 
-            result = await OrganizeTheDataObtainedAsync(RowMatches: rows);
+            if (!rowsResult.IsSuccess)
+            {
+                return Result<Dictionary<byte, T[]>>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Extract<T>),
+                        MethodName = nameof(ValuesAsync),
+                        VariableName = nameof(rowsResult.IsSuccess),
+                        Description = $"La variable {nameof(rowsResult.IsSuccess)} no puede ser {false}",
+                        OtherErrors = new[]
+                        {
+                            rowsResult.Error
+                        }
+                    }
+                );
+            }
+
+            result = await OrganizeTheDataObtainedAsync(RowMatches: rowsResult.Value);
 
             if (!result.IsSuccess)
             {
@@ -71,7 +85,7 @@ namespace API.App.Context.Tool
                         ClassName = nameof(Extract<T>),
                         MethodName = nameof(ValuesAsync),
                         VariableName = nameof(result.IsSuccess),
-                        Description = "",
+                        Description = $"La variable {result.IsSuccess} no puede ser {false}.",
                         OtherErrors = new[]
                         {
                             result.Error
@@ -80,7 +94,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            return result;
+            return Result<Dictionary<byte, T[]>>.Success(Value: result.Value);
         }
 
 
@@ -144,15 +158,28 @@ namespace API.App.Context.Tool
                 options: RegexOptions.Singleline
             );
 
-            if (cellMatches.Count <= 0)
+            if (cellMatches.Count < 0)
             {
                 return Result<MatchCollection>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<T>),
                         MethodName = nameof(CellResult),
-                        VariableName = nameof(cellMatches),
-                        Description = $"La cantidad de datos de la lista {nameof(cellMatches)} no puede ser igual o inferior a 0."
+                        VariableName = nameof(cellMatches.Count),
+                        Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser inferior a 0."
+                    }
+                );
+            }
+
+            if (cellMatches.Count == 0)
+            {
+                return Result<MatchCollection>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Extract<T>),
+                        MethodName = nameof(CellResult),
+                        VariableName = nameof(cellMatches.Count),
+                        Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser 0."
                     }
                 );
             }

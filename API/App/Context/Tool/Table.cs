@@ -22,29 +22,52 @@ namespace API.App.Context.Tool
 
 
         #region Get
-        internal MatchCollection GetData()
+        internal Result<MatchCollection> GetData()
         {
             #region Variables
             string rowPattern;
             #endregion
 
-            #region Match
+            #region Objects
+            Result<string> result;
+            #endregion
+
+            #region Collection
             MatchCollection rowMatches;
             #endregion
+
+            result = this.GetHtml();
+
+            if (!result.IsSuccess)
+            {
+                return Result<MatchCollection>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Table),
+                        MethodName = nameof(GetData),
+                        VariableName = nameof(result.IsSuccess),
+                        Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}.",
+                        OtherErrors = new[]
+                        {
+                            result.Error
+                        }
+                    }
+                );
+            }
 
             // Regex para las filas de la tabla
             rowPattern = @"<tr>(.*?)<\/tr>";
             rowMatches = Regex.Matches(
-                input: this.GetHtml(),
+                input: result.Value,
                 pattern: rowPattern,
                 options: RegexOptions.Singleline
             );
 
-            return rowMatches;
+            return Result<MatchCollection>.Success(Value: rowMatches);
         }
 
         #region Table
-        private string GetHtml()
+        private Result<string> GetHtml()
         {
             #region Variables
             string tableHtml;
@@ -58,12 +81,24 @@ namespace API.App.Context.Tool
 
             if (!result.IsSuccess)
             {
-                return result.Error.ToString();
+                return Result<string>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Table),
+                        MethodName = nameof(GetHtml),
+                        VariableName = nameof(result.IsSuccess),
+                        Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}.",
+                        OtherErrors = new[]
+                        {
+                            result.Error
+                        }
+                    }
+                );
             }
 
             tableHtml = result.Value.Groups[1].Value;
 
-            return tableHtml;
+            return Result<string>.Success(Value: tableHtml);
         }
 
         private Result<Match> GetMatchResult()
@@ -87,7 +122,7 @@ namespace API.App.Context.Tool
                         ClassName = nameof(Table),
                         MethodName = nameof(GetMatchResult),
                         VariableName = nameof(tableMatch.Success),
-                        Description = $"La variable {nameof(tableMatch.Success)} no puede ser falso."
+                        Description = $"La variable {nameof(tableMatch.Success)} no puede ser {false}."
                     }
                 );
             }

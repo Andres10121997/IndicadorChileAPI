@@ -154,6 +154,7 @@ namespace API.Controllers
                             #region Object
                             Currency<float> currency;
                             CurrencyInfoDto updatedValue;
+                            Result<CurrencyHeaderDto<float>> currencyResult;
                             #endregion
 
                             updatedValue = Value with
@@ -169,10 +170,15 @@ namespace API.Controllers
                                 SearchFilter: SearchFilter
                             );
 
-                            if (await currency.HeaderAsync() != default)
+                            currencyResult = await currency.HeaderAsync();
+
+                            if (!currencyResult.IsSuccess)
                             {
-                                return this.Ok(value: await currency.HeaderAsync());
+                                this.logger.LogWarning(currencyResult.ToString());
+                                break;
                             }
+
+                            return this.Ok(value: currencyResult.Value);
                         }
 
                         return this.StatusCode(statusCode: StatusCodes.Status422UnprocessableEntity);
