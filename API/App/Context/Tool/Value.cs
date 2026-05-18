@@ -93,26 +93,30 @@ namespace API.App.Context.Tool
 
         public async Task<Result<CurrencyDto<T>[]>> MonthlyAsync()
         {
-            var result = await this.AnnualAsync();
+            #region Objects
+            Result<CurrencyDto<T>[]> currencyResult;
+            #endregion
 
-            if (!result.IsSuccess)
+            currencyResult = await this.AnnualAsync();
+
+            if (!currencyResult.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(MonthlyAsync),
-                        VariableName = nameof(result.IsSuccess),
-                        Description = $"La variable ${nameof(result.IsSuccess)} no puede ser ${false}",
+                        VariableName = nameof(currencyResult.IsSuccess),
+                        Description = $"La variable ${nameof(currencyResult.IsSuccess)} no puede ser ${false}",
                         OtherErrors = new[]
                         {
-                            result.Error
+                            currencyResult.Error
                         }
                     }
                 );
             }
 
-             VarGlobal<T>.Currencies = result.Value
+             VarGlobal<T>.Currencies = currencyResult.Value
                 .AsParallel()
                 .Where(predicate: Model => Model.Date.Year == this.searchFilter.Year
                                            &&
@@ -126,36 +130,37 @@ namespace API.App.Context.Tool
         {
             #region Objects
             CurrencyDto<T>? currency;
+            Result<CurrencyDto<T>[]> currencyResult;
             #endregion
 
-            var result = await this.AnnualAsync();
+            currencyResult = await this.AnnualAsync();
 
-            if (!result.IsSuccess)
+            if (!currencyResult.IsSuccess)
             {
                 return Result<CurrencyDto<T>>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(DailyAsync),
-                        VariableName = nameof(result.IsSuccess),
-                        Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}",
+                        VariableName = nameof(currencyResult.IsSuccess),
+                        Description = $"La variable {nameof(currencyResult.IsSuccess)} no puede ser {false}",
                         OtherErrors = new[]
                         {
-                            result.Error
+                            currencyResult.Error
                         }
                     }
                 );
             }
 
             // Buscar valor exacto
-            currency = result.Value
-                        .FirstOrDefault(predicate: model => model.Date == Date)
-                    ??
-                    // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-                    result.Value
-                        .Where(predicate: Model => Model.Date < Date)
-                        .OrderByDescending(keySelector: Model => Model.Date)
-                        .FirstOrDefault();
+            currency = currencyResult.Value
+                       .FirstOrDefault(predicate: model => model.Date == Date)
+                       ??
+                       // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
+                       currencyResult.Value
+                       .Where(predicate: Model => Model.Date < Date)
+                       .OrderByDescending(keySelector: Model => Model.Date)
+                       .FirstOrDefault();
 
             if (currency == null)
             {
