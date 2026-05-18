@@ -134,8 +134,7 @@ namespace API.Controllers
                 statusCode: StatusCodes.Status200OK
             ),
             ProducesResponseType(
-                statusCode: StatusCodes.Status404NotFound,
-                StatusCode = StatusCodes.Status404NotFound
+                statusCode: StatusCodes.Status404NotFound
             ),
             ProducesResponseType(
                 type: typeof(Exception),
@@ -174,7 +173,7 @@ namespace API.Controllers
 
                             if (!currencyResult.IsSuccess)
                             {
-                                this.logger.LogWarning(currencyResult.ToString());
+                                this.logger.LogWarning(message: currencyResult.ToString());
                                 break;
                             }
 
