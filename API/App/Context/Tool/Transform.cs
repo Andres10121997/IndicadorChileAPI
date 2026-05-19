@@ -99,7 +99,9 @@ namespace API.App.Context.Tool
 
         internal bool DateRangeValidation(byte Day, byte Month)
         {
+            #region Collections
             bool[] dateRange;
+            #endregion
 
             dateRange = new bool[2]
             {
