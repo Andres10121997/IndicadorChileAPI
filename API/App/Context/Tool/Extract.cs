@@ -110,13 +110,13 @@ namespace API.App.Context.Tool
                 parallelOptions: Utils.ParallelForEachOptions,
                 body: async (RowMatch, CancellationToken) =>
                 {
-                    Result<MatchCollection> cell;
+                    Result<MatchCollection> cellResult;
 
-                    cell = Cell(RowMatch: RowMatch);
+                    cellResult = Cell(RowMatch: RowMatch);
 
-                    if (cell.IsSuccess)
+                    if (cellResult.IsSuccess)
                     {
-                        ParseData(CellMatches: cell.Value);
+                        ParseData(CellMatches: cellResult.Value);
                     }
                 }
             );
