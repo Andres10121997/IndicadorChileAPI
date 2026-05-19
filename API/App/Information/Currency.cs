@@ -3,7 +3,6 @@ using API.App.DTO;
 using API.App.DTO.Currency;
 using API.Models;
 using System;
-using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
