@@ -7,6 +7,16 @@ namespace API
 {
     internal static class Validate
     {
+        #region Constructor Method
+        static Validate()
+        {
+            
+        }
+        #endregion
+
+
+
+        #region Range
         internal static bool DateRange(SearchFilterModel SearchFilter, byte Day, byte Month)
         {
             #region Collections
@@ -42,5 +52,6 @@ namespace API
 
             return validation;
         }
+        #endregion
     }
 }
