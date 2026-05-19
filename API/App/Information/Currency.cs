@@ -33,27 +33,26 @@ namespace API.App.Information
 
         public async Task<Result<CurrencyHeaderDto<T>>> HeaderAsync()
         {
+            #region Variables
+            bool validation;
+            #endregion
+
             #region Objects
-            Result<bool> validationResult;
             Result<CurrencyDto<T>[]> getResult;
             CurrencyHeaderDto<T> currencyHeader;
             #endregion
 
-            validationResult = this.Validation();
+            validation = Validate.YearRange(SearchFilter: this.searchFilter, CurrencyInfo: this.currencyInfo);
 
-            if (!validationResult.IsSuccess)
+            if (!validation)
             {
                 return Result<CurrencyHeaderDto<T>>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Currency<T>),
                         MethodName = nameof(HeaderAsync),
-                        VariableName = nameof(validationResult.IsSuccess),
-                        Description = $"La variable {nameof(validationResult.IsSuccess)} no puede ser {false}",
-                        OtherErrors = new[]
-                        {
-                            validationResult.Error
-                        }
+                        VariableName = nameof(validation),
+                        Description = $"La variable {nameof(validation)} no puede ser {false}"
                     }
                 );
             }
@@ -86,40 +85,6 @@ namespace API.App.Information
             };
 
             return Result<CurrencyHeaderDto<T>>.Success(currencyHeader);
-        }
-
-        private Result<bool> Validation()
-        {
-            #region Variables
-            bool validation;
-            #endregion
-
-            #region Collections
-            bool[] currencyValidation;
-            #endregion
-
-            currencyValidation = new bool[2]
-            {
-                this.searchFilter.Year >= this.currencyInfo.StartDate.Year,
-                this.searchFilter.Year <= this.currencyInfo.EndDate.Year
-            };
-
-            validation = currencyValidation.All(value => value == true);
-
-            if (validation == false)
-            {
-                return Result<bool>.Failure(
-                    new ResultErrorDto()
-                    {
-                        ClassName = nameof(Currency<T>),
-                        MethodName = nameof(Validation),
-                        VariableName = nameof(this.searchFilter.Year),
-                        Description = $"La variable '{nameof(this.searchFilter.Year)}' está fuera de rango."
-                    }
-                );
-            }
-
-            return Result<bool>.Success(Value: validation);
         }
 
         private async Task<Result<CurrencyDto<T>[]>> GetAsync()

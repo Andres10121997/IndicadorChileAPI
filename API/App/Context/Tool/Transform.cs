@@ -64,7 +64,7 @@ namespace API.App.Context.Tool
 
                     for (byte month = 1; month <= values.Length; month++)
                     {
-                        if (DateRangeValidation(Day: day, Month: month))
+                        if (Validate.DateRange(SearchFilter: this.SearchFilter, Day: day, Month: month))
                         {
                             #region Variables
                             T value;
@@ -95,21 +95,6 @@ namespace API.App.Context.Tool
             );
             
             return modelList.ToArray<TModel>();
-        }
-
-        internal bool DateRangeValidation(byte Day, byte Month)
-        {
-            #region Collections
-            bool[] dateRange;
-            #endregion
-
-            dateRange = new bool[2]
-            {
-                Day > 0,
-                Day <= DateTime.DaysInMonth(year: this.SearchFilter.Year, month: Month)
-            };
-
-            return dateRange.All(predicate: value => value == true);
         }
 
         internal async Task<Result<CurrencyDto<T>[]>> ToCurrencyModelsAsync(Dictionary<byte, T[]> CurrencyData)
