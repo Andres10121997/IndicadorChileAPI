@@ -41,28 +41,33 @@ namespace API.App.Start
         private static void ConfigureServices(WebApplicationBuilder Builder)
         {
             Builder.Services.AddMvc()
-                .AddJsonOptions(configure: options =>
-                {
-                    options.JsonSerializerOptions.Converters.Add(item: new JsonStringEnumConverter());
-                });
+                .AddJsonOptions(
+                    configure: options =>
+                    {
+                        options.JsonSerializerOptions.Converters.Add(item: new JsonStringEnumConverter());
+                    }
+                );
             Builder.Services.AddEndpointsApiExplorer();
 
             // Limitar peticiones por IP.
             // https://www.youtube.com/shorts/EoJl5wgE5UQ
-            Builder.Services.AddRateLimiter(options =>
-            {
-                options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+            Builder.Services.AddRateLimiter(
+                options =>
+                {
+                    options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
 
-                options.AddFixedWindowLimiter(
-                    policyName: "Limiter",
-                    fixedWindowOptions =>
-                    {
-                        fixedWindowOptions.PermitLimit = 4; // Solicitudes máximas permitidas
-                        fixedWindowOptions.Window = TimeSpan.FromSeconds(seconds: 15); // Ventana de tiempo
-                        fixedWindowOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst; // Cómo manejar solicitudes en cola
-                        fixedWindowOptions.QueueLimit = 1; // Máximo de solicitudes para hacer cola
-                    });
-            });
+                    options.AddFixedWindowLimiter(
+                        policyName: "Limiter",
+                        fixedWindowOptions =>
+                        {
+                            fixedWindowOptions.PermitLimit = 4; // Solicitudes máximas permitidas
+                            fixedWindowOptions.Window = TimeSpan.FromSeconds(seconds: 15); // Ventana de tiempo
+                            fixedWindowOptions.QueueProcessingOrder = QueueProcessingOrder.OldestFirst; // Cómo manejar solicitudes en cola
+                            fixedWindowOptions.QueueLimit = 1; // Máximo de solicitudes para hacer cola
+                        }
+                    );
+                }
+            );
 
             // Cierta información que se visualiza en la interfaz de usuario.
             Builder.Services.AddSwaggerGen(options =>

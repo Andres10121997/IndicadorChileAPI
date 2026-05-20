@@ -7,8 +7,12 @@ namespace API.App.Start
     {
         public static async Task Main(string[] args)
         {
-            WebApplication App = await Startup.InitAppAsync(args: args);
-            
+            #region Objects
+            WebApplication App;
+            #endregion
+
+            App = await Startup.InitAppAsync(args: args);
+
             App.Run();
         }
     }
