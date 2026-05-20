@@ -46,7 +46,7 @@ namespace API
                 SearchFilter.Year <= CurrencyInfo.EndDate.Year
             };
 
-            validation = range.All(value => value == true);
+            validation = range.All(predicate: value => value == true);
 
             return validation;
         }
