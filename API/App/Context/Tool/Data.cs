@@ -39,7 +39,7 @@ namespace API.App.Context.Tool
         {
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
-                parallelOptions: Utils.ParallelForEachOptions,
+                parallelOptions: VarGlobal<T>.ParallelForEachOptions,
                 body: async (RowMatch, CancellationToken) =>
                 {
                     #region Objects

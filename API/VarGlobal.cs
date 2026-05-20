@@ -1,6 +1,7 @@
 ﻿using API.App.DTO.Currency;
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace API
 {
@@ -23,6 +24,17 @@ namespace API
 
 
         #region Field
+        #region Objects
+        internal static ParallelOptions ParallelForEachOptions
+        {
+            get => new ParallelOptions
+            {
+                MaxDegreeOfParallelism = Environment.ProcessorCount,
+                TaskScheduler = TaskScheduler.Current
+            };
+        }
+        #endregion
+
         #region Collections
         internal static CurrencyDto<T>[] Currencies
         {

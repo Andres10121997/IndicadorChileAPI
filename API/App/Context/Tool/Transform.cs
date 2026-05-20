@@ -55,7 +55,7 @@ namespace API.App.Context.Tool
 
             await Parallel.ForEachAsync<KeyValuePair<byte, T[]>>(
                 source: Data,
-                parallelOptions: Utils.ParallelForEachOptions,
+                parallelOptions: VarGlobal<T>.ParallelForEachOptions,
                 body: async (Item, CancellationToken) =>
                 {
                     #region Variables
