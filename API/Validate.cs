@@ -5,26 +5,15 @@ using System.Linq;
 
 namespace API
 {
-    internal static class Validate
+    internal struct Validate
     {
-        #region Collections
-        private static bool[] range;
-        #endregion
-
-
-
-        #region Constructor Method
-        static Validate()
-        {
-            range = Array.Empty<bool>();
-        }
-        #endregion
-
-
-
         #region Range
         internal static bool DateRange(SearchFilterModel SearchFilter, byte Day, byte Month)
         {
+            #region Collections
+            bool[] range;
+            #endregion
+
             range = new bool[2]
             {
                 Day > 0,
@@ -38,6 +27,10 @@ namespace API
         {
             #region Variables
             bool validation;
+            #endregion
+
+            #region Collections
+            bool[] range;
             #endregion
 
             range = new bool[2]
