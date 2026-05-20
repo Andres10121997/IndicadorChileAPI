@@ -95,55 +95,5 @@ namespace API.App.Context.Tool
 
             return Result<Dictionary<byte, T[]>>.Success(Value: data);
         }
-
-        public static Result<MatchCollection> Cell(Match RowMatch)
-        {
-            #region Variables
-            string rowHtml;
-            string cellPattern;
-            #endregion
-
-            #region Collection
-            MatchCollection cellMatches;
-            #endregion
-
-            rowHtml = RowMatch.Groups[1].Value;
-
-            // Regex para las celdas (<th> y <td>)
-            cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
-            cellMatches = Regex.Matches(
-                input: rowHtml,
-                pattern: cellPattern,
-                options: RegexOptions.Singleline
-            );
-
-            if (cellMatches.Count < 0)
-            {
-                return Result<MatchCollection>.Failure(
-                    Error: new ResultErrorDto()
-                    {
-                        ClassName = nameof(Extract<T>),
-                        MethodName = nameof(Cell),
-                        VariableName = nameof(cellMatches.Count),
-                        Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser inferior a 0."
-                    }
-                );
-            }
-
-            if (cellMatches.Count == 0)
-            {
-                return Result<MatchCollection>.Failure(
-                    Error: new ResultErrorDto()
-                    {
-                        ClassName = nameof(Extract<T>),
-                        MethodName = nameof(Cell),
-                        VariableName = nameof(cellMatches.Count),
-                        Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser 0."
-                    }
-                );
-            }
-
-            return Result<MatchCollection>.Success(Value: cellMatches);
-        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using API.App.DTO;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Numerics;
 using System.Text.RegularExpressions;
@@ -45,7 +46,7 @@ namespace API.App.Context.Tool
                     Result<MatchCollection> cellResult;
                     #endregion
 
-                    cellResult = Extract<T>.Cell(RowMatch: RowMatch);
+                    cellResult = Cell(RowMatch: RowMatch);
 
                     if (cellResult.IsSuccess)
                     {
@@ -57,7 +58,55 @@ namespace API.App.Context.Tool
             return data;
         }
 
+        private static Result<MatchCollection> Cell(Match RowMatch)
+        {
+            #region Variables
+            string rowHtml;
+            string cellPattern;
+            #endregion
 
+            #region Collection
+            MatchCollection cellMatches;
+            #endregion
+
+            rowHtml = RowMatch.Groups[1].Value;
+
+            // Regex para las celdas (<th> y <td>)
+            cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
+            cellMatches = Regex.Matches(
+                input: rowHtml,
+                pattern: cellPattern,
+                options: RegexOptions.Singleline
+            );
+
+            if (cellMatches.Count < 0)
+            {
+                return Result<MatchCollection>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Extract<T>),
+                        MethodName = nameof(Cell),
+                        VariableName = nameof(cellMatches.Count),
+                        Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser inferior a 0."
+                    }
+                );
+            }
+
+            if (cellMatches.Count == 0)
+            {
+                return Result<MatchCollection>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Extract<T>),
+                        MethodName = nameof(Cell),
+                        VariableName = nameof(cellMatches.Count),
+                        Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser 0."
+                    }
+                );
+            }
+
+            return Result<MatchCollection>.Success(Value: cellMatches);
+        }
 
         private static void Parse(MatchCollection CellMatches)
         {
