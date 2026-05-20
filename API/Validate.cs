@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace API
 {
-    internal struct Validate
+    internal static class Validate
     {
         #region Range
         internal static bool DateRange(SearchFilterModel SearchFilter, byte Day, byte Month)
