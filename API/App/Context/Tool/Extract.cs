@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    public static class Extract<T>
+    internal static class Extract<T>
         where T : struct, IFloatingPoint<T>
     {
         #region Constructor Method
@@ -19,7 +19,7 @@ namespace API.App.Context.Tool
 
 
 
-        public static async Task<Result<Dictionary<byte, T[]>>> ValuesAsync(HtmlDto Html)
+        internal static async Task<Result<Dictionary<byte, T[]>>> ValuesAsync(HtmlDto Html)
         {
             #region Objects
             Table table;
@@ -69,8 +69,6 @@ namespace API.App.Context.Tool
 
             return Result<Dictionary<byte, T[]>>.Success(Value: result.Value);
         }
-
-
 
         private static async Task<Result<Dictionary<byte, T[]>>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
         {
