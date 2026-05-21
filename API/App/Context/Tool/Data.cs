@@ -121,7 +121,7 @@ namespace API.App.Context.Tool
         }
 
         private static void Set(MatchCollection CellMatches,
-                                    byte Day)
+                                byte Day)
         {
             #region Collections
             T[] values;
