@@ -46,17 +46,7 @@ namespace IndicadorChileAPI.App.Start
                         );
                     }
                 );
-            /*
-            Builder.Services.AddMvc()
-                .AddJsonOptions(
-                    configure: options =>
-                    {
-                        options.JsonSerializerOptions.Converters.Add(
-                            item: new JsonStringEnumConverter()
-                        );
-                    }
-                );
-            */
+            
             Builder.Services.AddEndpointsApiExplorer();
 
             // Limitar peticiones por IP.
@@ -92,8 +82,12 @@ namespace IndicadorChileAPI.App.Start
                     options =>
                     {
                         options
-                            .WithTitle("Indicadores de Chile")
-                            .WithTheme(theme: ScalarTheme.Solarized);
+                            .WithTitle(
+                                title: "Indicadores de Chile"
+                            )
+                            .WithTheme(
+                                theme: ScalarTheme.Moon
+                            );
                     }
                 );
             }
