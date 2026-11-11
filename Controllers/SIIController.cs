@@ -1,6 +1,6 @@
-﻿using APIIndicadorChileAPI.App.Information;
-using IndicadorChileAPI.App.DTO.Currency;
+﻿using IndicadorChileAPI.App.DTO.Currency;
 using IndicadorChileAPI.App.DTO.HTML;
+using IndicadorChileAPI.App.Information;
 using IndicadorChileAPI.Models;
 using IndicadorChileAPI.Utils;
 using Microsoft.AspNetCore.Http;

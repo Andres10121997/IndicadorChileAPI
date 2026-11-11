@@ -7,7 +7,7 @@ using System;
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace APIIndicadorChileAPI.App.Information
+namespace IndicadorChileAPI.App.Information
 {
     public class Currency<TCurrency>
         where TCurrency : struct, IFloatingPointConstants<TCurrency>

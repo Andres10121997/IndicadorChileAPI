@@ -37,6 +37,8 @@ namespace IndicadorChileAPI.App.Start
         #region Configure
         private static void ConfigureServices(WebApplicationBuilder Builder)
         {
+            Builder.Services.AddControllers();
+            /*
             Builder.Services.AddMvc()
                 .AddJsonOptions(
                     configure: options =>
@@ -46,7 +48,7 @@ namespace IndicadorChileAPI.App.Start
                         );
                     }
                 );
-
+            */
             Builder.Services.AddEndpointsApiExplorer();
 
             // Limitar peticiones por IP.
@@ -78,7 +80,14 @@ namespace IndicadorChileAPI.App.Start
             if (App.Environment.IsDevelopment())
             {
                 App.MapOpenApi();
-                App.MapScalarApiReference();
+                App.MapScalarApiReference(
+                    options =>
+                    {
+                        options
+                            .WithTitle("Indicadores de Chile")
+                            .WithTheme(theme: ScalarTheme.Solarized);
+                    }
+                );
             }
 
             App.UseRateLimiter();
