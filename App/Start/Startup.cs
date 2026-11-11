@@ -37,7 +37,15 @@ namespace IndicadorChileAPI.App.Start
         #region Configure
         private static void ConfigureServices(WebApplicationBuilder Builder)
         {
-            Builder.Services.AddControllers();
+            Builder.Services.AddControllers()
+                .AddJsonOptions(
+                    configure: options =>
+                    {
+                        options.JsonSerializerOptions.Converters.Add(
+                            item: new JsonStringEnumConverter()
+                        );
+                    }
+                );
             /*
             Builder.Services.AddMvc()
                 .AddJsonOptions(

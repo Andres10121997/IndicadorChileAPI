@@ -8,7 +8,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
     <ErrorReport>send</ErrorReport>
-    <PublishAot>True</PublishAot>
+    <PublishAot>False</PublishAot>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,5 +25,9 @@
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="3.0.114" />
     <PackageReference Include="Scalar.AspNetCore" Version="2.20.0" />
   </ItemGroup>
+
+	<ItemGroup>
+		<RuntimeHostConfigurationOption Include="Microsoft.AspNetCore.Mvc.ApiExplorer.IsEnhancedModelMetadataSupported" Value="true" Trim="true" />
+	</ItemGroup>
 
 </Project>
