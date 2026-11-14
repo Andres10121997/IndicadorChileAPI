@@ -102,13 +102,18 @@ namespace IndicadorChileAPI.App.Context.Tool
                 return default!;
             }
 
+            if (SearchFilter.Month.Equals(null))
+            {
+                return default!;
+            }
+
             currencies = currenciesResult.Value;
 
             return currencies
                 .AsParallel()
                 .Where(predicate: Model => Model.Date.Year == SearchFilter.Year
                                            &&
-                                           Model.Date.Month == SearchFilter.Month)
+                                           Model.Date.Month == (int)SearchFilter.Month)
                 .ToArray<CurrencyDto<TCurrency>>();
         }
     }

@@ -74,7 +74,7 @@ namespace IndicadorChileAPI.Models
                 maximum: 12
             )
         ]
-        public byte? Month { get; init; }
+        public Enums.monthNameEnum? Month { get; init; }
         #endregion
 
 
@@ -99,7 +99,9 @@ namespace IndicadorChileAPI.Models
                 );
             }
 
-            if (this.Month > Now.Month
+            if (this.Month != null
+                &&
+                (int)this.Month > Now.Month
                 &&
                 (this.Year == Now.Year || this.Year.Equals(obj: Now.Year)))
             {
