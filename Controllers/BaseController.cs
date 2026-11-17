@@ -21,14 +21,14 @@ namespace IndicadorChileAPI.Controllers
         #endregion
 
         #region Collections
-        private readonly Dictionary<Enums.currencyTypeEnum, CurrencyInfoDto[]> urls;
+        private readonly Dictionary<Enums.currencyTypeEnum, CurrencyInfoDTO[]> urls;
         #endregion
 
 
 
         #region Constructor Method
         public BaseController(ILogger<BaseController> Logger,
-                              Dictionary<Enums.currencyTypeEnum, CurrencyInfoDto[]> URLs)
+                              Dictionary<Enums.currencyTypeEnum, CurrencyInfoDTO[]> URLs)
             : base()
         {
             #region Interfaces
@@ -45,7 +45,7 @@ namespace IndicadorChileAPI.Controllers
 
         #region Field
         #region Collections
-        protected Dictionary<Enums.currencyTypeEnum, CurrencyInfoDto[]> URLs
+        protected Dictionary<Enums.currencyTypeEnum, CurrencyInfoDTO[]> URLs
         {
             get => this.urls;
         }

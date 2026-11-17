@@ -59,7 +59,7 @@ namespace IndicadorChileAPI.App.Validate
             return Result<bool, ResultErrorDto>.Success(Value: true);
         }
 
-        internal static Result<bool, ResultErrorDto> Year(CurrencyInfoDto CurrencyInfo,
+        internal static Result<bool, ResultErrorDto> Year(CurrencyInfoDTO CurrencyInfo,
                                                           SearchFilterModel SearchFilter)
         {
             range = new bool[2]

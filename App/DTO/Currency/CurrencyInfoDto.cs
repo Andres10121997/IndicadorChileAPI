@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IndicadorChileAPI.App.DTO.Currency
 {
-    public sealed record CurrencyInfoDto
+    public sealed record CurrencyInfoDTO
     {
         #region Field
         [

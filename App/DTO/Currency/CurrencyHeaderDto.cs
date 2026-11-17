@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace IndicadorChileAPI.App.DTO.Currency
 {
-    public sealed record CurrencyHeaderDto<TCurrency>
+    public sealed record CurrencyHeaderDTO<TCurrency>
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Field
@@ -112,7 +112,7 @@ namespace IndicadorChileAPI.App.DTO.Currency
         ]
         public required string CurrencyName { get; init; }
 
-        public required CurrencyDto<TCurrency>[] Currencies { get; init; }
+        public required CurrencyDTO<TCurrency>[] Currencies { get; init; }
         #endregion
     }
 }

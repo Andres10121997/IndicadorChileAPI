@@ -13,14 +13,14 @@ namespace IndicadorChileAPI.App.Information
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Objects
-        private CurrencyInfoDto currencyInfo;
+        private CurrencyInfoDTO currencyInfo;
         private SearchFilterModel searchFilter;
         #endregion
 
 
 
         #region Constructor Method
-        public Currency(CurrencyInfoDto CurrencyInfo,
+        public Currency(CurrencyInfoDTO CurrencyInfo,
                         SearchFilterModel SearchFilter)
         {
             this.currencyInfo = CurrencyInfo;
@@ -31,7 +31,7 @@ namespace IndicadorChileAPI.App.Information
 
 
 
-        public async Task<CurrencyHeaderDto<TCurrency>> HeaderAsync()
+        public async Task<CurrencyHeaderDTO<TCurrency>> HeaderAsync()
         {
             #region Variables
             DateTime ConsultationDateTime;
@@ -39,7 +39,7 @@ namespace IndicadorChileAPI.App.Information
 
             #region Objects
             Result<bool, ResultErrorDto> yearRangeResult;
-            CurrencyHeaderDto<TCurrency> currencyHeader;
+            CurrencyHeaderDTO<TCurrency> currencyHeader;
             #endregion
 
             yearRangeResult = IndicadorChileAPI.App.Validate.Range.Year(
@@ -54,7 +54,7 @@ namespace IndicadorChileAPI.App.Information
 
             ConsultationDateTime = DateTime.Now;
 
-            currencyHeader = new CurrencyHeaderDto<TCurrency>
+            currencyHeader = new CurrencyHeaderDTO<TCurrency>
             {
                 ConsultationDate = DateOnly.FromDateTime(dateTime: ConsultationDateTime),
                 ConsultationTime = TimeOnly.FromDateTime(dateTime: ConsultationDateTime),
@@ -68,10 +68,10 @@ namespace IndicadorChileAPI.App.Information
             return currencyHeader;
         }
 
-        private async Task<CurrencyDto<TCurrency>[]> GetAsync()
+        private async Task<CurrencyDTO<TCurrency>[]> GetAsync()
         {
             #region Collections
-            CurrencyDto<TCurrency>[] currencies;
+            CurrencyDTO<TCurrency>[] currencies;
             #endregion
 
             #region Objects

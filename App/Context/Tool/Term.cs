@@ -13,11 +13,11 @@ namespace IndicadorChileAPI.App.Context.Tool
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Collections
-        private static CurrencyDto<TCurrency>[] currencies;
+        private static CurrencyDTO<TCurrency>[] currencies;
         #endregion
 
         #region Objects
-        private static Result<CurrencyDto<TCurrency>[], ResultErrorDto> currenciesResult;
+        private static Result<CurrencyDTO<TCurrency>[], ResultErrorDto> currenciesResult;
         #endregion
 
 
@@ -25,7 +25,7 @@ namespace IndicadorChileAPI.App.Context.Tool
         #region Constructor Method
         static Term()
         {
-            currencies = Array.Empty<CurrencyDto<TCurrency>>();
+            currencies = Array.Empty<CurrencyDTO<TCurrency>>();
             
             currenciesResult = default!;
         }
@@ -33,8 +33,8 @@ namespace IndicadorChileAPI.App.Context.Tool
 
 
 
-        internal static async Task<CurrencyDto<TCurrency>[]> GetAsync(string HtmlContent,
-                                                                      CurrencyInfoDto CurrencyInfo,
+        internal static async Task<CurrencyDTO<TCurrency>[]> GetAsync(string HtmlContent,
+                                                                      CurrencyInfoDTO CurrencyInfo,
                                                                       SearchFilterModel SearchFilter)
         {
             if (SearchFilter.Month.HasValue)
@@ -57,8 +57,8 @@ namespace IndicadorChileAPI.App.Context.Tool
             return currencies;
         }
 
-        private static async Task<CurrencyDto<TCurrency>[]> AnnualAsync(string HtmlContent,
-                                                                        CurrencyInfoDto CurrencyInfo,
+        private static async Task<CurrencyDTO<TCurrency>[]> AnnualAsync(string HtmlContent,
+                                                                        CurrencyInfoDTO CurrencyInfo,
                                                                         SearchFilterModel SearchFilter)
         {
             currenciesResult = await Value<TCurrency>.CurrenciesAsync(
@@ -82,8 +82,8 @@ namespace IndicadorChileAPI.App.Context.Tool
             return currencies;
         }
 
-        private static async Task<CurrencyDto<TCurrency>[]> MonthlyAsync(string HtmlContent,
-                                                                         CurrencyInfoDto CurrencyInfo,
+        private static async Task<CurrencyDTO<TCurrency>[]> MonthlyAsync(string HtmlContent,
+                                                                         CurrencyInfoDTO CurrencyInfo,
                                                                          SearchFilterModel SearchFilter)
         {
             currenciesResult = await Value<TCurrency>.CurrenciesAsync(
@@ -114,7 +114,7 @@ namespace IndicadorChileAPI.App.Context.Tool
                 .Where(predicate: Model => Model.Date.Year == SearchFilter.Year
                                            &&
                                            Model.Date.Month == (int)SearchFilter.Month)
-                .ToArray<CurrencyDto<TCurrency>>();
+                .ToArray<CurrencyDTO<TCurrency>>();
         }
     }
 }

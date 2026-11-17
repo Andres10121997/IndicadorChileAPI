@@ -11,14 +11,14 @@ namespace IndicadorChileAPI.App.Context
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Objects
-        private CurrencyInfoDto currencyInfo;
+        private CurrencyInfoDTO currencyInfo;
         private SearchFilterModel searchFilter;
         #endregion
 
 
 
         #region Constructor Method
-        public ContextBase(CurrencyInfoDto CurrencyInfo,
+        public ContextBase(CurrencyInfoDTO CurrencyInfo,
                            SearchFilterModel SearchFilter)
             : base()
         {
@@ -33,7 +33,7 @@ namespace IndicadorChileAPI.App.Context
 
         #region Field
         #region Objects
-        protected CurrencyInfoDto CurrencyInfo
+        protected CurrencyInfoDTO CurrencyInfo
         {
             get => this.currencyInfo;
         }
@@ -48,10 +48,10 @@ namespace IndicadorChileAPI.App.Context
 
 
         #region Values
-        public async Task<CurrencyDto<TCurrency>[]> Values()
+        public async Task<CurrencyDTO<TCurrency>[]> Values()
         {
             #region Collections
-            CurrencyDto<TCurrency>[] currencies;
+            CurrencyDTO<TCurrency>[] currencies;
             #endregion
 
             currencies = await Term<TCurrency>.GetAsync(

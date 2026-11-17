@@ -14,12 +14,12 @@ namespace IndicadorChileAPI.App.Context.Tool
     internal static class Value<TCurrency>
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
-        internal static async Task<Result<CurrencyDto<TCurrency>[], ResultErrorDto>> CurrenciesAsync(string htmlContent,
-                                                                                                     CurrencyInfoDto CurrencyInfo,
+        internal static async Task<Result<CurrencyDTO<TCurrency>[], ResultErrorDto>> CurrenciesAsync(string htmlContent,
+                                                                                                     CurrencyInfoDTO CurrencyInfo,
                                                                                                      SearchFilterModel SearchFilter)
         {
             #region Objects
-            Result<CurrencyDto<TCurrency>[], ResultErrorDto> currenciesResult;
+            Result<CurrencyDTO<TCurrency>[], ResultErrorDto> currenciesResult;
             Result<Dictionary<byte, TCurrency[]>, ResultErrorDto> valuesResult;
             #endregion
 
@@ -36,7 +36,7 @@ namespace IndicadorChileAPI.App.Context.Tool
 
             if (!valuesResult.IsSuccess)
             {
-                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
+                return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto
                     {
                         ClassName = nameof(Value<TCurrency>),
@@ -49,7 +49,7 @@ namespace IndicadorChileAPI.App.Context.Tool
 
             if (valuesResult.Value == null)
             {
-                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
+                return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto
                     {
                         ClassName = nameof(Value<TCurrency>),
@@ -64,7 +64,7 @@ namespace IndicadorChileAPI.App.Context.Tool
 
             if (!currenciesResult.IsSuccess)
             {
-                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
+                return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto
                     {
                         ClassName = nameof(Value<TCurrency>),
@@ -77,7 +77,7 @@ namespace IndicadorChileAPI.App.Context.Tool
 
             if (currenciesResult.Value == null)
             {
-                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
+                return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto
                     {
                         ClassName = nameof(Value<TCurrency>),
@@ -88,7 +88,7 @@ namespace IndicadorChileAPI.App.Context.Tool
                 );
             }
 
-            return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Success(
+            return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Success(
                 Value: currenciesResult.Value
                     .AsParallel()
                     .Where(predicate: Model => !TCurrency.IsNaN(value: Model.Currency)
@@ -98,8 +98,8 @@ namespace IndicadorChileAPI.App.Context.Tool
                                                !TCurrency.IsInfinity(value: Model.Currency)
                                                &&
                                                !TCurrency.IsNegative(value: Model.Currency))
-                    .OrderBy<CurrencyDto<TCurrency>, DateOnly>(keySelector: Model => Model.Date)
-                    .ToArray<CurrencyDto<TCurrency>>()
+                    .OrderBy<CurrencyDTO<TCurrency>, DateOnly>(keySelector: Model => Model.Date)
+                    .ToArray<CurrencyDTO<TCurrency>>()
             );
         }
     }

@@ -29,13 +29,13 @@ namespace IndicadorChileAPI.Controllers
         #region Constructor Method
         public SIIController(ILogger<SIIController> Logger)
             : base(Logger: Logger,
-                   URLs: new Dictionary<Enums.currencyTypeEnum, CurrencyInfoDto[]>
+                   URLs: new Dictionary<Enums.currencyTypeEnum, CurrencyInfoDTO[]>
                          {
                              {
                                  Enums.currencyTypeEnum.USD,
-                                 new CurrencyInfoDto[2]
+                                 new CurrencyInfoDTO[2]
                                  {
-                                     new CurrencyInfoDto()
+                                     new CurrencyInfoDTO()
                                      {
                                          Url = new Uri(uriString: "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm"),
                                          Table = new TableDto
@@ -51,7 +51,7 @@ namespace IndicadorChileAPI.Controllers
                                              dateTime: DateTime.Now
                                          )
                                      },
-                                     new CurrencyInfoDto()
+                                     new CurrencyInfoDTO()
                                      {
                                          Url = new Uri(uriString: "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm"),
                                          Table = new TableDto
@@ -76,9 +76,9 @@ namespace IndicadorChileAPI.Controllers
                              },
                              {
                                  Enums.currencyTypeEnum.UF,
-                                 new CurrencyInfoDto[]
+                                 new CurrencyInfoDTO[]
                                  {
-                                     new CurrencyInfoDto()
+                                     new CurrencyInfoDTO()
                                      {
                                          Url = new Uri(uriString: "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm"),
                                          Table = new TableDto
@@ -94,7 +94,7 @@ namespace IndicadorChileAPI.Controllers
                                              dateTime: DateTime.Now
                                          )
                                      },
-                                     new CurrencyInfoDto()
+                                     new CurrencyInfoDTO()
                                      {
                                          Url = new Uri(uriString: "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm"),
                                          Table = new TableDto
@@ -131,19 +131,19 @@ namespace IndicadorChileAPI.Controllers
                 template: "[action]"
             )
         ]
-        public async Task<ActionResult<CurrencyHeaderDto<float>>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)
+        public async Task<ActionResult<CurrencyHeaderDTO<float>>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)
         {
             try
             {
                 if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType,
-                                          value: out CurrencyInfoDto[]? Values))
+                                          value: out CurrencyInfoDTO[]? Values))
                 {
-                    foreach (CurrencyInfoDto Value in Values)
+                    foreach (CurrencyInfoDTO Value in Values)
                     {
                         #region Object
                         Currency<float> currency;
-                        CurrencyInfoDto updatedValue;
-                        CurrencyHeaderDto<float> CurrencyHeader;
+                        CurrencyInfoDTO updatedValue;
+                        CurrencyHeaderDTO<float> CurrencyHeader;
                         #endregion
 
                         updatedValue = Value with

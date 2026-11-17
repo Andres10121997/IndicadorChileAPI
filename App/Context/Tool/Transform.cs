@@ -112,15 +112,15 @@ namespace IndicadorChileAPI.App.Context.Tool
             return modelList.ToArray<TModel>();
         }
 
-        internal async Task<Result<CurrencyDto<TCurrency>[], ResultErrorDto>> ToCurrencyModelsAsync(Dictionary<byte, TCurrency[]> CurrencyData)
+        internal async Task<Result<CurrencyDTO<TCurrency>[], ResultErrorDto>> ToCurrencyModelsAsync(Dictionary<byte, TCurrency[]> CurrencyData)
         {
             #region Collections
-            CurrencyDto<TCurrency>[] currencies;
+            CurrencyDTO<TCurrency>[] currencies;
             #endregion
 
-            currencies = await this.ToModelsAsync<CurrencyDto<TCurrency>>(
+            currencies = await this.ToModelsAsync<CurrencyDTO<TCurrency>>(
                 Data: CurrencyData,
-                ModelFactory: (Date, Value) => new CurrencyDto<TCurrency>
+                ModelFactory: (Date, Value) => new CurrencyDTO<TCurrency>
                 {
                     // https://www.youtube.com/shorts/UwcOL3ZL3go
                     ID = Guid.CreateVersion7(
@@ -144,7 +144,7 @@ namespace IndicadorChileAPI.App.Context.Tool
 
             if (currencies == null)
             {
-                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
+                return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Transform<TCurrency>),
@@ -157,7 +157,7 @@ namespace IndicadorChileAPI.App.Context.Tool
 
             if (currencies.Length.Equals(obj: 0))
             {
-                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
+                return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Transform<TCurrency>),
@@ -168,7 +168,7 @@ namespace IndicadorChileAPI.App.Context.Tool
                 );
             }
 
-            return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Success(Value: currencies);
+            return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Success(Value: currencies);
         }
         #endregion
     }
