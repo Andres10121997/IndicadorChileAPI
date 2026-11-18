@@ -1,6 +1,7 @@
 ﻿using IndicadorChileAPI.Utils;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace IndicadorChileAPI.Models
@@ -9,6 +10,9 @@ namespace IndicadorChileAPI.Models
     {
         #region Field
         [
+            Description(
+                description: "Opciones de qué divisas quieres obtener, donde el valor 0 es el Dólar y el 1 es la UF."
+            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
@@ -32,6 +36,9 @@ namespace IndicadorChileAPI.Models
         public required Enums.currencyTypeEnum CurrencyType { get; init; }
 
         [
+            Description(
+                description: "Año en el cual quieres obtener los valores de la divisa seleccionada a partir del año 2013 hasta el año actual."
+            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
@@ -56,6 +63,9 @@ namespace IndicadorChileAPI.Models
         public required ushort Year { get; init; }
 
         [
+            Description(
+                description: "Mes en el cual quieres obtener los valores de la divisa seleccionada."
+            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
