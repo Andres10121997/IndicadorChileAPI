@@ -14,7 +14,7 @@ namespace IndicadorChileAPI.App.Context.Tool
     internal static class Value<TCurrency>
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
-        internal static async Task<Result<CurrencyDTO<TCurrency>[], ResultErrorDto>> CurrenciesAsync(string htmlContent,
+        internal static async Task< Result<CurrencyDTO<TCurrency>[], ResultErrorDto> > CurrenciesAsync(string htmlContent,
                                                                                                      CurrencyInfoDTO CurrencyInfo,
                                                                                                      SearchFilterModel SearchFilter)
         {
@@ -34,6 +34,7 @@ namespace IndicadorChileAPI.App.Context.Tool
                 }
             );
 
+            #region Validate "valuesResult"
             if (!valuesResult.IsSuccess)
             {
                 return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
@@ -46,8 +47,8 @@ namespace IndicadorChileAPI.App.Context.Tool
                     }
                 );
             }
-
-            if (valuesResult.Value == null)
+            else
+            if (valuesResult.Value is null)
             {
                 return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto
@@ -59,9 +60,11 @@ namespace IndicadorChileAPI.App.Context.Tool
                     }
                 );
             }
+            #endregion
 
             currenciesResult = await new Transform<TCurrency>(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
 
+            #region Validate "currenciesResult"
             if (!currenciesResult.IsSuccess)
             {
                 return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
@@ -74,8 +77,8 @@ namespace IndicadorChileAPI.App.Context.Tool
                     }
                 );
             }
-
-            if (currenciesResult.Value == null)
+            else
+            if (currenciesResult.Value is null)
             {
                 return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto
@@ -87,6 +90,7 @@ namespace IndicadorChileAPI.App.Context.Tool
                     }
                 );
             }
+            #endregion
 
             return Result<CurrencyDTO<TCurrency>[], ResultErrorDto>.Success(
                 Value: currenciesResult.Value

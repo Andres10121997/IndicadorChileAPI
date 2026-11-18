@@ -11,7 +11,7 @@ namespace IndicadorChileAPI.App.Context.Tool
     internal static class Extract<TCurrency>
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
-        internal static async Task<Result<Dictionary<byte, TCurrency[]>, ResultErrorDto>> ValuesAsync(HtmlDto Html)
+        internal static async Task< Result<Dictionary<byte, TCurrency[]>, ResultErrorDto> > ValuesAsync(HtmlDto Html)
         {
             #region Collections
             Dictionary<byte, TCurrency[]> data;
