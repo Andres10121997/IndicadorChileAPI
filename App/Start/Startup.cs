@@ -90,12 +90,16 @@ namespace IndicadorChileAPI.App.Start
                             );
                     }
                 );
+                
+                App.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                // Forces redirection to HTTPS
+                App.UseHttpsRedirection();
             }
 
             App.UseRateLimiter();
-
-            // Forces redirection to HTTPS
-            App.UseHttpsRedirection();
 
             App.UseAuthorization();
 
