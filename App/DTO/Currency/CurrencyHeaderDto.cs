@@ -12,16 +12,6 @@ namespace IndicadorChileAPI.App.DTO.Currency
             DataType(
                 dataType: DataType.Date
             ),
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
-                Name = "Fecha de la consulta",
-                Order = 1,
-                Prompt = "",
-                ShortName = "Consulta"
-            ),
             Required
         ]
         public required DateOnly ConsultationDate { get; init; }
@@ -29,16 +19,6 @@ namespace IndicadorChileAPI.App.DTO.Currency
         [
             DataType(
                 dataType: DataType.Time
-            ),
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
-                Name = "Hora de la consulta",
-                Order = 2,
-                Prompt = "",
-                ShortName = "Consulta"
             ),
             Required
         ]
@@ -48,31 +28,11 @@ namespace IndicadorChileAPI.App.DTO.Currency
             DataType(
                 dataType: DataType.Url
             ),
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
-                Name = "URL",
-                Order = 3,
-                Prompt = "",
-                ShortName = "URL"
-            ),
             Required
         ]
         public required Uri Url { get; init; }
 
         [
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
-                Name = "Año",
-                Order = 4,
-                Prompt = "",
-                ShortName = "Año"
-            ),
             Required
         ]
         public required ushort Year { get; init; }
@@ -81,16 +41,7 @@ namespace IndicadorChileAPI.App.DTO.Currency
             DataType(
                 dataType: DataType.Text
             ),
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
-                Name = "Mes",
-                Order = 5,
-                Prompt = "",
-                ShortName = "Mes"
-            )
+            Required
         ]
         public required string MonthName { get; init; }
 
@@ -98,20 +49,13 @@ namespace IndicadorChileAPI.App.DTO.Currency
             DataType(
                 dataType: DataType.Text
             ),
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
-                Name = "Nombre divisa",
-                Order = 6,
-                Prompt = "",
-                ShortName = "Divisa"
-            ),
             Required
         ]
         public required string CurrencyName { get; init; }
 
+        [
+            Required
+        ]
         public required CurrencyDTO<TCurrency>[] Currencies { get; init; }
         #endregion
     }

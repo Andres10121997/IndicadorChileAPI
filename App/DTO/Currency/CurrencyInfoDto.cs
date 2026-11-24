@@ -16,6 +16,9 @@ namespace IndicadorChileAPI.App.DTO.Currency
         public required Uri Url { get; init; }
 
         [
+            DataType(
+                dataType: DataType.Custom
+            ),
             Required
         ]
         public required TableDto Table { get; init; }
